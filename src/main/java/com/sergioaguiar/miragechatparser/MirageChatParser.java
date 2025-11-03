@@ -31,7 +31,7 @@ public class MirageChatParser implements ModInitializer
 		ChatColorsConfig.load();
 
 		// Event registering
-        ChatMessageHandler.register();
+		ChatMessageHandler.register();
 
 		// Command registering
 		ReloadCommand.register();
