@@ -1,0 +1,31 @@
+{
+	"schemaVersion": 1,
+	"id": "miragechatparser",
+	"version": "${version}",
+	"name": "MirageChatParser",
+	"description": "A char-persing mod developed for MirageCraft Cobblemon, with the intent to display both Item lores and Pokémon stats into chat.",
+	"authors": [
+		"Sérgio de Aguiar (pioavenger)"
+	],
+	"contact": {
+		"sources": "https://github.com/sergio-aguiar/MirageChatParser"
+	},
+	"license": "All rights reserved.",
+	"icon": "assets/miragechatparser/icon.png",
+	"environment": "*",
+	"entrypoints": {
+		"main": [
+			"com.sergioaguiar.miragechatparser.MirageChatParser"
+		],
+		"client": [
+			"com.sergioaguiar.miragechatparser.MirageChatParserClient"
+		]
+	},
+	"depends": {
+		"fabricloader": ">=0.16.5",
+		"minecraft": "~1.21.1",
+		"java": ">=21",
+		"fabric-api": "*",
+		"cobblemon": ">=1.6.0"
+	}
+}
