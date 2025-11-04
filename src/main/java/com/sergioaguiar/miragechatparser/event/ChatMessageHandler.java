@@ -12,7 +12,7 @@ public class ChatMessageHandler
     public static void register() 
     {
         ServerMessageDecoratorEvent.EVENT.register(ServerMessageDecoratorEvent.CONTENT_PHASE,
-            (ServerPlayerEntity sender, Text message) -> ChatParser.parseMessage(sender, message.getString())
+            (ServerPlayerEntity sender, Text message) -> ChatParser.parseMessage(sender, message)
         );
 
         ModLogger.info("Chat Parser started.");

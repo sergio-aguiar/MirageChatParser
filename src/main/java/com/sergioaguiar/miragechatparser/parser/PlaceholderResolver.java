@@ -52,7 +52,7 @@ public class PlaceholderResolver
         } 
         catch (Exception e) {}
 
-        return Text.literal("[" + input + "]");
+        return null;
     }
 
     public static Text getPartyPokemonName(ServerPlayerEntity player, int slot)

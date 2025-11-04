@@ -9,9 +9,10 @@ import net.minecraft.text.Text;
 
 public class ChatParser 
 {
-    public static Text parseMessage(ServerPlayerEntity player, String message) 
+    public static Text parseMessage(ServerPlayerEntity player, Text message) 
     {
-        Matcher matcher = TextUtils.PLACEHOLDER_PATTERN.matcher(message);
+        String raw = message.getString();
+        Matcher matcher = TextUtils.PLACEHOLDER_PATTERN.matcher(raw);
         Text result = Text.empty();
         int lastEnd = 0;
         boolean replaced = false;
@@ -20,25 +21,29 @@ public class ChatParser
         {
             if (matcher.start() > lastEnd) 
             {
-                result = result.copy().append(Text.literal(message.substring(lastEnd, matcher.start())));
+                result = result.copy().append(Text.literal(raw.substring(lastEnd, matcher.start())));
             }
 
             String content = matcher.group(1).trim();
             Text replacement = PlaceholderResolver.resolveText(player, content);
 
-            if (!replacement.getString().equals("[" + content + "]")) 
+            if (replacement == null)
+            {
+                result = result.copy().append(raw.substring(matcher.start(), matcher.end()));
+            } 
+            else
             {
                 replaced = true;
+                result = result.copy().append(replacement);
             }
 
-            result = result.copy().append(replacement);
             lastEnd = matcher.end();
         }
 
-        if (lastEnd < message.length()) 
+        if (lastEnd < raw.length()) 
         {
-            result = result.copy().append(Text.literal(message.substring(lastEnd)));
+            result = result.copy().append(Text.literal(raw.substring(lastEnd)));
         }
-        return replaced ? result : Text.literal(message);
+        return replaced ? result : message;
     }
 }
