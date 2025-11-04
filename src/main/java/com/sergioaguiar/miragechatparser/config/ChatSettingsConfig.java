@@ -41,9 +41,15 @@ public class ChatSettingsConfig
         {
             config.load();
 
+            if (config.contains("General.ParseNonPlayerMessages"))
+            {
+                boolean parseNonPlayerMessages = config.getOrElse("General.ParseNonPlayerMessages", ChatSettings.DEFAULT_PARSE_NON_PLAYER_MESSAGES);
+                ChatSettings.setParseNonPlayerMessages(parseNonPlayerMessages);
+            }
+
             if (config.contains("Tooltip.ShowNickname"))
             {
-                boolean showNickname = config.getOrElse("Tooltip.ShowNickname", true);
+                boolean showNickname = config.getOrElse("Tooltip.ShowNickname", ChatSettings.DEFAULT_SHOW_NICKNAME);
                 ChatSettings.setShowNickname(showNickname);
             }
 
@@ -59,6 +65,10 @@ public class ChatSettingsConfig
     {
         String defaultContent = """
             # MirageChatParser - Chat Settings Configuration
+
+            [General]
+            # Whether to parse non-player (e.g. server) messages or not (true/false)
+            ParseNonPlayerMessages = false
 
             [Tooltip]
             # Whether to show a Pokémon's nickname in hover text (true/false)
