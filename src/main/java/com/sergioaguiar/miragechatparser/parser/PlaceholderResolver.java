@@ -148,15 +148,25 @@ public class PlaceholderResolver
             .append(Text.literal("\n"))
             .append(TextUtils.coloredCaughtBallLine(pokemon.getCaughtBall()))
             .append(Text.literal("\n"))
-            .append(TextUtils.coloredSizeLine(pokemon.getScaleModifier()))
-            .append(Text.literal("\n"))
-            .append(TextUtils.coloredEggGroupsLine(eggGroups));
+            .append(TextUtils.coloredSizeLine(pokemon.getScaleModifier()));
+
+            if (ChatSettings.showEggGroups())
+            {
+                tooltip = tooltip
+                    .append(Text.literal("\n"))
+                    .append(TextUtils.coloredEggGroupsLine(eggGroups));
+            }
 
         if (NeoDaycareUtils.isModLoaded())
         {
-            tooltip = tooltip
-                .append(Text.literal("\n"))
-                .append(TextUtils.coloredNeuterLine(pokemon));
+            boolean isNeutered = NeoDaycareUtils.isNeutered(pokemon);
+
+            if (isNeutered || ChatSettings.showNeuteredIfFalse())
+            {
+                tooltip = tooltip
+                    .append(Text.literal("\n"))
+                    .append(TextUtils.coloredNeuterLine(pokemon, isNeutered));
+            }
         }
 
         tooltip = tooltip

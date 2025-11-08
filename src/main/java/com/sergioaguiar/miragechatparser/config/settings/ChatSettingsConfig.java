@@ -43,14 +43,32 @@ public class ChatSettingsConfig
 
             if (config.contains("General.ParseNonPlayerMessages"))
             {
-                boolean parseNonPlayerMessages = config.getOrElse("General.ParseNonPlayerMessages", ChatSettings.DEFAULT_PARSE_NON_PLAYER_MESSAGES);
-                ChatSettings.setParseNonPlayerMessages(parseNonPlayerMessages);
+                boolean enabled = config.getOrElse("General.ParseNonPlayerMessages", ChatSettings.DEFAULT_PARSE_NON_PLAYER_MESSAGES);
+                ChatSettings.setParseNonPlayerMessages(enabled);
             }
 
             if (config.contains("Tooltip.ShowNickname"))
             {
-                boolean showNickname = config.getOrElse("Tooltip.ShowNickname", ChatSettings.DEFAULT_SHOW_NICKNAME);
-                ChatSettings.setShowNickname(showNickname);
+                boolean enabled = config.getOrElse("Tooltip.ShowNickname", ChatSettings.DEFAULT_SHOW_NICKNAME);
+                ChatSettings.setShowNickname(enabled);
+            }
+
+            if (config.contains("Tooltip.ShowFormIfNormal"))
+            {
+                boolean enabled = config.getOrElse("Tooltip.ShowFormIfNormal", ChatSettings.DEFAULT_SHOW_FORM_IF_NORMAL);
+                ChatSettings.setShowFormIfNormal(enabled);
+            }
+
+            if (config.contains("Tooltip.ShowNeuteredIfFalse"))
+            {
+                boolean enabled = config.getOrElse("Tooltip.ShowNeuteredIfFalse", ChatSettings.DEFAULT_SHOW_NEUTERED_IF_FALSE);
+                ChatSettings.setShowNeuteredIfFalse(enabled);
+            }
+
+            if (config.contains("Tooltip.ShowEggGroups"))
+            {
+                boolean enabled = config.getOrElse("Tooltip.ShowEggGroups", ChatSettings.DEFAULT_SHOW_EGG_GROUPS);
+                ChatSettings.setShowEggGroups(enabled);
             }
 
             ModLogger.info("Setting configurations successfully loaded from chat_settings.toml.");
@@ -73,6 +91,12 @@ public class ChatSettingsConfig
             [Tooltip]
             # Whether to show a Pokémon's nickname in hover text (true/false)
             ShowNickname = true
+            # Whether to show a Pokémon's form in hover text when the value is Normal (true/false)
+            ShowFormIfNormal = true
+            # Whether to show a Pokémon's neutered state in hover text when the value is False (true/false)
+            ShowNeuteredIfFalse = true
+            # Whether to show a Pokémon's egg groups in hover text (true/false)
+            ShowEggGroups = true
             """;
         
         Files.writeString(file.toPath(), defaultContent);

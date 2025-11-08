@@ -16,6 +16,7 @@ import com.cobblemon.mod.common.pokemon.Nature;
 import com.cobblemon.mod.common.pokemon.Pokemon;
 import com.sergioaguiar.miragechatparser.config.colors.ChatColors;
 import com.sergioaguiar.miragechatparser.config.colors.ChatColors.TypeColor;
+import com.sergioaguiar.miragechatparser.config.settings.ChatSettings;
 import com.sergioaguiar.miragechatparser.config.strings.ChatStrings;
 
 import net.minecraft.item.ItemStack;
@@ -29,6 +30,8 @@ public class TextUtils
 {
     public static final Pattern PLACEHOLDER_PATTERN = Pattern.compile("\\[(.*?)\\]");
     public static final String IV_AND_EV_STRING_FORMAT = "%.2f%% (%d/%d/%d/%d/%d/%d)";
+
+    private static final String NORMAL_FORM_STRING = "Normal";
 
     public static Text getFormattedIVs(IVs ivs) 
     {
@@ -134,12 +137,12 @@ public class TextUtils
     {
         return switch (stat.toUpperCase()) 
         {
-            case "HP" -> "HP";
-            case "ATTACK" -> "Atk";
-            case "DEFENSE", "DEFENCE" -> "Def";
-            case "SPECIAL_ATTACK" -> "SpA";
-            case "SPECIAL_DEFENSE", "SPECIAL_DEFENCE" -> "SpD";
-            case "SPEED" -> "Spe";
+            case "HP" -> ChatStrings.getHealthString();
+            case "ATTACK" -> ChatStrings.getAttackString();
+            case "DEFENSE", "DEFENCE" -> ChatStrings.getDefenseString();
+            case "SPECIAL_ATTACK" -> ChatStrings.getSpecialAttackString();
+            case "SPECIAL_DEFENSE", "SPECIAL_DEFENCE" -> ChatStrings.getSpecialDefenseString();
+            case "SPEED" -> ChatStrings.getSpeedString();
             default -> toTitleCase(stat);
         };
     }
@@ -157,14 +160,22 @@ public class TextUtils
 
     public static Text coloredSpeciesLine(String speciesName, String formName)
     {
-        return Text.literal(ChatStrings.getSpeciesString())
+        MutableText coloredLine = Text.literal(ChatStrings.getSpeciesString())
                 .setStyle(Style.EMPTY.withColor(ChatColors.getTooltipLabelColor()))
             .append(Text.literal(speciesName)
-                .setStyle(Style.EMPTY.withColor(ChatColors.getTooltipValueColor())))
-            .append(Text.literal(" ("))
-            .append(Text.literal(formName)
-                .setStyle(Style.EMPTY.withColor(ChatColors.getTooltipFormColor())))
-            .append(Text.literal(")"));
+                .setStyle(Style.EMPTY.withColor(ChatColors.getTooltipValueColor())));;
+
+        if (!formName.equals(NORMAL_FORM_STRING) || ChatSettings.showFormIfNormal())
+        {
+            coloredLine = coloredLine
+                .append(Text.literal(" ("))
+                .append(Text.literal(formName)
+                    .setStyle(Style.EMPTY.withColor(ChatColors.getTooltipFormColor())))
+                .append(Text.literal(")"));
+        }
+
+        return coloredLine;
+            
     }
 
     public static Text coloredLevelLine(int level, int currentExperience, int targetExperience)
@@ -384,10 +395,8 @@ public class TextUtils
         return coloredLine;
     }
 
-    public static Text coloredNeuterLine(Pokemon pokemon)
+    public static Text coloredNeuterLine(Pokemon pokemon, boolean isNeutered)
     {
-        boolean isNeutered = NeoDaycareUtils.isNeutered(pokemon);
-
         return Text.literal(ChatStrings.getNeuteredString())
                 .setStyle(Style.EMPTY.withColor(ChatColors.getTooltipLabelColor()))
             .append(Text.literal(isNeutered ? ChatStrings.getTrueString() : ChatStrings.getFalseString())
