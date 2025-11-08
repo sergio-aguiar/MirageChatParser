@@ -1,4 +1,4 @@
-package com.sergioaguiar.miragechatparser.config;
+package com.sergioaguiar.miragechatparser.config.colors;
 
 import com.mojang.serialization.DataResult;
 import com.sergioaguiar.miragechatparser.util.ModLogger;
@@ -208,463 +208,97 @@ public class ChatColors
         }
     }
 
-    public static TextColor getTypeColorNormal()
-    {
-        return typeColorNormal;
-    }
-
-    public static TextColor getTypeColorFire()
-    {
-        return typeColorFire;
-    }
-
-    public static TextColor getTypeColorWater()
-    {
-        return typeColorWater;
-    }
-
-    public static TextColor getTypeColorElectric()
-    {
-        return typeColorElectric;
-    }
-
-    public static TextColor getTypeColorGrass()
-    {
-        return typeColorGrass;
-    }
-
-    public static TextColor getTypeColorIce()
-    {
-        return typeColorIce;
-    }
-
-    public static TextColor getTypeColorFighting()
-    {
-        return typeColorFighting;
-    }
-
-    public static TextColor getTypeColorPoison()
-    {
-        return typeColorPoison;
-    }
-
-    public static TextColor getTypeColorGround()
-    {
-        return typeColorGround;
-    }
-
-    public static TextColor getTypeColorFlying()
-    {
-        return typeColorFlying;
-    }
-
-    public static TextColor getTypeColorPsychic()
-    {
-        return typeColorPsychic;
-    }
-
-    public static TextColor getTypeColorBug()
-    {
-        return typeColorBug;
-    }
-
-    public static TextColor getTypeColorRock()
-    {
-        return typeColorRock;
-    }
-
-    public static TextColor getTypeColorGhost()
-    {
-        return typeColorGhost;
-    }
-
-    public static TextColor getTypeColorDragon()
-    {
-        return typeColorDragon;
-    }
-
-    public static TextColor getTypeColorDark()
-    {
-        return typeColorDark;
-    }
-
-    public static TextColor getTypeColorSteel()
-    {
-        return typeColorSteel;
-    }
-
-    public static TextColor getTypeColorFairy()
-    {
-        return typeColorFairy;
-    }
-
-    public static TextColor getCommandPrefixColor()
-    {
-        return commandPrefixColor;
-    }
-
-    public static TextColor getCommandValueColor()
-    {
-        return commandValueColor;
-    }
-
-    public static TextColor getCommandPlayerColor()
-    {
-        return commandPlayerColor;
-    }
-
-    public static TextColor getHoverableBracketColor()
-    {
-        return hoverableBracketColor;
-    }
-
-    public static TextColor getHoverableBracketShinyColor()
-    {
-        return hoverableBracketShinyColor;
-    }
-
-    public static TextColor getHoverableBracketErrorColor()
-    {
-        return hoverableBracketErrorColor;
-    }
-
-    public static TextColor getHoverableTextColor()
-    {
-        return hoverableTextColor;
-    }
-
-    public static TextColor getHoverableTextShinyColor()
-    {
-        return hoverableTextShinyColor;
-    }
-
-    public static TextColor getHoverableTextErrorColor()
-    {
-        return hoverableTextErrorColor;
-    }
-
-    public static TextColor getTooltipLabelColor()
-    {
-        return tooltipLabelColor;
-    }
-
-    public static TextColor getTooltipValueColor()
-    {
-        return tooltipValueColor;
-    }
-
-    public static TextColor getTooltipFormColor()
-    {
-        return tooltipFormColor;
-    }
-
-    public static TextColor getTooltipCurrentExperienceColor()
-    {
-        return tooltipCurrentExperienceColor;
-    }
-
-    public static TextColor getTooltipTargetExperienceColor()
-    {
-        return tooltipTargetExperienceColor;
-    }
-
-    public static TextColor getTooltipHiddenAbilityColor()
-    {
-        return tooltipHiddenAbilityColor;
-    }
-
-    public static TextColor getTooltipStatUpColor()
-    {
-        return tooltipStatUpColor;
-    }
-
-    public static TextColor getTooltipStatDownColor()
-    {
-        return tooltipStatDownColor;
-    }
-
-    public static TextColor getTooltipHealthColor()
-    {
-        return tooltipHealthColor;
-    }
-
-    public static TextColor getTooltipAttackColor()
-    {
-        return tooltipAttackColor;
-    }
-
-    public static TextColor getTooltipDefenseColor()
-    {
-        return tooltipDefenseColor;
-    }
-
-    public static TextColor getTooltipSpAttackColor()
-    {
-        return tooltipSpAttackColor;
-    }
-
-    public static TextColor getTooltipSpDefenseColor()
-    {
-        return tooltipSpDefenseColor;
-    }
-
-    public static TextColor getTooltipSpeedColor()
-    {
-        return tooltipSpeedColor;
-    }
-
-    public static TextColor getTooltipMaleColor()
-    {
-        return tooltipMaleColor;
-    }
-
-    public static TextColor getTooltipFemaleColor()
-    {
-        return tooltipFemaleColor;
-    }
-
-    public static TextColor getTooltipGenderlessColor()
-    {
-        return tooltipGenderlessColor;
-    }
-
-    public static TextColor getTooltipTrueColor()
-    {
-        return tooltipTrueColor;
-    }
-
-    public static TextColor getTooltipFalseColor()
-    {
-        return tooltipFalseColor;
-    }
-
-    public static void setTypeColorNormal(TextColor color)
-    {
-        typeColorNormal = color;
-    }
-
-    public static void setTypeColorFire(TextColor color)
-    {
-        typeColorFire = color;
-    }
-
-    public static void setTypeColorWater(TextColor color)
-    {
-        typeColorWater = color;
-    }
-
-    public static void setTypeColorElectric(TextColor color)
-    {
-        typeColorElectric = color;
-    }
-
-    public static void setTypeColorGrass(TextColor color)
-    {
-        typeColorGrass = color;
-    }
-
-    public static void setTypeColorIce(TextColor color)
-    {
-        typeColorIce = color;
-    }
-
-    public static void setTypeColorFighting(TextColor color)
-    {
-        typeColorFighting = color;
-    }
-
-    public static void setTypeColorPoison(TextColor color)
-    {
-        typeColorPoison = color;
-    }
-
-    public static void setTypeColorGround(TextColor color)
-    {
-        typeColorGround = color;
-    }
-
-    public static void setTypeColorFlying(TextColor color)
-    {
-        typeColorFlying = color;
-    }
-
-    public static void setTypeColorPsychic(TextColor color)
-    {
-        typeColorPsychic = color;
-    }
-
-    public static void setTypeColorBug(TextColor color)
-    {
-        typeColorBug = color;
-    }
-
-    public static void setTypeColorRock(TextColor color)
-    {
-        typeColorRock = color;
-    }
-
-    public static void setTypeColorGhost(TextColor color)
-    {
-        typeColorGhost = color;
-    }
-
-    public static void setTypeColorDragon(TextColor color)
-    {
-        typeColorDragon = color;
-    }
-
-    public static void setTypeColorDark(TextColor color)
-    {
-        typeColorDark = color;
-    }
-
-    public static void setTypeColorSteel(TextColor color)
-    {
-        typeColorSteel = color;
-    }
-
-    public static void setTypeColorFairy(TextColor color)
-    {
-        typeColorFairy = color;
-    }
-
-    public static void setCommandPrefixColor(TextColor color)
-    {
-        commandPrefixColor = color;
-    }
-
-    public static void setCommandValueColor(TextColor color)
-    {
-        commandValueColor = color;
-    }
-
-    public static void setCommandPlayerColor(TextColor color)
-    {
-        commandPlayerColor = color;
-    }
-
-    public static void setHoverableBracketColor(TextColor color)
-    {
-        hoverableBracketColor = color;
-    }
-
-    public static void setHoverableBracketShinyColor(TextColor color)
-    {
-        hoverableBracketShinyColor = color;
-    }
-
-    public static void setHoverableBracketErrorColor(TextColor color)
-    {
-        hoverableBracketErrorColor = color;
-    }
-
-    public static void setHoverableTextColor(TextColor color)
-    {
-        hoverableTextColor = color;
-    }
-
-    public static void setHoverableTextShinyColor(TextColor color)
-    {
-        hoverableTextShinyColor = color;
-    }
-
-    public static void setHoverableTextErrorColor(TextColor color)
-    {
-        hoverableTextErrorColor = color;
-    }
-
-    public static void setTooltipLabelColor(TextColor color)
-    {
-        tooltipLabelColor = color;
-    }
-
-    public static void setTooltipValueColor(TextColor color)
-    {
-        tooltipValueColor = color;
-    }
-
-    public static void setTooltipFormColor(TextColor color)
-    {
-        tooltipFormColor = color;
-    }
-
-    public static void setTooltipCurrentExperienceColor(TextColor color)
-    {
-        tooltipCurrentExperienceColor = color;
-    }
-
-    public static void setTooltipTargetExperienceColor(TextColor color)
-    {
-        tooltipTargetExperienceColor = color;
-    }
-
-    public static void setTooltipHiddenAbilityColor(TextColor color)
-    {
-        tooltipHiddenAbilityColor = color;
-    }
-
-    public static void setTooltipStatUpColor(TextColor color)
-    {
-        tooltipStatUpColor = color;
-    }
-
-    public static void setTooltipStatDownColor(TextColor color)
-    {
-        tooltipStatDownColor = color;
-    }
-
-    public static void setTooltipHealthColor(TextColor color)
-    {
-        tooltipHealthColor = color;
-    }
-
-    public static void setTooltipAttackColor(TextColor color)
-    {
-        tooltipAttackColor = color;
-    }
-
-    public static void setTooltipDefenseColor(TextColor color)
-    {
-        tooltipDefenseColor = color;
-    }
-
-    public static void setTooltipSpAttackColor(TextColor color)
-    {
-        tooltipSpAttackColor = color;
-    }
-
-    public static void setTooltipSpDefenseColor(TextColor color)
-    {
-        tooltipSpDefenseColor = color;
-    }
-
-    public static void setTooltipSpeedColor(TextColor color)
-    {
-        tooltipSpeedColor = color;
-    }
-
-    public static void setTooltipMaleColor(TextColor color)
-    {
-        tooltipMaleColor = color;
-    }
-
-    public static void setTooltipFemaleColor(TextColor color)
-    {
-        tooltipFemaleColor = color;
-    }
-
-    public static void setTooltipGenderlessColor(TextColor color)
-    {
-        tooltipGenderlessColor = color;
-    }
-
-    public static void setTooltipTrueColor(TextColor color)
-    {
-        tooltipTrueColor = color;
-    }
-
-    public static void setTooltipFalseColor(TextColor color)
-    {
-        tooltipFalseColor = color;
-    }
+    public static TextColor getTypeColorNormal() { return typeColorNormal; }
+    public static TextColor getTypeColorFire() { return typeColorFire; }
+    public static TextColor getTypeColorWater() { return typeColorWater; }
+    public static TextColor getTypeColorElectric() { return typeColorElectric; }
+    public static TextColor getTypeColorGrass() { return typeColorGrass; }
+    public static TextColor getTypeColorIce() { return typeColorIce; }
+    public static TextColor getTypeColorFighting() { return typeColorFighting; }
+    public static TextColor getTypeColorPoison() { return typeColorPoison; }
+    public static TextColor getTypeColorGround() { return typeColorGround; }
+    public static TextColor getTypeColorFlying() { return typeColorFlying; }
+    public static TextColor getTypeColorPsychic() { return typeColorPsychic; }
+    public static TextColor getTypeColorBug() { return typeColorBug; }
+    public static TextColor getTypeColorRock() { return typeColorRock; }
+    public static TextColor getTypeColorGhost() { return typeColorGhost; }
+    public static TextColor getTypeColorDragon() { return typeColorDragon; }
+    public static TextColor getTypeColorDark() { return typeColorDark; }
+    public static TextColor getTypeColorSteel() { return typeColorSteel; }
+    public static TextColor getTypeColorFairy() { return typeColorFairy; }
+    public static TextColor getCommandPrefixColor() { return commandPrefixColor; }
+    public static TextColor getCommandValueColor() { return commandValueColor; }
+    public static TextColor getCommandPlayerColor() { return commandPlayerColor; }
+    public static TextColor getHoverableBracketColor() { return hoverableBracketColor; }
+    public static TextColor getHoverableBracketShinyColor() { return hoverableBracketShinyColor; }
+    public static TextColor getHoverableBracketErrorColor() { return hoverableBracketErrorColor; }
+    public static TextColor getHoverableTextColor() { return hoverableTextColor; }
+    public static TextColor getHoverableTextShinyColor() { return hoverableTextShinyColor; }
+    public static TextColor getHoverableTextErrorColor() { return hoverableTextErrorColor; }
+    public static TextColor getTooltipLabelColor() { return tooltipLabelColor; }
+    public static TextColor getTooltipValueColor() { return tooltipValueColor; }
+    public static TextColor getTooltipFormColor() { return tooltipFormColor; }
+    public static TextColor getTooltipCurrentExperienceColor() { return tooltipCurrentExperienceColor; }
+    public static TextColor getTooltipTargetExperienceColor() { return tooltipTargetExperienceColor; }
+    public static TextColor getTooltipHiddenAbilityColor() { return tooltipHiddenAbilityColor; }
+    public static TextColor getTooltipStatUpColor() { return tooltipStatUpColor; }
+    public static TextColor getTooltipStatDownColor() { return tooltipStatDownColor; }
+    public static TextColor getTooltipHealthColor() { return tooltipHealthColor; }
+    public static TextColor getTooltipAttackColor() { return tooltipAttackColor; }
+    public static TextColor getTooltipDefenseColor() { return tooltipDefenseColor; }
+    public static TextColor getTooltipSpAttackColor() { return tooltipSpAttackColor; }
+    public static TextColor getTooltipSpDefenseColor() { return tooltipSpDefenseColor; }
+    public static TextColor getTooltipSpeedColor() { return tooltipSpeedColor; }
+    public static TextColor getTooltipMaleColor() { return tooltipMaleColor; }
+    public static TextColor getTooltipFemaleColor() { return tooltipFemaleColor; }
+    public static TextColor getTooltipGenderlessColor() { return tooltipGenderlessColor; }
+    public static TextColor getTooltipTrueColor() { return tooltipTrueColor; }
+    public static TextColor getTooltipFalseColor() { return tooltipFalseColor; }
+
+    protected static void setTypeColorNormal(TextColor color) { typeColorNormal = color; }
+    protected static void setTypeColorFire(TextColor color) { typeColorFire = color; }
+    protected static void setTypeColorWater(TextColor color) { typeColorWater = color; }
+    protected static void setTypeColorElectric(TextColor color) { typeColorElectric = color; }
+    protected static void setTypeColorGrass(TextColor color) { typeColorGrass = color; }
+    protected static void setTypeColorIce(TextColor color) { typeColorIce = color; }
+    protected static void setTypeColorFighting(TextColor color) { typeColorFighting = color; }
+    protected static void setTypeColorPoison(TextColor color) { typeColorPoison = color; }
+    protected static void setTypeColorGround(TextColor color) { typeColorGround = color; }
+    protected static void setTypeColorFlying(TextColor color) { typeColorFlying = color; }
+    protected static void setTypeColorPsychic(TextColor color) { typeColorPsychic = color; }
+    protected static void setTypeColorBug(TextColor color) { typeColorBug = color; }
+    protected static void setTypeColorRock(TextColor color) { typeColorRock = color; }
+    protected static void setTypeColorGhost(TextColor color) { typeColorGhost = color; }
+    protected static void setTypeColorDragon(TextColor color) { typeColorDragon = color; }
+    protected static void setTypeColorDark(TextColor color) { typeColorDark = color; }
+    protected static void setTypeColorSteel(TextColor color) { typeColorSteel = color; }
+    protected static void setTypeColorFairy(TextColor color) { typeColorFairy = color; }
+    protected static void setCommandPrefixColor(TextColor color) { commandPrefixColor = color; }
+    protected static void setCommandValueColor(TextColor color) { commandValueColor = color; }
+    protected static void setCommandPlayerColor(TextColor color) { commandPlayerColor = color; }
+    protected static void setHoverableBracketColor(TextColor color) { hoverableBracketColor = color; }
+    protected static void setHoverableBracketShinyColor(TextColor color) { hoverableBracketShinyColor = color; }
+    protected static void setHoverableBracketErrorColor(TextColor color) { hoverableBracketErrorColor = color; }
+    protected static void setHoverableTextColor(TextColor color) { hoverableTextColor = color; }
+    protected static void setHoverableTextShinyColor(TextColor color) { hoverableTextShinyColor = color; }
+    protected static void setHoverableTextErrorColor(TextColor color) { hoverableTextErrorColor = color; }
+    protected static void setTooltipLabelColor(TextColor color) { tooltipLabelColor = color; }
+    protected static void setTooltipValueColor(TextColor color) { tooltipValueColor = color; }
+    protected static void setTooltipFormColor(TextColor color) { tooltipFormColor = color; }
+    protected static void setTooltipCurrentExperienceColor(TextColor color) { tooltipCurrentExperienceColor = color; }
+    protected static void setTooltipTargetExperienceColor(TextColor color) { tooltipTargetExperienceColor = color; }
+    protected static void setTooltipHiddenAbilityColor(TextColor color) { tooltipHiddenAbilityColor = color; }
+    protected static void setTooltipStatUpColor(TextColor color) { tooltipStatUpColor = color; }
+    protected static void setTooltipStatDownColor(TextColor color) { tooltipStatDownColor = color; }
+    protected static void setTooltipHealthColor(TextColor color) { tooltipHealthColor = color; }
+    protected static void setTooltipAttackColor(TextColor color) { tooltipAttackColor = color; }
+    protected static void setTooltipDefenseColor(TextColor color) { tooltipDefenseColor = color; }
+    protected static void setTooltipSpAttackColor(TextColor color) { tooltipSpAttackColor = color; }
+    protected static void setTooltipSpDefenseColor(TextColor color) { tooltipSpDefenseColor = color; }
+    protected static void setTooltipSpeedColor(TextColor color) { tooltipSpeedColor = color; }
+    protected static void setTooltipMaleColor(TextColor color) { tooltipMaleColor = color; }
+    protected static void setTooltipFemaleColor(TextColor color) { tooltipFemaleColor = color; }
+    protected static void setTooltipGenderlessColor(TextColor color) { tooltipGenderlessColor = color; }
+    protected static void setTooltipTrueColor(TextColor color) { tooltipTrueColor = color; }
+    protected static void setTooltipFalseColor(TextColor color) { tooltipFalseColor = color; }
 }

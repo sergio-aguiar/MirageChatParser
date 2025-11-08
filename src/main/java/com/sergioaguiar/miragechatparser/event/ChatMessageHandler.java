@@ -1,6 +1,6 @@
 package com.sergioaguiar.miragechatparser.event;
 
-import com.sergioaguiar.miragechatparser.config.ChatSettings;
+import com.sergioaguiar.miragechatparser.config.settings.ChatSettings;
 import com.sergioaguiar.miragechatparser.parser.ChatParser;
 import com.sergioaguiar.miragechatparser.util.ModLogger;
 

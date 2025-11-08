@@ -7,7 +7,7 @@ import com.mojang.brigadier.arguments.IntegerArgumentType;
 import com.mojang.brigadier.builder.LiteralArgumentBuilder;
 import com.mojang.brigadier.context.CommandContext;
 import com.mojang.brigadier.exceptions.CommandSyntaxException;
-import com.sergioaguiar.miragechatparser.config.ChatColors;
+import com.sergioaguiar.miragechatparser.config.colors.ChatColors;
 import com.sergioaguiar.miragechatparser.parser.PlaceholderResolver;
 import com.sergioaguiar.miragechatparser.util.LuckPermsUtils;
 import com.sergioaguiar.miragechatparser.util.ModLogger;

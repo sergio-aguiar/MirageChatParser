@@ -2,9 +2,10 @@ package com.sergioaguiar.miragechatparser.command;
 
 import com.mojang.brigadier.context.CommandContext;
 import com.mojang.brigadier.exceptions.CommandSyntaxException;
-import com.sergioaguiar.miragechatparser.config.ChatColors;
-import com.sergioaguiar.miragechatparser.config.ChatColorsConfig;
-import com.sergioaguiar.miragechatparser.config.ChatSettingsConfig;
+import com.sergioaguiar.miragechatparser.config.colors.ChatColors;
+import com.sergioaguiar.miragechatparser.config.colors.ChatColorsConfig;
+import com.sergioaguiar.miragechatparser.config.settings.ChatSettingsConfig;
+import com.sergioaguiar.miragechatparser.config.strings.ChatStringsConfig;
 import com.sergioaguiar.miragechatparser.util.LuckPermsUtils;
 import com.sergioaguiar.miragechatparser.util.ModLogger;
 
@@ -34,25 +35,6 @@ public class ReloadCommand
     {
         try
         {
-            ChatColorsConfig.load();
-            context.getSource().sendFeedback(() -> 
-                Text.literal("MirageChatParser » ")
-                    .setStyle(Style.EMPTY.withColor(ChatColors.getCommandPrefixColor()))
-                .append(Text.literal("Reloaded chat color configuration.")
-                    .setStyle(Style.EMPTY.withColor(ChatColors.getCommandValueColor()))),
-                true
-            );
-            ModLogger.info("Chat color configuration reloaded successfully.");
-        }
-        catch (Exception e)
-        {
-            context.getSource().sendError(Text.literal("MirageChatParser » Failed to reload color configuration: %s".formatted(e.getMessage())));
-            ModLogger.error("Error reloading config: %s".formatted(e.getMessage()));
-            return 1;
-        }
-
-        try
-        {
             ChatSettingsConfig.load();
             context.getSource().sendFeedback(() -> 
                 Text.literal("MirageChatParser » ")
@@ -66,7 +48,45 @@ public class ReloadCommand
         catch (Exception e)
         {
             context.getSource().sendError(Text.literal("MirageChatParser » Failed to reload settings configuration: %s".formatted(e.getMessage())));
-            ModLogger.error("Error reloading config: %s".formatted(e.getMessage()));
+            ModLogger.error("Error reloading setting config: %s".formatted(e.getMessage()));
+            return 1;
+        }
+
+        try
+        {
+            ChatStringsConfig.load();
+            context.getSource().sendFeedback(() -> 
+                Text.literal("MirageChatParser » ")
+                    .setStyle(Style.EMPTY.withColor(ChatColors.getCommandPrefixColor()))
+                .append(Text.literal("Reloaded chat strings configuration.")
+                    .setStyle(Style.EMPTY.withColor(ChatColors.getCommandValueColor()))),
+                true
+            );
+            ModLogger.info("Chat string configuration reloaded successfully.");
+        }
+        catch (Exception e)
+        {
+            context.getSource().sendError(Text.literal("MirageChatParser » Failed to reload strings configuration: %s".formatted(e.getMessage())));
+            ModLogger.error("Error reloading string config: %s".formatted(e.getMessage()));
+            return 1;
+        }
+
+        try
+        {
+            ChatColorsConfig.load();
+            context.getSource().sendFeedback(() -> 
+                Text.literal("MirageChatParser » ")
+                    .setStyle(Style.EMPTY.withColor(ChatColors.getCommandPrefixColor()))
+                .append(Text.literal("Reloaded chat color configuration.")
+                    .setStyle(Style.EMPTY.withColor(ChatColors.getCommandValueColor()))),
+                true
+            );
+            ModLogger.info("Chat color configuration reloaded successfully.");
+        }
+        catch (Exception e)
+        {
+            context.getSource().sendError(Text.literal("MirageChatParser » Failed to reload color configuration: %s".formatted(e.getMessage())));
+            ModLogger.error("Error reloading color config: %s".formatted(e.getMessage()));
             return 1;
         }
 

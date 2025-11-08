@@ -1,4 +1,4 @@
-package com.sergioaguiar.miragechatparser.config;
+package com.sergioaguiar.miragechatparser.config.settings;
 
 import java.io.File;
 import java.io.IOException;
@@ -24,11 +24,11 @@ public class ChatSettingsConfig
             {
                 Files.createDirectories(file.getParentFile().toPath());
                 createDefaultConfig(file);
-                ModLogger.info("Generated default chat_colors.toml.");
+                ModLogger.info("Generated default chat_settings.toml.");
             }
             catch (IOException e)
             {
-                ModLogger.error("Failed to create default chat_colors.toml: %s".formatted(e.getMessage()));
+                ModLogger.error("Failed to create default chat_settings.toml: %s".formatted(e.getMessage()));
                 return;
             }
         }
@@ -53,7 +53,7 @@ public class ChatSettingsConfig
                 ChatSettings.setShowNickname(showNickname);
             }
 
-            ModLogger.info("Settings configurations successfully loaded from chat_settings.toml.");
+            ModLogger.info("Setting configurations successfully loaded from chat_settings.toml.");
         }
         catch (Exception e)
         {

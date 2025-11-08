@@ -14,8 +14,9 @@ import com.cobblemon.mod.common.pokemon.Gender;
 import com.cobblemon.mod.common.pokemon.IVs;
 import com.cobblemon.mod.common.pokemon.Nature;
 import com.cobblemon.mod.common.pokemon.Pokemon;
-import com.sergioaguiar.miragechatparser.config.ChatColors;
-import com.sergioaguiar.miragechatparser.config.ChatColors.TypeColor;
+import com.sergioaguiar.miragechatparser.config.colors.ChatColors;
+import com.sergioaguiar.miragechatparser.config.colors.ChatColors.TypeColor;
+import com.sergioaguiar.miragechatparser.config.strings.ChatStrings;
 
 import net.minecraft.item.ItemStack;
 import net.minecraft.text.HoverEvent;
@@ -156,7 +157,7 @@ public class TextUtils
 
     public static Text coloredSpeciesLine(String speciesName, String formName)
     {
-        return Text.literal("Species: ")
+        return Text.literal(ChatStrings.getSpeciesString())
                 .setStyle(Style.EMPTY.withColor(ChatColors.getTooltipLabelColor()))
             .append(Text.literal(speciesName)
                 .setStyle(Style.EMPTY.withColor(ChatColors.getTooltipValueColor())))
@@ -168,7 +169,7 @@ public class TextUtils
 
     public static Text coloredLevelLine(int level, int currentExperience, int targetExperience)
     {
-        MutableText coloredLine = Text.literal("Level: ")
+        MutableText coloredLine = Text.literal(ChatStrings.getLevelString())
                 .setStyle(Style.EMPTY.withColor(ChatColors.getTooltipLabelColor()))
             .append(Text.literal(String.valueOf(level))
                 .setStyle(Style.EMPTY.withColor(ChatColors.getTooltipValueColor())));
@@ -192,7 +193,7 @@ public class TextUtils
     {
         TextColor typeColor = TypeColor.fromTypeName(type.getName());
 
-        return Text.literal("Type: ")
+        return Text.literal(ChatStrings.getTypeString())
                 .setStyle(Style.EMPTY.withColor(ChatColors.getTooltipLabelColor()))
             .append(Text.literal(String.valueOf(TextUtils.toTitleCase(type.getName())))
                 .setStyle(Style.EMPTY.withColor(typeColor)));
@@ -203,18 +204,18 @@ public class TextUtils
         TextColor typeColor1 = TypeColor.fromTypeName(type1.getName());
         TextColor typeColor2 = TypeColor.fromTypeName(type2.getName());
 
-        return Text.literal("Types: ")
+        return Text.literal(ChatStrings.getTypesString())
                 .setStyle(Style.EMPTY.withColor(ChatColors.getTooltipLabelColor()))
             .append(Text.literal(String.valueOf(TextUtils.toTitleCase(type1.getName())))
                 .setStyle(Style.EMPTY.withColor(typeColor1)))
-            .append(Text.literal("/"))
+            .append(Text.literal(ChatStrings.getTypeSeparatorString()))
             .append(Text.literal(String.valueOf(TextUtils.toTitleCase(type2.getName())))
                 .setStyle(Style.EMPTY.withColor(typeColor2)));
     }
 
     public static Text coloredAbilitiesLine(String abilityName, boolean isHidden)
     {
-        MutableText coloredLine = Text.literal("Ability: ")
+        MutableText coloredLine = Text.literal(ChatStrings.getAbilityString())
                 .setStyle(Style.EMPTY.withColor(ChatColors.getTooltipLabelColor()))
             .append(Text.literal(abilityName)
                 .setStyle(Style.EMPTY.withColor(ChatColors.getTooltipValueColor())));
@@ -223,7 +224,7 @@ public class TextUtils
         {
             coloredLine = coloredLine
                 .append(Text.literal(" ("))
-                .append(Text.literal("HA")
+                .append(Text.literal(ChatStrings.getHiddenAbilityString())
                     .setStyle(Style.EMPTY.withColor(ChatColors.getTooltipHiddenAbilityColor())))
                 .append(Text.literal(")"));
         }
@@ -235,7 +236,7 @@ public class TextUtils
     {
         boolean isMinted = !nature.getDisplayName().toString().equals(natureEffective.getDisplayName().toString());
 
-        MutableText coloredLine = Text.literal(isMinted ? "Nature (minted): " : "Nature: ")
+        MutableText coloredLine = Text.literal(isMinted ? ChatStrings.getNatureMintedString() : ChatStrings.getNatureString())
                 .setStyle(Style.EMPTY.withColor(ChatColors.getTooltipLabelColor()))
             .append(Text.translatable(natureEffective.getDisplayName().toString())
                 .setStyle(Style.EMPTY.withColor(ChatColors.getTooltipValueColor())));
@@ -245,13 +246,13 @@ public class TextUtils
             coloredLine = coloredLine
                 .append(Text.literal(" (")
                     .setStyle(Style.EMPTY.withColor(ChatColors.getTooltipLabelColor())))
-                .append(Text.literal("+")
+                .append(Text.literal(ChatStrings.getStatIncreaseString())
                     .setStyle(Style.EMPTY.withColor(ChatColors.getTooltipStatUpColor())))
                 .append(Text.literal(TextUtils.formatStatName(natureEffective.getIncreasedStat().toString()))
                     .setStyle(Style.EMPTY.withColor(ChatColors.getTooltipStatUpColor())))
                 .append(Text.literal("/")
                     .setStyle(Style.EMPTY.withColor(ChatColors.getTooltipLabelColor())))
-                .append(Text.literal("-")
+                .append(Text.literal(ChatStrings.getStatDecreaseString())
                     .setStyle(Style.EMPTY.withColor(ChatColors.getTooltipStatDownColor())))
                 .append(Text.literal(TextUtils.formatStatName(natureEffective.getDecreasedStat().toString()))
                     .setStyle(Style.EMPTY.withColor(ChatColors.getTooltipStatDownColor())))
@@ -264,21 +265,21 @@ public class TextUtils
 
     public static Text coloredIVsLine(IVs ivs)
     {
-        return Text.literal("IVs: ")
+        return Text.literal(ChatStrings.getIVsString())
                 .setStyle(Style.EMPTY.withColor(ChatColors.getTooltipLabelColor()))
             .append(getFormattedIVs(ivs));
     }
 
     public static Text coloredEVsLine(EVs evs)
     {
-        return Text.literal("EVs: ")
+        return Text.literal(ChatStrings.getEVsString())
                 .setStyle(Style.EMPTY.withColor(ChatColors.getTooltipLabelColor()))
             .append(getFormattedEVs(evs));
     }
 
     public static Text coloredMovesLine(List<Move> moves) 
     {
-        MutableText coloredLine = Text.literal("Moves: ")
+        MutableText coloredLine = Text.literal(ChatStrings.getMovesString())
                 .setStyle(Style.EMPTY.withColor(ChatColors.getTooltipLabelColor()));
 
         for (int i = 0; i < moves.size(); i++) 
@@ -293,7 +294,7 @@ public class TextUtils
             if (i < moves.size() - 1) 
             {
                 coloredLine = coloredLine
-                    .append(Text.literal(", ")
+                    .append(Text.literal(ChatStrings.getMoveSeparatorString())
                         .setStyle(Style.EMPTY.withColor(ChatColors.getTooltipValueColor())));
             }
         }
@@ -304,31 +305,31 @@ public class TextUtils
     public static Text coloredGenderLine(Gender gender) 
     {
         TextColor genderColor;
-        char genderChar;
+        String genderSymbol;
         switch (gender) 
         {
             case MALE:
                 genderColor = ChatColors.getTooltipMaleColor();
-                genderChar = '♂';
+                genderSymbol = ChatStrings.getMaleIconString();
                 break;
             case FEMALE:
                 genderColor = ChatColors.getTooltipFemaleColor();
-                genderChar = '♀';
+                genderSymbol = ChatStrings.getFemaleIconString();
                 break;
             default:
                 genderColor = ChatColors.getTooltipGenderlessColor();
-                genderChar = '⚲';
+                genderSymbol = ChatStrings.getGenderlessIconString();
         }
 
-        return Text.literal("Gender: ")
+        return Text.literal(ChatStrings.getGenderString())
                 .setStyle(Style.EMPTY.withColor(ChatColors.getTooltipLabelColor()))
-            .append(Text.literal("%c %s".formatted(genderChar, TextUtils.toTitleCase(gender.name())))
+            .append(Text.literal("%s %s".formatted(genderSymbol, TextUtils.toTitleCase(gender.name())))
                 .setStyle(Style.EMPTY.withColor(genderColor)));
     }
 
     public static Text coloredFriendshipLine(int happiness)
     {
-        return Text.literal("Friendship: ")
+        return Text.literal(ChatStrings.getFriendshipString())
                 .setStyle(Style.EMPTY.withColor(ChatColors.getTooltipLabelColor()))
             .append(Text.literal(Integer.toString(happiness))
                 .setStyle(Style.EMPTY.withColor(ChatColors.getTooltipValueColor())));
@@ -336,15 +337,15 @@ public class TextUtils
 
     public static Text coloredHeldItemLine(ItemStack heldItem)
     {
-        return Text.literal("Held Item: ")
+        return Text.literal(ChatStrings.getHeldItemString())
                 .setStyle(Style.EMPTY.withColor(ChatColors.getTooltipLabelColor()))
-            .append(Text.literal(heldItem.isEmpty() ? "None" : heldItem.getName().getString())
+            .append(Text.literal(heldItem.isEmpty() ? ChatStrings.getEmptyHeldItemString() : heldItem.getName().getString())
                 .setStyle(Style.EMPTY.withColor(ChatColors.getTooltipValueColor())));
     }
 
     public static Text coloredCaughtBallLine(PokeBall caughtBall)
     {
-        return Text.literal("Caught Ball: ")
+        return Text.literal(ChatStrings.getCaughtBallString())
                 .setStyle(Style.EMPTY.withColor(ChatColors.getTooltipLabelColor()))
             .append(Text.literal(caughtBall.item.getName().getString())
                 .setStyle(Style.EMPTY.withColor(ChatColors.getTooltipValueColor())));
@@ -352,7 +353,7 @@ public class TextUtils
 
     public static Text coloredSizeLine(float scaleModifier)
     {
-        return Text.literal("Size: ")
+        return Text.literal(ChatStrings.getSizeString())
                 .setStyle(Style.EMPTY.withColor(ChatColors.getTooltipLabelColor()))
             .append(Text.literal(CobblemonUtils.SizeCategory.fromSize(scaleModifier).toString())
                 .setStyle(Style.EMPTY.withColor(ChatColors.getTooltipValueColor())));
@@ -361,7 +362,7 @@ public class TextUtils
     public static Text coloredEggGroupsLine(Set<EggGroup> eggGroups)
     {
         MutableText coloredLine =
-            Text.literal("Egg Groups: ")
+            Text.literal(ChatStrings.getEggGroupsString())
                 .setStyle(Style.EMPTY.withColor(ChatColors.getTooltipLabelColor()));
 
         int i = 0;
@@ -374,7 +375,7 @@ public class TextUtils
             if (i < eggGroups.size() - 1) 
             {
                 coloredLine = coloredLine
-                    .append(Text.literal(", ")
+                    .append(Text.literal(ChatStrings.getEggGroupsSeparatorString())
                         .setStyle(Style.EMPTY.withColor(ChatColors.getTooltipValueColor())));
             }
             i++;
@@ -387,15 +388,15 @@ public class TextUtils
     {
         boolean isNeutered = NeoDaycareUtils.isNeutered(pokemon);
 
-        return Text.literal("Neutered: ")
+        return Text.literal(ChatStrings.getNeuteredString())
                 .setStyle(Style.EMPTY.withColor(ChatColors.getTooltipLabelColor()))
-            .append(Text.literal(isNeutered ? "True" : "False")
+            .append(Text.literal(isNeutered ? ChatStrings.getTrueString() : ChatStrings.getFalseString())
                 .setStyle(Style.EMPTY.withColor(isNeutered ? ChatColors.getTooltipTrueColor() : ChatColors.getTooltipFalseColor())));
     }
 
     public static Text coloredOTLine(String playerName)
     {
-        return Text.literal("Original Trainer: ")
+        return Text.literal(ChatStrings.getOriginalTrainerString())
                 .setStyle(Style.EMPTY.withColor(ChatColors.getTooltipLabelColor()))
             .append(Text.literal(playerName)
                 .setStyle(Style.EMPTY.withColor(ChatColors.getTooltipValueColor())));
@@ -437,7 +438,7 @@ public class TextUtils
     {
         MutableText hoverableText = Text.literal("[")
                 .setStyle(Style.EMPTY.withColor(isShiny ? ChatColors.getHoverableBracketShinyColor() : ChatColors.getHoverableBracketColor()))
-            .append(Text.literal("%s%s".formatted(isShiny ? "★ " : "", speciesName))
+            .append(Text.literal("%s%s".formatted(isShiny ? ChatStrings.getShinyIconString() : "", speciesName))
                 .setStyle(Style.EMPTY.withColor(isShiny ? ChatColors.getHoverableTextShinyColor() : ChatColors.getHoverableTextColor())))
             .append(Text.literal("]")
                 .setStyle(Style.EMPTY.withColor(isShiny ? ChatColors.getHoverableBracketShinyColor() : ChatColors.getHoverableBracketColor())));
