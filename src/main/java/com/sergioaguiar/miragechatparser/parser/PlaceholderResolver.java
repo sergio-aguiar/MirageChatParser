@@ -130,7 +130,7 @@ public class PlaceholderResolver
                     : TextUtils.coloredDualtypeLine(types.get(0), types.get(1))
             )
             .append(Text.literal("\n"))
-            .append(TextUtils.coloredAbilitiesLine(Text.translatable(pokemon.getAbility().getDisplayName()).getString(), CobblemonUtils.hasHiddenAbility(pokemon) == 1 ? true : false))
+            .append(TextUtils.coloredAbilitiesLine(Text.translatable(pokemon.getAbility().getDisplayName()).getString(), CobblemonUtils.hasHiddenAbility(pokemon)))
             .append(Text.literal("\n"))
             .append(TextUtils.coloredNatureLine(nature, natureEffective))
             .append(Text.literal("\n"))

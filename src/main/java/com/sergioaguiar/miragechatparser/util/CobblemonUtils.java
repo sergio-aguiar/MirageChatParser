@@ -55,10 +55,9 @@ public class CobblemonUtils
         }
     }
 
-    public static int hasHiddenAbility(Pokemon pokemon)
+    public static boolean hasHiddenAbility(Pokemon pokemon)
     {
-        if (pokemon == null) return -1;
-        if (pokemon.getAbility().getForced()) return 2;
+        if (pokemon == null) return false;
 
         HashSet<String> uniqueAbilities = new HashSet<>();
         boolean isHidden = false;
@@ -69,6 +68,13 @@ public class CobblemonUtils
             if (ability.getType() == HiddenAbilityType.INSTANCE && ability.getTemplate() == pokemon.getAbility().getTemplate()) isHidden = true;
         }
 
-        return isHidden && uniqueAbilities.size() > 1 ? 1 : 0;
+        return isHidden && uniqueAbilities.size() > 1 ? true : false;
+    }
+
+    public static boolean hasForcedAbility(Pokemon pokemon)
+    {
+        if (pokemon == null) return false;
+        if (pokemon.getAbility().getForced()) return true;
+        return false;
     }
 }
