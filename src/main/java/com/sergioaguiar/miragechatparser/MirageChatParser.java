@@ -2,6 +2,7 @@ package com.sergioaguiar.miragechatparser;
 
 import net.fabricmc.api.ModInitializer;
 
+import com.sergioaguiar.miragechatparser.command.DebugShoutCommand;
 import com.sergioaguiar.miragechatparser.command.PCShoutCommand;
 import com.sergioaguiar.miragechatparser.command.PartyShoutAllCommand;
 import com.sergioaguiar.miragechatparser.command.PartyShoutCommand;
@@ -42,5 +43,6 @@ public class MirageChatParser implements ModInitializer
 		PartyShoutCommand.register();
 		PartyShoutAllCommand.register();
 		PCShoutCommand.register();
+		DebugShoutCommand.register();
 	}
 }

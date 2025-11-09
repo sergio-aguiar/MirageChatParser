@@ -3,12 +3,14 @@ package com.sergioaguiar.miragechatparser.parser;
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 import java.util.stream.Collectors;
 import java.util.stream.StreamSupport;
 
 import com.cobblemon.mod.common.Cobblemon;
 import com.cobblemon.mod.common.api.moves.Move;
 import com.cobblemon.mod.common.api.pokemon.egg.EggGroup;
+import com.cobblemon.mod.common.api.pokemon.feature.SpeciesFeature;
 import com.cobblemon.mod.common.api.storage.party.PlayerPartyStore;
 import com.cobblemon.mod.common.api.storage.pc.PCBox;
 import com.cobblemon.mod.common.api.storage.pc.PCStore;
@@ -101,6 +103,8 @@ public class PlaceholderResolver
     {
         String nickname = pokemon.getDisplayName().getString();
         Species species = pokemon.getSpecies();
+        Set<String> aspects = pokemon.getAspects();
+        List<SpeciesFeature> speciesFeatures = pokemon.getFeatures();
         int level = pokemon.getLevel();
         int nextLevelExperience = pokemon.getExperience() + pokemon.getExperienceToNextLevel();
         List<ElementalType> types = StreamSupport.stream(pokemon.getTypes().spliterator(), false).collect(Collectors.toUnmodifiableList());
@@ -120,7 +124,7 @@ public class PlaceholderResolver
                         : TextUtils.gradientBetweenTypes(nickname, types.get(0), types.get(1)))
                         .append(Text.literal("\n"))
                 : Text.literal(""))
-            .append(TextUtils.coloredSpeciesLine(species.getName(), TextUtils.toTitleCase(pokemon.getForm().getName())))
+            .append(TextUtils.coloredSpeciesLine(pokemon, TextUtils.toTitleCase(pokemon.getForm().getName()), aspects, speciesFeatures))
             .append(Text.literal("\n"))
             .append(TextUtils.coloredLevelLine(level, pokemon.getExperience(), nextLevelExperience))
             .append(Text.literal("\n"))

@@ -6,6 +6,11 @@ import java.util.regex.Pattern;
 
 import com.cobblemon.mod.common.api.moves.Move;
 import com.cobblemon.mod.common.api.pokemon.egg.EggGroup;
+import com.cobblemon.mod.common.api.pokemon.feature.ChoiceSpeciesFeatureProvider;
+import com.cobblemon.mod.common.api.pokemon.feature.FlagSpeciesFeatureProvider;
+import com.cobblemon.mod.common.api.pokemon.feature.SpeciesFeature;
+import com.cobblemon.mod.common.api.pokemon.feature.SpeciesFeatureProvider;
+import com.cobblemon.mod.common.api.pokemon.feature.SpeciesFeatures;
 import com.cobblemon.mod.common.api.pokemon.stats.Stats;
 import com.cobblemon.mod.common.api.types.ElementalType;
 import com.cobblemon.mod.common.pokeball.PokeBall;
@@ -14,6 +19,7 @@ import com.cobblemon.mod.common.pokemon.Gender;
 import com.cobblemon.mod.common.pokemon.IVs;
 import com.cobblemon.mod.common.pokemon.Nature;
 import com.cobblemon.mod.common.pokemon.Pokemon;
+import com.cobblemon.mod.common.pokemon.Species;
 import com.sergioaguiar.miragechatparser.config.colors.ChatColors;
 import com.sergioaguiar.miragechatparser.config.colors.ChatColors.TypeColor;
 import com.sergioaguiar.miragechatparser.config.settings.ChatSettings;
@@ -31,7 +37,7 @@ public class TextUtils
     public static final Pattern PLACEHOLDER_PATTERN = Pattern.compile("\\[(.*?)\\]");
     public static final String IV_AND_EV_STRING_FORMAT = "%.2f%% (%d/%d/%d/%d/%d/%d)";
 
-    private static final String NORMAL_FORM_STRING = "Normal";
+    public static final String NORMAL_FORM_STRING = "Normal";
 
     public static Text getFormattedIVs(IVs ivs) 
     {
@@ -158,14 +164,41 @@ public class TextUtils
         return toTitleCase(lastPart);
     }
 
-    public static Text coloredSpeciesLine(String speciesName, String formName)
+    public static Text coloredSpeciesLine(Pokemon pokemon, String formName, Set<String> aspects, List<SpeciesFeature> speciesFeatures)
     {
+        Species species = pokemon.getSpecies();
+
         MutableText coloredLine = Text.literal(ChatStrings.getSpeciesString())
                 .setStyle(Style.EMPTY.withColor(ChatColors.getTooltipLabelColor()))
-            .append(Text.literal(speciesName)
+            .append(Text.literal(pokemon.getSpecies().getName())
                 .setStyle(Style.EMPTY.withColor(ChatColors.getTooltipValueColor())));;
 
-        if (!formName.equals(NORMAL_FORM_STRING) || ChatSettings.showFormIfNormal())
+        boolean isFormNormal = formName.equals(NORMAL_FORM_STRING);
+
+        if (isFormNormal && !speciesFeatures.isEmpty())
+        {
+            for (SpeciesFeatureProvider<?> speciesFeatureProvider : SpeciesFeatures.INSTANCE.getFeaturesFor(species))
+            {
+                String featureValue;
+
+                if (speciesFeatureProvider instanceof ChoiceSpeciesFeatureProvider choiceSpeciesFeatureProvider)
+                {
+                    featureValue = choiceSpeciesFeatureProvider.get(pokemon).getValue();
+                }
+                else if (speciesFeatureProvider instanceof FlagSpeciesFeatureProvider flagSpeciesFeatureProvider)
+                {
+                    featureValue = flagSpeciesFeatureProvider.get(pokemon).getName();
+                }
+                else continue;
+
+                coloredLine = coloredLine
+                    .append(Text.literal(" ("))
+                    .append(Text.literal(TextUtils.toTitleCase(featureValue))
+                        .setStyle(Style.EMPTY.withColor(ChatColors.getTooltipFormColor())))
+                    .append(Text.literal(")"));
+            }
+        }
+        else if (!isFormNormal || ChatSettings.showFormIfNormal())
         {
             coloredLine = coloredLine
                 .append(Text.literal(" ("))
@@ -174,8 +207,7 @@ public class TextUtils
                 .append(Text.literal(")"));
         }
 
-        return coloredLine;
-            
+        return coloredLine; 
     }
 
     public static Text coloredLevelLine(int level, int currentExperience, int targetExperience)
