@@ -71,6 +71,8 @@ public class ChatAspects
         displayedAspects = new HashMap<>();
     }
 
+    protected static void resetDisplayedAspects() { displayedAspects.clear(); }
+
     public static boolean isSpeciesFeatureIgnored(String speciesFeature) { return ignoredSpeciesFeatures.contains(speciesFeature); }
     public static boolean shouldDisplayAspect(String aspect) { return displayedAspects.containsKey(aspect); }
     public static int getDisplayedAspectsCount() { return displayedAspects.size(); }

@@ -43,6 +43,8 @@ public class ChatAspectsConfig
         {
             config.load();
 
+            ChatAspects.resetDisplayedAspects();
+
             if (config.contains("Aspect"))
             {
                 CommentedConfig aspects = config.get("Aspect");
