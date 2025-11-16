@@ -101,8 +101,9 @@ public class PlaceholderResolver
 
     private static Text buildPokemonText(Pokemon pokemon) 
     {
-        String nickname = pokemon.getDisplayName().getString();
         Species species = pokemon.getSpecies();
+        String nickname = (pokemon.getNickname() == null || pokemon.getNickname().getLiteralString() == null) 
+            ? species.getName() : pokemon.getNickname().getLiteralString();
         Set<String> aspects = pokemon.getAspects();
         List<SpeciesFeature> speciesFeatures = pokemon.getFeatures();
         int level = pokemon.getLevel();
