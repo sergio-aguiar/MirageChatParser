@@ -2,6 +2,7 @@ package com.sergioaguiar.miragechatparser.command;
 
 import com.mojang.brigadier.context.CommandContext;
 import com.mojang.brigadier.exceptions.CommandSyntaxException;
+import com.sergioaguiar.miragechatparser.config.aspects.ChatAspectsConfig;
 import com.sergioaguiar.miragechatparser.config.colors.ChatColors;
 import com.sergioaguiar.miragechatparser.config.colors.ChatColorsConfig;
 import com.sergioaguiar.miragechatparser.config.settings.ChatSettingsConfig;
@@ -87,6 +88,25 @@ public class ReloadCommand
         {
             context.getSource().sendError(Text.literal("MirageChatParser » Failed to reload color configuration: %s".formatted(e.getMessage())));
             ModLogger.error("Error reloading color config: %s".formatted(e.getMessage()));
+            return 1;
+        }
+
+        try
+        {
+            ChatAspectsConfig.load();
+            context.getSource().sendFeedback(() -> 
+                Text.literal("MirageChatParser » ")
+                    .setStyle(Style.EMPTY.withColor(ChatColors.getCommandPrefixColor()))
+                .append(Text.literal("Reloaded chat aspect configuration.")
+                    .setStyle(Style.EMPTY.withColor(ChatColors.getCommandValueColor()))),
+                true
+            );
+            ModLogger.info("Chat aspect configuration reloaded successfully.");
+        }
+        catch (Exception e)
+        {
+            context.getSource().sendError(Text.literal("MirageChatParser » Failed to reload aspect configuration: %s".formatted(e.getMessage())));
+            ModLogger.error("Error reloading aspect config: %s".formatted(e.getMessage()));
             return 1;
         }
 

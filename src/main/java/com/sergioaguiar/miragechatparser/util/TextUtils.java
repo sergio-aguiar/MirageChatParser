@@ -1,16 +1,14 @@
 package com.sergioaguiar.miragechatparser.util;
 
+import java.util.LinkedList;
 import java.util.List;
 import java.util.Set;
 import java.util.regex.Pattern;
 
 import com.cobblemon.mod.common.api.moves.Move;
 import com.cobblemon.mod.common.api.pokemon.egg.EggGroup;
-import com.cobblemon.mod.common.api.pokemon.feature.ChoiceSpeciesFeatureProvider;
-import com.cobblemon.mod.common.api.pokemon.feature.FlagSpeciesFeatureProvider;
 import com.cobblemon.mod.common.api.pokemon.feature.SpeciesFeature;
-import com.cobblemon.mod.common.api.pokemon.feature.SpeciesFeatureProvider;
-import com.cobblemon.mod.common.api.pokemon.feature.SpeciesFeatures;
+import com.cobblemon.mod.common.api.pokemon.feature.StringSpeciesFeature;
 import com.cobblemon.mod.common.api.pokemon.stats.Stats;
 import com.cobblemon.mod.common.api.types.ElementalType;
 import com.cobblemon.mod.common.pokeball.PokeBall;
@@ -19,7 +17,7 @@ import com.cobblemon.mod.common.pokemon.Gender;
 import com.cobblemon.mod.common.pokemon.IVs;
 import com.cobblemon.mod.common.pokemon.Nature;
 import com.cobblemon.mod.common.pokemon.Pokemon;
-import com.cobblemon.mod.common.pokemon.Species;
+import com.sergioaguiar.miragechatparser.config.aspects.ChatAspects;
 import com.sergioaguiar.miragechatparser.config.colors.ChatColors;
 import com.sergioaguiar.miragechatparser.config.colors.ChatColors.TypeColor;
 import com.sergioaguiar.miragechatparser.config.settings.ChatSettings;
@@ -139,6 +137,13 @@ public class TextUtils
         return sb.toString().trim();
     }
 
+    public static String toTitleCaseWithDelimiters(String input) {
+        if (input == null || input.isEmpty()) return input;
+
+        input = input.replace('-', ' ').replace('_', ' ');
+        return toTitleCase(input);
+    }
+
     public static String formatStatName(String stat)
     {
         return switch (stat.toUpperCase()) 
@@ -166,8 +171,6 @@ public class TextUtils
 
     public static Text coloredSpeciesLine(Pokemon pokemon, String formName, Set<String> aspects, List<SpeciesFeature> speciesFeatures)
     {
-        Species species = pokemon.getSpecies();
-
         MutableText coloredLine = Text.literal(ChatStrings.getSpeciesString())
                 .setStyle(Style.EMPTY.withColor(ChatColors.getTooltipLabelColor()))
             .append(Text.literal(pokemon.getSpecies().getName())
@@ -175,36 +178,74 @@ public class TextUtils
 
         boolean isFormNormal = formName.equals(NORMAL_FORM_STRING);
 
-        if (isFormNormal && !speciesFeatures.isEmpty())
-        {
-            for (SpeciesFeatureProvider<?> speciesFeatureProvider : SpeciesFeatures.INSTANCE.getFeaturesFor(species))
-            {
-                String featureValue;
+        List<StringSpeciesFeature> allowedSpeciesFeatures = new LinkedList<>();
 
-                if (speciesFeatureProvider instanceof ChoiceSpeciesFeatureProvider choiceSpeciesFeatureProvider)
+        for (SpeciesFeature feature : speciesFeatures)
+        {
+            if (feature instanceof StringSpeciesFeature stringSpeciesFeature)
+            {
+                if (ChatAspects.isSpeciesFeatureIgnored(stringSpeciesFeature.getName())) continue;
+                allowedSpeciesFeatures.add(stringSpeciesFeature);
+            }
+        }
+
+        if (!isFormNormal || ChatSettings.showFormIfNormal())
+        {
+            coloredLine = coloredLine
+                .append(Text.literal(" ("))
+                .append(Text.literal(toTitleCaseWithDelimiters(formName))
+                    .setStyle(Style.EMPTY.withColor(ChatColors.getTooltipFormColor())))
+                .append(Text.literal(")"));
+        }
+
+        if (isFormNormal && !allowedSpeciesFeatures.isEmpty())
+        {
+            for (StringSpeciesFeature stringFeature : allowedSpeciesFeatures)
+            {
+                if (stringFeature == null) continue;
+
+                String featureKey = stringFeature.getName();
+                String featureValue = stringFeature.getValue();
+
+                if (featureKey.equals(ChatAspects.SPECIES_FEATURE_MOOSHTANK_STRING) && featureValue.equals(ChatAspects.SPECIES_FEATURE_MOOSHTANK_FALSE_STRING))
                 {
-                    featureValue = choiceSpeciesFeatureProvider.get(pokemon).getValue();
+                    continue;
                 }
-                else if (speciesFeatureProvider instanceof FlagSpeciesFeatureProvider flagSpeciesFeatureProvider)
+                else if (featureKey.equals(ChatAspects.SPECIES_FEATURE_NETHERITE_COATING_STRING))
                 {
-                    featureValue = flagSpeciesFeatureProvider.get(pokemon).getName();
+                    if (featureValue.equals(ChatAspects.SPECIES_FEATURE_NETHERITE_COATING_NONE_STRING)) continue;
+                    else featureValue += ChatAspects.SPECIES_FEATURE_NETHERITE_COATING_APPEND_STRING;
                 }
-                else continue;
+                else if (featureKey.equals(ChatAspects.SPECIES_FEATURE_REGION_BIAS_STRING))
+                {
+                    featureValue += ChatAspects.SPECIES_FEATURE_REGION_BIAS_APPEND_STRING;
+                }
+                else if (featureKey.equals(ChatAspects.SPECIES_FEATURE_TREE_STRING) && featureValue.equals(ChatAspects.SPECIES_FEATURE_TREE_NONE_STRING))
+                {
+                    continue;
+                }
 
                 coloredLine = coloredLine
                     .append(Text.literal(" ("))
-                    .append(Text.literal(TextUtils.toTitleCase(featureValue))
+                    .append(Text.literal(toTitleCaseWithDelimiters(featureValue))
                         .setStyle(Style.EMPTY.withColor(ChatColors.getTooltipFormColor())))
                     .append(Text.literal(")"));
             }
         }
-        else if (!isFormNormal || ChatSettings.showFormIfNormal())
+
+        if (ChatAspects.getDisplayedAspectsCount() > 0)
         {
-            coloredLine = coloredLine
-                .append(Text.literal(" ("))
-                .append(Text.literal(formName)
-                    .setStyle(Style.EMPTY.withColor(ChatColors.getTooltipFormColor())))
-                .append(Text.literal(")"));
+            for (String aspect : aspects)
+            {
+                if (ChatAspects.shouldDisplayAspect(aspect))
+                {
+                    coloredLine = coloredLine
+                        .append(Text.literal(" ("))
+                        .append(Text.literal(ChatAspects.getAspectFriendlyName(aspect))
+                            .setStyle(Style.EMPTY.withColor(ChatColors.getTooltipFormColor())))
+                        .append(Text.literal(")"));
+                }
+            }
         }
 
         return coloredLine; 
@@ -238,7 +279,7 @@ public class TextUtils
 
         return Text.literal(ChatStrings.getTypeString())
                 .setStyle(Style.EMPTY.withColor(ChatColors.getTooltipLabelColor()))
-            .append(Text.literal(String.valueOf(TextUtils.toTitleCase(type.getName())))
+            .append(Text.literal(String.valueOf(toTitleCase(type.getName())))
                 .setStyle(Style.EMPTY.withColor(typeColor)));
     }
 
@@ -249,10 +290,10 @@ public class TextUtils
 
         return Text.literal(ChatStrings.getTypesString())
                 .setStyle(Style.EMPTY.withColor(ChatColors.getTooltipLabelColor()))
-            .append(Text.literal(String.valueOf(TextUtils.toTitleCase(type1.getName())))
+            .append(Text.literal(String.valueOf(toTitleCase(type1.getName())))
                 .setStyle(Style.EMPTY.withColor(typeColor1)))
             .append(Text.literal(ChatStrings.getTypeSeparatorString()))
-            .append(Text.literal(String.valueOf(TextUtils.toTitleCase(type2.getName())))
+            .append(Text.literal(String.valueOf(toTitleCase(type2.getName())))
                 .setStyle(Style.EMPTY.withColor(typeColor2)));
     }
 
@@ -291,13 +332,13 @@ public class TextUtils
                     .setStyle(Style.EMPTY.withColor(ChatColors.getTooltipLabelColor())))
                 .append(Text.literal(ChatStrings.getStatIncreaseString())
                     .setStyle(Style.EMPTY.withColor(ChatColors.getTooltipStatUpColor())))
-                .append(Text.literal(TextUtils.formatStatName(natureEffective.getIncreasedStat().toString()))
+                .append(Text.literal(formatStatName(natureEffective.getIncreasedStat().toString()))
                     .setStyle(Style.EMPTY.withColor(ChatColors.getTooltipStatUpColor())))
                 .append(Text.literal("/")
                     .setStyle(Style.EMPTY.withColor(ChatColors.getTooltipLabelColor())))
                 .append(Text.literal(ChatStrings.getStatDecreaseString())
                     .setStyle(Style.EMPTY.withColor(ChatColors.getTooltipStatDownColor())))
-                .append(Text.literal(TextUtils.formatStatName(natureEffective.getDecreasedStat().toString()))
+                .append(Text.literal(formatStatName(natureEffective.getDecreasedStat().toString()))
                     .setStyle(Style.EMPTY.withColor(ChatColors.getTooltipStatDownColor())))
                 .append(Text.literal(")")
                     .setStyle(Style.EMPTY.withColor(ChatColors.getTooltipLabelColor())));
@@ -366,7 +407,7 @@ public class TextUtils
 
         return Text.literal(ChatStrings.getGenderString())
                 .setStyle(Style.EMPTY.withColor(ChatColors.getTooltipLabelColor()))
-            .append(Text.literal("%s %s".formatted(genderSymbol, TextUtils.toTitleCase(gender.name())))
+            .append(Text.literal("%s %s".formatted(genderSymbol, toTitleCase(gender.name())))
                 .setStyle(Style.EMPTY.withColor(genderColor)));
     }
 
@@ -412,7 +453,7 @@ public class TextUtils
         for (EggGroup eggGroup : eggGroups)
         {
             coloredLine = coloredLine
-                .append(Text.literal(TextUtils.toTitleCase(eggGroup.name().replace("_", " ")))
+                .append(Text.literal(toTitleCase(eggGroup.name().replace("_", " ")))
                     .setStyle(Style.EMPTY.withColor(ChatColors.getTooltipValueColor())));
 
             if (i < eggGroups.size() - 1) 

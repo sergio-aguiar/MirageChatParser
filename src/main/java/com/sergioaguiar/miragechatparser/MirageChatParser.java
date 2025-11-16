@@ -3,10 +3,13 @@ package com.sergioaguiar.miragechatparser;
 import net.fabricmc.api.ModInitializer;
 
 import com.sergioaguiar.miragechatparser.command.DebugShoutCommand;
+import com.sergioaguiar.miragechatparser.command.InfoCommand;
 import com.sergioaguiar.miragechatparser.command.PCShoutCommand;
 import com.sergioaguiar.miragechatparser.command.PartyShoutAllCommand;
 import com.sergioaguiar.miragechatparser.command.PartyShoutCommand;
 import com.sergioaguiar.miragechatparser.command.ReloadCommand;
+import com.sergioaguiar.miragechatparser.config.aspects.ChatAspects;
+import com.sergioaguiar.miragechatparser.config.aspects.ChatAspectsConfig;
 import com.sergioaguiar.miragechatparser.config.colors.ChatColors;
 import com.sergioaguiar.miragechatparser.config.colors.ChatColorsConfig;
 import com.sergioaguiar.miragechatparser.config.settings.ChatSettings;
@@ -29,11 +32,13 @@ public class MirageChatParser implements ModInitializer
 		ChatSettings.setDefaults();
 		ChatStrings.setDefaults();
 		ChatColors.setDefaults();
+		ChatAspects.setDefaults();
 
 		// Config handling (config file overrides)
 		ChatSettingsConfig.load();
 		ChatStringsConfig.load();
 		ChatColorsConfig.load();
+		ChatAspectsConfig.load();
 
 		// Event registering
 		ChatMessageHandler.register();
@@ -44,5 +49,6 @@ public class MirageChatParser implements ModInitializer
 		PartyShoutAllCommand.register();
 		PCShoutCommand.register();
 		DebugShoutCommand.register();
+		InfoCommand.register();
 	}
 }
