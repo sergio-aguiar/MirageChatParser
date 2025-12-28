@@ -117,66 +117,167 @@ public class PlaceholderResolver
         HashSet<EggGroup> eggGroups = species.getEggGroups();
         ItemStack heldItem = pokemon.getHeldItem$common();
 
-        MutableText tooltip = 
-            (ChatSettings.showNickname() 
-                ? (types.size() == 1 
-                        ? Text.literal(nickname)
-                            .setStyle(Style.EMPTY.withColor(ChatColors.TypeColor.fromTypeName(types.get(0).getName()))) 
-                        : TextUtils.gradientBetweenTypes(nickname, types.get(0), types.get(1)))
-                        .append(Text.literal("\n"))
-                : Text.literal(""))
-            .append(TextUtils.coloredSpeciesLine(pokemon, TextUtils.toTitleCase(pokemon.getForm().getName()), aspects, speciesFeatures))
-            .append(Text.literal("\n"))
-            .append(TextUtils.coloredLevelLine(level, pokemon.getExperience(), nextLevelExperience))
-            .append(Text.literal("\n"))
-            .append(
-                types.size() == 1 
-                    ? TextUtils.coloredMonotypeLine(types.get(0))
-                    : TextUtils.coloredDualtypeLine(types.get(0), types.get(1))
-            )
-            .append(Text.literal("\n"))
-            .append(TextUtils.coloredAbilitiesLine(Text.translatable(pokemon.getAbility().getDisplayName()).getString(), CobblemonUtils.hasHiddenAbility(pokemon)))
-            .append(Text.literal("\n"))
-            .append(TextUtils.coloredNatureLine(nature, natureEffective))
-            .append(Text.literal("\n"))
-            .append(TextUtils.coloredIVsLine(ivs))
-            .append(Text.literal("\n"))
-            .append(TextUtils.coloredEVsLine(evs))
-            .append(Text.literal("\n"))
-            .append(TextUtils.coloredMovesLine(moves))
-            .append(Text.literal("\n"))
-            .append(TextUtils.coloredGenderLine(pokemon.getGender()))
-            .append(Text.literal("\n"))
-            .append(TextUtils.coloredFriendshipLine(pokemon.getFriendship()))
-            .append(Text.literal("\n"))
-            .append(TextUtils.coloredHeldItemLine(heldItem))
-            .append(Text.literal("\n"))
-            .append(TextUtils.coloredCaughtBallLine(pokemon.getCaughtBall()))
-            .append(Text.literal("\n"))
-            .append(TextUtils.coloredSizeLine(pokemon.getScaleModifier()));
+        MutableText tooltip = Text.literal("");
+        boolean first = true;
 
-            if (ChatSettings.showEggGroups())
+        if (ChatSettings.showNickname())
+        {
+            if (first) first = false;
+            else tooltip = tooltip.append(Text.literal("\n"));
+
+            if (types.size() == 1 )
             {
                 tooltip = tooltip
-                    .append(Text.literal("\n"))
-                    .append(TextUtils.coloredEggGroupsLine(eggGroups));
+                    .append(Text.literal(nickname)
+                        .setStyle(Style.EMPTY.withColor(ChatColors.TypeColor.fromTypeName(types.get(0).getName()))));
             }
+            else
+            {
+                tooltip = tooltip.append(TextUtils.gradientBetweenTypes(nickname, types.get(0), types.get(1)));
+            }
+        }
 
-        if (NeoDaycareUtils.isModLoaded())
+        if (ChatSettings.showSpecies())
         {
+            if (first) first = false;
+            else tooltip = tooltip.append(Text.literal("\n"));
+
+            tooltip = tooltip
+                .append(TextUtils.coloredSpeciesLine(pokemon, TextUtils.toTitleCase(pokemon.getForm().getName()), aspects, speciesFeatures));
+        }
+
+        if (ChatSettings.showLevel())
+        {
+            if (first) first = false;
+            else tooltip = tooltip.append(Text.literal("\n"));
+
+            tooltip = tooltip
+                .append(TextUtils.coloredLevelLine(level, pokemon.getExperience(), nextLevelExperience));
+        }
+
+        if (ChatSettings.showSize())
+        {
+            if (first) first = false;
+            else tooltip = tooltip.append(Text.literal("\n"));
+
+            if (types.size() == 1 )
+            {
+                tooltip = tooltip.append(TextUtils.coloredMonotypeLine(types.get(0)));
+            }
+            else
+            {
+                tooltip = tooltip.append(TextUtils.coloredDualtypeLine(types.get(0), types.get(1)));
+            }
+        }
+
+        if (ChatSettings.showAbilities())
+        {
+            if (first) first = false;
+            else tooltip = tooltip.append(Text.literal("\n"));
+
+            tooltip = tooltip.append(TextUtils.coloredAbilitiesLine(Text.translatable(pokemon.getAbility().getDisplayName()).getString(), CobblemonUtils.hasHiddenAbility(pokemon)));
+        }
+
+        if (ChatSettings.showNature())
+        {
+            if (first) first = false;
+            else tooltip = tooltip.append(Text.literal("\n"));
+
+            tooltip = tooltip.append(TextUtils.coloredNatureLine(nature, natureEffective));
+        }
+
+        if (ChatSettings.showIVs())
+        {
+            if (first) first = false;
+            else tooltip = tooltip.append(Text.literal("\n"));
+
+            tooltip = tooltip.append(TextUtils.coloredIVsLine(ivs));
+        }
+
+        if (ChatSettings.showEVs())
+        {
+            if (first) first = false;
+            else tooltip = tooltip.append(Text.literal("\n"));
+
+            tooltip = tooltip.append(TextUtils.coloredEVsLine(evs));
+        }
+
+        if (ChatSettings.showMoves())
+        {
+            if (first) first = false;
+            else tooltip = tooltip.append(Text.literal("\n"));
+
+            tooltip = tooltip.append(TextUtils.coloredMovesLine(moves));
+        }
+
+        if (ChatSettings.showGender())
+        {
+            if (first) first = false;
+            else tooltip = tooltip.append(Text.literal("\n"));
+
+            tooltip = tooltip.append(TextUtils.coloredGenderLine(pokemon.getGender()));
+        }
+
+        if (ChatSettings.showFriendship())
+        {
+            if (first) first = false;
+            else tooltip = tooltip.append(Text.literal("\n"));
+
+            tooltip = tooltip.append(TextUtils.coloredFriendshipLine(pokemon.getFriendship()));
+        }
+
+        if (ChatSettings.showHeldItem())
+        {
+            if (first) first = false;
+            else tooltip = tooltip.append(Text.literal("\n"));
+
+            tooltip = tooltip.append(TextUtils.coloredHeldItemLine(heldItem));
+        }   
+
+        if (ChatSettings.showBall())
+        {
+            if (first) first = false;
+            else tooltip = tooltip.append(Text.literal("\n"));
+
+            tooltip = tooltip.append(TextUtils.coloredCaughtBallLine(pokemon.getCaughtBall()));
+        }
+
+        if (ChatSettings.showSize())
+        {
+            if (first) first = false;
+            else tooltip = tooltip.append(Text.literal("\n"));
+
+            tooltip = tooltip.append(TextUtils.coloredSizeLine(pokemon.getScaleModifier()));
+        }
+
+        if (ChatSettings.showEggGroups())
+        {
+            if (first) first = false;
+            else tooltip = tooltip.append(Text.literal("\n"));
+
+            tooltip = tooltip.append(TextUtils.coloredEggGroupsLine(eggGroups));
+        }
+
+        if (NeoDaycareUtils.isModLoaded() && ChatSettings.showNeutered())
+        {
+            if (first) first = false;
+            else tooltip = tooltip.append(Text.literal("\n"));
+
             boolean isNeutered = NeoDaycareUtils.isNeutered(pokemon);
 
             if (isNeutered || ChatSettings.showNeuteredIfFalse())
             {
-                tooltip = tooltip
-                    .append(Text.literal("\n"))
-                    .append(TextUtils.coloredNeuterLine(pokemon, isNeutered));
+                tooltip = tooltip.append(TextUtils.coloredNeuterLine(pokemon, isNeutered));
             }
         }
 
-        tooltip = tooltip
-            .append(Text.literal("\n"))
-            .append(TextUtils.coloredOTLine(pokemon.getOriginalTrainerName()));
+        if (ChatSettings.showOT())
+        {
+            if (first) first = false;
+            else tooltip = tooltip.append(Text.literal("\n"));
+
+            tooltip = tooltip.append(TextUtils.coloredOTLine(pokemon.getOriginalTrainerName()));
+        }
 
         return TextUtils.hoverableText(species.getName(), tooltip, pokemon.getShiny());
     }
