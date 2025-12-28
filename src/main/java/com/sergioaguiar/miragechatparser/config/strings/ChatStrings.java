@@ -15,6 +15,7 @@ public class ChatStrings
     private static final String DEFAULT_NATURE_STRING = "Nature: ";
     private static final String DEFAULT_NATURE_MINTED_STRING = "Nature (Mint): ";
     private static final String DEFAULT_IVS_STRING = "IVs: ";
+    private static final String DEFAULT_IVS_HYPER_TRAINED_STRING = "IVs (Hyper Trained): ";
     private static final String DEFAULT_EVS_STRING = "EVs: ";
     private static final String DEFAULT_MOVES_STRING = "Moves: ";
     private static final String DEFAULT_GENDER_STRING = "Gender: ";
@@ -57,6 +58,7 @@ public class ChatStrings
     private static String natureString;
     private static String natureMintedString;
     private static String ivsString;
+    private static String ivsHyperTrainedString;
     private static String evsString;
     private static String movesString;
     private static String genderString;
@@ -101,6 +103,7 @@ public class ChatStrings
         natureString = DEFAULT_NATURE_STRING;
         natureMintedString = DEFAULT_NATURE_MINTED_STRING;
         ivsString = DEFAULT_IVS_STRING;
+        ivsHyperTrainedString = DEFAULT_IVS_HYPER_TRAINED_STRING;
         evsString = DEFAULT_EVS_STRING;
         movesString = DEFAULT_MOVES_STRING;
         genderString = DEFAULT_GENDER_STRING;
@@ -142,6 +145,7 @@ public class ChatStrings
     public static String getNatureString() { return natureString; }
     public static String getNatureMintedString() { return natureMintedString; }
     public static String getIVsString() { return ivsString; }
+    public static String getIVsHyperTrainedString() { return ivsHyperTrainedString; }
     public static String getEVsString() { return evsString; }
     public static String getMovesString() { return movesString; }
     public static String getGenderString() { return genderString; }
@@ -180,6 +184,7 @@ public class ChatStrings
     protected static void setNatureString(String string) { natureString = string; }
     protected static void setNatureMintedString(String string) { natureMintedString = string; }
     protected static void setIVsString(String string) { ivsString = string; }
+    protected static void setIVsHyperTrainedString(String string) { ivsHyperTrainedString = string; }
     protected static void setEVsString(String string) { evsString = string; }
     protected static void setMovesString(String string) { movesString = string; }
     protected static void setGenderString(String string) { genderString = string; }

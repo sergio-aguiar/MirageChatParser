@@ -118,6 +118,13 @@ public class ChatStringsConfig
                     ChatStrings.setIVsString(string);
             }
 
+            if (config.contains("Label.IVsHyperTrained"))
+            {
+                String string = config.get("Label.IVsHyperTrained");
+                if (string != null && !string.isEmpty())
+                    ChatStrings.setIVsHyperTrainedString(string);
+            }
+
             if (config.contains("Label.EVs"))
             {
                 String string = config.get("Label.EVs");
@@ -332,6 +339,7 @@ public class ChatStringsConfig
             Nature = "Nature: "
             NatureMinted = "Nature (Mint): "
             IVs = "IVs: "
+            IVsHyperTrained = "IVs (Hyper Trained): "
             EVs = "EVs: "
             Moves = "Moves: "
             Gender = "Gender: "

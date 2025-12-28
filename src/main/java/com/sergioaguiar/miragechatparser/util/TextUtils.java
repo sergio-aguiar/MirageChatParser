@@ -37,14 +37,14 @@ public class TextUtils
 
     public static final String NORMAL_FORM_STRING = "Normal";
 
-    public static Text getFormattedIVs(IVs ivs) 
+    public static Text getFormattedIVs(IVs ivs, boolean effective) 
     {
-        int hp = ivs.get(Stats.HP);
-        int atk = ivs.get(Stats.ATTACK);
-        int def = ivs.get(Stats.DEFENCE);
-        int spa = ivs.get(Stats.SPECIAL_ATTACK);
-        int spd = ivs.get(Stats.SPECIAL_DEFENCE);
-        int spe = ivs.get(Stats.SPEED);
+        int hp = effective ? ivs.getEffectiveBattleIV(Stats.HP) : ivs.get(Stats.HP);
+        int atk = effective ? ivs.getEffectiveBattleIV(Stats.ATTACK) : ivs.get(Stats.ATTACK);
+        int def = effective ? ivs.getEffectiveBattleIV(Stats.DEFENCE) : ivs.get(Stats.DEFENCE);
+        int spa = effective ? ivs.getEffectiveBattleIV(Stats.SPECIAL_ATTACK) : ivs.get(Stats.SPECIAL_ATTACK);
+        int spd = effective ? ivs.getEffectiveBattleIV(Stats.SPECIAL_DEFENCE) : ivs.get(Stats.SPECIAL_DEFENCE);
+        int spe = effective ? ivs.getEffectiveBattleIV(Stats.SPEED) : ivs.get(Stats.SPEED);
 
         double total = hp + atk + def + spa + spd + spe;
         double percent = (total / 186.0) * 100.0;
@@ -349,9 +349,12 @@ public class TextUtils
 
     public static Text coloredIVsLine(IVs ivs)
     {
-        return Text.literal(ChatStrings.getIVsString())
-                .setStyle(Style.EMPTY.withColor(ChatColors.getTooltipLabelColor()))
-            .append(getFormattedIVs(ivs));
+        boolean isHyperTrained = CobblemonUtils.isHyperTrained(ivs);
+
+        MutableText coloredLine = Text.literal(isHyperTrained ? ChatStrings.getIVsHyperTrainedString() : ChatStrings.getIVsString())
+                .setStyle(Style.EMPTY.withColor(ChatColors.getTooltipLabelColor()));
+
+        return coloredLine.append(isHyperTrained ? getFormattedIVs(ivs, true) : getFormattedIVs(ivs, false));
     }
 
     public static Text coloredEVsLine(EVs evs)

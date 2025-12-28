@@ -3,6 +3,8 @@ package com.sergioaguiar.miragechatparser.util;
 import java.util.HashSet;
 
 import com.cobblemon.mod.common.api.abilities.PotentialAbility;
+import com.cobblemon.mod.common.api.pokemon.stats.Stats;
+import com.cobblemon.mod.common.pokemon.IVs;
 import com.cobblemon.mod.common.pokemon.Pokemon;
 import com.cobblemon.mod.common.pokemon.abilities.HiddenAbilityType;
 
@@ -75,6 +77,17 @@ public class CobblemonUtils
     {
         if (pokemon == null) return false;
         if (pokemon.getAbility().getForced()) return true;
+        return false;
+    }
+
+    public static boolean isHyperTrained(IVs ivs)
+    {
+        if (ivs.get(Stats.HP) != ivs.getEffectiveBattleIV(Stats.HP)) return true;
+        if (ivs.get(Stats.ATTACK) != ivs.getEffectiveBattleIV(Stats.ATTACK)) return true;
+        if (ivs.get(Stats.DEFENCE) != ivs.getEffectiveBattleIV(Stats.DEFENCE)) return true;
+        if (ivs.get(Stats.SPECIAL_ATTACK) != ivs.getEffectiveBattleIV(Stats.SPECIAL_ATTACK)) return true;
+        if (ivs.get(Stats.SPECIAL_DEFENCE) != ivs.getEffectiveBattleIV(Stats.SPECIAL_DEFENCE)) return true;
+        if (ivs.get(Stats.SPEED) != ivs.getEffectiveBattleIV(Stats.SPEED)) return true;
         return false;
     }
 }
