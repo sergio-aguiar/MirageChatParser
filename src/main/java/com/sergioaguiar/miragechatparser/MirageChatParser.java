@@ -14,6 +14,8 @@ import com.sergioaguiar.miragechatparser.config.colors.ChatColors;
 import com.sergioaguiar.miragechatparser.config.colors.ChatColorsConfig;
 import com.sergioaguiar.miragechatparser.config.settings.ChatSettings;
 import com.sergioaguiar.miragechatparser.config.settings.ChatSettingsConfig;
+import com.sergioaguiar.miragechatparser.config.sizes.ChatSizes;
+import com.sergioaguiar.miragechatparser.config.sizes.ChatSizesConfig;
 import com.sergioaguiar.miragechatparser.config.strings.ChatStrings;
 import com.sergioaguiar.miragechatparser.config.strings.ChatStringsConfig;
 import com.sergioaguiar.miragechatparser.event.ChatMessageHandler;
@@ -33,12 +35,14 @@ public class MirageChatParser implements ModInitializer
 		ChatStrings.setDefaults();
 		ChatColors.setDefaults();
 		ChatAspects.setDefaults();
+		ChatSizes.setDefaults();
 
 		// Config handling (config file overrides)
 		ChatSettingsConfig.load();
 		ChatStringsConfig.load();
 		ChatColorsConfig.load();
 		ChatAspectsConfig.load();
+		ChatSizesConfig.load();
 
 		// Event registering
 		ChatMessageHandler.register();

@@ -21,6 +21,7 @@ import com.sergioaguiar.miragechatparser.config.aspects.ChatAspects;
 import com.sergioaguiar.miragechatparser.config.colors.ChatColors;
 import com.sergioaguiar.miragechatparser.config.colors.ChatColors.TypeColor;
 import com.sergioaguiar.miragechatparser.config.settings.ChatSettings;
+import com.sergioaguiar.miragechatparser.config.sizes.ChatSizes;
 import com.sergioaguiar.miragechatparser.config.strings.ChatStrings;
 
 import net.minecraft.item.ItemStack;
@@ -439,7 +440,7 @@ public class TextUtils
     {
         return Text.literal(ChatStrings.getSizeString())
                 .setStyle(Style.EMPTY.withColor(ChatColors.getTooltipLabelColor()))
-            .append(Text.literal(CobblemonUtils.SizeCategory.fromSize(scaleModifier).toString())
+            .append(Text.literal(ChatSizes.fromSize(scaleModifier).toString())
                 .setStyle(Style.EMPTY.withColor(ChatColors.getTooltipValueColor())));
     }
 
