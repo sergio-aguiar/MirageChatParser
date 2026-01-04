@@ -44,7 +44,7 @@ public class ReloadCommand
                     .setStyle(Style.EMPTY.withColor(ChatColors.getCommandValueColor()))),
                 true
             );
-            ModLogger.info("Chat color configuration reloaded successfully.");
+            ModLogger.info("Chat setting configuration reloaded successfully.");
         }
         catch (Exception e)
         {
