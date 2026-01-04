@@ -161,6 +161,18 @@ public class ChatSettingsConfig
                 ChatSettings.setShowNeuteredIfFalse(enabled);
             }
 
+            if (config.contains("Tooltip.BoldHyperTrainingValues"))
+            {
+                boolean enabled = config.getOrElse("Tooltip.BoldHyperTrainingValues", ChatSettings.DEFAULT_BOLD_HYPER_TRAINING_VALUES);
+                ChatSettings.setBoldHyperTrainingValues(enabled);
+            }
+
+            if (config.contains("Tooltip.ItalicHyperTrainingValues"))
+            {
+                boolean enabled = config.getOrElse("Tooltip.ItalicHyperTrainingValues", ChatSettings.DEFAULT_ITALIC_HYPER_TRAINING_VALUES);
+                ChatSettings.setItalicHyperTrainingValues(enabled);
+            }
+
             ModLogger.info("Setting configurations successfully loaded from chat_settings.toml.");
         }
         catch (Exception e)
@@ -217,6 +229,10 @@ public class ChatSettingsConfig
             ShowFormIfNormal = true
             # Whether to show a Pokémon's neutered state in hover text when the value is False (true/false)
             ShowNeuteredIfFalse = true
+            # Whether hyper trainer IV stat values should appear in bold (true/false)
+            BoldHyperTrainingValues = true;
+            # Whether hyper trainer IV stat values should appear in italic (true/false)
+            ItalicHyperTrainingValues = false;
             """;
         
         Files.writeString(file.toPath(), defaultContent);

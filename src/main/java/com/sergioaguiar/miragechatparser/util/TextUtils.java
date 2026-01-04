@@ -1,5 +1,6 @@
 package com.sergioaguiar.miragechatparser.util;
 
+import java.util.HashSet;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Set;
@@ -37,7 +38,7 @@ public class TextUtils
 
     public static final String NORMAL_FORM_STRING = "Normal";
 
-    public static Text getFormattedIVs(IVs ivs, boolean effective) 
+    public static Text getFormattedIVs(IVs ivs, Set<Stats> hyperTrainedStats, boolean effective) 
     {
         int hp = effective ? ivs.getEffectiveBattleIV(Stats.HP) : ivs.get(Stats.HP);
         int atk = effective ? ivs.getEffectiveBattleIV(Stats.ATTACK) : ivs.get(Stats.ATTACK);
@@ -52,29 +53,53 @@ public class TextUtils
         return Text.literal(String.format("%.2f%% (", percent))
                 .setStyle(Style.EMPTY.withColor(ChatColors.getTooltipValueColor()))
             .append(Text.literal(String.valueOf(hp))
-                .setStyle(Style.EMPTY.withColor(ChatColors.getTooltipHealthColor())))
-            .append(Text.literal("/"))
-                .setStyle(Style.EMPTY.withColor(ChatColors.getTooltipValueColor()))
+                .setStyle(Style.EMPTY
+                    .withColor(ChatColors.getTooltipHealthColor())
+                    .withBold(hyperTrainedStats.contains(Stats.HP) && ChatSettings.shouldBoldHyperTrainingValues())
+                    .withItalic(hyperTrainedStats.contains(Stats.HP) && ChatSettings.shouldItalicHyperTrainingValues())
+                ))
+            .append(Text.literal("/")
+                .setStyle(Style.EMPTY.withColor(ChatColors.getTooltipValueColor())))
             .append(Text.literal(String.valueOf(atk))
-                .setStyle(Style.EMPTY.withColor(ChatColors.getTooltipAttackColor())))
-            .append(Text.literal("/"))
-                .setStyle(Style.EMPTY.withColor(ChatColors.getTooltipValueColor()))
+                .setStyle(Style.EMPTY
+                    .withColor(ChatColors.getTooltipAttackColor())
+                    .withBold(hyperTrainedStats.contains(Stats.ATTACK) && ChatSettings.shouldBoldHyperTrainingValues())
+                    .withItalic(hyperTrainedStats.contains(Stats.ATTACK) && ChatSettings.shouldItalicHyperTrainingValues())
+                ))
+            .append(Text.literal("/")
+                .setStyle(Style.EMPTY.withColor(ChatColors.getTooltipValueColor())))
             .append(Text.literal(String.valueOf(def))
-                .setStyle(Style.EMPTY.withColor(ChatColors.getTooltipDefenseColor())))
-            .append(Text.literal("/"))
-                .setStyle(Style.EMPTY.withColor(ChatColors.getTooltipValueColor()))
+                .setStyle(Style.EMPTY
+                    .withColor(ChatColors.getTooltipDefenseColor())
+                    .withBold(hyperTrainedStats.contains(Stats.DEFENCE) && ChatSettings.shouldBoldHyperTrainingValues())
+                    .withItalic(hyperTrainedStats.contains(Stats.DEFENCE) && ChatSettings.shouldItalicHyperTrainingValues())
+                ))
+            .append(Text.literal("/")
+                .setStyle(Style.EMPTY.withColor(ChatColors.getTooltipValueColor())))
             .append(Text.literal(String.valueOf(spa))
-                .setStyle(Style.EMPTY.withColor(ChatColors.getTooltipSpAttackColor())))
-            .append(Text.literal("/"))
-                .setStyle(Style.EMPTY.withColor(ChatColors.getTooltipValueColor()))
+                .setStyle(Style.EMPTY
+                    .withColor(ChatColors.getTooltipSpAttackColor())
+                    .withBold(hyperTrainedStats.contains(Stats.SPECIAL_ATTACK) && ChatSettings.shouldBoldHyperTrainingValues())
+                    .withItalic(hyperTrainedStats.contains(Stats.SPECIAL_ATTACK) && ChatSettings.shouldItalicHyperTrainingValues())
+                ))
+            .append(Text.literal("/")
+                .setStyle(Style.EMPTY.withColor(ChatColors.getTooltipValueColor())))
             .append(Text.literal(String.valueOf(spd))
-                .setStyle(Style.EMPTY.withColor(ChatColors.getTooltipSpDefenseColor())))
-            .append(Text.literal("/"))
-                .setStyle(Style.EMPTY.withColor(ChatColors.getTooltipValueColor()))
+                .setStyle(Style.EMPTY
+                    .withColor(ChatColors.getTooltipSpDefenseColor())
+                    .withBold(hyperTrainedStats.contains(Stats.SPECIAL_DEFENCE) && ChatSettings.shouldBoldHyperTrainingValues())
+                    .withItalic(hyperTrainedStats.contains(Stats.SPECIAL_DEFENCE) && ChatSettings.shouldItalicHyperTrainingValues())
+                ))
+            .append(Text.literal("/")
+                .setStyle(Style.EMPTY.withColor(ChatColors.getTooltipValueColor())))
             .append(Text.literal(String.valueOf(spe))
-                .setStyle(Style.EMPTY.withColor(ChatColors.getTooltipSpeedColor())))
-            .append(Text.literal(")"))
-                .setStyle(Style.EMPTY.withColor(ChatColors.getTooltipValueColor()));
+                .setStyle(Style.EMPTY
+                    .withColor(ChatColors.getTooltipSpeedColor())
+                    .withBold(hyperTrainedStats.contains(Stats.SPEED) && ChatSettings.shouldBoldHyperTrainingValues())
+                    .withItalic(hyperTrainedStats.contains(Stats.SPEED) && ChatSettings.shouldItalicHyperTrainingValues())
+                ))
+            .append(Text.literal(")")
+                .setStyle(Style.EMPTY.withColor(ChatColors.getTooltipValueColor())));
     }
 
     public static Text getFormattedEVs(EVs evs) 
@@ -93,28 +118,28 @@ public class TextUtils
                 .setStyle(Style.EMPTY.withColor(ChatColors.getTooltipValueColor()))
             .append(Text.literal(String.valueOf(hp))
                 .setStyle(Style.EMPTY.withColor(ChatColors.getTooltipHealthColor())))
-            .append(Text.literal("/"))
-                .setStyle(Style.EMPTY.withColor(ChatColors.getTooltipValueColor()))
+            .append(Text.literal("/")
+                .setStyle(Style.EMPTY.withColor(ChatColors.getTooltipValueColor())))
             .append(Text.literal(String.valueOf(atk))
                 .setStyle(Style.EMPTY.withColor(ChatColors.getTooltipAttackColor())))
-            .append(Text.literal("/"))
-                .setStyle(Style.EMPTY.withColor(ChatColors.getTooltipValueColor()))
+            .append(Text.literal("/")
+                .setStyle(Style.EMPTY.withColor(ChatColors.getTooltipValueColor())))
             .append(Text.literal(String.valueOf(def))
                 .setStyle(Style.EMPTY.withColor(ChatColors.getTooltipDefenseColor())))
-            .append(Text.literal("/"))
-                .setStyle(Style.EMPTY.withColor(ChatColors.getTooltipValueColor()))
+            .append(Text.literal("/")
+                .setStyle(Style.EMPTY.withColor(ChatColors.getTooltipValueColor())))
             .append(Text.literal(String.valueOf(spa))
                 .setStyle(Style.EMPTY.withColor(ChatColors.getTooltipSpAttackColor())))
-            .append(Text.literal("/"))
-                .setStyle(Style.EMPTY.withColor(ChatColors.getTooltipValueColor()))
+            .append(Text.literal("/")
+                .setStyle(Style.EMPTY.withColor(ChatColors.getTooltipValueColor())))
             .append(Text.literal(String.valueOf(spd))
                 .setStyle(Style.EMPTY.withColor(ChatColors.getTooltipSpDefenseColor())))
-            .append(Text.literal("/"))
-                .setStyle(Style.EMPTY.withColor(ChatColors.getTooltipValueColor()))
+            .append(Text.literal("/")
+                .setStyle(Style.EMPTY.withColor(ChatColors.getTooltipValueColor())))
             .append(Text.literal(String.valueOf(spe))
                 .setStyle(Style.EMPTY.withColor(ChatColors.getTooltipSpeedColor())))
-            .append(Text.literal(")"))
-                .setStyle(Style.EMPTY.withColor(ChatColors.getTooltipValueColor()));
+            .append(Text.literal(")")
+                .setStyle(Style.EMPTY.withColor(ChatColors.getTooltipValueColor())));
     }
 
     public static String toTitleCase(String input)
@@ -174,7 +199,7 @@ public class TextUtils
         MutableText coloredLine = Text.literal(ChatStrings.getSpeciesString())
                 .setStyle(Style.EMPTY.withColor(ChatColors.getTooltipLabelColor()))
             .append(Text.literal(pokemon.getSpecies().getName())
-                .setStyle(Style.EMPTY.withColor(ChatColors.getTooltipValueColor())));;
+                .setStyle(Style.EMPTY.withColor(ChatColors.getTooltipValueColor())));
 
         boolean isFormNormal = formName.equals(NORMAL_FORM_STRING);
 
@@ -349,12 +374,12 @@ public class TextUtils
 
     public static Text coloredIVsLine(IVs ivs)
     {
-        boolean isHyperTrained = CobblemonUtils.isHyperTrained(ivs);
+        Set<Stats> hyperTrainedStats = CobblemonUtils.getHyperTrainedStats(ivs);
 
-        MutableText coloredLine = Text.literal(isHyperTrained ? ChatStrings.getIVsHyperTrainedString() : ChatStrings.getIVsString())
+        MutableText coloredLine = Text.literal(hyperTrainedStats.isEmpty() ? ChatStrings.getIVsString() : ChatStrings.getIVsHyperTrainedString())
                 .setStyle(Style.EMPTY.withColor(ChatColors.getTooltipLabelColor()));
 
-        return coloredLine.append(isHyperTrained ? getFormattedIVs(ivs, true) : getFormattedIVs(ivs, false));
+        return coloredLine.append(hyperTrainedStats.isEmpty() ? getFormattedIVs(ivs, hyperTrainedStats, false) : getFormattedIVs(ivs, hyperTrainedStats, true));
     }
 
     public static Text coloredEVsLine(EVs evs)
