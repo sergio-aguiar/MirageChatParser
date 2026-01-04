@@ -1,0 +1,56 @@
+# MirageChatParser - Chat Color Configuration
+# You can use standard hex color codes like "#aabbcc"
+
+[Type]
+Normal = "#a8a77a"
+Fire = "#ee8130"
+Water = "#6390f0"
+Electric = "#f7d02c"
+Grass = "#7ac74c"
+Ice = "#96d9d6"
+Fighting = "#c22e28"
+Poison = "#a33ea1"
+Ground = "#e2bf65"
+Flying = "#a98ff3"
+Psychic = "#f95587"
+Bug = "#a6b91a"
+Rock = "#b6a136"
+Ghost = "#735797"
+Dragon = "#6f35fc"
+Dark = "#705746"
+Steel = "#b7b7ce"
+Fairy = "#d685ad"
+
+[Command]
+PrefixColor = "#2facdd"
+ValueColor = "#d1d8eb"
+PlayerColor = '#cfe95e'
+
+[Hoverable]
+BracketColor = "#0a9120"
+BracketShinyColor = "#e7e436"
+BracketErrorColor = "#c00303"
+TextColor = "#21bb3a"
+TextShinyColor = "#b6b30b"
+TextErrorColor = "#e21e1e"
+
+[Tooltip]
+LabelColor = "#3463e6"
+ValueColor = "#d1d8eb"
+FormColor = "#e6e354"
+CurrentExperienceColor = "#6ec95c"
+TargetExperienceColor = "#37af51"
+HiddenAbilityColor = "#31d6e2"
+StatUpColor = "#60d651"
+StatDownColor = "#d14040"
+HealthColor = "#4f9c45"
+AttackColor = "#b33f3f"
+DefenseColor = "#d1842c"
+SpAttackColor = "#d140ca"
+SpDefenseColor = "#ddda36"
+SpeedColor = "#3bd8dd"
+MaleColor = "#0984f7"
+FemaleColor = "#e16ef0"
+GenderlessColor = "#bdbdbd"
+TrueColor = "#40d440"
+FalseColor = "#d12828"

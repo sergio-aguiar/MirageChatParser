@@ -1,0 +1,49 @@
+# MirageChatParser - Chat Settings Configuration
+
+[General]
+# Whether to parse non-player (e.g. server) messages or not (true/false)
+ParseNonPlayerMessages = false
+
+[Tooltip]
+# Whether to show a Pokémon's nickname in hover text (true/false)
+ShowNickname = true
+# Whether to show a Pokémon's species in hover text (true/false)
+ShowSpecies = true
+# Whether to show a Pokémon's level in hover text (true/false)
+ShowLevel = true
+# Whether to show a Pokémon's types in hover text (true/false)
+ShowTypes = true
+# Whether to show a Pokémon's abilities in hover text (true/false)
+ShowAbilities = true
+# Whether to show a Pokémon's nature in hover text (true/false)
+ShowNature = true
+# Whether to show a Pokémon's IVs in hover text (true/false)
+ShowIVs = true
+# Whether to show a Pokémon's EVs in hover text (true/false)
+ShowEVs = true
+# Whether to show a Pokémon's moves in hover text (true/false)
+ShowMoves = true
+# Whether to show a Pokémon's gender in hover text (true/false)
+ShowGender = true
+# Whether to show a Pokémon's friendship in hover text (true/false)
+ShowFriendship = true
+# Whether to show a Pokémon's held item in hover text (true/false)
+ShowHeldItem = true
+# Whether to show a Pokémon's caught ball in hover text (true/false)
+ShowBall = true
+# Whether to show a Pokémon's size in hover text (true/false)
+ShowSize = true
+# Whether to show a Pokémon's egg groups in hover text (true/false)
+ShowEggGroups = true
+# Whether to show a Pokémon's neutered state in hover text (true/false)
+ShowNeutered = true
+# Whether to show a Pokémon's original trainer in hover text (true/false)
+ShowOT = true
+# Whether to show a Pokémon's form in hover text when the value is Normal (true/false)
+ShowFormIfNormal = true
+# Whether to show a Pokémon's neutered state in hover text when the value is False (true/false)
+ShowNeuteredIfFalse = true
+# Whether hyper trained IV stat values should appear in bold (true/false)
+BoldHyperTrainingValues = true;
+# Whether hyper trained IV stat values should appear in italic (true/false)
+ItalicHyperTrainingValues = false;

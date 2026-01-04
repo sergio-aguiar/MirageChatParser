@@ -229,9 +229,9 @@ public class ChatSettingsConfig
             ShowFormIfNormal = true
             # Whether to show a Pokémon's neutered state in hover text when the value is False (true/false)
             ShowNeuteredIfFalse = true
-            # Whether hyper trainer IV stat values should appear in bold (true/false)
+            # Whether hyper trained IV stat values should appear in bold (true/false)
             BoldHyperTrainingValues = true;
-            # Whether hyper trainer IV stat values should appear in italic (true/false)
+            # Whether hyper trained IV stat values should appear in italic (true/false)
             ItalicHyperTrainingValues = false;
             """;
         

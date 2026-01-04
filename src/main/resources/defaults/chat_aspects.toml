@@ -1,0 +1,9 @@
+# MirageChatParser - Aspect Color Configuration
+
+[Aspect]
+# Add the aspect value as the key and the string to appear in the hoverable UI as the value in front of it.
+# If you set a pokémon aspect with aspect=halloween2025 and want it to appear as (Halloween 2025), use the following:
+# halloween2025 = "Halloween 2025"
+
+# Custom Aspects to show
+halloween2025 = "Halloween 2025"

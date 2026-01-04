@@ -1,0 +1,58 @@
+# MirageChatParser - Chat Strings Configuration
+
+[General]
+True = "Yes"
+False = "No"
+
+[Hoverable]
+# Another suggestion "☆ "
+ShinyIcon = "★ "
+
+[Label]
+# Another suggestion, "Species (Form): "
+Species = "Species: "
+# Another suggestion, "Level (EXP/EXP Needed): "
+Level = "Level: "
+Type = "Type: "
+Types = "Types: "
+Ability = "Ability: "
+Nature = "Nature: "
+NatureMinted = "Nature (Mint): "
+IVs = "IVs: "
+IVsHyperTrained = "IVs (Hyper Trained): "
+EVs = "EVs: "
+Moves = "Moves: "
+Gender = "Gender: "
+# Another suggestion, "Happiness: "
+Friendship = "Friendship: "
+HeldItem = "Held Item: "
+CaughtBall = "Caught Ball: "
+Size = "Size: "
+EggGroups = "Egg Groups: "
+Neutered = "Neutered: "
+# Other suggestions, "OT: " and "Original Trainer (OT): "
+OriginalTrainer = "Original Trainer: "
+
+[Stat]
+Health = "HP"
+Attack = "Atk"
+Defense = "Def"
+SpecialAttack = "SpA"
+SpecialDefense = "SpD"
+Speed = "Spe"
+
+[Value]
+# Another suggestion, "Hidden Ability"
+HiddenAbility = "HA"
+TypeSeparator = "/"
+# Other suggestions, "↑" and "⇧"
+StatIncrease = "+"
+# Other suggestions, "↓" and "⇩"
+StatDecrease = "-"
+# Another suggestion, " - "
+MoveSeparator = ", "
+MaleIcon = "♂"
+FemaleIcon = "♀"
+GenderlessIcon = "⚲"
+EmptyHeldItem = "None"
+EggGroupsSeparator = ", "
