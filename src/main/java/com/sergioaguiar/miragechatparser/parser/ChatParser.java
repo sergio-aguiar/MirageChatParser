@@ -2,6 +2,7 @@ package com.sergioaguiar.miragechatparser.parser;
 
 import java.util.regex.Matcher;
 
+import com.sergioaguiar.miragechatparser.util.ModLogger;
 import com.sergioaguiar.miragechatparser.util.TextUtils;
 
 import net.minecraft.server.network.ServerPlayerEntity;
@@ -11,39 +12,48 @@ public class ChatParser
 {
     public static Text parseMessage(ServerPlayerEntity player, Text message) 
     {
-        String raw = message.getString();
-        Matcher matcher = TextUtils.PLACEHOLDER_PATTERN.matcher(raw);
-        Text result = Text.empty();
-        int lastEnd = 0;
-        boolean replaced = false;
-
-        while (matcher.find()) 
+        try
         {
-            if (matcher.start() > lastEnd) 
+            String raw = message.getString();
+            Matcher matcher = TextUtils.PLACEHOLDER_PATTERN.matcher(raw);
+            Text result = Text.empty();
+            int lastEnd = 0;
+            boolean replaced = false;
+
+            while (matcher.find()) 
             {
-                result = result.copy().append(Text.literal(raw.substring(lastEnd, matcher.start())));
+                if (matcher.start() > lastEnd) 
+                {
+                    result = result.copy().append(Text.literal(raw.substring(lastEnd, matcher.start())));
+                }
+
+                String content = matcher.group(1).trim();
+                Text replacement = PlaceholderResolver.resolveText(player, content);
+
+                if (replacement == null)
+                {
+                    result = result.copy().append(raw.substring(matcher.start(), matcher.end()));
+                } 
+                else
+                {
+                    replaced = true;
+                    result = result.copy().append(replacement);
+                }
+
+                lastEnd = matcher.end();
             }
 
-            String content = matcher.group(1).trim();
-            Text replacement = PlaceholderResolver.resolveText(player, content);
-
-            if (replacement == null)
+            if (lastEnd < raw.length()) 
             {
-                result = result.copy().append(raw.substring(matcher.start(), matcher.end()));
-            } 
-            else
-            {
-                replaced = true;
-                result = result.copy().append(replacement);
+                result = result.copy().append(Text.literal(raw.substring(lastEnd)));
             }
-
-            lastEnd = matcher.end();
+            return replaced ? result : message;
         }
-
-        if (lastEnd < raw.length()) 
+        catch (Exception e)
         {
-            result = result.copy().append(Text.literal(raw.substring(lastEnd)));
+            ModLogger.error("Unknown error while parsing message: %s".formatted(e.getMessage()));
+            e.printStackTrace();
+            return message;
         }
-        return replaced ? result : message;
     }
 }

@@ -23,6 +23,6 @@ public class ChatMessageHandler
             }
         );
 
-        ModLogger.info("Chat Parser started.");
+        ModLogger.info("Chat Message Parser started.");
     }
 }

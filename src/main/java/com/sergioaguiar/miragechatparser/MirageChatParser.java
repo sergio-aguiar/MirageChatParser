@@ -30,29 +30,61 @@ public class MirageChatParser implements ModInitializer
 	{
 		ModLogger.info("Initializing MirageChatParser...");
 
-		// Config handling (defaults)
-		ChatSettings.setDefaults();
-		ChatStrings.setDefaults();
-		ChatColors.setDefaults();
-		ChatAspects.setDefaults();
-		ChatSizes.setDefaults();
+		try
+		{
+			// Config handling (defaults)
+			ChatSettings.setDefaults();
+			ChatStrings.setDefaults();
+			ChatColors.setDefaults();
+			ChatAspects.setDefaults();
+			ChatSizes.setDefaults();
+		}
+		catch (Exception e)
+		{
+			ModLogger.error("Uncaught exception during default config setting: %s".formatted(e.getMessage()));
+			e.printStackTrace();
+		}
 
-		// Config handling (config file overrides)
-		ChatSettingsConfig.load();
-		ChatStringsConfig.load();
-		ChatColorsConfig.load();
-		ChatAspectsConfig.load();
-		ChatSizesConfig.load();
+		try
+		{
+			// Config handling (config file overrides)
+			ChatSettingsConfig.load();
+			ChatStringsConfig.load();
+			ChatColorsConfig.load();
+			ChatAspectsConfig.load();
+			ChatSizesConfig.load();
+		}
+		catch (Exception e)
+		{
+			ModLogger.error("Uncaught exception during config loading: %s".formatted(e.getMessage()));
+			e.printStackTrace();
+		}
 
-		// Event registering
-		ChatMessageHandler.register();
+		try
+		{
+			// Event registering
+			ChatMessageHandler.register();
+		}
+		catch (Exception e)
+		{
+			ModLogger.error("Uncaught exception during event registering: %s".formatted(e.getMessage()));
+			e.printStackTrace();
+		}
 
-		// Command registering
-		ReloadCommand.register();
-		PartyShoutCommand.register();
-		PartyShoutAllCommand.register();
-		PCShoutCommand.register();
-		DebugShoutCommand.register();
-		InfoCommand.register();
+		try
+		{
+			// Command registering
+			ReloadCommand.register();
+			PartyShoutCommand.register();
+			PartyShoutAllCommand.register();
+			PCShoutCommand.register();
+			DebugShoutCommand.register();
+			InfoCommand.register();
+		}
+		catch (Exception e)
+		{
+			ModLogger.error("Uncaught exception during command registering: %s".formatted(e.getMessage()));
+			e.printStackTrace();
+		}
 	}
 }

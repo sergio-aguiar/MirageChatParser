@@ -37,7 +37,7 @@ public class ChatSizesConfig
         }
         catch (Exception e)
         {
-            ModLogger.info("Failed to obtain the CobblemonSizeVariation sizing algorithm: %s".formatted(e.getMessage()));
+            ModLogger.error("Failed to obtain the CobblemonSizeVariation sizing algorithm: %s".formatted(e.getMessage()));
         }
     }
 
@@ -65,7 +65,7 @@ public class ChatSizesConfig
                 }
                 catch (Exception e)
                 {
-                    ModLogger.info("Failed to load a size definition from file %s: %s".formatted(sizeFileName, e.getMessage()));
+                    ModLogger.error("Failed to load a size definition from file %s: %s".formatted(sizeFileName, e.getMessage()));
                     continue;
                 }
             }
