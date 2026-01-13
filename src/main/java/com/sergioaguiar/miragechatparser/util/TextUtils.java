@@ -465,10 +465,20 @@ public class TextUtils
 
     public static Text coloredSizeLine(float scaleModifier)
     {
+        TextColor sizeColor;
+        try
+        {
+            sizeColor = TextColor.parse(ChatSizes.getColorfromScale(scaleModifier)).getOrThrow();
+        }
+        catch (Exception e)
+        {
+            sizeColor = ChatColors.getTooltipValueColor();
+        }
+
         return Text.literal(ChatStrings.getSizeString())
                 .setStyle(Style.EMPTY.withColor(ChatColors.getTooltipLabelColor()))
-            .append(Text.literal(ChatSizes.fromSize(scaleModifier).toString())
-                .setStyle(Style.EMPTY.withColor(ChatColors.getTooltipValueColor())));
+            .append(Text.literal(ChatSizes.getSizefromScale(scaleModifier).toString())
+                .setStyle(Style.EMPTY.withColor(sizeColor)));
     }
 
     public static Text coloredEggGroupsLine(Set<EggGroup> eggGroups)
