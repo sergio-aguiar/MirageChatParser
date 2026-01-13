@@ -84,7 +84,7 @@ public class ChatSizes
     public static String getAlgorithmName() { return algorithmName; }
     public static Map<String, SizeDefinition> getSizes() { return sizes; }
 
-    public static String fromSize(double sizeScale)
+    public static String getSizefromScale(double sizeScale)
     {
         for (Map.Entry<String, SizeDefinition> sizeDefinition : sizes.entrySet())
         {
@@ -93,6 +93,18 @@ public class ChatSizes
                 return sizeDefinition.getKey();
             }
         }
-        return "Average";
+        return SizeCategory.AVERAGE.toString();
+    }
+
+    public static String getColorfromScale(double sizeScale)
+    {
+        for (Map.Entry<String, SizeDefinition> sizeDefinition : sizes.entrySet())
+        {
+            if (sizeScale >= sizeDefinition.getValue().getMin() && sizeScale <= sizeDefinition.getValue().getMax())
+            {
+                return sizeDefinition.getValue().getColor();
+            }
+        }
+        return SizeCategory.AVERAGE.getColor();
     }
 }
