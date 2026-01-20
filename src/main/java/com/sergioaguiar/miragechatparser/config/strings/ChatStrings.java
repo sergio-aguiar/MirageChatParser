@@ -44,6 +44,7 @@ public class ChatStrings
     private static final String DEFAULT_GENDERLESS_ICON_STRING = "⚲";
     private static final String DEFAULT_EMPTY_HELD_ITEM_STRING = "None";
     private static final String DEFAULT_EGG_GROUPS_SEPARATOR_STRING = ", ";
+    private static final String DEFAULT_CLOSED_SHEET_STRING = "Hidden";
 
     private static String trueString;
     private static String falseString;
@@ -87,6 +88,7 @@ public class ChatStrings
     private static String genderlessIconString;
     private static String emptyHeldItemString;
     private static String eggGroupsSeparatorString;
+    private static String closedSheetString;
 
     public static void setDefaults()
     {
@@ -132,6 +134,7 @@ public class ChatStrings
         genderlessIconString = DEFAULT_GENDERLESS_ICON_STRING;
         emptyHeldItemString = DEFAULT_EMPTY_HELD_ITEM_STRING;
         eggGroupsSeparatorString = DEFAULT_EGG_GROUPS_SEPARATOR_STRING;
+        closedSheetString = DEFAULT_CLOSED_SHEET_STRING;
     }
 
     public static String getTrueString() { return trueString; }
@@ -172,6 +175,7 @@ public class ChatStrings
     public static String getGenderlessIconString() { return genderlessIconString; }
     public static String getEmptyHeldItemString() { return emptyHeldItemString; }
     public static String getEggGroupsSeparatorString() { return eggGroupsSeparatorString; }
+    public static String getClosedSheetString() { return closedSheetString; }
 
     protected static void setTrueString(String string) { trueString = string; }
     protected static void setFalseString(String string) { falseString = string; }
@@ -211,4 +215,5 @@ public class ChatStrings
     protected static void setGenderlessIconString(String string) { genderlessIconString = string; }
     protected static void setEmptyHeldItemString(String string) { emptyHeldItemString = string; }
     protected static void setEggGroupsSeparatorString(String string) { eggGroupsSeparatorString = string; }
+    protected static void setClosedSheetString(String string) { closedSheetString = string; }
 }

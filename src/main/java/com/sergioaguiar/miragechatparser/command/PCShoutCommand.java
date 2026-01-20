@@ -31,14 +31,19 @@ public class PCShoutCommand
                     .requires(source -> LuckPermsUtils.hasPermission(source, "miragechatparser.commands.pcshout"))
                     .then(CommandManager.argument("box", IntegerArgumentType.integer(1, Integer.MAX_VALUE))
                         .then(CommandManager.argument("slot", IntegerArgumentType.integer(1, 30))
-                            .executes(PCShoutCommand::executePCShout)
+                            .executes(context -> PCShoutCommand.executePCShout(context, false))
+                            .then(CommandManager.literal("closed")
+                                .executes(context ->
+                                    PCShoutCommand.executePCShout(context, true)
+                                )
+                            )
                         )
                     )
             );
         });
     }
 
-    private static int executePCShout(CommandContext<ServerCommandSource> context) throws CommandSyntaxException
+    private static int executePCShout(CommandContext<ServerCommandSource> context, boolean isClosedSheet) throws CommandSyntaxException
     {
         ServerCommandSource source = context.getSource();
         if (!source.isExecutedByPlayer())
@@ -88,7 +93,7 @@ public class PCShoutCommand
             return 1;
         }
 
-        Text message = PlaceholderResolver.getPCPokemonName(player, box, slot);
+        Text message = PlaceholderResolver.getPCPokemonName(player, box, slot, isClosedSheet);
 
         player.getServer().getPlayerManager().broadcast
         (

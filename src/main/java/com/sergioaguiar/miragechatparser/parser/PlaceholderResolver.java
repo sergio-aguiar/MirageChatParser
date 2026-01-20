@@ -41,15 +41,20 @@ public class PlaceholderResolver
             String lower = input.toLowerCase().replaceAll("\\s+", "");
             if (lower.startsWith("party:") || lower.startsWith("poke:")) 
             {
-                int slot = Integer.parseInt(lower.split(":")[1]);
-                return getPartyPokemonName(player, slot);
+                String[] parts = lower.split(":");
+                int slot = Integer.parseInt(parts[1]);
+                boolean isClosedSheet = parts.length > 2 && parts[2].equals("closed");
+
+                return getPartyPokemonName(player, slot, isClosedSheet);
             }
             else if (lower.startsWith("pc:")) 
             {
                 String[] parts = lower.split(":");
                 int box = Integer.parseInt(parts[1]);
                 int slot = Integer.parseInt(parts[2]);
-                return getPCPokemonName(player, box, slot);
+                boolean isClosedSheet = parts.length > 3 && parts[3].equals("closed");
+
+                return getPCPokemonName(player, box, slot, isClosedSheet);
             }
         } 
         catch (Exception e) {}
@@ -57,7 +62,7 @@ public class PlaceholderResolver
         return null;
     }
 
-    public static Text getPartyPokemonName(ServerPlayerEntity player, int slot)
+    public static Text getPartyPokemonName(ServerPlayerEntity player, int slot, boolean isClosedSheet)
     {
         if (slot < 1 || slot > 6) TextUtils.errorPlaceholder("Invalid Slot");
 
@@ -66,10 +71,10 @@ public class PlaceholderResolver
 
         if (pokemon == null) return TextUtils.errorPlaceholder("Empty Slot");
 
-        return buildPokemonText(pokemon);
+        return buildPokemonText(pokemon, isClosedSheet);
     }
 
-    public static ArrayList<Text> getAllPartyPokemonName(ServerPlayerEntity player)
+    public static ArrayList<Text> getAllPartyPokemonName(ServerPlayerEntity player, boolean isClosedSheet)
     {
         PlayerPartyStore party = Cobblemon.INSTANCE.getStorage().getParty(player);
         ArrayList<Text> pokemonInfos = new ArrayList<>();
@@ -79,12 +84,12 @@ public class PlaceholderResolver
             Pokemon pokemon = party.get(i);
             if (pokemon == null) continue;
 
-            pokemonInfos.add(buildPokemonText(pokemon));
+            pokemonInfos.add(buildPokemonText(pokemon, isClosedSheet));
         }
         return pokemonInfos;
     }
 
-    public static Text getPCPokemonName(ServerPlayerEntity player, int box, int slot)
+    public static Text getPCPokemonName(ServerPlayerEntity player, int box, int slot, boolean isClosedSheet)
     {
         PCStore pc = Cobblemon.INSTANCE.getStorage().getPC(player);
 
@@ -96,10 +101,10 @@ public class PlaceholderResolver
 
         if (pokemon == null) return TextUtils.errorPlaceholder("Empty Slot");
         
-        return buildPokemonText(pokemon);
+        return buildPokemonText(pokemon, isClosedSheet);
     }
 
-    private static Text buildPokemonText(Pokemon pokemon) 
+    private static Text buildPokemonText(Pokemon pokemon, boolean isClosedSheet) 
     {
         Species species = pokemon.getSpecies();
         String nickname = (pokemon.getNickname() == null || pokemon.getNickname().getLiteralString() == null) 
@@ -175,7 +180,7 @@ public class PlaceholderResolver
             if (first) first = false;
             else tooltip = tooltip.append(Text.literal("\n"));
 
-            tooltip = tooltip.append(TextUtils.coloredAbilitiesLine(Text.translatable(pokemon.getAbility().getDisplayName()).getString(), CobblemonUtils.hasHiddenAbility(pokemon)));
+            tooltip = tooltip.append(TextUtils.coloredAbilitiesLine(Text.translatable(pokemon.getAbility().getDisplayName()).getString(), CobblemonUtils.hasHiddenAbility(pokemon), isClosedSheet));
         }
 
         if (ChatSettings.showNature())
@@ -183,7 +188,7 @@ public class PlaceholderResolver
             if (first) first = false;
             else tooltip = tooltip.append(Text.literal("\n"));
 
-            tooltip = tooltip.append(TextUtils.coloredNatureLine(nature, natureEffective));
+            tooltip = tooltip.append(TextUtils.coloredNatureLine(nature, natureEffective, isClosedSheet));
         }
 
         if (ChatSettings.showIVs())
@@ -191,7 +196,7 @@ public class PlaceholderResolver
             if (first) first = false;
             else tooltip = tooltip.append(Text.literal("\n"));
 
-            tooltip = tooltip.append(TextUtils.coloredIVsLine(ivs));
+            tooltip = tooltip.append(TextUtils.coloredIVsLine(ivs, isClosedSheet));
         }
 
         if (ChatSettings.showEVs())
@@ -199,7 +204,7 @@ public class PlaceholderResolver
             if (first) first = false;
             else tooltip = tooltip.append(Text.literal("\n"));
 
-            tooltip = tooltip.append(TextUtils.coloredEVsLine(evs));
+            tooltip = tooltip.append(TextUtils.coloredEVsLine(evs, isClosedSheet));
         }
 
         if (ChatSettings.showMoves())
@@ -207,7 +212,7 @@ public class PlaceholderResolver
             if (first) first = false;
             else tooltip = tooltip.append(Text.literal("\n"));
 
-            tooltip = tooltip.append(TextUtils.coloredMovesLine(moves));
+            tooltip = tooltip.append(TextUtils.coloredMovesLine(moves, isClosedSheet));
         }
 
         if (ChatSettings.showGender())
@@ -215,7 +220,7 @@ public class PlaceholderResolver
             if (first) first = false;
             else tooltip = tooltip.append(Text.literal("\n"));
 
-            tooltip = tooltip.append(TextUtils.coloredGenderLine(pokemon.getGender()));
+            tooltip = tooltip.append(TextUtils.coloredGenderLine(pokemon.getGender(), isClosedSheet));
         }
 
         if (ChatSettings.showFriendship())
@@ -223,7 +228,7 @@ public class PlaceholderResolver
             if (first) first = false;
             else tooltip = tooltip.append(Text.literal("\n"));
 
-            tooltip = tooltip.append(TextUtils.coloredFriendshipLine(pokemon.getFriendship()));
+            tooltip = tooltip.append(TextUtils.coloredFriendshipLine(pokemon.getFriendship(), isClosedSheet));
         }
 
         if (ChatSettings.showHeldItem())
@@ -231,7 +236,7 @@ public class PlaceholderResolver
             if (first) first = false;
             else tooltip = tooltip.append(Text.literal("\n"));
 
-            tooltip = tooltip.append(TextUtils.coloredHeldItemLine(heldItem));
+            tooltip = tooltip.append(TextUtils.coloredHeldItemLine(heldItem, isClosedSheet));
         }   
 
         if (ChatSettings.showBall())

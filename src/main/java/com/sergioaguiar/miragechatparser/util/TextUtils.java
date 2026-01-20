@@ -322,14 +322,14 @@ public class TextUtils
                 .setStyle(Style.EMPTY.withColor(typeColor2)));
     }
 
-    public static Text coloredAbilitiesLine(String abilityName, boolean isHidden)
+    public static Text coloredAbilitiesLine(String abilityName, boolean isHidden, boolean isClosedSheet)
     {
         MutableText coloredLine = Text.literal(ChatStrings.getAbilityString())
                 .setStyle(Style.EMPTY.withColor(ChatColors.getTooltipLabelColor()))
-            .append(Text.literal(abilityName)
+            .append(Text.literal(isClosedSheet ? ChatStrings.getClosedSheetString() : abilityName)
                 .setStyle(Style.EMPTY.withColor(ChatColors.getTooltipValueColor())));
 
-        if (isHidden)
+        if (!isClosedSheet && isHidden)
         {
             coloredLine = coloredLine
                 .append(Text.literal(" ("))
@@ -341,16 +341,16 @@ public class TextUtils
         return coloredLine;
     }
 
-    public static Text coloredNatureLine(Nature nature, Nature natureEffective) 
+    public static Text coloredNatureLine(Nature nature, Nature natureEffective, boolean isClosedSheet) 
     {
         boolean isMinted = !nature.getDisplayName().toString().equals(natureEffective.getDisplayName().toString());
 
         MutableText coloredLine = Text.literal(isMinted ? ChatStrings.getNatureMintedString() : ChatStrings.getNatureString())
                 .setStyle(Style.EMPTY.withColor(ChatColors.getTooltipLabelColor()))
-            .append(Text.translatable(natureEffective.getDisplayName().toString())
+            .append(Text.translatable(isClosedSheet ? ChatStrings.getClosedSheetString() : natureEffective.getDisplayName().toString())
                 .setStyle(Style.EMPTY.withColor(ChatColors.getTooltipValueColor())));
 
-        if (natureEffective.getIncreasedStat() != null && natureEffective.getDecreasedStat() != null)
+        if (!isClosedSheet && natureEffective.getIncreasedStat() != null && natureEffective.getDecreasedStat() != null)
         {
             coloredLine = coloredLine
                 .append(Text.literal(" (")
@@ -372,49 +372,71 @@ public class TextUtils
         return coloredLine;
     }
 
-    public static Text coloredIVsLine(IVs ivs)
+    public static Text coloredIVsLine(IVs ivs, boolean isClosedSheet)
     {
         Set<Stats> hyperTrainedStats = CobblemonUtils.getHyperTrainedStats(ivs);
 
-        MutableText coloredLine = Text.literal(hyperTrainedStats.isEmpty() ? ChatStrings.getIVsString() : ChatStrings.getIVsHyperTrainedString())
+        MutableText coloredLine = Text.literal(hyperTrainedStats.isEmpty() || isClosedSheet ? ChatStrings.getIVsString() : ChatStrings.getIVsHyperTrainedString())
                 .setStyle(Style.EMPTY.withColor(ChatColors.getTooltipLabelColor()));
 
-        return coloredLine.append(hyperTrainedStats.isEmpty() ? getFormattedIVs(ivs, hyperTrainedStats, false) : getFormattedIVs(ivs, hyperTrainedStats, true));
+        return coloredLine.append
+            (isClosedSheet 
+                ? Text.literal(ChatStrings.getClosedSheetString())
+                    .setStyle(Style.EMPTY.withColor(ChatColors.getTooltipValueColor()))
+                : (hyperTrainedStats.isEmpty() 
+                    ? getFormattedIVs(ivs, hyperTrainedStats, false)
+                    : getFormattedIVs(ivs, hyperTrainedStats, true)
+                )
+            );
     }
 
-    public static Text coloredEVsLine(EVs evs)
+    public static Text coloredEVsLine(EVs evs, boolean isClosedSheet)
     {
         return Text.literal(ChatStrings.getEVsString())
                 .setStyle(Style.EMPTY.withColor(ChatColors.getTooltipLabelColor()))
-            .append(getFormattedEVs(evs));
+            .append
+            (isClosedSheet 
+                ? Text.literal(ChatStrings.getClosedSheetString())
+                    .setStyle(Style.EMPTY.withColor(ChatColors.getTooltipValueColor()))
+                : getFormattedEVs(evs)
+            );
     }
 
-    public static Text coloredMovesLine(List<Move> moves) 
+    public static Text coloredMovesLine(List<Move> moves, boolean isClosedSheet) 
     {
         MutableText coloredLine = Text.literal(ChatStrings.getMovesString())
                 .setStyle(Style.EMPTY.withColor(ChatColors.getTooltipLabelColor()));
 
-        for (int i = 0; i < moves.size(); i++) 
+        if (isClosedSheet)
         {
-            Move move = moves.get(i);
-            TextColor typeColor = TypeColor.fromTypeName(move.getType().getName());
-
             coloredLine = coloredLine
-                .append(Text.literal(move.getDisplayName().getString())
-                    .setStyle(Style.EMPTY.withColor(typeColor)));
-
-            if (i < moves.size() - 1) 
+                .append(Text.literal(ChatStrings.getClosedSheetString())
+                    .setStyle(Style.EMPTY.withColor(ChatColors.getTooltipValueColor())));
+        }
+        else
+        {
+            for (int i = 0; i < moves.size(); i++) 
             {
+                Move move = moves.get(i);
+                TextColor typeColor = TypeColor.fromTypeName(move.getType().getName());
+
                 coloredLine = coloredLine
-                    .append(Text.literal(ChatStrings.getMoveSeparatorString())
-                        .setStyle(Style.EMPTY.withColor(ChatColors.getTooltipValueColor())));
+                    .append(Text.literal(move.getDisplayName().getString())
+                        .setStyle(Style.EMPTY.withColor(typeColor)));
+
+                if (i < moves.size() - 1) 
+                {
+                    coloredLine = coloredLine
+                        .append(Text.literal(ChatStrings.getMoveSeparatorString())
+                            .setStyle(Style.EMPTY.withColor(ChatColors.getTooltipValueColor())));
+                }
             }
         }
 
         return coloredLine;
     }
 
-    public static Text coloredGenderLine(Gender gender) 
+    public static Text coloredGenderLine(Gender gender, boolean isClosedSheet) 
     {
         TextColor genderColor;
         String genderSymbol;
@@ -433,25 +455,36 @@ public class TextUtils
                 genderSymbol = ChatStrings.getGenderlessIconString();
         }
 
-        return Text.literal(ChatStrings.getGenderString())
-                .setStyle(Style.EMPTY.withColor(ChatColors.getTooltipLabelColor()))
-            .append(Text.literal("%s %s".formatted(genderSymbol, toTitleCase(gender.name())))
+        MutableText coloredLine = Text.literal(ChatStrings.getGenderString())
+                .setStyle(Style.EMPTY.withColor(ChatColors.getTooltipLabelColor()));
+
+        if (isClosedSheet)
+        {
+            coloredLine = coloredLine.append(Text.literal(ChatStrings.getClosedSheetString())
+                .setStyle(Style.EMPTY.withColor(ChatColors.getTooltipValueColor())));
+        }
+        else
+        {
+            coloredLine = coloredLine.append(Text.literal("%s %s".formatted(genderSymbol, toTitleCase(gender.name())))
                 .setStyle(Style.EMPTY.withColor(genderColor)));
+        }
+
+        return coloredLine;
     }
 
-    public static Text coloredFriendshipLine(int happiness)
+    public static Text coloredFriendshipLine(int happiness, boolean isClosedSheet)
     {
         return Text.literal(ChatStrings.getFriendshipString())
                 .setStyle(Style.EMPTY.withColor(ChatColors.getTooltipLabelColor()))
-            .append(Text.literal(Integer.toString(happiness))
+            .append(Text.literal(isClosedSheet ? ChatStrings.getClosedSheetString() : Integer.toString(happiness))
                 .setStyle(Style.EMPTY.withColor(ChatColors.getTooltipValueColor())));
     }
 
-    public static Text coloredHeldItemLine(ItemStack heldItem)
+    public static Text coloredHeldItemLine(ItemStack heldItem, boolean isClosedSheet)
     {
         return Text.literal(ChatStrings.getHeldItemString())
                 .setStyle(Style.EMPTY.withColor(ChatColors.getTooltipLabelColor()))
-            .append(Text.literal(heldItem.isEmpty() ? ChatStrings.getEmptyHeldItemString() : heldItem.getName().getString())
+            .append(Text.literal(isClosedSheet ? ChatStrings.getClosedSheetString() : (heldItem.isEmpty() ? ChatStrings.getEmptyHeldItemString() : heldItem.getName().getString()))
                 .setStyle(Style.EMPTY.withColor(ChatColors.getTooltipValueColor())));
     }
 

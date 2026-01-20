@@ -307,6 +307,13 @@ public class ChatStringsConfig
                     ChatStrings.setEggGroupsSeparatorString(string);
             }
 
+            if (config.contains("Value.ClosedSheet"))
+            {
+                String string = config.get("Value.ClosedSheet");
+                if (string != null && !string.isEmpty())
+                    ChatStrings.setClosedSheetString(string);
+            }
+
             ModLogger.info("String configurations successfully loaded from chat_strings.toml.");
         }
         catch (Exception e)
@@ -376,6 +383,7 @@ public class ChatStringsConfig
             GenderlessIcon = "⚲"
             EmptyHeldItem = "None"
             EggGroupsSeparator = ", "
+            ClosedSheet = "Hidden"
             """;
         
         Files.writeString(file.toPath(), defaultContent);

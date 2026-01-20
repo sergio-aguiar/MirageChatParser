@@ -26,12 +26,20 @@ public class PartyShoutCommand
         LiteralArgumentBuilder<ServerCommandSource> partyShout = CommandManager.literal("partyshout")
             .requires(source -> LuckPermsUtils.hasPermission(source, "miragechatparser.commands.partyshout"))
             .then(CommandManager.argument("slot", IntegerArgumentType.integer(1, 6))
-                .executes(PartyShoutCommand::executePartyShout));
+                .executes(context -> PartyShoutCommand.executePartyShout(context, false))
+                .then(CommandManager.literal("closed")
+                    .executes(context -> PartyShoutCommand.executePartyShout(context, true))
+                )
+            );
 
         LiteralArgumentBuilder<ServerCommandSource> pokeShout = CommandManager.literal("pokeshout")
             .requires(source -> LuckPermsUtils.hasPermission(source, "miragechatparser.commands.pokeshout"))
             .then(CommandManager.argument("slot", IntegerArgumentType.integer(1, 6))
-                .executes(PartyShoutCommand::executePartyShout));
+                .executes(context -> PartyShoutCommand.executePartyShout(context, false))
+                .then(CommandManager.literal("closed")
+                    .executes(context -> PartyShoutCommand.executePartyShout(context, true))
+                )
+            );
 
         CommandRegistrationCallback.EVENT.register((dispatcher, registryAccess, environment) -> 
         {
@@ -40,7 +48,7 @@ public class PartyShoutCommand
         });
     }
 
-    private static int executePartyShout(CommandContext<ServerCommandSource> context) throws CommandSyntaxException
+    private static int executePartyShout(CommandContext<ServerCommandSource> context, boolean isClosedSheet) throws CommandSyntaxException
     {
         ServerCommandSource source = context.getSource();
         if (!source.isExecutedByPlayer())
@@ -76,7 +84,7 @@ public class PartyShoutCommand
             return 1;
         }
 
-        Text message = PlaceholderResolver.getPartyPokemonName(player, slot);
+        Text message = PlaceholderResolver.getPartyPokemonName(player, slot, isClosedSheet);
 
         player.getServer().getPlayerManager().broadcast
         (

@@ -24,11 +24,17 @@ public class PartyShoutAllCommand
     {
         LiteralArgumentBuilder<ServerCommandSource> partyShoutAll = CommandManager.literal("partyshoutall")
             .requires(source -> LuckPermsUtils.hasPermission(source, "miragechatparser.commands.partyshoutall"))
-            .executes(PartyShoutAllCommand::executePartyShoutAll);
+            .executes(context -> PartyShoutAllCommand.executePartyShoutAll(context, false))
+            .then(CommandManager.literal("closed")
+                .executes(context -> PartyShoutAllCommand.executePartyShoutAll(context, true))
+            );
 
         LiteralArgumentBuilder<ServerCommandSource> pokeShoutAll = CommandManager.literal("pokeshoutall")
             .requires(source -> LuckPermsUtils.hasPermission(source, "miragechatparser.commands.pokeshoutall"))
-            .executes(PartyShoutAllCommand::executePartyShoutAll);
+            .executes(context -> PartyShoutAllCommand.executePartyShoutAll(context, false))
+            .then(CommandManager.literal("closed")
+                .executes(context -> PartyShoutAllCommand.executePartyShoutAll(context, true))
+            );
 
         CommandRegistrationCallback.EVENT.register((dispatcher, registryAccess, environment) -> 
         {
@@ -37,7 +43,7 @@ public class PartyShoutAllCommand
         });
     }
 
-    private static int executePartyShoutAll(CommandContext<ServerCommandSource> context) throws CommandSyntaxException
+    private static int executePartyShoutAll(CommandContext<ServerCommandSource> context, boolean isClosedSheet) throws CommandSyntaxException
     {
         ServerCommandSource source = context.getSource();
         if (!source.isExecutedByPlayer())
@@ -57,7 +63,7 @@ public class PartyShoutAllCommand
             return 1;
         }
 
-        ArrayList<Text> pokemonInfos = PlaceholderResolver.getAllPartyPokemonName(player);
+        ArrayList<Text> pokemonInfos = PlaceholderResolver.getAllPartyPokemonName(player, isClosedSheet);
 
         if (pokemonInfos.isEmpty())
         {
