@@ -67,6 +67,7 @@ public class ChatSettings
         showIVs = DEFAULT_SHOW_IVS;
         showEVs = DEFAULT_SHOW_EVS;
         showMoves = DEFAULT_SHOW_MOVES;
+        showGender = DEFAULT_SHOW_GENDER;
         showFriendship = DEFAULT_SHOW_FRIENDSHIP;
         showHeldItem = DEFAULT_SHOW_HELD_ITEM;
         showBall = DEFAULT_SHOW_BALL;
