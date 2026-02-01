@@ -45,6 +45,7 @@ public class ChatStrings
     private static final String DEFAULT_EMPTY_HELD_ITEM_STRING = "None";
     private static final String DEFAULT_EGG_GROUPS_SEPARATOR_STRING = ", ";
     private static final String DEFAULT_CLOSED_SHEET_STRING = "Hidden";
+    private static final String DEFAULT_UNKNOWN_PLAYER_STRING = "Unknown Player";
 
     private static String trueString;
     private static String falseString;
@@ -89,6 +90,7 @@ public class ChatStrings
     private static String emptyHeldItemString;
     private static String eggGroupsSeparatorString;
     private static String closedSheetString;
+    private static String unknownPlayeString;
 
     public static void setDefaults()
     {
@@ -135,6 +137,7 @@ public class ChatStrings
         emptyHeldItemString = DEFAULT_EMPTY_HELD_ITEM_STRING;
         eggGroupsSeparatorString = DEFAULT_EGG_GROUPS_SEPARATOR_STRING;
         closedSheetString = DEFAULT_CLOSED_SHEET_STRING;
+        unknownPlayeString = DEFAULT_UNKNOWN_PLAYER_STRING;
     }
 
     public static String getTrueString() { return trueString; }
@@ -176,6 +179,7 @@ public class ChatStrings
     public static String getEmptyHeldItemString() { return emptyHeldItemString; }
     public static String getEggGroupsSeparatorString() { return eggGroupsSeparatorString; }
     public static String getClosedSheetString() { return closedSheetString; }
+    public static String getUnknownPlayerString() { return unknownPlayeString; }
 
     protected static void setTrueString(String string) { trueString = string; }
     protected static void setFalseString(String string) { falseString = string; }
@@ -216,4 +220,5 @@ public class ChatStrings
     protected static void setEmptyHeldItemString(String string) { emptyHeldItemString = string; }
     protected static void setEggGroupsSeparatorString(String string) { eggGroupsSeparatorString = string; }
     protected static void setClosedSheetString(String string) { closedSheetString = string; }
+    protected static void setUnknownPlayerString(String string) { unknownPlayeString = string; }
 }

@@ -314,6 +314,13 @@ public class ChatStringsConfig
                     ChatStrings.setClosedSheetString(string);
             }
 
+            if (config.contains("Value.UnknownPlayer"))
+            {
+                String string = config.get("Value.UnknownPlayer");
+                if (string != null && !string.isEmpty())
+                    ChatStrings.setUnknownPlayerString(string);
+            }
+
             ModLogger.info("String configurations successfully loaded from chat_strings.toml.");
         }
         catch (Exception e)
@@ -384,6 +391,7 @@ public class ChatStringsConfig
             EmptyHeldItem = "None"
             EggGroupsSeparator = ", "
             ClosedSheet = "Hidden"
+            UnknownPlayer = "Unknown Player"
             """;
         
         Files.writeString(file.toPath(), defaultContent);

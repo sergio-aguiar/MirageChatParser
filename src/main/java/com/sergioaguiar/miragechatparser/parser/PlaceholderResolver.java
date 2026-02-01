@@ -22,6 +22,7 @@ import com.cobblemon.mod.common.pokemon.Pokemon;
 import com.cobblemon.mod.common.pokemon.Species;
 import com.sergioaguiar.miragechatparser.config.colors.ChatColors;
 import com.sergioaguiar.miragechatparser.config.settings.ChatSettings;
+import com.sergioaguiar.miragechatparser.config.strings.ChatStrings;
 import com.sergioaguiar.miragechatparser.util.CobblemonUtils;
 import com.sergioaguiar.miragechatparser.util.NeoDaycareUtils;
 import com.sergioaguiar.miragechatparser.util.TextUtils;
@@ -281,7 +282,9 @@ public class PlaceholderResolver
             if (first) first = false;
             else tooltip = tooltip.append(Text.literal("\n"));
 
-            tooltip = tooltip.append(TextUtils.coloredOTLine(pokemon.getOriginalTrainerName()));
+            String originalTrainer = pokemon.getOriginalTrainerName() == null ? ChatStrings.getOriginalTrainerString() : pokemon.getOriginalTrainerName();
+
+            tooltip = tooltip.append(TextUtils.coloredOTLine(originalTrainer));
         }
 
         return TextUtils.hoverableText(species.getName(), tooltip, pokemon.getShiny());
