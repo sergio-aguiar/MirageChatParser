@@ -46,7 +46,7 @@ public class PlaceholderResolver
                 int slot = Integer.parseInt(parts[1]);
                 boolean isClosedSheet = parts.length > 2 && parts[2].equals("closed");
 
-                return getPartyPokemonName(player, slot, isClosedSheet);
+                return getPartyPokemon(player, slot, isClosedSheet);
             }
             else if (lower.startsWith("pc:")) 
             {
@@ -63,7 +63,7 @@ public class PlaceholderResolver
         return null;
     }
 
-    public static Text getPartyPokemonName(ServerPlayerEntity player, int slot, boolean isClosedSheet)
+    public static Text getPartyPokemon(ServerPlayerEntity player, int slot, boolean isClosedSheet)
     {
         if (slot < 1 || slot > 6) TextUtils.errorPlaceholder("Invalid Slot");
 
@@ -75,7 +75,7 @@ public class PlaceholderResolver
         return buildPokemonText(pokemon, isClosedSheet);
     }
 
-    public static ArrayList<Text> getAllPartyPokemonName(ServerPlayerEntity player, boolean isClosedSheet)
+    public static ArrayList<Text> getAllPartyPokemon(ServerPlayerEntity player, boolean isClosedSheet)
     {
         PlayerPartyStore party = Cobblemon.INSTANCE.getStorage().getParty(player);
         ArrayList<Text> pokemonInfos = new ArrayList<>();
@@ -105,7 +105,7 @@ public class PlaceholderResolver
         return buildPokemonText(pokemon, isClosedSheet);
     }
 
-    private static Text buildPokemonText(Pokemon pokemon, boolean isClosedSheet) 
+    public static Text buildPokemonText(Pokemon pokemon, boolean isClosedSheet) 
     {
         Species species = pokemon.getSpecies();
         String nickname = (pokemon.getNickname() == null || pokemon.getNickname().getLiteralString() == null) 

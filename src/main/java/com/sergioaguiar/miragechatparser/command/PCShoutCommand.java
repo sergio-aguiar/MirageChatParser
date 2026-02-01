@@ -59,7 +59,7 @@ public class PCShoutCommand
         }
         catch (Exception e)
         {
-            ModLogger.error("Failed to execute partyshout/pokeshout: %s".formatted(e.getMessage()));
+            ModLogger.error("Failed to execute PCShout: %s".formatted(e.getMessage()));
             return 1;
         }
 

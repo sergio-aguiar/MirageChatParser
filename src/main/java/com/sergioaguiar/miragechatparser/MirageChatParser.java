@@ -5,6 +5,7 @@ import net.fabricmc.api.ModInitializer;
 import com.sergioaguiar.miragechatparser.command.DebugShoutCommand;
 import com.sergioaguiar.miragechatparser.command.InfoCommand;
 import com.sergioaguiar.miragechatparser.command.PCShoutCommand;
+import com.sergioaguiar.miragechatparser.command.PartyCheckCommand;
 import com.sergioaguiar.miragechatparser.command.PartyShoutAllCommand;
 import com.sergioaguiar.miragechatparser.command.PartyShoutCommand;
 import com.sergioaguiar.miragechatparser.command.ReloadCommand;
@@ -80,6 +81,7 @@ public class MirageChatParser implements ModInitializer
 			PCShoutCommand.register();
 			DebugShoutCommand.register();
 			InfoCommand.register();
+			PartyCheckCommand.register();
 		}
 		catch (Exception e)
 		{

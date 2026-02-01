@@ -54,7 +54,7 @@ public class DebugShoutCommand
         }
         catch (Exception e)
         {
-            ModLogger.error("Failed to execute debugshout: %s".formatted(e.getMessage()));
+            ModLogger.error("Failed to execute DebugShout: %s".formatted(e.getMessage()));
             return 1;
         }
 

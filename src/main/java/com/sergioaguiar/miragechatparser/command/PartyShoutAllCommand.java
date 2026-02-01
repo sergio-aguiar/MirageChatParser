@@ -59,11 +59,11 @@ public class PartyShoutAllCommand
         }
         catch (Exception e)
         {
-            ModLogger.error("Failed to execute partyshout/pokeshout: %s".formatted(e.getMessage()));
+            ModLogger.error("Failed to execute PartyShoutAll/PokeShoutAll: %s".formatted(e.getMessage()));
             return 1;
         }
 
-        ArrayList<Text> pokemonInfos = PlaceholderResolver.getAllPartyPokemonName(player, isClosedSheet);
+        ArrayList<Text> pokemonInfos = PlaceholderResolver.getAllPartyPokemon(player, isClosedSheet);
 
         if (pokemonInfos.isEmpty())
         {

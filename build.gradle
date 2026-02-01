@@ -21,6 +21,11 @@ repositories {
     maven { url "https://maven.fabricmc.net/" }
 	maven { url "https://maven.impactdev.net/repository/development/" }
     maven { url "https://repo.repsy.io/mvn/cobblemon/cobblemon" }
+
+	maven {
+        name = "LandonJW Snapshots"
+        url = "https://maven.landonjw.ca/snapshots"
+    }
 }
 
 loom {
@@ -54,6 +59,10 @@ dependencies {
 	include "com.electronwill.night-config:core:${project.night_config_version}"
 	include "com.electronwill.night-config:toml:${project.night_config_version}"
 	include "com.electronwill.night-config:json:${project.night_config_version}"
+
+	// Gooeylibs (UI library)
+	modImplementation("ca.landonjw.gooeylibs:api:${gooeylibs_version}-SNAPSHOT")
+	modImplementation("ca.landonjw.gooeylibs:fabric:${gooeylibs_version}-SNAPSHOT")
 }
 
 processResources {

@@ -64,7 +64,7 @@ public class PartyShoutCommand
         }
         catch (Exception e)
         {
-            ModLogger.error("Failed to execute partyshout/pokeshout: %s".formatted(e.getMessage()));
+            ModLogger.error("Failed to execute PartyShout/PokeShout: %s".formatted(e.getMessage()));
             return 1;
         }
 
@@ -84,7 +84,7 @@ public class PartyShoutCommand
             return 1;
         }
 
-        Text message = PlaceholderResolver.getPartyPokemonName(player, slot, isClosedSheet);
+        Text message = PlaceholderResolver.getPartyPokemon(player, slot, isClosedSheet);
 
         player.getServer().getPlayerManager().broadcast
         (
