@@ -1,9 +1,12 @@
 package com.sergioaguiar.miragechatparser.util;
 
 import java.util.List;
+import java.util.stream.Collectors;
+import java.util.stream.StreamSupport;
 
 import com.cobblemon.mod.common.Cobblemon;
 import com.cobblemon.mod.common.api.storage.party.PlayerPartyStore;
+import com.cobblemon.mod.common.api.types.ElementalType;
 import com.cobblemon.mod.common.item.PokemonItem;
 import com.cobblemon.mod.common.pokemon.Pokemon;
 import com.sergioaguiar.miragechatparser.config.colors.ChatColors;
@@ -48,7 +51,7 @@ public class GooeyLibsUtils
 
         for (int i = 0; i < 9; i++)
         {
-            if (i == 0 || i == 8) templateBuilder.set(1, i, getBlackStainedGlassPaneButton());
+            if (i == 0 || i == 8) templateBuilder.set(2, i, getBlackStainedGlassPaneButton());
             else if (i == 1 || i == 2 || i == 6 || i == 7) templateBuilder.set(2, i, getWhiteStainedGlassPaneButton());
         }
 
@@ -82,14 +85,17 @@ public class GooeyLibsUtils
 
     private static GooeyButton getPokemonButton(ServerPlayerEntity player, Pokemon pokemon, boolean closed)
     {
-        Text pokemonText = PlaceholderResolver.buildPokemonText(pokemon, closed);
-
         ca.landonjw.gooeylibs2.api.button.GooeyButton.Builder pokemonButtonBuilder = GooeyButton.builder();
 
         if (pokemon != null)
         {
+            String nickname = (pokemon.getNickname() == null || pokemon.getNickname().getLiteralString() == null) 
+                ? pokemon.getSpecies().getName() : pokemon.getNickname().getLiteralString();
+            List<ElementalType> types = StreamSupport.stream(pokemon.getTypes().spliterator(), false).collect(Collectors.toUnmodifiableList());
+
             pokemonButtonBuilder.display(PokemonItem.from(pokemon))
-            .with(DataComponentTypes.LORE, new LoreComponent(List.of(pokemonText)))
+            .with(DataComponentTypes.ITEM_NAME, PlaceholderResolver.getNicknameText(nickname, types))
+            .with(DataComponentTypes.LORE, new LoreComponent(PlaceholderResolver.getPokemonTooltipTextList(pokemon, closed)))
             .onClick((action) ->
             {
                 player.getServer().getPlayerManager().broadcast
@@ -102,7 +108,7 @@ public class GooeyLibsUtils
                             .setStyle(Style.EMPTY.withColor(ChatColors.getCommandPlayerColor())))
                         .append(Text.literal(" shouted: ")
                             .setStyle(Style.EMPTY.withColor(ChatColors.getCommandValueColor())))
-                        .append(pokemonText),
+                        .append(PlaceholderResolver.buildPokemonText(pokemon, closed)),
                     false
                 );
             });

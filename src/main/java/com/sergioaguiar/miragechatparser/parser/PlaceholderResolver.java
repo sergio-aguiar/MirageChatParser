@@ -15,7 +15,9 @@ import com.cobblemon.mod.common.api.storage.party.PlayerPartyStore;
 import com.cobblemon.mod.common.api.storage.pc.PCBox;
 import com.cobblemon.mod.common.api.storage.pc.PCStore;
 import com.cobblemon.mod.common.api.types.ElementalType;
+import com.cobblemon.mod.common.pokeball.PokeBall;
 import com.cobblemon.mod.common.pokemon.EVs;
+import com.cobblemon.mod.common.pokemon.Gender;
 import com.cobblemon.mod.common.pokemon.IVs;
 import com.cobblemon.mod.common.pokemon.Nature;
 import com.cobblemon.mod.common.pokemon.Pokemon;
@@ -107,6 +109,11 @@ public class PlaceholderResolver
 
     public static Text buildPokemonText(Pokemon pokemon, boolean isClosedSheet) 
     {
+        return TextUtils.hoverableText(pokemon.getSpecies().getName(), buildPokemonTooltip(pokemon, isClosedSheet), pokemon.getShiny());
+    }
+
+    public static Text buildPokemonTooltip(Pokemon pokemon, boolean isClosedSheet) 
+    {
         Species species = pokemon.getSpecies();
         String nickname = (pokemon.getNickname() == null || pokemon.getNickname().getLiteralString() == null) 
             ? species.getName() : pokemon.getNickname().getLiteralString();
@@ -131,16 +138,7 @@ public class PlaceholderResolver
             if (first) first = false;
             else tooltip = tooltip.append(Text.literal("\n"));
 
-            if (types.size() == 1 )
-            {
-                tooltip = tooltip
-                    .append(Text.literal(nickname)
-                        .setStyle(Style.EMPTY.withColor(ChatColors.TypeColor.fromTypeName(types.get(0).getName()))));
-            }
-            else
-            {
-                tooltip = tooltip.append(TextUtils.gradientBetweenTypes(nickname, types.get(0), types.get(1)));
-            }
+            tooltip = tooltip.append(getNicknameText(nickname, types));
         }
 
         if (ChatSettings.showSpecies())
@@ -148,8 +146,7 @@ public class PlaceholderResolver
             if (first) first = false;
             else tooltip = tooltip.append(Text.literal("\n"));
 
-            tooltip = tooltip
-                .append(TextUtils.coloredSpeciesLine(pokemon, TextUtils.toTitleCase(pokemon.getForm().getName()), aspects, speciesFeatures));
+            tooltip = tooltip.append(getSpeciesText(pokemon, aspects, speciesFeatures));
         }
 
         if (ChatSettings.showLevel())
@@ -157,23 +154,15 @@ public class PlaceholderResolver
             if (first) first = false;
             else tooltip = tooltip.append(Text.literal("\n"));
 
-            tooltip = tooltip
-                .append(TextUtils.coloredLevelLine(level, pokemon.getExperience(), nextLevelExperience));
+            tooltip = tooltip.append(getLevelText(level, pokemon.getExperience(), nextLevelExperience));
         }
 
-        if (ChatSettings.showSize())
+        if (ChatSettings.showTypes())
         {
             if (first) first = false;
             else tooltip = tooltip.append(Text.literal("\n"));
 
-            if (types.size() == 1 )
-            {
-                tooltip = tooltip.append(TextUtils.coloredMonotypeLine(types.get(0)));
-            }
-            else
-            {
-                tooltip = tooltip.append(TextUtils.coloredDualtypeLine(types.get(0), types.get(1)));
-            }
+            tooltip = tooltip.append(getTypesText(types));
         }
 
         if (ChatSettings.showAbilities())
@@ -181,7 +170,7 @@ public class PlaceholderResolver
             if (first) first = false;
             else tooltip = tooltip.append(Text.literal("\n"));
 
-            tooltip = tooltip.append(TextUtils.coloredAbilitiesLine(Text.translatable(pokemon.getAbility().getDisplayName()).getString(), CobblemonUtils.hasHiddenAbility(pokemon), isClosedSheet));
+            tooltip = tooltip.append(getAbilitiesText(pokemon, isClosedSheet));
         }
 
         if (ChatSettings.showNature())
@@ -189,7 +178,7 @@ public class PlaceholderResolver
             if (first) first = false;
             else tooltip = tooltip.append(Text.literal("\n"));
 
-            tooltip = tooltip.append(TextUtils.coloredNatureLine(nature, natureEffective, isClosedSheet));
+            tooltip = tooltip.append(getNatureText(nature, natureEffective, isClosedSheet));
         }
 
         if (ChatSettings.showIVs())
@@ -197,7 +186,7 @@ public class PlaceholderResolver
             if (first) first = false;
             else tooltip = tooltip.append(Text.literal("\n"));
 
-            tooltip = tooltip.append(TextUtils.coloredIVsLine(ivs, isClosedSheet));
+            tooltip = tooltip.append(getIVsText(ivs, isClosedSheet));
         }
 
         if (ChatSettings.showEVs())
@@ -205,7 +194,7 @@ public class PlaceholderResolver
             if (first) first = false;
             else tooltip = tooltip.append(Text.literal("\n"));
 
-            tooltip = tooltip.append(TextUtils.coloredEVsLine(evs, isClosedSheet));
+            tooltip = tooltip.append(getEVsText(evs, isClosedSheet));
         }
 
         if (ChatSettings.showMoves())
@@ -213,7 +202,7 @@ public class PlaceholderResolver
             if (first) first = false;
             else tooltip = tooltip.append(Text.literal("\n"));
 
-            tooltip = tooltip.append(TextUtils.coloredMovesLine(moves, isClosedSheet));
+            tooltip = tooltip.append(getMovesText(moves, isClosedSheet));
         }
 
         if (ChatSettings.showGender())
@@ -221,7 +210,7 @@ public class PlaceholderResolver
             if (first) first = false;
             else tooltip = tooltip.append(Text.literal("\n"));
 
-            tooltip = tooltip.append(TextUtils.coloredGenderLine(pokemon.getGender(), isClosedSheet));
+            tooltip = tooltip.append(getGenderText(pokemon.getGender(), isClosedSheet));
         }
 
         if (ChatSettings.showFriendship())
@@ -229,7 +218,7 @@ public class PlaceholderResolver
             if (first) first = false;
             else tooltip = tooltip.append(Text.literal("\n"));
 
-            tooltip = tooltip.append(TextUtils.coloredFriendshipLine(pokemon.getFriendship(), isClosedSheet));
+            tooltip = tooltip.append(getFriendshipText(pokemon.getFriendship(), isClosedSheet));
         }
 
         if (ChatSettings.showHeldItem())
@@ -237,7 +226,7 @@ public class PlaceholderResolver
             if (first) first = false;
             else tooltip = tooltip.append(Text.literal("\n"));
 
-            tooltip = tooltip.append(TextUtils.coloredHeldItemLine(heldItem, isClosedSheet));
+            tooltip = tooltip.append(getHeldItemText(heldItem, isClosedSheet));
         }   
 
         if (ChatSettings.showBall())
@@ -245,7 +234,7 @@ public class PlaceholderResolver
             if (first) first = false;
             else tooltip = tooltip.append(Text.literal("\n"));
 
-            tooltip = tooltip.append(TextUtils.coloredCaughtBallLine(pokemon.getCaughtBall()));
+            tooltip = tooltip.append(getCaughtBallText(pokemon.getCaughtBall()));
         }
 
         if (ChatSettings.showSize())
@@ -253,7 +242,7 @@ public class PlaceholderResolver
             if (first) first = false;
             else tooltip = tooltip.append(Text.literal("\n"));
 
-            tooltip = tooltip.append(TextUtils.coloredSizeLine(pokemon.getScaleModifier()));
+            tooltip = tooltip.append(getSizeText(pokemon.getScaleModifier()));
         }
 
         if (ChatSettings.showEggGroups())
@@ -261,7 +250,7 @@ public class PlaceholderResolver
             if (first) first = false;
             else tooltip = tooltip.append(Text.literal("\n"));
 
-            tooltip = tooltip.append(TextUtils.coloredEggGroupsLine(eggGroups));
+            tooltip = tooltip.append(getEggGroupText(eggGroups));
         }
 
         if (NeoDaycareUtils.isModLoaded() && ChatSettings.showNeutered())
@@ -273,7 +262,7 @@ public class PlaceholderResolver
 
             if (isNeutered || ChatSettings.showNeuteredIfFalse())
             {
-                tooltip = tooltip.append(TextUtils.coloredNeuterLine(pokemon, isNeutered));
+                tooltip = tooltip.append(getneuterText(pokemon, isNeutered));
             }
         }
 
@@ -282,11 +271,224 @@ public class PlaceholderResolver
             if (first) first = false;
             else tooltip = tooltip.append(Text.literal("\n"));
 
-            String originalTrainer = pokemon.getOriginalTrainerName() == null ? ChatStrings.getOriginalTrainerString() : pokemon.getOriginalTrainerName();
-
-            tooltip = tooltip.append(TextUtils.coloredOTLine(originalTrainer));
+            tooltip = tooltip.append(getOText(pokemon));
         }
 
-        return TextUtils.hoverableText(species.getName(), tooltip, pokemon.getShiny());
+        return tooltip;
+    }
+
+    public static List<Text> getPokemonTooltipTextList(Pokemon pokemon, boolean isClosedSheet)
+    {
+        List<Text> tooltipText = new ArrayList<>();
+
+        Species species = pokemon.getSpecies();
+        Set<String> aspects = pokemon.getAspects();
+        List<SpeciesFeature> speciesFeatures = pokemon.getFeatures();
+        int level = pokemon.getLevel();
+        int nextLevelExperience = pokemon.getExperience() + pokemon.getExperienceToNextLevel();
+        List<ElementalType> types = StreamSupport.stream(pokemon.getTypes().spliterator(), false).collect(Collectors.toUnmodifiableList());
+        Nature nature = pokemon.getNature();
+        Nature natureEffective = pokemon.getEffectiveNature();
+        IVs ivs = pokemon.getIvs();
+        EVs evs = pokemon.getEvs();
+        List<Move> moves = pokemon.getMoveSet().getMoves();
+        HashSet<EggGroup> eggGroups = species.getEggGroups();
+        ItemStack heldItem = pokemon.getHeldItem$common();
+
+        if (ChatSettings.showSpecies())
+        {
+            tooltipText.add(getSpeciesText(pokemon, aspects, speciesFeatures));
+        }
+
+        if (ChatSettings.showLevel())
+        {
+            tooltipText.add(getLevelText(level, pokemon.getExperience(), nextLevelExperience));
+        }
+
+        if (ChatSettings.showTypes())
+        {
+            tooltipText.add(getTypesText(types));
+        }
+
+        if (ChatSettings.showAbilities())
+        {
+            tooltipText.add(getAbilitiesText(pokemon, isClosedSheet));
+        }
+
+        if (ChatSettings.showNature())
+        {
+            tooltipText.add(getNatureText(nature, natureEffective, isClosedSheet));
+        }
+
+        if (ChatSettings.showIVs())
+        {
+            tooltipText.add(getIVsText(ivs, isClosedSheet));
+        }
+
+        if (ChatSettings.showEVs())
+        {
+            tooltipText.add(getEVsText(evs, isClosedSheet));
+        }
+
+        if (ChatSettings.showMoves())
+        {
+            tooltipText.add(getMovesText(moves, isClosedSheet));
+        }
+
+        if (ChatSettings.showGender())
+        {
+            tooltipText.add(getGenderText(pokemon.getGender(), isClosedSheet));
+        }
+
+        if (ChatSettings.showFriendship())
+        {
+            tooltipText.add(getFriendshipText(pokemon.getFriendship(), isClosedSheet));
+        }
+
+        if (ChatSettings.showHeldItem())
+        {
+            tooltipText.add(getHeldItemText(heldItem, isClosedSheet));
+        }   
+
+        if (ChatSettings.showBall())
+        {
+            tooltipText.add(getCaughtBallText(pokemon.getCaughtBall()));
+        }
+
+        if (ChatSettings.showSize())
+        {
+            tooltipText.add(getSizeText(pokemon.getScaleModifier()));
+        }
+
+        if (ChatSettings.showEggGroups())
+        {
+            tooltipText.add(getEggGroupText(eggGroups));
+        }
+
+        if (NeoDaycareUtils.isModLoaded() && ChatSettings.showNeutered())
+        {
+            boolean isNeutered = NeoDaycareUtils.isNeutered(pokemon);
+
+            if (isNeutered || ChatSettings.showNeuteredIfFalse())
+            {
+                tooltipText.add(getneuterText(pokemon, isNeutered));
+            }
+        }
+
+        if (ChatSettings.showOT())
+        {
+            tooltipText.add(getOText(pokemon));
+        }
+
+        return tooltipText;
+    }
+
+    public static Text getNicknameText(String nickname, List<ElementalType> types)
+    {
+        if (types.size() == 1)
+        {
+            return Text.literal(nickname).setStyle(Style.EMPTY.withColor(ChatColors.TypeColor.fromTypeName(types.get(0).getName())));
+        }
+        else
+        {
+            return TextUtils.gradientBetweenTypes(nickname, types.get(0), types.get(1));
+        }
+    }
+
+    private static Text getSpeciesText(Pokemon pokemon, Set<String> aspects, List<SpeciesFeature> speciesFeatures)
+    {
+        return TextUtils.coloredSpeciesLine(pokemon, TextUtils.toTitleCase(pokemon.getForm().getName()), aspects, speciesFeatures);
+    }
+
+    private static Text getLevelText(int level, int experience, int nextLevelExperience)
+    {
+        return TextUtils.coloredLevelLine(level, experience, nextLevelExperience);
+    }
+
+    private static Text getTypesText(List<ElementalType> types)
+    {
+        if (types.size() == 1)
+        {
+            return TextUtils.coloredMonotypeLine(types.get(0));
+        }
+        else
+        {
+            return TextUtils.coloredDualtypeLine(types.get(0), types.get(1));
+        }
+    }
+
+    private static Text getAbilitiesText(Pokemon pokemon, boolean isClosedSheet)
+    {
+        return TextUtils.coloredAbilitiesLine(Text.translatable(pokemon.getAbility().getDisplayName()).getString(), CobblemonUtils.hasHiddenAbility(pokemon), isClosedSheet);
+    }
+
+    private static Text getNatureText(Nature nature, Nature natureEffective, boolean isClosedSheet)
+    {
+        return TextUtils.coloredNatureLine(nature, natureEffective, isClosedSheet);
+    }
+
+    private static Text getIVsText(IVs ivs, boolean isClosedSheet)
+    {
+        return TextUtils.coloredIVsLine(ivs, isClosedSheet);
+    }
+
+    private static Text getEVsText(EVs evs, boolean isClosedSheet)
+    {
+        return TextUtils.coloredEVsLine(evs, isClosedSheet);
+    }
+
+    private static Text getMovesText(List<Move> moves, boolean isClosedSheet)
+    {
+        return TextUtils.coloredMovesLine(moves, isClosedSheet);
+    }
+
+    private static Text getGenderText(Gender gender, boolean isClosedSheet)
+    {
+        return TextUtils.coloredGenderLine(gender, isClosedSheet);
+    }
+
+    private static Text getFriendshipText(int friendship, boolean isClosedSheet)
+    {
+        return TextUtils.coloredFriendshipLine(friendship, isClosedSheet);
+    }
+
+    private static Text getHeldItemText(ItemStack heldItem, boolean isClosedSheet)
+    {
+        return TextUtils.coloredHeldItemLine(heldItem, isClosedSheet);
+    }
+
+    private static Text getCaughtBallText(PokeBall caughtBall)
+    {
+        return TextUtils.coloredCaughtBallLine(caughtBall);
+    }
+
+    private static Text getSizeText(float scale)
+    {
+        return TextUtils.coloredSizeLine(scale);
+    }
+
+    private static Text getEggGroupText(HashSet<EggGroup> eggGroups)
+    {
+        return TextUtils.coloredEggGroupsLine(eggGroups);
+    }
+
+    private static Text getneuterText(Pokemon pokemon, boolean isNeutered)
+    {
+        return TextUtils.coloredNeuterLine(pokemon, isNeutered);
+    }
+
+    private static Text getOText(Pokemon pokemon)
+    {
+        String originalTrainer;
+        try
+        {
+            originalTrainer = pokemon.getOriginalTrainerName() == null ? ChatStrings.getUnknownPlayerString() : pokemon.getOriginalTrainerName();
+        }
+        catch (Exception e)
+        {
+            originalTrainer = ChatStrings.getUnknownPlayerString();
+        }
+
+        return TextUtils.coloredOTLine(originalTrainer);
     }
 }
