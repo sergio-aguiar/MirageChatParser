@@ -387,7 +387,7 @@ public class PlaceholderResolver
     {
         if (types.size() == 1)
         {
-            return Text.literal(nickname).setStyle(Style.EMPTY.withColor(ChatColors.TypeColor.fromTypeName(types.get(0).getName())));
+            return Text.literal(nickname).setStyle(Style.EMPTY.withColor(ChatColors.TypeColor.fromTypeName(types.get(0).getName())).withItalic(false));
         }
         else
         {

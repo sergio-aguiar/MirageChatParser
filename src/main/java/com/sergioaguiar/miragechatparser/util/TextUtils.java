@@ -197,7 +197,7 @@ public class TextUtils
     public static Text coloredSpeciesLine(Pokemon pokemon, String formName, Set<String> aspects, List<SpeciesFeature> speciesFeatures)
     {
         MutableText coloredLine = Text.literal(ChatStrings.getSpeciesString())
-                .setStyle(Style.EMPTY.withColor(ChatColors.getTooltipLabelColor()))
+                .setStyle(Style.EMPTY.withColor(ChatColors.getTooltipLabelColor()).withItalic(false))
             .append(Text.literal(pokemon.getSpecies().getName())
                 .setStyle(Style.EMPTY.withColor(ChatColors.getTooltipValueColor())));
 
@@ -279,7 +279,7 @@ public class TextUtils
     public static Text coloredLevelLine(int level, int currentExperience, int targetExperience)
     {
         MutableText coloredLine = Text.literal(ChatStrings.getLevelString())
-                .setStyle(Style.EMPTY.withColor(ChatColors.getTooltipLabelColor()))
+                .setStyle(Style.EMPTY.withColor(ChatColors.getTooltipLabelColor()).withItalic(false))
             .append(Text.literal(String.valueOf(level))
                 .setStyle(Style.EMPTY.withColor(ChatColors.getTooltipValueColor())));
 
@@ -303,7 +303,7 @@ public class TextUtils
         TextColor typeColor = TypeColor.fromTypeName(type.getName());
 
         return Text.literal(ChatStrings.getTypeString())
-                .setStyle(Style.EMPTY.withColor(ChatColors.getTooltipLabelColor()))
+                .setStyle(Style.EMPTY.withColor(ChatColors.getTooltipLabelColor()).withItalic(false))
             .append(Text.literal(String.valueOf(toTitleCase(type.getName())))
                 .setStyle(Style.EMPTY.withColor(typeColor)));
     }
@@ -314,7 +314,7 @@ public class TextUtils
         TextColor typeColor2 = TypeColor.fromTypeName(type2.getName());
 
         return Text.literal(ChatStrings.getTypesString())
-                .setStyle(Style.EMPTY.withColor(ChatColors.getTooltipLabelColor()))
+                .setStyle(Style.EMPTY.withColor(ChatColors.getTooltipLabelColor()).withItalic(false))
             .append(Text.literal(String.valueOf(toTitleCase(type1.getName())))
                 .setStyle(Style.EMPTY.withColor(typeColor1)))
             .append(Text.literal(ChatStrings.getTypeSeparatorString()))
@@ -325,7 +325,7 @@ public class TextUtils
     public static Text coloredAbilitiesLine(String abilityName, boolean isHidden, boolean isClosedSheet)
     {
         MutableText coloredLine = Text.literal(ChatStrings.getAbilityString())
-                .setStyle(Style.EMPTY.withColor(ChatColors.getTooltipLabelColor()))
+                .setStyle(Style.EMPTY.withColor(ChatColors.getTooltipLabelColor()).withItalic(false))
             .append(Text.literal(isClosedSheet ? ChatStrings.getClosedSheetString() : abilityName)
                 .setStyle(Style.EMPTY.withColor(ChatColors.getTooltipValueColor())));
 
@@ -346,7 +346,7 @@ public class TextUtils
         boolean isMinted = !nature.getDisplayName().toString().equals(natureEffective.getDisplayName().toString());
 
         MutableText coloredLine = Text.literal(isMinted ? ChatStrings.getNatureMintedString() : ChatStrings.getNatureString())
-                .setStyle(Style.EMPTY.withColor(ChatColors.getTooltipLabelColor()))
+                .setStyle(Style.EMPTY.withColor(ChatColors.getTooltipLabelColor()).withItalic(false))
             .append(Text.translatable(isClosedSheet ? ChatStrings.getClosedSheetString() : natureEffective.getDisplayName().toString())
                 .setStyle(Style.EMPTY.withColor(ChatColors.getTooltipValueColor())));
 
@@ -377,7 +377,7 @@ public class TextUtils
         Set<Stats> hyperTrainedStats = CobblemonUtils.getHyperTrainedStats(ivs);
 
         MutableText coloredLine = Text.literal(hyperTrainedStats.isEmpty() || isClosedSheet ? ChatStrings.getIVsString() : ChatStrings.getIVsHyperTrainedString())
-                .setStyle(Style.EMPTY.withColor(ChatColors.getTooltipLabelColor()));
+                .setStyle(Style.EMPTY.withColor(ChatColors.getTooltipLabelColor()).withItalic(false));
 
         return coloredLine.append
             (isClosedSheet 
@@ -393,7 +393,7 @@ public class TextUtils
     public static Text coloredEVsLine(EVs evs, boolean isClosedSheet)
     {
         return Text.literal(ChatStrings.getEVsString())
-                .setStyle(Style.EMPTY.withColor(ChatColors.getTooltipLabelColor()))
+                .setStyle(Style.EMPTY.withColor(ChatColors.getTooltipLabelColor()).withItalic(false))
             .append
             (isClosedSheet 
                 ? Text.literal(ChatStrings.getClosedSheetString())
@@ -405,7 +405,7 @@ public class TextUtils
     public static Text coloredMovesLine(List<Move> moves, boolean isClosedSheet) 
     {
         MutableText coloredLine = Text.literal(ChatStrings.getMovesString())
-                .setStyle(Style.EMPTY.withColor(ChatColors.getTooltipLabelColor()));
+                .setStyle(Style.EMPTY.withColor(ChatColors.getTooltipLabelColor()).withItalic(false));
 
         if (isClosedSheet)
         {
@@ -456,7 +456,7 @@ public class TextUtils
         }
 
         MutableText coloredLine = Text.literal(ChatStrings.getGenderString())
-                .setStyle(Style.EMPTY.withColor(ChatColors.getTooltipLabelColor()));
+                .setStyle(Style.EMPTY.withColor(ChatColors.getTooltipLabelColor()).withItalic(false));
 
         if (isClosedSheet)
         {
@@ -475,7 +475,7 @@ public class TextUtils
     public static Text coloredFriendshipLine(int happiness, boolean isClosedSheet)
     {
         return Text.literal(ChatStrings.getFriendshipString())
-                .setStyle(Style.EMPTY.withColor(ChatColors.getTooltipLabelColor()))
+                .setStyle(Style.EMPTY.withColor(ChatColors.getTooltipLabelColor()).withItalic(false))
             .append(Text.literal(isClosedSheet ? ChatStrings.getClosedSheetString() : Integer.toString(happiness))
                 .setStyle(Style.EMPTY.withColor(ChatColors.getTooltipValueColor())));
     }
@@ -483,7 +483,7 @@ public class TextUtils
     public static Text coloredHeldItemLine(ItemStack heldItem, boolean isClosedSheet)
     {
         return Text.literal(ChatStrings.getHeldItemString())
-                .setStyle(Style.EMPTY.withColor(ChatColors.getTooltipLabelColor()))
+                .setStyle(Style.EMPTY.withColor(ChatColors.getTooltipLabelColor()).withItalic(false))
             .append(Text.literal(isClosedSheet ? ChatStrings.getClosedSheetString() : (heldItem.isEmpty() ? ChatStrings.getEmptyHeldItemString() : heldItem.getName().getString()))
                 .setStyle(Style.EMPTY.withColor(ChatColors.getTooltipValueColor())));
     }
@@ -491,7 +491,7 @@ public class TextUtils
     public static Text coloredCaughtBallLine(PokeBall caughtBall)
     {
         return Text.literal(ChatStrings.getCaughtBallString())
-                .setStyle(Style.EMPTY.withColor(ChatColors.getTooltipLabelColor()))
+                .setStyle(Style.EMPTY.withColor(ChatColors.getTooltipLabelColor()).withItalic(false))
             .append(Text.literal(caughtBall.item.getName().getString())
                 .setStyle(Style.EMPTY.withColor(ChatColors.getTooltipValueColor())));
     }
@@ -509,7 +509,7 @@ public class TextUtils
         }
 
         return Text.literal(ChatStrings.getSizeString())
-                .setStyle(Style.EMPTY.withColor(ChatColors.getTooltipLabelColor()))
+                .setStyle(Style.EMPTY.withColor(ChatColors.getTooltipLabelColor()).withItalic(false))
             .append(Text.literal(ChatSizes.getSizefromScale(scaleModifier).toString())
                 .setStyle(Style.EMPTY.withColor(sizeColor)));
     }
@@ -518,7 +518,7 @@ public class TextUtils
     {
         MutableText coloredLine =
             Text.literal(ChatStrings.getEggGroupsString())
-                .setStyle(Style.EMPTY.withColor(ChatColors.getTooltipLabelColor()));
+                .setStyle(Style.EMPTY.withColor(ChatColors.getTooltipLabelColor()).withItalic(false));
 
         int i = 0;
         for (EggGroup eggGroup : eggGroups)
@@ -542,7 +542,7 @@ public class TextUtils
     public static Text coloredNeuterLine(Pokemon pokemon, boolean isNeutered)
     {
         return Text.literal(ChatStrings.getNeuteredString())
-                .setStyle(Style.EMPTY.withColor(ChatColors.getTooltipLabelColor()))
+                .setStyle(Style.EMPTY.withColor(ChatColors.getTooltipLabelColor()).withItalic(false))
             .append(Text.literal(isNeutered ? ChatStrings.getTrueString() : ChatStrings.getFalseString())
                 .setStyle(Style.EMPTY.withColor(isNeutered ? ChatColors.getTooltipTrueColor() : ChatColors.getTooltipFalseColor())));
     }
@@ -550,14 +550,14 @@ public class TextUtils
     public static Text coloredOTLine(String playerName)
     {
         return Text.literal(ChatStrings.getOriginalTrainerString())
-                .setStyle(Style.EMPTY.withColor(ChatColors.getTooltipLabelColor()))
+                .setStyle(Style.EMPTY.withColor(ChatColors.getTooltipLabelColor()).withItalic(false))
             .append(Text.literal(playerName)
                 .setStyle(Style.EMPTY.withColor(ChatColors.getTooltipValueColor())));
     }
 
     public static MutableText gradientBetweenTypes(String text, ElementalType type1, ElementalType type2)
     {
-        MutableText result = Text.literal("");
+        MutableText result = Text.literal("").setStyle(Style.EMPTY.withItalic(false));
 
         int length = text.length();
         if (length == 0) return result;

@@ -321,6 +321,98 @@ public class ChatStringsConfig
                     ChatStrings.setUnknownPlayerString(string);
             }
 
+            if (config.contains("GUI.PartyCheckTitle"))
+            {
+                String string = config.get("GUI.PartyCheckTitle");
+                if (string != null && !string.isEmpty())
+                    ChatStrings.setPartyCheckTitleString(string);
+            }
+
+            if (config.contains("GUI.GeneralShoutTypeName"))
+            {
+                String string = config.get("GUI.GeneralShoutTypeName");
+                if (string != null && !string.isEmpty())
+                    ChatStrings.setGeneralShoutTypeNameString(string);
+            }
+
+            if (config.contains("GUI.GeneralShoutTypeDescription"))
+            {
+                String string = config.get("GUI.GeneralShoutTypeDescription");
+                if (string != null && !string.isEmpty())
+                    ChatStrings.setGeneralShoutTypeDescriptionString(string);
+            }
+
+            if (config.contains("GUI.RideShoutTypeName"))
+            {
+                String string = config.get("GUI.RideShoutTypeName");
+                if (string != null && !string.isEmpty())
+                    ChatStrings.setRideShoutTypeNameString(string);
+            }
+
+            if (config.contains("GUI.RideShoutTypeDescription"))
+            {
+                String string = config.get("GUI.RideShoutTypeDescription");
+                if (string != null && !string.isEmpty())
+                    ChatStrings.setRideShoutTypeDescriptionString(string);
+            }
+
+            if (config.contains("GUI.RibbonsShoutTypeName"))
+            {
+                String string = config.get("GUI.RibbonsShoutTypeName");
+                if (string != null && !string.isEmpty())
+                    ChatStrings.setRibbonShoutTypeNameString(string);
+            }
+
+            if (config.contains("GUI.RibbonsShoutTypeDescription"))
+            {
+                String string = config.get("GUI.RibbonsShoutTypeDescription");
+                if (string != null && !string.isEmpty())
+                    ChatStrings.setRibbonShoutTypeDescriptionString(string);
+            }
+
+            if (config.contains("GUI.OpenShoutVisibilityName"))
+            {
+                String string = config.get("GUI.OpenShoutVisibilityName");
+                if (string != null && !string.isEmpty())
+                    ChatStrings.setOpenShoutVisibilityNameString(string);
+            }
+
+            if (config.contains("GUI.OpenShoutVisibilityDescription"))
+            {
+                String string = config.get("GUI.OpenShoutVisibilityDescription");
+                if (string != null && !string.isEmpty())
+                    ChatStrings.setOpenShoutVisibilityDescriptionString(string);
+            }
+
+            if (config.contains("GUI.ClosedShoutVisibilityName"))
+            {
+                String string = config.get("GUI.ClosedShoutVisibilityName");
+                if (string != null && !string.isEmpty())
+                    ChatStrings.setClosedShoutVisibilityNameString(string);
+            }
+
+            if (config.contains("GUI.ClosedShoutVisibilityDescription"))
+            {
+                String string = config.get("GUI.ClosedShoutVisibilityDescription");
+                if (string != null && !string.isEmpty())
+                    ChatStrings.setClosedShoutVisibilityDescriptionString(string);
+            }
+
+            if (config.contains("GUI.SelfShoutVisibilityName"))
+            {
+                String string = config.get("GUI.SelfShoutVisibilityName");
+                if (string != null && !string.isEmpty())
+                    ChatStrings.setSelfShoutVisibilityNameString(string);
+            }
+
+            if (config.contains("GUI.SelfShoutVisibilityDescription"))
+            {
+                String string = config.get("GUI.SelfShoutVisibilityDescription");
+                if (string != null && !string.isEmpty())
+                    ChatStrings.setSelfShoutVisibilityDescriptionString(string);
+            }
+
+
             ModLogger.info("String configurations successfully loaded from chat_strings.toml.");
         }
         catch (Exception e)
@@ -392,6 +484,21 @@ public class ChatStringsConfig
             EggGroupsSeparator = ", "
             ClosedSheet = "Hidden"
             UnknownPlayer = "Unknown Player"
+
+            [GUI]
+            PartyCheckTitle = "Party Check"
+            GeneralShoutTypeName = "General Stats"
+            GeneralShoutTypeDescription = "General species/battle-specific information"
+            RideShoutTypeName = "Ride Stats"
+            RideShoutTypeDescription = "Mount-specific riding information"
+            RibbonsShoutTypeName = "Ribbons"
+            RibbonsShoutTypeDescription = "Coming Soon"
+            OpenShoutVisibilityName = "Open"
+            OpenShoutVisibilityDescription = "All information is displayed publicly"
+            ClosedShoutVisibilityName = "Closed"
+            ClosedShoutVisibilityDescription = "All battle-relevant information is hidden"
+            SelfShoutVisibilityName = "Self"
+            SelfShoutVisibilityDescription = "All information is only viewable by you"
             """;
         
         Files.writeString(file.toPath(), defaultContent);

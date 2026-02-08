@@ -1,7 +1,61 @@
 package com.sergioaguiar.miragechatparser.config.strings;
 
+import com.sergioaguiar.miragechatparser.gui.IShoutOption;
+
 public class ChatStrings
 {
+    public enum ShoutType implements IShoutOption
+    {
+        GENERAL("General Stats", "General species/battle-specific information"),
+        RIDE("Ride Stats", "Mount-specific riding information"),
+        RIBBON("Ribbons", "Coming Soon");
+
+        private final String name;
+        private final String description;
+
+        private ShoutType(String name, String description)
+        {
+            this.name = name;
+            this.description = description;
+        }
+
+        public String getName()
+        {
+            return name;
+        }
+
+        public String getDescription()
+        {
+            return description;
+        }
+    }
+
+    public enum ShoutVisibility implements IShoutOption
+    {
+        OPEN("Open", "All information is displayed publicly"),
+        CLOSED("Closed", "All battle-relevant information is hidden"),
+        SELF("Self", "All information is only viewable by you");
+
+        private final String name;
+        private final String description;
+
+        private ShoutVisibility(String name, String description)
+        {
+            this.name = name;
+            this.description = description;
+        }
+
+        public String getName()
+        {
+            return name;
+        }
+
+        public String getDescription()
+        {
+            return description;
+        }
+    }
+
     private static final String DEFAULT_TRUE_STRING = "Yes";
     private static final String DEFAULT_FALSE_STRING = "No";
 
@@ -47,6 +101,8 @@ public class ChatStrings
     private static final String DEFAULT_CLOSED_SHEET_STRING = "Hidden";
     private static final String DEFAULT_UNKNOWN_PLAYER_STRING = "Unknown Player";
 
+    private static final String DEFAULT_PARTY_CHECK_TITLE_STRING = "Party Check";
+
     private static String trueString;
     private static String falseString;
 
@@ -91,6 +147,21 @@ public class ChatStrings
     private static String eggGroupsSeparatorString;
     private static String closedSheetString;
     private static String unknownPlayeString;
+
+    private static String generalShoutTypeNameString;
+    private static String generalShoutTypeDescriptionString;
+    private static String rideShoutTypeNameString;
+    private static String rideShoutTypeDescriptionString;
+    private static String ribbonShoutTypeNameString;
+    private static String ribbonShoutTypeDescriptionString;
+
+    private static String partyCheckTitleString;
+    private static String openShoutVisibilityNameString;
+    private static String openShoutVisibilityDescriptionString;
+    private static String closedShoutVisibilityNameString;
+    private static String closedShoutVisibilityDescriptionString;
+    private static String selfShoutVisibilityNameString;
+    private static String selfShoutVisibilityDescriptionString;
 
     public static void setDefaults()
     {
@@ -138,6 +209,20 @@ public class ChatStrings
         eggGroupsSeparatorString = DEFAULT_EGG_GROUPS_SEPARATOR_STRING;
         closedSheetString = DEFAULT_CLOSED_SHEET_STRING;
         unknownPlayeString = DEFAULT_UNKNOWN_PLAYER_STRING;
+
+        partyCheckTitleString = DEFAULT_PARTY_CHECK_TITLE_STRING;
+        generalShoutTypeNameString = ShoutType.GENERAL.getName();
+        generalShoutTypeDescriptionString = ShoutType.GENERAL.getDescription();
+        rideShoutTypeNameString = ShoutType.RIDE.getName();
+        rideShoutTypeDescriptionString = ShoutType.RIDE.getDescription();
+        ribbonShoutTypeNameString = ShoutType.RIBBON.getName();
+        ribbonShoutTypeDescriptionString = ShoutType.RIBBON.getDescription();
+        openShoutVisibilityNameString = ShoutVisibility.OPEN.getName();
+        openShoutVisibilityDescriptionString = ShoutVisibility.OPEN.getDescription();
+        closedShoutVisibilityNameString = ShoutVisibility.CLOSED.getName();
+        closedShoutVisibilityDescriptionString = ShoutVisibility.CLOSED.getDescription();
+        selfShoutVisibilityNameString = ShoutVisibility.SELF.getName();
+        selfShoutVisibilityDescriptionString = ShoutVisibility.SELF.getDescription();
     }
 
     public static String getTrueString() { return trueString; }
@@ -180,6 +265,19 @@ public class ChatStrings
     public static String getEggGroupsSeparatorString() { return eggGroupsSeparatorString; }
     public static String getClosedSheetString() { return closedSheetString; }
     public static String getUnknownPlayerString() { return unknownPlayeString; }
+    public static String getPartyCheckTitleString() { return partyCheckTitleString; }
+    public static String getGeneralShoutTypeNameString() { return generalShoutTypeNameString; }
+    public static String getGeneralShoutTypeDescriptionString() { return generalShoutTypeDescriptionString; }
+    public static String getRideShoutTypeNameString() { return rideShoutTypeNameString; }
+    public static String getRideShoutTypeDescriptionString() { return rideShoutTypeDescriptionString; }
+    public static String getRibbonShoutTypeNameString() { return ribbonShoutTypeNameString; }
+    public static String getRibbonShoutTypeDescriptionString() { return ribbonShoutTypeDescriptionString; }
+    public static String getOpenShoutVisibilityNameString() { return openShoutVisibilityNameString; }
+    public static String getOpenShoutVisibilityDescriptionString() { return openShoutVisibilityDescriptionString; }
+    public static String getClosedShoutVisibilityNameString() { return closedShoutVisibilityNameString; }
+    public static String getClosedShoutVisibilityDescriptionString() { return closedShoutVisibilityDescriptionString; }
+    public static String getSelfShoutVisibilityNameString() { return selfShoutVisibilityNameString; }
+    public static String getSelfShoutVisibilityDescriptionString() { return selfShoutVisibilityDescriptionString; }
 
     protected static void setTrueString(String string) { trueString = string; }
     protected static void setFalseString(String string) { falseString = string; }
@@ -221,4 +319,17 @@ public class ChatStrings
     protected static void setEggGroupsSeparatorString(String string) { eggGroupsSeparatorString = string; }
     protected static void setClosedSheetString(String string) { closedSheetString = string; }
     protected static void setUnknownPlayerString(String string) { unknownPlayeString = string; }
+    protected static void setPartyCheckTitleString(String string) { partyCheckTitleString = string; }
+    protected static void setGeneralShoutTypeNameString(String string) { generalShoutTypeNameString = string; }
+    protected static void setGeneralShoutTypeDescriptionString(String string) { generalShoutTypeDescriptionString = string; }
+    protected static void setRideShoutTypeNameString(String string) { rideShoutTypeNameString = string; }
+    protected static void setRideShoutTypeDescriptionString(String string) { rideShoutTypeDescriptionString = string; }
+    protected static void setRibbonShoutTypeNameString(String string) { ribbonShoutTypeNameString = string; }
+    protected static void setRibbonShoutTypeDescriptionString(String string) { ribbonShoutTypeDescriptionString = string; }
+    protected static void setOpenShoutVisibilityNameString(String string) { openShoutVisibilityNameString = string; }
+    protected static void setOpenShoutVisibilityDescriptionString(String string) { openShoutVisibilityDescriptionString = string; }
+    protected static void setClosedShoutVisibilityNameString(String string) { closedShoutVisibilityNameString = string; }
+    protected static void setClosedShoutVisibilityDescriptionString(String string) { closedShoutVisibilityDescriptionString = string; }
+    protected static void setSelfShoutVisibilityNameString(String string) { selfShoutVisibilityNameString = string; }
+    protected static void setSelfShoutVisibilityDescriptionString(String string) { selfShoutVisibilityDescriptionString = string; }
 }
