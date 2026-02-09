@@ -365,6 +365,41 @@ public class ChatColorsConfig
                     ChatColors.setTooltipFalseColor(TextColor.parse(color).getOrThrow());
             }
 
+            if (config.contains("GUI.PartyCheckButtonTitleColor"))
+            {
+                String color = config.get("GUI.PartyCheckButtonTitleColor");
+                if (color != null && !color.isEmpty())
+                    ChatColors.setPartyCheckButtonTitleColor(TextColor.parse(color).getOrThrow());
+            }
+
+            if (config.contains("GUI.PartyCheckOptionNameColor"))
+            {
+                String color = config.get("GUI.PartyCheckOptionNameColor");
+                if (color != null && !color.isEmpty())
+                    ChatColors.setPartyCheckOptionNameColor(TextColor.parse(color).getOrThrow());
+            }
+
+            if (config.contains("GUI.PartyCheckOptionSplitterColor"))
+            {
+                String color = config.get("GUI.PartyCheckOptionSplitterColor");
+                if (color != null && !color.isEmpty())
+                    ChatColors.setPartyCheckOptionSplitterColor(TextColor.parse(color).getOrThrow());
+            }
+
+            if (config.contains("GUI.PartyCheckOptionDescriptionColor"))
+            {
+                String color = config.get("GUI.PartyCheckOptionDescriptionColor");
+                if (color != null && !color.isEmpty())
+                    ChatColors.setPartyCheckOptionDescriptionColor(TextColor.parse(color).getOrThrow());
+            }
+
+            if (config.contains("GUI.PartyCheckFooterColor"))
+            {
+                String color = config.get("GUI.PartyCheckFooterColor");
+                if (color != null && !color.isEmpty())
+                    ChatColors.setPartyCheckFooterColorColor(TextColor.parse(color).getOrThrow());
+            }
+
             ModLogger.info("Color configurations successfully loaded from chat_colors.toml.");
         }
         catch (Exception e)
@@ -432,6 +467,13 @@ public class ChatColorsConfig
             GenderlessColor = "#bdbdbd"
             TrueColor = "#40d440"
             FalseColor = "#d12828"
+
+            [GUI]
+            PartyCheckButtonTitleColor = "#1f22b8"
+            PartyCheckOptionNameColor = "#3463e6"
+            PartyCheckOptionSplitterColor = "#3463e6"
+            PartyCheckOptionDescriptionColor = "#d1d8eb"
+            PartyCheckFooterColor = "#d1d8eb"
             """;
         
         Files.writeString(file.toPath(), defaultContent);

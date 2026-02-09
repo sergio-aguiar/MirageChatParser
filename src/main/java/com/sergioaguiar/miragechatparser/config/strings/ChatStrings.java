@@ -4,16 +4,16 @@ import com.sergioaguiar.miragechatparser.gui.IShoutOption;
 
 public class ChatStrings
 {
-    public enum ShoutType implements IShoutOption
+    public enum DefaultShoutType implements IShoutOption
     {
         GENERAL("General Stats", "General species/battle-specific information"),
         RIDE("Ride Stats", "Mount-specific riding information"),
-        RIBBON("Ribbons", "Coming Soon");
+        RIBBON("Ribbons", "Pokémon ribbon-related information");
 
         private final String name;
         private final String description;
 
-        private ShoutType(String name, String description)
+        private DefaultShoutType(String name, String description)
         {
             this.name = name;
             this.description = description;
@@ -30,7 +30,7 @@ public class ChatStrings
         }
     }
 
-    public enum ShoutVisibility implements IShoutOption
+    public enum DefaultShoutVisibility implements IShoutOption
     {
         OPEN("Open", "All information is displayed publicly"),
         CLOSED("Closed", "All battle-relevant information is hidden"),
@@ -39,7 +39,7 @@ public class ChatStrings
         private final String name;
         private final String description;
 
-        private ShoutVisibility(String name, String description)
+        private DefaultShoutVisibility(String name, String description)
         {
             this.name = name;
             this.description = description;
@@ -101,7 +101,9 @@ public class ChatStrings
     private static final String DEFAULT_CLOSED_SHEET_STRING = "Hidden";
     private static final String DEFAULT_UNKNOWN_PLAYER_STRING = "Unknown Player";
 
-    private static final String DEFAULT_PARTY_CHECK_TITLE_STRING = "Party Check";
+    private static final String DEFAULT_PARTYCHECK_TITLE_STRING = "Party Check";
+    private static final String DEFAULT_PARTYCHECK_FOOTER_STRING = "Click to cycle through the available options";
+    private static final String DEFAULT_PARTYCHECK_SPLITTER_STRING = " - ";
 
     private static String trueString;
     private static String falseString;
@@ -162,6 +164,8 @@ public class ChatStrings
     private static String closedShoutVisibilityDescriptionString;
     private static String selfShoutVisibilityNameString;
     private static String selfShoutVisibilityDescriptionString;
+    private static String partyCheckFooterString;
+    private static String partyCheckSplitterString;
 
     public static void setDefaults()
     {
@@ -210,19 +214,21 @@ public class ChatStrings
         closedSheetString = DEFAULT_CLOSED_SHEET_STRING;
         unknownPlayeString = DEFAULT_UNKNOWN_PLAYER_STRING;
 
-        partyCheckTitleString = DEFAULT_PARTY_CHECK_TITLE_STRING;
-        generalShoutTypeNameString = ShoutType.GENERAL.getName();
-        generalShoutTypeDescriptionString = ShoutType.GENERAL.getDescription();
-        rideShoutTypeNameString = ShoutType.RIDE.getName();
-        rideShoutTypeDescriptionString = ShoutType.RIDE.getDescription();
-        ribbonShoutTypeNameString = ShoutType.RIBBON.getName();
-        ribbonShoutTypeDescriptionString = ShoutType.RIBBON.getDescription();
-        openShoutVisibilityNameString = ShoutVisibility.OPEN.getName();
-        openShoutVisibilityDescriptionString = ShoutVisibility.OPEN.getDescription();
-        closedShoutVisibilityNameString = ShoutVisibility.CLOSED.getName();
-        closedShoutVisibilityDescriptionString = ShoutVisibility.CLOSED.getDescription();
-        selfShoutVisibilityNameString = ShoutVisibility.SELF.getName();
-        selfShoutVisibilityDescriptionString = ShoutVisibility.SELF.getDescription();
+        partyCheckTitleString = DEFAULT_PARTYCHECK_TITLE_STRING;
+        generalShoutTypeNameString = DefaultShoutType.GENERAL.getName();
+        generalShoutTypeDescriptionString = DefaultShoutType.GENERAL.getDescription();
+        rideShoutTypeNameString = DefaultShoutType.RIDE.getName();
+        rideShoutTypeDescriptionString = DefaultShoutType.RIDE.getDescription();
+        ribbonShoutTypeNameString = DefaultShoutType.RIBBON.getName();
+        ribbonShoutTypeDescriptionString = DefaultShoutType.RIBBON.getDescription();
+        openShoutVisibilityNameString = DefaultShoutVisibility.OPEN.getName();
+        openShoutVisibilityDescriptionString = DefaultShoutVisibility.OPEN.getDescription();
+        closedShoutVisibilityNameString = DefaultShoutVisibility.CLOSED.getName();
+        closedShoutVisibilityDescriptionString = DefaultShoutVisibility.CLOSED.getDescription();
+        selfShoutVisibilityNameString = DefaultShoutVisibility.SELF.getName();
+        selfShoutVisibilityDescriptionString = DefaultShoutVisibility.SELF.getDescription();
+        partyCheckFooterString = DEFAULT_PARTYCHECK_FOOTER_STRING;
+        partyCheckSplitterString = DEFAULT_PARTYCHECK_SPLITTER_STRING;
     }
 
     public static String getTrueString() { return trueString; }
@@ -278,6 +284,8 @@ public class ChatStrings
     public static String getClosedShoutVisibilityDescriptionString() { return closedShoutVisibilityDescriptionString; }
     public static String getSelfShoutVisibilityNameString() { return selfShoutVisibilityNameString; }
     public static String getSelfShoutVisibilityDescriptionString() { return selfShoutVisibilityDescriptionString; }
+    public static String getPartyCheckFooterString() { return partyCheckFooterString; }
+    public static String getPartyCheckSplitterString() { return partyCheckSplitterString; }
 
     protected static void setTrueString(String string) { trueString = string; }
     protected static void setFalseString(String string) { falseString = string; }
@@ -332,4 +340,6 @@ public class ChatStrings
     protected static void setClosedShoutVisibilityDescriptionString(String string) { closedShoutVisibilityDescriptionString = string; }
     protected static void setSelfShoutVisibilityNameString(String string) { selfShoutVisibilityNameString = string; }
     protected static void setSelfShoutVisibilityDescriptionString(String string) { selfShoutVisibilityDescriptionString = string; }
+    protected static void setPartyCheckFooterString(String string) { partyCheckFooterString = string; }
+    protected static void setPartyCheckSplitterString(String string) { partyCheckSplitterString = string; }
 }

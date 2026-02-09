@@ -98,6 +98,12 @@ public class ChatColors
     private static final DataResult<TextColor> DEFAULT_TOOLTIP_TRUE_COLOR = TextColor.parse("#40d440");
     private static final DataResult<TextColor> DEFAULT_TOOLTIP_FALSE_COLOR = TextColor.parse("#d12828");
 
+    private static final DataResult<TextColor> DEFAULT_PARTYCHECK_BUTTON_TITLE_COLOR = TextColor.parse("#1f22b8");
+    private static final DataResult<TextColor> DEFAULT_PARTYCHECK_OPTION_NAME_COLOR = TextColor.parse("#3463e6");
+    private static final DataResult<TextColor> DEFAULT_PARTYCHECK_OPTION_SPLITTER_COLOR = TextColor.parse("#3463e6");
+    private static final DataResult<TextColor> DEFAULT_PARTYCHECK_OPTION_DESCRIPTION_COLOR = TextColor.parse("#d1d8eb");
+    private static final DataResult<TextColor> DEFAULT_PARTYCHECK_FOOTER_COLOR = TextColor.parse("#d1d8eb");
+
     private static TextColor typeColorNormal;
     private static TextColor typeColorFire;
     private static TextColor typeColorWater;
@@ -147,6 +153,12 @@ public class ChatColors
     private static TextColor tooltipGenderlessColor;
     private static TextColor tooltipTrueColor;
     private static TextColor tooltipFalseColor;
+
+    private static TextColor partyCheckButtonTitleColor;
+    private static TextColor partyCheckOptionNameColor;
+    private static TextColor partyCheckOptionSplitterColor;
+    private static TextColor partyCheckOptionDescriptionColor;
+    private static TextColor partyCheckFooterColor;
 
     public static void setDefaults()
     {
@@ -201,6 +213,12 @@ public class ChatColors
             tooltipGenderlessColor = DEFAULT_TOOLTIP_GENDERLESS_COLOR.getOrThrow();
             tooltipTrueColor = DEFAULT_TOOLTIP_TRUE_COLOR.getOrThrow();
             tooltipFalseColor = DEFAULT_TOOLTIP_FALSE_COLOR.getOrThrow();
+
+            partyCheckButtonTitleColor = DEFAULT_PARTYCHECK_BUTTON_TITLE_COLOR.getOrThrow();
+            partyCheckOptionNameColor = DEFAULT_PARTYCHECK_OPTION_NAME_COLOR.getOrThrow();
+            partyCheckOptionSplitterColor = DEFAULT_PARTYCHECK_OPTION_SPLITTER_COLOR.getOrThrow();
+            partyCheckOptionDescriptionColor = DEFAULT_PARTYCHECK_OPTION_DESCRIPTION_COLOR.getOrThrow();
+            partyCheckFooterColor = DEFAULT_PARTYCHECK_FOOTER_COLOR.getOrThrow();
         }
         catch (IllegalStateException e) 
         {
@@ -254,6 +272,11 @@ public class ChatColors
     public static TextColor getTooltipGenderlessColor() { return tooltipGenderlessColor; }
     public static TextColor getTooltipTrueColor() { return tooltipTrueColor; }
     public static TextColor getTooltipFalseColor() { return tooltipFalseColor; }
+    public static TextColor getPartyCheckButtonTitleColor() { return partyCheckButtonTitleColor; }
+    public static TextColor getPartyCheckOptionNameColor() { return partyCheckOptionNameColor; }
+    public static TextColor getPartyCheckOptionSplitterColor() { return partyCheckOptionSplitterColor; }
+    public static TextColor getPartyCheckOptionDescriptionColor() { return partyCheckOptionDescriptionColor; }
+    public static TextColor getPartyCheckFooterColorColor() { return partyCheckFooterColor; }
 
     protected static void setTypeColorNormal(TextColor color) { typeColorNormal = color; }
     protected static void setTypeColorFire(TextColor color) { typeColorFire = color; }
@@ -301,4 +324,9 @@ public class ChatColors
     protected static void setTooltipGenderlessColor(TextColor color) { tooltipGenderlessColor = color; }
     protected static void setTooltipTrueColor(TextColor color) { tooltipTrueColor = color; }
     protected static void setTooltipFalseColor(TextColor color) { tooltipFalseColor = color; }
+    protected static void setPartyCheckButtonTitleColor(TextColor color) { partyCheckButtonTitleColor = color; }
+    protected static void setPartyCheckOptionNameColor(TextColor color) { partyCheckOptionNameColor = color; }
+    protected static void setPartyCheckOptionSplitterColor(TextColor color) { partyCheckOptionSplitterColor = color; }
+    protected static void setPartyCheckOptionDescriptionColor(TextColor color) { partyCheckOptionDescriptionColor = color; }
+    protected static void setPartyCheckFooterColorColor(TextColor color) { partyCheckFooterColor = color; }
 }

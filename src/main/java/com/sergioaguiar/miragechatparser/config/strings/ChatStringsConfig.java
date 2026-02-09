@@ -412,6 +412,19 @@ public class ChatStringsConfig
                     ChatStrings.setSelfShoutVisibilityDescriptionString(string);
             }
 
+            if (config.contains("GUI.PartyCheckFooterString"))
+            {
+                String string = config.get("GUI.PartyCheckFooterString");
+                if (string != null && !string.isEmpty())
+                    ChatStrings.setPartyCheckFooterString(string);
+            }
+
+            if (config.contains("GUI.PartyCheckSplitterString"))
+            {
+                String string = config.get("GUI.PartyCheckSplitterString");
+                if (string != null && !string.isEmpty())
+                    ChatStrings.setPartyCheckSplitterString(string);
+            }
 
             ModLogger.info("String configurations successfully loaded from chat_strings.toml.");
         }
@@ -492,13 +505,15 @@ public class ChatStringsConfig
             RideShoutTypeName = "Ride Stats"
             RideShoutTypeDescription = "Mount-specific riding information"
             RibbonsShoutTypeName = "Ribbons"
-            RibbonsShoutTypeDescription = "Coming Soon"
+            RibbonsShoutTypeDescription = "Pokémon ribbon-related information"
             OpenShoutVisibilityName = "Open"
             OpenShoutVisibilityDescription = "All information is displayed publicly"
             ClosedShoutVisibilityName = "Closed"
             ClosedShoutVisibilityDescription = "All battle-relevant information is hidden"
             SelfShoutVisibilityName = "Self"
             SelfShoutVisibilityDescription = "All information is only viewable by you"
+            PartyCheckFooterString = "Click to cycle through the available options"
+            PartyCheckSplitterString = " - "
             """;
         
         Files.writeString(file.toPath(), defaultContent);
