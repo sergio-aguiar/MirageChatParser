@@ -1,6 +1,7 @@
 package com.sergioaguiar.miragechatparser.util;
 
 import java.util.List;
+import java.util.function.Supplier;
 import java.util.stream.Collectors;
 import java.util.stream.StreamSupport;
 
@@ -33,7 +34,7 @@ public class GooeyLibsUtils
             .build();
     }
 
-    public static GooeyButton getPokemonButton(ServerPlayerEntity player, Pokemon pokemon, boolean closed)
+    public static GooeyButton getPokemonButton(ServerPlayerEntity player, Pokemon pokemon, Supplier<Boolean> isRideShout, Supplier<Boolean> isRibbonShout, Supplier<Boolean> closed, Supplier<Boolean> self)
     {
         ca.landonjw.gooeylibs2.api.button.GooeyButton.Builder pokemonButtonBuilder = GooeyButton.builder();
 
@@ -45,27 +46,35 @@ public class GooeyLibsUtils
 
             pokemonButtonBuilder.display(PokemonItem.from(pokemon))
                 .with(DataComponentTypes.ITEM_NAME, PlaceholderResolver.getNicknameText(nickname, types))
-                .with(DataComponentTypes.LORE, new LoreComponent(PlaceholderResolver.getPokemonTooltipTextList(pokemon, closed)))
+                .with(DataComponentTypes.LORE, new LoreComponent(PlaceholderResolver.getPokemonTooltipTextList(pokemon, closed.get())))
                 .onClick((action) ->
                 {
-                    player.getServer().getPlayerManager().broadcast
-                    (
-                        Text.literal("PartyShout » ")
-                                .setStyle(Style.EMPTY.withColor(ChatColors.getCommandPrefixColor()))
-                            .append(Text.literal("Player ")
-                                .setStyle(Style.EMPTY.withColor(ChatColors.getCommandValueColor())))
-                            .append(Text.literal(player.getDisplayName().getString())
-                                .setStyle(Style.EMPTY.withColor(ChatColors.getCommandPlayerColor())))
-                            .append(Text.literal(" shouted: ")
-                                .setStyle(Style.EMPTY.withColor(ChatColors.getCommandValueColor())))
-                            .append(PlaceholderResolver.buildPokemonText(pokemon, closed)),
-                        false
-                    );
+                    if (isRideShout.get())
+                    {
+                        player.sendMessage
+                        (
+                            Text.literal("RideShout » ")
+                                    .setStyle(Style.EMPTY.withColor(ChatColors.getCommandPrefixColor()))
+                                .append(Text.literal("Coming soon!")
+                                    .setStyle(Style.EMPTY.withColor(ChatColors.getCommandValueColor())))
+                        );
+                    }
+                    else if (isRibbonShout.get())
+                    {
+                        player.sendMessage
+                        (
+                            Text.literal("RibbonShout » ")
+                                    .setStyle(Style.EMPTY.withColor(ChatColors.getCommandPrefixColor()))
+                                .append(Text.literal("Coming soon!")
+                                    .setStyle(Style.EMPTY.withColor(ChatColors.getCommandValueColor())))
+                        );
+                    }
+                    else ShoutUtils.doPartyShout(player, pokemon, closed.get(), self.get());
                 });
         }
         else
         {
-            pokemonButtonBuilder.display(new ItemStack(Items.BARRIER));
+            pokemonButtonBuilder.display(new ItemStack(Items.GLASS_PANE));
         }
             
         return pokemonButtonBuilder.build();

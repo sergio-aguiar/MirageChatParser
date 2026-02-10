@@ -16,6 +16,7 @@ import net.fabricmc.fabric.api.command.v2.CommandRegistrationCallback;
 import net.minecraft.server.command.CommandManager;
 import net.minecraft.server.command.ServerCommandSource;
 import net.minecraft.server.network.ServerPlayerEntity;
+import net.minecraft.text.MutableText;
 import net.minecraft.text.Style;
 import net.minecraft.text.Text;
 
@@ -26,18 +27,24 @@ public class PartyShoutCommand
         LiteralArgumentBuilder<ServerCommandSource> partyShout = CommandManager.literal("partyshout")
             .requires(source -> LuckPermsUtils.hasPermission(source, "miragechatparser.commands.partyshout"))
             .then(CommandManager.argument("slot", IntegerArgumentType.integer(1, 6))
-                .executes(context -> PartyShoutCommand.executePartyShout(context, false))
+                .executes(context -> PartyShoutCommand.executePartyShout(context, false, false))
                 .then(CommandManager.literal("closed")
-                    .executes(context -> PartyShoutCommand.executePartyShout(context, true))
+                    .executes(context -> PartyShoutCommand.executePartyShout(context, true, false))
+                )
+                .then(CommandManager.literal("self")
+                    .executes(context -> PartyShoutCommand.executePartyShout(context, false, true))
                 )
             );
 
         LiteralArgumentBuilder<ServerCommandSource> pokeShout = CommandManager.literal("pokeshout")
             .requires(source -> LuckPermsUtils.hasPermission(source, "miragechatparser.commands.pokeshout"))
             .then(CommandManager.argument("slot", IntegerArgumentType.integer(1, 6))
-                .executes(context -> PartyShoutCommand.executePartyShout(context, false))
+                .executes(context -> PartyShoutCommand.executePartyShout(context, false, false))
                 .then(CommandManager.literal("closed")
-                    .executes(context -> PartyShoutCommand.executePartyShout(context, true))
+                    .executes(context -> PartyShoutCommand.executePartyShout(context, true, false))
+                )
+                .then(CommandManager.literal("self")
+                    .executes(context -> PartyShoutCommand.executePartyShout(context, false, true))
                 )
             );
 
@@ -48,7 +55,7 @@ public class PartyShoutCommand
         });
     }
 
-    private static int executePartyShout(CommandContext<ServerCommandSource> context, boolean isClosedSheet) throws CommandSyntaxException
+    private static int executePartyShout(CommandContext<ServerCommandSource> context, boolean isClosedSheet, boolean isSelfShout) throws CommandSyntaxException
     {
         ServerCommandSource source = context.getSource();
         if (!source.isExecutedByPlayer())
@@ -86,19 +93,18 @@ public class PartyShoutCommand
 
         Text message = PlaceholderResolver.getPartyPokemon(player, slot, isClosedSheet);
 
-        player.getServer().getPlayerManager().broadcast
-        (
-            Text.literal("PartyShout » ")
-                    .setStyle(Style.EMPTY.withColor(ChatColors.getCommandPrefixColor()))
-                .append(Text.literal("Player ")
-                    .setStyle(Style.EMPTY.withColor(ChatColors.getCommandValueColor())))
-                .append(Text.literal(player.getDisplayName().getString())
-                    .setStyle(Style.EMPTY.withColor(ChatColors.getCommandPlayerColor())))
-                .append(Text.literal(" shouted: ")
-                    .setStyle(Style.EMPTY.withColor(ChatColors.getCommandValueColor())))
-                .append(message),
-            false
-        );
+        MutableText shoutText = Text.literal("PartyShout » ")
+                .setStyle(Style.EMPTY.withColor(ChatColors.getCommandPrefixColor()))
+            .append(Text.literal("Player ")
+                .setStyle(Style.EMPTY.withColor(ChatColors.getCommandValueColor())))
+            .append(Text.literal(player.getDisplayName().getString())
+                .setStyle(Style.EMPTY.withColor(ChatColors.getCommandPlayerColor())))
+            .append(Text.literal(" shouted: ")
+                .setStyle(Style.EMPTY.withColor(ChatColors.getCommandValueColor())))
+            .append(message);
+
+        if (isSelfShout) player.sendMessage(shoutText, false);
+        else player.getServer().getPlayerManager().broadcast(shoutText, false);
 
         return 0;
     }

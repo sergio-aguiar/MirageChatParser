@@ -16,6 +16,7 @@ import net.fabricmc.fabric.api.command.v2.CommandRegistrationCallback;
 import net.minecraft.server.command.CommandManager;
 import net.minecraft.server.command.ServerCommandSource;
 import net.minecraft.server.network.ServerPlayerEntity;
+import net.minecraft.text.MutableText;
 import net.minecraft.text.Style;
 import net.minecraft.text.Text;
 
@@ -31,10 +32,15 @@ public class PCShoutCommand
                     .requires(source -> LuckPermsUtils.hasPermission(source, "miragechatparser.commands.pcshout"))
                     .then(CommandManager.argument("box", IntegerArgumentType.integer(1, Integer.MAX_VALUE))
                         .then(CommandManager.argument("slot", IntegerArgumentType.integer(1, 30))
-                            .executes(context -> PCShoutCommand.executePCShout(context, false))
+                            .executes(context -> PCShoutCommand.executePCShout(context, false, false))
                             .then(CommandManager.literal("closed")
                                 .executes(context ->
-                                    PCShoutCommand.executePCShout(context, true)
+                                    PCShoutCommand.executePCShout(context, true, false)
+                                )
+                            )
+                            .then(CommandManager.literal("self")
+                                .executes(context ->
+                                    PCShoutCommand.executePCShout(context, false, true)
                                 )
                             )
                         )
@@ -43,7 +49,7 @@ public class PCShoutCommand
         });
     }
 
-    private static int executePCShout(CommandContext<ServerCommandSource> context, boolean isClosedSheet) throws CommandSyntaxException
+    private static int executePCShout(CommandContext<ServerCommandSource> context, boolean isClosedSheet, boolean isSelfShout) throws CommandSyntaxException
     {
         ServerCommandSource source = context.getSource();
         if (!source.isExecutedByPlayer())
@@ -95,19 +101,18 @@ public class PCShoutCommand
 
         Text message = PlaceholderResolver.getPCPokemonName(player, box, slot, isClosedSheet);
 
-        player.getServer().getPlayerManager().broadcast
-        (
-            Text.literal("PCShout » ")
-                    .setStyle(Style.EMPTY.withColor(ChatColors.getCommandPrefixColor()))
-                .append(Text.literal("Player ")
-                    .setStyle(Style.EMPTY.withColor(ChatColors.getCommandValueColor())))
-                .append(Text.literal(player.getDisplayName().getString())
-                    .setStyle(Style.EMPTY.withColor(ChatColors.getCommandPlayerColor())))
-                .append(Text.literal(" shouted: ")
-                    .setStyle(Style.EMPTY.withColor(ChatColors.getCommandValueColor())))
-                .append(message),
-            false
-        );
+        MutableText shoutText = Text.literal("PCShout » ")
+                .setStyle(Style.EMPTY.withColor(ChatColors.getCommandPrefixColor()))
+            .append(Text.literal("Player ")
+                .setStyle(Style.EMPTY.withColor(ChatColors.getCommandValueColor())))
+            .append(Text.literal(player.getDisplayName().getString())
+                .setStyle(Style.EMPTY.withColor(ChatColors.getCommandPlayerColor())))
+            .append(Text.literal(" shouted: ")
+                .setStyle(Style.EMPTY.withColor(ChatColors.getCommandValueColor())))
+            .append(message);
+
+        if (isSelfShout) player.sendMessage(shoutText, false);
+        else player.getServer().getPlayerManager().broadcast(shoutText, false);
 
         return 0;
     }

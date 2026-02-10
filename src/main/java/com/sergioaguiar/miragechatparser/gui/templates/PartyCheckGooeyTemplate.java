@@ -1,16 +1,28 @@
 package com.sergioaguiar.miragechatparser.gui.templates;
 
+import java.util.List;
+
 import org.jetbrains.annotations.NotNull;
 
 import com.cobblemon.mod.common.Cobblemon;
 import com.cobblemon.mod.common.api.storage.party.PlayerPartyStore;
+import com.sergioaguiar.miragechatparser.config.colors.ChatColors;
+import com.sergioaguiar.miragechatparser.config.strings.ChatStrings;
 import com.sergioaguiar.miragechatparser.gui.buttons.ShoutTypeGooeyButton;
 import com.sergioaguiar.miragechatparser.gui.buttons.ShoutVisibilityGooeyButton;
 import com.sergioaguiar.miragechatparser.util.GooeyLibsUtils;
+import com.sergioaguiar.miragechatparser.util.ShoutUtils;
 
+import ca.landonjw.gooeylibs2.api.button.GooeyButton;
 import ca.landonjw.gooeylibs2.api.template.slot.TemplateSlotDelegate;
 import ca.landonjw.gooeylibs2.api.template.types.ChestTemplate;
+import net.minecraft.component.DataComponentTypes;
+import net.minecraft.component.type.LoreComponent;
+import net.minecraft.item.ItemStack;
+import net.minecraft.item.Items;
 import net.minecraft.server.network.ServerPlayerEntity;
+import net.minecraft.text.Style;
+import net.minecraft.text.Text;
 
 public class PartyCheckGooeyTemplate extends ChestTemplate
 {
@@ -20,12 +32,16 @@ public class PartyCheckGooeyTemplate extends ChestTemplate
     private static final int BUTTON_ROW = 1;
     private static final int SHOUT_TYPE_BUTTON_COLUMN = 3;
     private static final int SHOUT_VISIBILITY_BUTTON_COLUMN = 4;
+    private static final int POKESHOUTALL_BUTTON_COLUMN = 5;
 
     private static final int TOP_POKEMON_ROW = 2;
     private static final int BOTTOM_POKEMON_ROW = 3;
     private static final int LEFT_POKEMON_COLUMN = 3;
     private static final int MIDDLE_POKEMON_COLUMN = 4;
     private static final int RIGHT_POKEMON_COLUMN = 5;
+
+    private ShoutTypeGooeyButton shoutTypeButton;
+    private ShoutVisibilityGooeyButton shoutVisibilityButton;
 
     public PartyCheckGooeyTemplate(@NotNull TemplateSlotDelegate[] slots, ServerPlayerEntity player)
     {
@@ -39,6 +55,7 @@ public class PartyCheckGooeyTemplate extends ChestTemplate
         configureShoutTypeButton();
         configureShoutVisibilityButton();
         configurePokemonButtons(player);
+        configurePartyShoutAllButton(player, false, false);
     }
 
     private void configureWindowFrame()
@@ -76,21 +93,72 @@ public class PartyCheckGooeyTemplate extends ChestTemplate
 
     private void configureShoutTypeButton()
     {
+        shoutTypeButton = new ShoutTypeGooeyButton();
+
         set
         (
             BUTTON_ROW, 
             SHOUT_TYPE_BUTTON_COLUMN, 
-            new ShoutTypeGooeyButton()
+            shoutTypeButton
         );
     }
 
     private void configureShoutVisibilityButton()
     {
+        shoutVisibilityButton = new ShoutVisibilityGooeyButton();
+
         set
         (
             BUTTON_ROW,
             SHOUT_VISIBILITY_BUTTON_COLUMN,
-            new ShoutVisibilityGooeyButton()
+            shoutVisibilityButton
+        );
+    }
+
+    private void configurePartyShoutAllButton(ServerPlayerEntity player, boolean closed, boolean self)
+    {
+        set
+        (
+            BUTTON_ROW,
+            POKESHOUTALL_BUTTON_COLUMN,
+            GooeyButton.builder()
+                .display(new ItemStack(Items.YELLOW_CONCRETE))
+                .with
+                (
+                    DataComponentTypes.CUSTOM_NAME, 
+                    Text.literal(ChatStrings.getPartyCheckPokeShoutAllTitleString()).setStyle(Style.EMPTY.withColor(ChatColors.getPartyCheckButtonTitleColor()).withItalic(false))
+                )
+                .with
+                (
+                    DataComponentTypes.LORE,
+                    new LoreComponent(List.of(Text.literal(ChatStrings.getPartyCheckPartyShoutAllFooterString()).setStyle(Style.EMPTY.withColor(ChatColors.getPartyCheckFooterColorColor()).withItalic(false))))
+                )
+                .onClick((action) ->
+                {
+                    if (shoutTypeButton.isRideShout()) 
+                    {
+                        player.sendMessage
+                        (
+                            Text.literal("RideShout » ")
+                                    .setStyle(Style.EMPTY.withColor(ChatColors.getCommandPrefixColor()))
+                                .append(Text.literal("Coming soon!")
+                                    .setStyle(Style.EMPTY.withColor(ChatColors.getCommandValueColor())))
+                        );
+                    }
+                    else if (shoutTypeButton.isRibbonShout()) 
+                    {
+                        player.sendMessage
+                        (
+                            Text.literal("RibbonShout » ")
+                                    .setStyle(Style.EMPTY.withColor(ChatColors.getCommandPrefixColor()))
+                                .append(Text.literal("Coming soon!")
+                                    .setStyle(Style.EMPTY.withColor(ChatColors.getCommandValueColor())))
+                        );
+                    }
+                    else ShoutUtils.doPartyShoutAll(player, shoutVisibilityButton.isClosedShout(), shoutVisibilityButton.isOpenShout());
+                    
+                })
+                .build()
         );
     }
 
@@ -98,11 +166,11 @@ public class PartyCheckGooeyTemplate extends ChestTemplate
     {
         PlayerPartyStore party = Cobblemon.INSTANCE.getStorage().getParty(player);
 
-        set(TOP_POKEMON_ROW, LEFT_POKEMON_COLUMN, GooeyLibsUtils.getPokemonButton(player, party.get(0), false));
-        set(TOP_POKEMON_ROW, MIDDLE_POKEMON_COLUMN, GooeyLibsUtils.getPokemonButton(player, party.get(1), false));
-        set(TOP_POKEMON_ROW, RIGHT_POKEMON_COLUMN, GooeyLibsUtils.getPokemonButton(player, party.get(2), false));
-        set(BOTTOM_POKEMON_ROW, LEFT_POKEMON_COLUMN, GooeyLibsUtils.getPokemonButton(player, party.get(3), false));
-        set(BOTTOM_POKEMON_ROW, MIDDLE_POKEMON_COLUMN, GooeyLibsUtils.getPokemonButton(player, party.get(4), false));
-        set(BOTTOM_POKEMON_ROW, RIGHT_POKEMON_COLUMN, GooeyLibsUtils.getPokemonButton(player, party.get(5), false));
+        set(TOP_POKEMON_ROW, LEFT_POKEMON_COLUMN, GooeyLibsUtils.getPokemonButton(player, party.get(0), shoutTypeButton::isRideShout, shoutTypeButton::isRibbonShout, shoutVisibilityButton::isClosedShout, shoutVisibilityButton::isOpenShout));
+        set(TOP_POKEMON_ROW, MIDDLE_POKEMON_COLUMN, GooeyLibsUtils.getPokemonButton(player, party.get(1), shoutTypeButton::isRideShout, shoutTypeButton::isRibbonShout, shoutVisibilityButton::isClosedShout, shoutVisibilityButton::isOpenShout));
+        set(TOP_POKEMON_ROW, RIGHT_POKEMON_COLUMN, GooeyLibsUtils.getPokemonButton(player, party.get(2), shoutTypeButton::isRideShout, shoutTypeButton::isRibbonShout, shoutVisibilityButton::isClosedShout, shoutVisibilityButton::isOpenShout));
+        set(BOTTOM_POKEMON_ROW, LEFT_POKEMON_COLUMN, GooeyLibsUtils.getPokemonButton(player, party.get(3), shoutTypeButton::isRideShout, shoutTypeButton::isRibbonShout, shoutVisibilityButton::isClosedShout, shoutVisibilityButton::isOpenShout));
+        set(BOTTOM_POKEMON_ROW, MIDDLE_POKEMON_COLUMN, GooeyLibsUtils.getPokemonButton(player, party.get(4), shoutTypeButton::isRideShout, shoutTypeButton::isRibbonShout, shoutVisibilityButton::isClosedShout, shoutVisibilityButton::isOpenShout));
+        set(BOTTOM_POKEMON_ROW, RIGHT_POKEMON_COLUMN, GooeyLibsUtils.getPokemonButton(player, party.get(5), shoutTypeButton::isRideShout, shoutTypeButton::isRibbonShout, shoutVisibilityButton::isClosedShout, shoutVisibilityButton::isOpenShout));
     }
 }

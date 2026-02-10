@@ -102,7 +102,11 @@ public class ChatStrings
     private static final String DEFAULT_UNKNOWN_PLAYER_STRING = "Unknown Player";
 
     private static final String DEFAULT_PARTYCHECK_TITLE_STRING = "Party Check";
-    private static final String DEFAULT_PARTYCHECK_FOOTER_STRING = "Click to cycle through the available options";
+    private static final String DEFAULT_PARTYCHECK_SHOUT_TYPE_TITLE_STRING = "Shout Type";
+    private static final String DEFAULT_PARTYCHECK_SHOUT_VISIBILITY_TITLE_STRING = "Shout Visibility";
+    private static final String DEFAULT_PARTYCHECK_POKESHOUTALL_TITLE_STRING = "PartyShoutAll";
+    private static final String DEFAULT_PARTYCHECK_OPTIONED_FOOTER_STRING = "Click to cycle through the available options.";
+    private static final String DEFAULT_PARTYCHECK_PARTYSHOUTALL_FOOTER_STRING = "Click to display all Pokémon in chat.";
     private static final String DEFAULT_PARTYCHECK_SPLITTER_STRING = " - ";
 
     private static String trueString;
@@ -150,14 +154,16 @@ public class ChatStrings
     private static String closedSheetString;
     private static String unknownPlayeString;
 
+    private static String partyCheckTitleString;
+    private static String partyCheckShoutTypeTitleString;
+    private static String partyCheckShoutVisibilityTitleString;
+    private static String partyCheckPokeShoutAllTitleString;
     private static String generalShoutTypeNameString;
     private static String generalShoutTypeDescriptionString;
     private static String rideShoutTypeNameString;
     private static String rideShoutTypeDescriptionString;
     private static String ribbonShoutTypeNameString;
     private static String ribbonShoutTypeDescriptionString;
-
-    private static String partyCheckTitleString;
     private static String openShoutVisibilityNameString;
     private static String openShoutVisibilityDescriptionString;
     private static String closedShoutVisibilityNameString;
@@ -165,6 +171,7 @@ public class ChatStrings
     private static String selfShoutVisibilityNameString;
     private static String selfShoutVisibilityDescriptionString;
     private static String partyCheckFooterString;
+    private static String partyCheckPartyShoutAllFooterString;
     private static String partyCheckSplitterString;
 
     public static void setDefaults()
@@ -215,6 +222,9 @@ public class ChatStrings
         unknownPlayeString = DEFAULT_UNKNOWN_PLAYER_STRING;
 
         partyCheckTitleString = DEFAULT_PARTYCHECK_TITLE_STRING;
+        partyCheckShoutTypeTitleString = DEFAULT_PARTYCHECK_SHOUT_TYPE_TITLE_STRING;
+        partyCheckShoutVisibilityTitleString = DEFAULT_PARTYCHECK_SHOUT_VISIBILITY_TITLE_STRING;
+        partyCheckPokeShoutAllTitleString = DEFAULT_PARTYCHECK_POKESHOUTALL_TITLE_STRING;
         generalShoutTypeNameString = DefaultShoutType.GENERAL.getName();
         generalShoutTypeDescriptionString = DefaultShoutType.GENERAL.getDescription();
         rideShoutTypeNameString = DefaultShoutType.RIDE.getName();
@@ -227,7 +237,8 @@ public class ChatStrings
         closedShoutVisibilityDescriptionString = DefaultShoutVisibility.CLOSED.getDescription();
         selfShoutVisibilityNameString = DefaultShoutVisibility.SELF.getName();
         selfShoutVisibilityDescriptionString = DefaultShoutVisibility.SELF.getDescription();
-        partyCheckFooterString = DEFAULT_PARTYCHECK_FOOTER_STRING;
+        partyCheckFooterString = DEFAULT_PARTYCHECK_OPTIONED_FOOTER_STRING;
+        partyCheckPartyShoutAllFooterString = DEFAULT_PARTYCHECK_PARTYSHOUTALL_FOOTER_STRING;
         partyCheckSplitterString = DEFAULT_PARTYCHECK_SPLITTER_STRING;
     }
 
@@ -272,6 +283,9 @@ public class ChatStrings
     public static String getClosedSheetString() { return closedSheetString; }
     public static String getUnknownPlayerString() { return unknownPlayeString; }
     public static String getPartyCheckTitleString() { return partyCheckTitleString; }
+    public static String getPartyCheckShoutTypeTitleString() { return partyCheckShoutTypeTitleString; }
+    public static String getPartyCheckShoutVisibilityTitleString() { return partyCheckShoutVisibilityTitleString; }
+    public static String getPartyCheckPokeShoutAllTitleString() { return partyCheckPokeShoutAllTitleString; }
     public static String getGeneralShoutTypeNameString() { return generalShoutTypeNameString; }
     public static String getGeneralShoutTypeDescriptionString() { return generalShoutTypeDescriptionString; }
     public static String getRideShoutTypeNameString() { return rideShoutTypeNameString; }
@@ -285,6 +299,7 @@ public class ChatStrings
     public static String getSelfShoutVisibilityNameString() { return selfShoutVisibilityNameString; }
     public static String getSelfShoutVisibilityDescriptionString() { return selfShoutVisibilityDescriptionString; }
     public static String getPartyCheckFooterString() { return partyCheckFooterString; }
+    public static String getPartyCheckPartyShoutAllFooterString() { return partyCheckPartyShoutAllFooterString; }
     public static String getPartyCheckSplitterString() { return partyCheckSplitterString; }
 
     protected static void setTrueString(String string) { trueString = string; }
@@ -328,6 +343,9 @@ public class ChatStrings
     protected static void setClosedSheetString(String string) { closedSheetString = string; }
     protected static void setUnknownPlayerString(String string) { unknownPlayeString = string; }
     protected static void setPartyCheckTitleString(String string) { partyCheckTitleString = string; }
+    protected static void setPartyCheckShoutTypeTitleString(String string) { partyCheckShoutTypeTitleString = string; }
+    protected static void setPartyCheckShoutVisibilityTitleString(String string) { partyCheckShoutVisibilityTitleString = string; }
+    protected static void setPartyCheckPokeShoutAllTitleString(String string) { partyCheckPokeShoutAllTitleString = string; }
     protected static void setGeneralShoutTypeNameString(String string) { generalShoutTypeNameString = string; }
     protected static void setGeneralShoutTypeDescriptionString(String string) { generalShoutTypeDescriptionString = string; }
     protected static void setRideShoutTypeNameString(String string) { rideShoutTypeNameString = string; }
@@ -341,5 +359,6 @@ public class ChatStrings
     protected static void setSelfShoutVisibilityNameString(String string) { selfShoutVisibilityNameString = string; }
     protected static void setSelfShoutVisibilityDescriptionString(String string) { selfShoutVisibilityDescriptionString = string; }
     protected static void setPartyCheckFooterString(String string) { partyCheckFooterString = string; }
+    protected static void setPartyCheckPartyShoutAllFooterString(String string) { partyCheckPartyShoutAllFooterString = string; }
     protected static void setPartyCheckSplitterString(String string) { partyCheckSplitterString = string; }
 }

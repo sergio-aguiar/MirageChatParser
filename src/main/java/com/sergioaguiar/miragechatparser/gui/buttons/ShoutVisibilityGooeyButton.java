@@ -101,9 +101,9 @@ public class ShoutVisibilityGooeyButton extends ButtonBase
     {
         List<Text> loreText = List.of
         (
-            getButtonLoreLine(0, buttonIndex),
-            getButtonLoreLine(1, buttonIndex),
-            getButtonLoreLine(2, buttonIndex),
+            getButtonLoreLine(ShoutVisibility.OPEN.ordinal(), buttonIndex),
+            getButtonLoreLine(ShoutVisibility.CLOSED.ordinal(), buttonIndex),
+            getButtonLoreLine(ShoutVisibility.SELF.ordinal(), buttonIndex),
             Text.literal("")
                 .setStyle(Style.EMPTY.withItalic(false)),
             Text.literal(ChatStrings.getPartyCheckFooterString())
@@ -151,9 +151,24 @@ public class ShoutVisibilityGooeyButton extends ButtonBase
                         : Items.GRAY_CONCRETE
         );
 
-        stack.set(DataComponentTypes.CUSTOM_NAME, Text.literal(type.getName()).setStyle(Style.EMPTY.withColor(ChatColors.getPartyCheckButtonTitleColor()).withItalic(false)));
+        stack.set(DataComponentTypes.CUSTOM_NAME, Text.literal(ChatStrings.getPartyCheckShoutVisibilityTitleString()).setStyle(Style.EMPTY.withColor(ChatColors.getPartyCheckButtonTitleColor()).withItalic(false)));
         stack.set(DataComponentTypes.LORE, getShoutVisibilityButtonLore(type.ordinal()));
 
         return stack;
+    }
+
+    public boolean isOpenShout()
+    {
+        return currentSelection == ShoutVisibility.OPEN.ordinal();
+    }
+
+    public boolean isClosedShout()
+    {
+        return currentSelection == ShoutVisibility.CLOSED.ordinal();
+    }
+
+    public boolean isSelfShout()
+    {
+        return currentSelection == ShoutVisibility.SELF.ordinal();
     }
 }

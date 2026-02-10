@@ -101,9 +101,9 @@ public class ShoutTypeGooeyButton extends ButtonBase
     {
         List<Text> loreText = List.of
         (
-            getButtonLoreLine(0, buttonIndex),
-            getButtonLoreLine(1, buttonIndex),
-            getButtonLoreLine(2, buttonIndex),
+            getButtonLoreLine(ShoutType.GENERAL.ordinal(), buttonIndex),
+            getButtonLoreLine(ShoutType.RIDE.ordinal(), buttonIndex),
+            getButtonLoreLine(ShoutType.RIBBON.ordinal(), buttonIndex),
             Text.literal("")
                 .setStyle(Style.EMPTY.withItalic(false)),
             Text.literal(ChatStrings.getPartyCheckFooterString())
@@ -151,9 +151,24 @@ public class ShoutTypeGooeyButton extends ButtonBase
                         : Items.GRAY_CONCRETE
         );
 
-        stack.set(DataComponentTypes.CUSTOM_NAME, Text.literal(type.getName()).setStyle(Style.EMPTY.withColor(ChatColors.getPartyCheckButtonTitleColor()).withItalic(false)));
+        stack.set(DataComponentTypes.CUSTOM_NAME, Text.literal(ChatStrings.getPartyCheckShoutTypeTitleString()).setStyle(Style.EMPTY.withColor(ChatColors.getPartyCheckButtonTitleColor()).withItalic(false)));
         stack.set(DataComponentTypes.LORE, getShoutTypeButtonLore(type.ordinal()));
 
         return stack;
+    }
+
+    public boolean isGeneralShout()
+    {
+        return currentSelection == ShoutType.GENERAL.ordinal();
+    }
+
+    public boolean isRideShout()
+    {
+        return currentSelection == ShoutType.RIDE.ordinal();
+    }
+
+    public boolean isRibbonShout()
+    {
+        return currentSelection == ShoutType.RIBBON.ordinal();
     }
 }

@@ -54,3 +54,10 @@ FemaleColor = "#e16ef0"
 GenderlessColor = "#bdbdbd"
 TrueColor = "#40d440"
 FalseColor = "#d12828"
+
+[GUI]
+PartyCheckButtonTitleColor = "#1f22b8"
+PartyCheckOptionNameColor = "#3463e6"
+PartyCheckOptionSplitterColor = "#3463e6"
+PartyCheckOptionDescriptionColor = "#d1d8eb"
+PartyCheckFooterColor = "#d1d8eb"

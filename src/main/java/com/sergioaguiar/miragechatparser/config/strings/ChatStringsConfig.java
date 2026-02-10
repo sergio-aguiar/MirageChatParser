@@ -321,6 +321,27 @@ public class ChatStringsConfig
                     ChatStrings.setUnknownPlayerString(string);
             }
 
+            if (config.contains("GUI.PartyCheckShoutTypeTitle"))
+            {
+                String string = config.get("GUI.PartyCheckShoutTypeTitle");
+                if (string != null && !string.isEmpty())
+                    ChatStrings.setPartyCheckShoutTypeTitleString(string);
+            }
+
+            if (config.contains("GUI.PartyCheckShoutVisibilityTitle"))
+            {
+                String string = config.get("GUI.PartyCheckShoutVisibilityTitle");
+                if (string != null && !string.isEmpty())
+                    ChatStrings.setPartyCheckShoutVisibilityTitleString(string);
+            }
+
+            if (config.contains("GUI.PartyCheckPokeShoutAllTitle"))
+            {
+                String string = config.get("GUI.PartyCheckPokeShoutAllTitle");
+                if (string != null && !string.isEmpty())
+                    ChatStrings.setPartyCheckPokeShoutAllTitleString(string);
+            }
+
             if (config.contains("GUI.PartyCheckTitle"))
             {
                 String string = config.get("GUI.PartyCheckTitle");
@@ -412,16 +433,16 @@ public class ChatStringsConfig
                     ChatStrings.setSelfShoutVisibilityDescriptionString(string);
             }
 
-            if (config.contains("GUI.PartyCheckFooterString"))
+            if (config.contains("GUI.PartyCheckFooter"))
             {
-                String string = config.get("GUI.PartyCheckFooterString");
+                String string = config.get("GUI.PartyCheckFooter");
                 if (string != null && !string.isEmpty())
                     ChatStrings.setPartyCheckFooterString(string);
             }
 
-            if (config.contains("GUI.PartyCheckSplitterString"))
+            if (config.contains("GUI.PartyCheckSplitter"))
             {
-                String string = config.get("GUI.PartyCheckSplitterString");
+                String string = config.get("GUI.PartyCheckSplitter");
                 if (string != null && !string.isEmpty())
                     ChatStrings.setPartyCheckSplitterString(string);
             }
@@ -500,6 +521,9 @@ public class ChatStringsConfig
 
             [GUI]
             PartyCheckTitle = "Party Check"
+            PartyCheckShoutTypeTitle = "Shout Type"
+            PartyCheckShoutVisibilityTitle = "Shout Visibility"
+            PartyCheckPokeShoutAllTitle = "PokeShoutAll"
             GeneralShoutTypeName = "General Stats"
             GeneralShoutTypeDescription = "General species/battle-specific information"
             RideShoutTypeName = "Ride Stats"
@@ -512,8 +536,9 @@ public class ChatStringsConfig
             ClosedShoutVisibilityDescription = "All battle-relevant information is hidden"
             SelfShoutVisibilityName = "Self"
             SelfShoutVisibilityDescription = "All information is only viewable by you"
-            PartyCheckFooterString = "Click to cycle through the available options"
-            PartyCheckSplitterString = " - "
+            PartyCheckFooter = "Click to cycle through the available options."
+            PartyCheckPartyShoutAllFooter = "Click to display all Pokémon in chat."
+            PartyCheckSplitter = " - "
             """;
         
         Files.writeString(file.toPath(), defaultContent);

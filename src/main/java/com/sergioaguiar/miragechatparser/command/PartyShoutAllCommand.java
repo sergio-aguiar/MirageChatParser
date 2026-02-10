@@ -24,16 +24,22 @@ public class PartyShoutAllCommand
     {
         LiteralArgumentBuilder<ServerCommandSource> partyShoutAll = CommandManager.literal("partyshoutall")
             .requires(source -> LuckPermsUtils.hasPermission(source, "miragechatparser.commands.partyshoutall"))
-            .executes(context -> PartyShoutAllCommand.executePartyShoutAll(context, false))
+            .executes(context -> PartyShoutAllCommand.executePartyShoutAll(context, false, false))
             .then(CommandManager.literal("closed")
-                .executes(context -> PartyShoutAllCommand.executePartyShoutAll(context, true))
+                .executes(context -> PartyShoutAllCommand.executePartyShoutAll(context, true, false))
+            )
+            .then(CommandManager.literal("self")
+                .executes(context -> PartyShoutAllCommand.executePartyShoutAll(context, false, true))
             );
 
         LiteralArgumentBuilder<ServerCommandSource> pokeShoutAll = CommandManager.literal("pokeshoutall")
             .requires(source -> LuckPermsUtils.hasPermission(source, "miragechatparser.commands.pokeshoutall"))
-            .executes(context -> PartyShoutAllCommand.executePartyShoutAll(context, false))
+            .executes(context -> PartyShoutAllCommand.executePartyShoutAll(context, false, false))
             .then(CommandManager.literal("closed")
-                .executes(context -> PartyShoutAllCommand.executePartyShoutAll(context, true))
+                .executes(context -> PartyShoutAllCommand.executePartyShoutAll(context, true, false))
+            )
+            .then(CommandManager.literal("self")
+                .executes(context -> PartyShoutAllCommand.executePartyShoutAll(context, false, true))
             );
 
         CommandRegistrationCallback.EVENT.register((dispatcher, registryAccess, environment) -> 
@@ -43,7 +49,7 @@ public class PartyShoutAllCommand
         });
     }
 
-    private static int executePartyShoutAll(CommandContext<ServerCommandSource> context, boolean isClosedSheet) throws CommandSyntaxException
+    private static int executePartyShoutAll(CommandContext<ServerCommandSource> context, boolean isClosedSheet, boolean isSelfShout) throws CommandSyntaxException
     {
         ServerCommandSource source = context.getSource();
         if (!source.isExecutedByPlayer())
@@ -94,7 +100,8 @@ public class PartyShoutAllCommand
             else if (i != infoAmount - 1) coloredLine = coloredLine.append(Text.literal(" "));
         }
 
-        player.getServer().getPlayerManager().broadcast(coloredLine, false);
+        if (isSelfShout) player.sendMessage(coloredLine, false);
+        else player.getServer().getPlayerManager().broadcast(coloredLine, false);
         return 0;
     }
 }
