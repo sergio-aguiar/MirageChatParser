@@ -8,7 +8,7 @@ import net.minecraft.server.network.ServerPlayerEntity;
 
 public class CooldownManager
 {
-    private static final int COOLDOWN_TICKS = 40;
+    private static final int COOLDOWN_TICKS = 20;
 
     private static final Map<UUID, Long> LAST_COMMAND_TICKS = new HashMap<>();
 
