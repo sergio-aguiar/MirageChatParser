@@ -11,6 +11,7 @@ import com.cobblemon.mod.common.pokemon.Pokemon;
 import com.sergioaguiar.miragechatparser.config.colors.ChatColors;
 import com.sergioaguiar.miragechatparser.config.strings.ChatStrings;
 import com.sergioaguiar.miragechatparser.gui.templates.PartyCheckGooeyTemplate;
+import com.sergioaguiar.miragechatparser.manager.CooldownManager;
 import com.sergioaguiar.miragechatparser.parser.PlaceholderResolver;
 
 import ca.landonjw.gooeylibs2.api.button.GooeyButton;
@@ -51,27 +52,46 @@ public class GooeyLibsUtils
                 .with(DataComponentTypes.LORE, new LoreComponent(PlaceholderResolver.getPokemonTooltipTextList(pokemon, closed.get())))
                 .onClick((action) ->
                 {
-                    if (isRideShout.get())
+                    if (CooldownManager.isOnCooldown(player))
                     {
                         player.sendMessage
                         (
-                            Text.literal("RideShout » ")
+                            Text.literal("MirageChat » ")
                                     .setStyle(Style.EMPTY.withColor(ChatColors.getCommandPrefixColor()))
-                                .append(Text.literal("Coming soon!")
+                                .append(Text.literal("You are still on cooldown for ")
+                                    .setStyle(Style.EMPTY.withColor(ChatColors.getCommandValueColor())))
+                                .append(Text.literal("%.2f".formatted(CooldownManager.getRemainingTicks(player) / 20.0))
+                                    .setStyle(Style.EMPTY.withColor(ChatColors.getCommandPrefixColor())))
+                                .append(Text.literal(" seconds.")
                                     .setStyle(Style.EMPTY.withColor(ChatColors.getCommandValueColor())))
                         );
                     }
-                    else if (isRibbonShout.get())
+                    else
                     {
-                        player.sendMessage
-                        (
-                            Text.literal("RibbonShout » ")
-                                    .setStyle(Style.EMPTY.withColor(ChatColors.getCommandPrefixColor()))
-                                .append(Text.literal("Coming soon!")
-                                    .setStyle(Style.EMPTY.withColor(ChatColors.getCommandValueColor())))
-                        );
+                        if (isRideShout.get())
+                        {
+                            player.sendMessage
+                            (
+                                Text.literal("RideShout » ")
+                                        .setStyle(Style.EMPTY.withColor(ChatColors.getCommandPrefixColor()))
+                                    .append(Text.literal("Coming soon!")
+                                        .setStyle(Style.EMPTY.withColor(ChatColors.getCommandValueColor())))
+                            );
+                        }
+                        else if (isRibbonShout.get())
+                        {
+                            player.sendMessage
+                            (
+                                Text.literal("RibbonShout » ")
+                                        .setStyle(Style.EMPTY.withColor(ChatColors.getCommandPrefixColor()))
+                                    .append(Text.literal("Coming soon!")
+                                        .setStyle(Style.EMPTY.withColor(ChatColors.getCommandValueColor())))
+                            );
+                        }
+                        else ShoutUtils.doPartyShout(player, pokemon, closed.get(), self.get());
+
+                        CooldownManager.setUsed(player);
                     }
-                    else ShoutUtils.doPartyShout(player, pokemon, closed.get(), self.get());
                 });
         }
         else

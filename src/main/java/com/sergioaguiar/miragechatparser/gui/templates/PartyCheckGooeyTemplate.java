@@ -11,6 +11,7 @@ import com.sergioaguiar.miragechatparser.config.settings.ChatSettings;
 import com.sergioaguiar.miragechatparser.config.strings.ChatStrings;
 import com.sergioaguiar.miragechatparser.gui.buttons.ShoutTypeGooeyButton;
 import com.sergioaguiar.miragechatparser.gui.buttons.ShoutVisibilityGooeyButton;
+import com.sergioaguiar.miragechatparser.manager.CooldownManager;
 import com.sergioaguiar.miragechatparser.util.GooeyLibsUtils;
 import com.sergioaguiar.miragechatparser.util.ShoutUtils;
 
@@ -139,28 +140,46 @@ public class PartyCheckGooeyTemplate extends ChestTemplate
                 )
                 .onClick((action) ->
                 {
-                    if (shoutTypeButton.isRideShout()) 
+                    if (CooldownManager.isOnCooldown(player))
                     {
                         player.sendMessage
                         (
-                            Text.literal("RideShout » ")
+                            Text.literal("MirageChat » ")
                                     .setStyle(Style.EMPTY.withColor(ChatColors.getCommandPrefixColor()))
-                                .append(Text.literal("Coming soon!")
+                                .append(Text.literal("You are still on cooldown for ")
+                                    .setStyle(Style.EMPTY.withColor(ChatColors.getCommandValueColor())))
+                                .append(Text.literal("%.2f".formatted(CooldownManager.getRemainingTicks(player) / 20.0))
+                                    .setStyle(Style.EMPTY.withColor(ChatColors.getCommandPrefixColor())))
+                                .append(Text.literal(" seconds.")
                                     .setStyle(Style.EMPTY.withColor(ChatColors.getCommandValueColor())))
                         );
                     }
-                    else if (shoutTypeButton.isRibbonShout()) 
+                    else
                     {
-                        player.sendMessage
-                        (
-                            Text.literal("RibbonShout » ")
-                                    .setStyle(Style.EMPTY.withColor(ChatColors.getCommandPrefixColor()))
-                                .append(Text.literal("Coming soon!")
-                                    .setStyle(Style.EMPTY.withColor(ChatColors.getCommandValueColor())))
-                        );
-                    }
-                    else ShoutUtils.doPartyShoutAll(player, shoutVisibilityButton.isClosedShout(), shoutVisibilityButton.isOpenShout());
-                    
+                        if (shoutTypeButton.isRideShout()) 
+                        {
+                            player.sendMessage
+                            (
+                                Text.literal("RideShout » ")
+                                        .setStyle(Style.EMPTY.withColor(ChatColors.getCommandPrefixColor()))
+                                    .append(Text.literal("Coming soon!")
+                                        .setStyle(Style.EMPTY.withColor(ChatColors.getCommandValueColor())))
+                            );
+                        }
+                        else if (shoutTypeButton.isRibbonShout()) 
+                        {
+                            player.sendMessage
+                            (
+                                Text.literal("RibbonShout » ")
+                                        .setStyle(Style.EMPTY.withColor(ChatColors.getCommandPrefixColor()))
+                                    .append(Text.literal("Coming soon!")
+                                        .setStyle(Style.EMPTY.withColor(ChatColors.getCommandValueColor())))
+                            );
+                        }
+                        else ShoutUtils.doPartyShoutAll(player, shoutVisibilityButton.isClosedShout(), shoutVisibilityButton.isOpenShout());
+
+                        CooldownManager.setUsed(player);
+                    }                    
                 })
                 .build()
         );
