@@ -255,13 +255,13 @@ public class PlaceholderResolver
 
         if (NeoDaycareUtils.isModLoaded() && ChatSettings.showNeutered())
         {
-            if (first) first = false;
-            else tooltip = tooltip.append(Text.literal("\n"));
-
             boolean isNeutered = NeoDaycareUtils.isNeutered(pokemon);
 
             if (isNeutered || ChatSettings.showNeuteredIfFalse())
             {
+                if (first) first = false;
+                else tooltip = tooltip.append(Text.literal("\n"));
+
                 tooltip = tooltip.append(getneuterText(pokemon, isNeutered));
             }
         }
