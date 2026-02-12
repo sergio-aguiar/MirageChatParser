@@ -28,6 +28,8 @@ public class ChatSettings
     protected static final boolean DEFAULT_BOLD_HYPER_TRAINING_VALUES = false;
     protected static final boolean DEFAULT_ITALIC_HYPER_TRAINING_VALUES = false;
 
+    protected static final boolean DEFAULT_SHOW_PARTYCHECK_GUI_FRAME_BLOCKS = true;
+
     private static boolean parseNonPlayerMessages;
 
     private static boolean showNickname;
@@ -53,6 +55,8 @@ public class ChatSettings
 
     private static boolean boldHyperTrainingValues;
     private static boolean italicHyperTrainingValues;
+
+    private static boolean showPartyCheckGUIFrameBlocks;
 
     public static void setDefaults()
     {
@@ -81,6 +85,8 @@ public class ChatSettings
 
         boldHyperTrainingValues = DEFAULT_BOLD_HYPER_TRAINING_VALUES;
         italicHyperTrainingValues = DEFAULT_ITALIC_HYPER_TRAINING_VALUES;
+
+        showPartyCheckGUIFrameBlocks = DEFAULT_SHOW_PARTYCHECK_GUI_FRAME_BLOCKS;
     }
 
     public static boolean parseNonPlayerMessages() { return parseNonPlayerMessages; }
@@ -105,6 +111,7 @@ public class ChatSettings
     public static boolean showNeuteredIfFalse() { return showNeuteredIfFalse; }
     public static boolean shouldBoldHyperTrainingValues() { return boldHyperTrainingValues; }
     public static boolean shouldItalicHyperTrainingValues() { return italicHyperTrainingValues; }
+    public static boolean shouldShowPartyCheckGUIFrameBlocks() { return showPartyCheckGUIFrameBlocks; }
 
     protected static void setParseNonPlayerMessages(boolean enabled) { parseNonPlayerMessages = enabled; }
     protected static void setShowNickname(boolean enabled) { showNickname = enabled; }
@@ -128,4 +135,5 @@ public class ChatSettings
     protected static void setShowNeuteredIfFalse(boolean enabled) { showNeuteredIfFalse = enabled; }
     protected static void setBoldHyperTrainingValues(boolean enabled) { boldHyperTrainingValues = enabled; }
     protected static void setItalicHyperTrainingValues(boolean enabled) { italicHyperTrainingValues = enabled; }
+    protected static void setShowPartyCheckGUIFrameBlocks(boolean enabled) { showPartyCheckGUIFrameBlocks = enabled; }
 }

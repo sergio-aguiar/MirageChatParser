@@ -173,6 +173,12 @@ public class ChatSettingsConfig
                 ChatSettings.setItalicHyperTrainingValues(enabled);
             }
 
+            if (config.contains("GUI.ShowPartyCheckGUIFrameBlocks"))
+            {
+                boolean enabled = config.getOrElse("GUI.ShowPartyCheckGUIFrameBlocks", ChatSettings.DEFAULT_ITALIC_HYPER_TRAINING_VALUES);
+                ChatSettings.setShowPartyCheckGUIFrameBlocks(enabled);
+            }
+
             ModLogger.info("Setting configurations successfully loaded from chat_settings.toml.");
         }
         catch (Exception e)
@@ -233,6 +239,10 @@ public class ChatSettingsConfig
             BoldHyperTrainingValues = true
             # Whether hyper trained IV stat values should appear in italic (true/false)
             ItalicHyperTrainingValues = false
+
+            [GUI]
+            # Whether the PartyCheck command's GUI should display the surrounding block frame (true/false)
+            ShowPartyCheckGUIFrameBlocks = true
             """;
         
         Files.writeString(file.toPath(), defaultContent);
