@@ -47,3 +47,7 @@ ShowNeuteredIfFalse = true
 BoldHyperTrainingValues = true
 # Whether hyper trained IV stat values should appear in italic (true/false)
 ItalicHyperTrainingValues = false
+
+[GUI]
+# Whether the PartyCheck command's GUI should display the surrounding block frame (true/false)
+ShowPartyCheckGUIFrameBlocks = true
