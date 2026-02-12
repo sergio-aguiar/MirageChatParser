@@ -41,6 +41,9 @@ public class PartyCheckGooeyTemplate extends ChestTemplate
     private static final int MIDDLE_POKEMON_COLUMN = 4;
     private static final int RIGHT_POKEMON_COLUMN = 5;
 
+    private static final int MAX_PARTY_POKEMON = 6;
+    private static final int POKEMON_PER_ROW = 3;
+
     private ShoutTypeGooeyButton shoutTypeButton;
     private ShoutVisibilityGooeyButton shoutVisibilityButton;
 
@@ -167,11 +170,21 @@ public class PartyCheckGooeyTemplate extends ChestTemplate
     {
         PlayerPartyStore party = Cobblemon.INSTANCE.getStorage().getParty(player);
 
-        set(TOP_POKEMON_ROW, LEFT_POKEMON_COLUMN, GooeyLibsUtils.getPokemonButton(player, party.get(0), shoutTypeButton::isRideShout, shoutTypeButton::isRibbonShout, shoutVisibilityButton::isClosedShout, shoutVisibilityButton::isOpenShout));
-        set(TOP_POKEMON_ROW, MIDDLE_POKEMON_COLUMN, GooeyLibsUtils.getPokemonButton(player, party.get(1), shoutTypeButton::isRideShout, shoutTypeButton::isRibbonShout, shoutVisibilityButton::isClosedShout, shoutVisibilityButton::isOpenShout));
-        set(TOP_POKEMON_ROW, RIGHT_POKEMON_COLUMN, GooeyLibsUtils.getPokemonButton(player, party.get(2), shoutTypeButton::isRideShout, shoutTypeButton::isRibbonShout, shoutVisibilityButton::isClosedShout, shoutVisibilityButton::isOpenShout));
-        set(BOTTOM_POKEMON_ROW, LEFT_POKEMON_COLUMN, GooeyLibsUtils.getPokemonButton(player, party.get(3), shoutTypeButton::isRideShout, shoutTypeButton::isRibbonShout, shoutVisibilityButton::isClosedShout, shoutVisibilityButton::isOpenShout));
-        set(BOTTOM_POKEMON_ROW, MIDDLE_POKEMON_COLUMN, GooeyLibsUtils.getPokemonButton(player, party.get(4), shoutTypeButton::isRideShout, shoutTypeButton::isRibbonShout, shoutVisibilityButton::isClosedShout, shoutVisibilityButton::isOpenShout));
-        set(BOTTOM_POKEMON_ROW, RIGHT_POKEMON_COLUMN, GooeyLibsUtils.getPokemonButton(player, party.get(5), shoutTypeButton::isRideShout, shoutTypeButton::isRibbonShout, shoutVisibilityButton::isClosedShout, shoutVisibilityButton::isOpenShout));
+        for (int i = 0; i < MAX_PARTY_POKEMON; i++)
+        {
+            try
+            {
+                set
+                (
+                    i < POKEMON_PER_ROW ? TOP_POKEMON_ROW : BOTTOM_POKEMON_ROW,
+                    i % POKEMON_PER_ROW == 0 ? LEFT_POKEMON_COLUMN : i % POKEMON_PER_ROW == 1 ? MIDDLE_POKEMON_COLUMN : RIGHT_POKEMON_COLUMN,
+                    GooeyLibsUtils.getPokemonButton(player, party.get(i), shoutTypeButton::isRideShout, shoutTypeButton::isRibbonShout, shoutVisibilityButton::isClosedShout, shoutVisibilityButton::isOpenShout)
+                );
+            }
+            catch (GooeyLibsUtils.EmptyPartySlotException e)
+            {
+                continue;
+            }
+        }
     }
 }

@@ -26,6 +26,8 @@ import net.minecraft.text.Text;
 
 public class GooeyLibsUtils
 {
+    public static class EmptyPartySlotException extends Exception {}
+
     public static GooeyPage getPartyCheckPage(ServerPlayerEntity player)
     {
         return GooeyPage.builder()
@@ -34,7 +36,7 @@ public class GooeyLibsUtils
             .build();
     }
 
-    public static GooeyButton getPokemonButton(ServerPlayerEntity player, Pokemon pokemon, Supplier<Boolean> isRideShout, Supplier<Boolean> isRibbonShout, Supplier<Boolean> closed, Supplier<Boolean> self)
+    public static GooeyButton getPokemonButton(ServerPlayerEntity player, Pokemon pokemon, Supplier<Boolean> isRideShout, Supplier<Boolean> isRibbonShout, Supplier<Boolean> closed, Supplier<Boolean> self) throws EmptyPartySlotException
     {
         ca.landonjw.gooeylibs2.api.button.GooeyButton.Builder pokemonButtonBuilder = GooeyButton.builder();
 
@@ -74,7 +76,7 @@ public class GooeyLibsUtils
         }
         else
         {
-            pokemonButtonBuilder.display(new ItemStack(Items.GLASS_PANE));
+            throw new EmptyPartySlotException();
         }
             
         return pokemonButtonBuilder.build();
