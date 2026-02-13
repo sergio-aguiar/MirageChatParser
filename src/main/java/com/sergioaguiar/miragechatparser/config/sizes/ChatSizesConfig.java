@@ -50,16 +50,29 @@ public class ChatSizesConfig
         {
             config.load();
 
+            ChatSizes.setMinimumSizeScale(Double.parseDouble(config.get("minSizeModifier").toString()));
+            ChatSizes.setMaximumSizeScale(Double.parseDouble(config.get("maxSizeModifier").toString()));
+
+            boolean isGen9Algo = ChatSizes.getAlgorithmName().equalsIgnoreCase("gen9");
+
             List<Config> sizes = config.get("sizes");
             for (Config size : sizes)
             {
+                double sizeMin = isGen9Algo 
+                    ? ChatSizes.getScaleFromGen9Int(Integer.parseInt(size.get("min").toString())) 
+                    : Double.parseDouble(size.get("min").toString());
+
+                double sizeMax = isGen9Algo 
+                    ? ChatSizes.getScaleFromGen9Int(Integer.parseInt(size.get("max").toString())) 
+                    : Double.parseDouble(size.get("max").toString());
+
                 try
                 {
                     ChatSizes.addSizeDefinition
                     (
                         size.get("name"),
-                        Double.parseDouble(size.get("min").toString()),
-                        Double.parseDouble(size.get("max").toString()),
+                        sizeMin,
+                        sizeMax,
                         size.get("color")
                     );
                 }

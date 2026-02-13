@@ -1,5 +1,6 @@
 package com.sergioaguiar.miragechatparser.config.sizes;
 
+import java.util.Comparator;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -52,6 +53,8 @@ public class ChatSizes
     }
 
     private static String algorithmName;
+    private static double minimumSizeScale;
+    private static double maximumSizeScale;
     private static Map<String, SizeDefinition> sizes;
 
     public static void setDefaults()
@@ -79,32 +82,94 @@ public class ChatSizes
     }
 
     public static void setAlgorithmName(String algName) { algorithmName = algName; }
+    public static void setMinimumSizeScale(double scale) { minimumSizeScale = scale; }
+    public static void setMaximumSizeScale(double scale) { maximumSizeScale = scale; }
     public static void addSizeDefinition(String name, double min, double max, String color) { sizes.put(name, new CobblemonSizeVariationUtils.SizeDefinition(name, min, max, color)); }
 
     public static String getAlgorithmName() { return algorithmName; }
+    public static double getMinimumSizeScale() { return minimumSizeScale; }
+    public static double getMaximumSizeScale() { return maximumSizeScale; }
     public static Map<String, SizeDefinition> getSizes() { return sizes; }
 
     public static String getSizefromScale(double sizeScale)
     {
         for (Map.Entry<String, SizeDefinition> sizeDefinition : sizes.entrySet())
         {
-            if (sizeScale >= sizeDefinition.getValue().getMin() && sizeScale <= sizeDefinition.getValue().getMax())
+            if (sizeScale >= sizeDefinition.getValue().getMin() && sizeScale < sizeDefinition.getValue().getMax())
             {
                 return sizeDefinition.getKey();
             }
         }
-        return SizeCategory.AVERAGE.toString();
+
+        try
+        {
+            SizeDefinition lowestMinSize = getLowestMinSize();
+            if (sizeScale <= lowestMinSize.getMin()) return lowestMinSize.getName();
+
+            SizeDefinition highestMaxSize = getHighestMaxSize();
+            if (sizeScale >= highestMaxSize.getMax()) return highestMaxSize.getName();
+
+            return getHighestMaxBelow(sizeScale).getName();
+        }
+        catch (Exception e)
+        {
+            return "Unknown Size";
+        }
     }
 
     public static String getColorfromScale(double sizeScale)
     {
         for (Map.Entry<String, SizeDefinition> sizeDefinition : sizes.entrySet())
         {
-            if (sizeScale >= sizeDefinition.getValue().getMin() && sizeScale <= sizeDefinition.getValue().getMax())
+            if (sizeScale >= sizeDefinition.getValue().getMin() && sizeScale < sizeDefinition.getValue().getMax())
             {
                 return sizeDefinition.getValue().getColor();
             }
         }
-        return SizeCategory.AVERAGE.getColor();
+        
+        try
+        {
+            SizeDefinition lowestMinSize = getLowestMinSize();
+            if (sizeScale <= lowestMinSize.getMin()) return lowestMinSize.getColor();
+
+            SizeDefinition highestMaxSize = getHighestMaxSize();
+            if (sizeScale >= highestMaxSize.getMax()) return highestMaxSize.getColor();
+
+            return getHighestMaxBelow(sizeScale).getColor();
+        }
+        catch (Exception e)
+        {
+            return SizeCategory.AVERAGE.getColor();
+        }
+    }
+
+    public static double getScaleFromGen9Int(int gen9Int)
+    {
+        return gen9Int * ((maximumSizeScale - minimumSizeScale) / 255.0) + minimumSizeScale;
+    }
+
+    private static SizeDefinition getLowestMinSize()
+    {
+        return sizes.values()
+            .stream()
+            .min(Comparator.comparingDouble(SizeDefinition::getMin))
+            .orElseThrow();
+    }
+
+    private static SizeDefinition getHighestMaxSize()
+    {
+        return sizes.values()
+            .stream()
+            .max(Comparator.comparingDouble(SizeDefinition::getMax))
+            .orElseThrow();
+    }
+
+    private static SizeDefinition getHighestMaxBelow(double value)
+    {
+        return sizes.values()
+            .stream()
+            .filter(size -> size.getMax() <= value)
+            .max(Comparator.comparingDouble(SizeDefinition::getMax))
+            .orElseThrow();
     }
 }
