@@ -8,15 +8,14 @@ import com.mojang.brigadier.arguments.IntegerArgumentType;
 import com.mojang.brigadier.context.CommandContext;
 import com.mojang.brigadier.exceptions.CommandSyntaxException;
 import com.sergioaguiar.miragechatparser.config.colors.ChatColors;
-import com.sergioaguiar.miragechatparser.parser.PlaceholderResolver;
 import com.sergioaguiar.miragechatparser.util.LuckPermsUtils;
 import com.sergioaguiar.miragechatparser.util.ModLogger;
+import com.sergioaguiar.miragechatparser.util.ShoutUtils;
 
 import net.fabricmc.fabric.api.command.v2.CommandRegistrationCallback;
 import net.minecraft.server.command.CommandManager;
 import net.minecraft.server.command.ServerCommandSource;
 import net.minecraft.server.network.ServerPlayerEntity;
-import net.minecraft.text.MutableText;
 import net.minecraft.text.Style;
 import net.minecraft.text.Text;
 
@@ -88,32 +87,7 @@ public class PCShoutCommand
         PCBox boxStorage = pc.getBoxes().get(box - 1);
         Pokemon pokemon = boxStorage.get(slot - 1);
 
-        if (pokemon == null)
-        {
-            player.sendMessage(Text.literal("PCShout » ")
-                    .setStyle(Style.EMPTY.withColor(ChatColors.getCommandPrefixColor()))
-                .append(Text.literal("You can not shout an empty slot!")
-                    .setStyle(Style.EMPTY.withColor(ChatColors.getCommandValueColor()))), 
-                false);
-
-            return 1;
-        }
-
-        Text message = PlaceholderResolver.getPCPokemonName(player, box, slot, isClosedSheet);
-
-        MutableText shoutText = Text.literal("PCShout » ")
-                .setStyle(Style.EMPTY.withColor(ChatColors.getCommandPrefixColor()))
-            .append(Text.literal("Player ")
-                .setStyle(Style.EMPTY.withColor(ChatColors.getCommandValueColor())))
-            .append(Text.literal(player.getDisplayName().getString())
-                .setStyle(Style.EMPTY.withColor(ChatColors.getCommandPlayerColor())))
-            .append(Text.literal(" shouted: ")
-                .setStyle(Style.EMPTY.withColor(ChatColors.getCommandValueColor())))
-            .append(message);
-
-        if (isSelfShout) player.sendMessage(shoutText, false);
-        else player.getServer().getPlayerManager().broadcast(shoutText, false);
-
+        ShoutUtils.doPCShout(player, pokemon, box, slot, isClosedSheet, isSelfShout);
         return 0;
     }
 }
