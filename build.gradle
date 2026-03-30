@@ -61,7 +61,6 @@ dependencies {
 	include "com.electronwill.night-config:json:${project.night_config_version}"
 
 	// Gooeylibs (UI library)
-	modImplementation("ca.landonjw.gooeylibs:api:${gooeylibs_version}-SNAPSHOT")
 	modImplementation("ca.landonjw.gooeylibs:fabric:${gooeylibs_version}-SNAPSHOT")
 }
 
