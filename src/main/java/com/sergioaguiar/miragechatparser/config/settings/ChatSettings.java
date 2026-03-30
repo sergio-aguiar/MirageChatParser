@@ -89,26 +89,26 @@ public class ChatSettings
         showPartyCheckGUIFrameBlocks = DEFAULT_SHOW_PARTYCHECK_GUI_FRAME_BLOCKS;
     }
 
-    public static boolean parseNonPlayerMessages() { return parseNonPlayerMessages; }
-    public static boolean showNickname() { return showNickname; }
-    public static boolean showSpecies() { return showSpecies; }
-    public static boolean showLevel() { return showLevel; }
-    public static boolean showTypes() { return showTypes; }
-    public static boolean showAbilities() { return showAbilities; }
-    public static boolean showNature() { return showNature; }
-    public static boolean showIVs() { return showIVs; }
-    public static boolean showEVs() { return showEVs; }
-    public static boolean showMoves() { return showMoves; }
-    public static boolean showGender() { return showGender; }
-    public static boolean showFriendship() { return showFriendship; }
-    public static boolean showHeldItem() { return showHeldItem; }
-    public static boolean showBall() { return showBall; }
-    public static boolean showSize() { return showSize; }
-    public static boolean showEggGroups() { return showEggGroups; }
-    public static boolean showNeutered() { return showNeutered; }
-    public static boolean showOT() { return showOT; }
-    public static boolean showFormIfNormal() { return showFormIfNormal; }
-    public static boolean showNeuteredIfFalse() { return showNeuteredIfFalse; }
+    public static boolean shouldParseNonPlayerMessages() { return parseNonPlayerMessages; }
+    public static boolean shouldShowNickname() { return showNickname; }
+    public static boolean shouldShowSpecies() { return showSpecies; }
+    public static boolean shouldShowLevel() { return showLevel; }
+    public static boolean shouldShowTypes() { return showTypes; }
+    public static boolean shouldShowAbilities() { return showAbilities; }
+    public static boolean shouldShowNature() { return showNature; }
+    public static boolean shouldShowIVs() { return showIVs; }
+    public static boolean shouldShowEVs() { return showEVs; }
+    public static boolean shouldShowMoves() { return showMoves; }
+    public static boolean shouldShowGender() { return showGender; }
+    public static boolean shouldShowFriendship() { return showFriendship; }
+    public static boolean shouldShowHeldItem() { return showHeldItem; }
+    public static boolean shouldShowBall() { return showBall; }
+    public static boolean shouldShowSize() { return showSize; }
+    public static boolean shouldShowEggGroups() { return showEggGroups; }
+    public static boolean shouldShowNeutered() { return showNeutered; }
+    public static boolean shouldShowOT() { return showOT; }
+    public static boolean shouldShowFormIfNormal() { return showFormIfNormal; }
+    public static boolean shouldShowNeuteredIfFalse() { return showNeuteredIfFalse; }
     public static boolean shouldBoldHyperTrainingValues() { return boldHyperTrainingValues; }
     public static boolean shouldItalicHyperTrainingValues() { return italicHyperTrainingValues; }
     public static boolean shouldShowPartyCheckGUIFrameBlocks() { return showPartyCheckGUIFrameBlocks; }

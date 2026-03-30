@@ -9,10 +9,14 @@ import com.sergioaguiar.miragechatparser.command.PartyCheckCommand;
 import com.sergioaguiar.miragechatparser.command.PartyShoutAllCommand;
 import com.sergioaguiar.miragechatparser.command.PartyShoutCommand;
 import com.sergioaguiar.miragechatparser.command.ReloadCommand;
+import com.sergioaguiar.miragechatparser.config.antiafk.AntiAFKSettings;
+import com.sergioaguiar.miragechatparser.config.antiafk.AntiAFKSettingsConfig;
 import com.sergioaguiar.miragechatparser.config.aspects.ChatAspects;
 import com.sergioaguiar.miragechatparser.config.aspects.ChatAspectsConfig;
 import com.sergioaguiar.miragechatparser.config.colors.ChatColors;
 import com.sergioaguiar.miragechatparser.config.colors.ChatColorsConfig;
+import com.sergioaguiar.miragechatparser.config.modules.Modules;
+import com.sergioaguiar.miragechatparser.config.modules.ModulesConfig;
 import com.sergioaguiar.miragechatparser.config.settings.ChatSettings;
 import com.sergioaguiar.miragechatparser.config.settings.ChatSettingsConfig;
 import com.sergioaguiar.miragechatparser.config.sizes.ChatSizes;
@@ -31,14 +35,18 @@ public class MirageChatParser implements ModInitializer
 	{
 		ModLogger.info("Initializing MirageChatParser...");
 
+		// Config handling (defaults)
 		try
 		{
-			// Config handling (defaults)
+			Modules.setDefaults();
+
 			ChatSettings.setDefaults();
 			ChatStrings.setDefaults();
 			ChatColors.setDefaults();
 			ChatAspects.setDefaults();
 			ChatSizes.setDefaults();
+
+			AntiAFKSettings.setDefaults();
 		}
 		catch (Exception e)
 		{
@@ -46,14 +54,18 @@ public class MirageChatParser implements ModInitializer
 			e.printStackTrace();
 		}
 
+		// Config handling (config file overrides)
 		try
 		{
-			// Config handling (config file overrides)
+			ModulesConfig.load();
+
 			ChatSettingsConfig.load();
 			ChatStringsConfig.load();
 			ChatColorsConfig.load();
 			ChatAspectsConfig.load();
 			ChatSizesConfig.load();
+
+			AntiAFKSettingsConfig.load();
 		}
 		catch (Exception e)
 		{
@@ -61,9 +73,9 @@ public class MirageChatParser implements ModInitializer
 			e.printStackTrace();
 		}
 
+		// Event registering
 		try
 		{
-			// Event registering
 			ChatMessageHandler.register();
 		}
 		catch (Exception e)
@@ -72,9 +84,9 @@ public class MirageChatParser implements ModInitializer
 			e.printStackTrace();
 		}
 
+		// Command registering
 		try
 		{
-			// Command registering
 			ReloadCommand.register();
 			PartyShoutCommand.register();
 			PartyShoutAllCommand.register();

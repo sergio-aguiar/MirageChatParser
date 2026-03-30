@@ -214,7 +214,7 @@ public class TextUtils
             }
         }
 
-        if (!isFormNormal || ChatSettings.showFormIfNormal())
+        if (!isFormNormal || ChatSettings.shouldShowFormIfNormal())
         {
             coloredLine = coloredLine
                 .append(Text.literal(" ("))

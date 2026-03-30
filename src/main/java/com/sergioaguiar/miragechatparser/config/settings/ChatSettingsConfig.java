@@ -11,7 +11,7 @@ import com.sergioaguiar.miragechatparser.util.ModLogger;
 
 public class ChatSettingsConfig
 {
-    private static final Path CONFIG_PATH = Paths.get("config", "miragechatparser", "chat_settings.toml");
+    private static final Path CONFIG_PATH = Paths.get("config", "miragechatparser", "chat_module", "chat_settings.toml");
 
     public static void load()
     {

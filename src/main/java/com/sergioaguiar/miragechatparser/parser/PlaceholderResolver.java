@@ -133,7 +133,7 @@ public class PlaceholderResolver
         MutableText tooltip = Text.literal("");
         boolean first = true;
 
-        if (ChatSettings.showNickname())
+        if (ChatSettings.shouldShowNickname())
         {
             if (first) first = false;
             else tooltip = tooltip.append(Text.literal("\n"));
@@ -141,7 +141,7 @@ public class PlaceholderResolver
             tooltip = tooltip.append(getNicknameText(nickname, types));
         }
 
-        if (ChatSettings.showSpecies())
+        if (ChatSettings.shouldShowSpecies())
         {
             if (first) first = false;
             else tooltip = tooltip.append(Text.literal("\n"));
@@ -149,7 +149,7 @@ public class PlaceholderResolver
             tooltip = tooltip.append(getSpeciesText(pokemon, aspects, speciesFeatures));
         }
 
-        if (ChatSettings.showLevel())
+        if (ChatSettings.shouldShowLevel())
         {
             if (first) first = false;
             else tooltip = tooltip.append(Text.literal("\n"));
@@ -157,7 +157,7 @@ public class PlaceholderResolver
             tooltip = tooltip.append(getLevelText(level, pokemon.getExperience(), nextLevelExperience));
         }
 
-        if (ChatSettings.showTypes())
+        if (ChatSettings.shouldShowTypes())
         {
             if (first) first = false;
             else tooltip = tooltip.append(Text.literal("\n"));
@@ -165,7 +165,7 @@ public class PlaceholderResolver
             tooltip = tooltip.append(getTypesText(types));
         }
 
-        if (ChatSettings.showAbilities())
+        if (ChatSettings.shouldShowAbilities())
         {
             if (first) first = false;
             else tooltip = tooltip.append(Text.literal("\n"));
@@ -173,7 +173,7 @@ public class PlaceholderResolver
             tooltip = tooltip.append(getAbilitiesText(pokemon, isClosedSheet));
         }
 
-        if (ChatSettings.showNature())
+        if (ChatSettings.shouldShowNature())
         {
             if (first) first = false;
             else tooltip = tooltip.append(Text.literal("\n"));
@@ -181,7 +181,7 @@ public class PlaceholderResolver
             tooltip = tooltip.append(getNatureText(nature, natureEffective, isClosedSheet));
         }
 
-        if (ChatSettings.showIVs())
+        if (ChatSettings.shouldShowIVs())
         {
             if (first) first = false;
             else tooltip = tooltip.append(Text.literal("\n"));
@@ -189,7 +189,7 @@ public class PlaceholderResolver
             tooltip = tooltip.append(getIVsText(ivs, isClosedSheet));
         }
 
-        if (ChatSettings.showEVs())
+        if (ChatSettings.shouldShowEVs())
         {
             if (first) first = false;
             else tooltip = tooltip.append(Text.literal("\n"));
@@ -197,7 +197,7 @@ public class PlaceholderResolver
             tooltip = tooltip.append(getEVsText(evs, isClosedSheet));
         }
 
-        if (ChatSettings.showMoves())
+        if (ChatSettings.shouldShowMoves())
         {
             if (first) first = false;
             else tooltip = tooltip.append(Text.literal("\n"));
@@ -205,7 +205,7 @@ public class PlaceholderResolver
             tooltip = tooltip.append(getMovesText(moves, isClosedSheet));
         }
 
-        if (ChatSettings.showGender())
+        if (ChatSettings.shouldShowGender())
         {
             if (first) first = false;
             else tooltip = tooltip.append(Text.literal("\n"));
@@ -213,7 +213,7 @@ public class PlaceholderResolver
             tooltip = tooltip.append(getGenderText(pokemon.getGender(), isClosedSheet));
         }
 
-        if (ChatSettings.showFriendship())
+        if (ChatSettings.shouldShowFriendship())
         {
             if (first) first = false;
             else tooltip = tooltip.append(Text.literal("\n"));
@@ -221,7 +221,7 @@ public class PlaceholderResolver
             tooltip = tooltip.append(getFriendshipText(pokemon.getFriendship(), isClosedSheet));
         }
 
-        if (ChatSettings.showHeldItem())
+        if (ChatSettings.shouldShowHeldItem())
         {
             if (first) first = false;
             else tooltip = tooltip.append(Text.literal("\n"));
@@ -229,7 +229,7 @@ public class PlaceholderResolver
             tooltip = tooltip.append(getHeldItemText(heldItem, isClosedSheet));
         }   
 
-        if (ChatSettings.showBall())
+        if (ChatSettings.shouldShowBall())
         {
             if (first) first = false;
             else tooltip = tooltip.append(Text.literal("\n"));
@@ -237,7 +237,7 @@ public class PlaceholderResolver
             tooltip = tooltip.append(getCaughtBallText(pokemon.getCaughtBall()));
         }
 
-        if (ChatSettings.showSize())
+        if (ChatSettings.shouldShowSize())
         {
             if (first) first = false;
             else tooltip = tooltip.append(Text.literal("\n"));
@@ -245,7 +245,7 @@ public class PlaceholderResolver
             tooltip = tooltip.append(getSizeText(pokemon.getScaleModifier()));
         }
 
-        if (ChatSettings.showEggGroups())
+        if (ChatSettings.shouldShowEggGroups())
         {
             if (first) first = false;
             else tooltip = tooltip.append(Text.literal("\n"));
@@ -253,11 +253,11 @@ public class PlaceholderResolver
             tooltip = tooltip.append(getEggGroupText(eggGroups));
         }
 
-        if (NeoDaycareUtils.isModLoaded() && ChatSettings.showNeutered())
+        if (NeoDaycareUtils.isModLoaded() && ChatSettings.shouldShowNeutered())
         {
             boolean isNeutered = NeoDaycareUtils.isNeutered(pokemon);
 
-            if (isNeutered || ChatSettings.showNeuteredIfFalse())
+            if (isNeutered || ChatSettings.shouldShowNeuteredIfFalse())
             {
                 if (first) first = false;
                 else tooltip = tooltip.append(Text.literal("\n"));
@@ -266,7 +266,7 @@ public class PlaceholderResolver
             }
         }
 
-        if (ChatSettings.showOT())
+        if (ChatSettings.shouldShowOT())
         {
             if (first) first = false;
             else tooltip = tooltip.append(Text.literal("\n"));
@@ -295,87 +295,87 @@ public class PlaceholderResolver
         HashSet<EggGroup> eggGroups = species.getEggGroups();
         ItemStack heldItem = pokemon.getHeldItem$common();
 
-        if (ChatSettings.showSpecies())
+        if (ChatSettings.shouldShowSpecies())
         {
             tooltipText.add(getSpeciesText(pokemon, aspects, speciesFeatures));
         }
 
-        if (ChatSettings.showLevel())
+        if (ChatSettings.shouldShowLevel())
         {
             tooltipText.add(getLevelText(level, pokemon.getExperience(), nextLevelExperience));
         }
 
-        if (ChatSettings.showTypes())
+        if (ChatSettings.shouldShowTypes())
         {
             tooltipText.add(getTypesText(types));
         }
 
-        if (ChatSettings.showAbilities())
+        if (ChatSettings.shouldShowAbilities())
         {
             tooltipText.add(getAbilitiesText(pokemon, isClosedSheet));
         }
 
-        if (ChatSettings.showNature())
+        if (ChatSettings.shouldShowNature())
         {
             tooltipText.add(getNatureText(nature, natureEffective, isClosedSheet));
         }
 
-        if (ChatSettings.showIVs())
+        if (ChatSettings.shouldShowIVs())
         {
             tooltipText.add(getIVsText(ivs, isClosedSheet));
         }
 
-        if (ChatSettings.showEVs())
+        if (ChatSettings.shouldShowEVs())
         {
             tooltipText.add(getEVsText(evs, isClosedSheet));
         }
 
-        if (ChatSettings.showMoves())
+        if (ChatSettings.shouldShowMoves())
         {
             tooltipText.add(getMovesText(moves, isClosedSheet));
         }
 
-        if (ChatSettings.showGender())
+        if (ChatSettings.shouldShowGender())
         {
             tooltipText.add(getGenderText(pokemon.getGender(), isClosedSheet));
         }
 
-        if (ChatSettings.showFriendship())
+        if (ChatSettings.shouldShowFriendship())
         {
             tooltipText.add(getFriendshipText(pokemon.getFriendship(), isClosedSheet));
         }
 
-        if (ChatSettings.showHeldItem())
+        if (ChatSettings.shouldShowHeldItem())
         {
             tooltipText.add(getHeldItemText(heldItem, isClosedSheet));
         }   
 
-        if (ChatSettings.showBall())
+        if (ChatSettings.shouldShowBall())
         {
             tooltipText.add(getCaughtBallText(pokemon.getCaughtBall()));
         }
 
-        if (ChatSettings.showSize())
+        if (ChatSettings.shouldShowSize())
         {
             tooltipText.add(getSizeText(pokemon.getScaleModifier()));
         }
 
-        if (ChatSettings.showEggGroups())
+        if (ChatSettings.shouldShowEggGroups())
         {
             tooltipText.add(getEggGroupText(eggGroups));
         }
 
-        if (NeoDaycareUtils.isModLoaded() && ChatSettings.showNeutered())
+        if (NeoDaycareUtils.isModLoaded() && ChatSettings.shouldShowNeutered())
         {
             boolean isNeutered = NeoDaycareUtils.isNeutered(pokemon);
 
-            if (isNeutered || ChatSettings.showNeuteredIfFalse())
+            if (isNeutered || ChatSettings.shouldShowNeuteredIfFalse())
             {
                 tooltipText.add(getneuterText(pokemon, isNeutered));
             }
         }
 
-        if (ChatSettings.showOT())
+        if (ChatSettings.shouldShowOT())
         {
             tooltipText.add(getOText(pokemon));
         }

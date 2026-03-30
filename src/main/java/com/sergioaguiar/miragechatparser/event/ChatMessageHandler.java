@@ -1,5 +1,6 @@
 package com.sergioaguiar.miragechatparser.event;
 
+import com.sergioaguiar.miragechatparser.config.modules.Modules;
 import com.sergioaguiar.miragechatparser.config.settings.ChatSettings;
 import com.sergioaguiar.miragechatparser.parser.ChatParser;
 import com.sergioaguiar.miragechatparser.util.ModLogger;
@@ -12,10 +13,16 @@ public class ChatMessageHandler
 {
     public static void register() 
     {
+        if (!Modules.shouldEnableChatParserModule()) 
+        {
+            ModLogger.info("Chat Message Parser skipped.");
+            return;
+        }
+
         ServerMessageDecoratorEvent.EVENT.register(ServerMessageDecoratorEvent.CONTENT_PHASE,
             (ServerPlayerEntity sender, Text message) -> 
             {
-                if (!ChatSettings.parseNonPlayerMessages() && sender == null)
+                if (!ChatSettings.shouldParseNonPlayerMessages() && sender == null)
                 {
                     return message;
                 }

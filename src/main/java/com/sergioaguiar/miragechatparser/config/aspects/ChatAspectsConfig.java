@@ -13,7 +13,7 @@ import com.sergioaguiar.miragechatparser.util.ModLogger;
 
 public class ChatAspectsConfig
 {
-    private static final Path CONFIG_PATH = Paths.get("config", "miragechatparser", "chat_aspects.toml");
+    private static final Path CONFIG_PATH = Paths.get("config", "miragechatparser", "chat_module", "chat_aspects.toml");
 
     public static void load()
     {
@@ -67,7 +67,7 @@ public class ChatAspectsConfig
     private static void createDefaultConfig(File file) throws IOException
     {
         String defaultContent = """
-            # MirageChatParser - Aspect Color Configuration
+            # MirageChatParser - Chat Aspect Configuration
 
             [Aspect]
             # Add the aspect value as the key and the string to appear in the hoverable UI as the value in front of it.

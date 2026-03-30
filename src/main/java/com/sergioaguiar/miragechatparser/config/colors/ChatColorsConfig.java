@@ -13,7 +13,7 @@ import net.minecraft.text.TextColor;
 
 public class ChatColorsConfig
 {
-    private static final Path CONFIG_PATH = Paths.get("config", "miragechatparser", "chat_colors.toml");
+    private static final Path CONFIG_PATH = Paths.get("config", "miragechatparser", "chat_module", "chat_colors.toml");
 
     public static void load()
     {
