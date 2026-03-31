@@ -2,6 +2,7 @@ package com.sergioaguiar.miragechatparser.command;
 
 import com.mojang.brigadier.context.CommandContext;
 import com.mojang.brigadier.exceptions.CommandSyntaxException;
+import com.sergioaguiar.miragechatparser.config.antiafk.AntiAFKSettingsConfig;
 import com.sergioaguiar.miragechatparser.config.aspects.ChatAspectsConfig;
 import com.sergioaguiar.miragechatparser.config.colors.ChatColors;
 import com.sergioaguiar.miragechatparser.config.colors.ChatColorsConfig;
@@ -127,6 +128,25 @@ public class ReloadCommand
         {
             context.getSource().sendError(Text.literal("MirageChatParser » Failed to reload size configuration: %s".formatted(e.getMessage())));
             ModLogger.error("Error reloading size config: %s".formatted(e.getMessage()));
+            return 1;
+        }
+
+        try
+        {
+            AntiAFKSettingsConfig.load();
+            context.getSource().sendFeedback(() -> 
+                Text.literal("MirageChatParser » ")
+                    .setStyle(Style.EMPTY.withColor(ChatColors.getCommandPrefixColor()))
+                .append(Text.literal("Reloaded anti-AFK setting configuration.")
+                    .setStyle(Style.EMPTY.withColor(ChatColors.getCommandValueColor()))),
+                true
+            );
+            ModLogger.info("Anti-AFK setting configuration reloaded successfully.");
+        }
+        catch (Exception e)
+        {
+            context.getSource().sendError(Text.literal("MirageChatParser » Failed to reload anti-AFK setting configuration: %s".formatted(e.getMessage())));
+            ModLogger.error("Error reloading anti-AFK setting config: %s".formatted(e.getMessage()));
             return 1;
         }
 

@@ -24,6 +24,8 @@ import com.sergioaguiar.miragechatparser.config.sizes.ChatSizesConfig;
 import com.sergioaguiar.miragechatparser.config.strings.ChatStrings;
 import com.sergioaguiar.miragechatparser.config.strings.ChatStringsConfig;
 import com.sergioaguiar.miragechatparser.event.ChatMessageHandler;
+import com.sergioaguiar.miragechatparser.event.TickEventHandler;
+import com.sergioaguiar.miragechatparser.manager.AntiAFKManager;
 import com.sergioaguiar.miragechatparser.util.ModLogger;
 
 public class MirageChatParser implements ModInitializer 
@@ -73,10 +75,22 @@ public class MirageChatParser implements ModInitializer
 			e.printStackTrace();
 		}
 
+		// Module starting
+		try
+		{
+			AntiAFKManager.start();
+		}
+		catch (Exception e)
+		{
+			ModLogger.error("Uncaught exception during module starting: %s".formatted(e.getMessage()));
+			e.printStackTrace();
+		}
+
 		// Event registering
 		try
 		{
 			ChatMessageHandler.register();
+			TickEventHandler.register();
 		}
 		catch (Exception e)
 		{

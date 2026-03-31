@@ -65,6 +65,24 @@ public class AntiAFKSettingsConfig
                 AntiAFKSettings.setFailedQuestionsBeforeKick(questionAmount);
             }
 
+            if (config.contains("General.MinimumPositionChangeForMovementRegister"))
+            {
+                double minimum = config.getOrElse("General.MinimumPositionChangeForMovementRegister", AntiAFKSettings.DEFAULT_MINIMUM_POSITION_CHANGE_FOR_MOVEMENT_REGISTER);
+                AntiAFKSettings.setMinimumPositionChangeForMovementRegister(minimum);
+            }
+
+            if (config.contains("General.MinimumPitchChangeForCameraMovementRegister"))
+            {
+                Number minimum = config.getOrElse("General.MinimumPitchChangeForCameraMovementRegister", AntiAFKSettings.DEFAULT_MINIMUM_PITCH_CHANGE_FOR_CAMERA_MOVEMENT_REGISTER);
+                AntiAFKSettings.setMinimumPitchChangeForCameraMovementRegister(minimum.floatValue());
+            }
+
+            if (config.contains("General.MinimumYawChangeForCameraMovementRegister"))
+            {
+                Number minimum = config.getOrElse("General.MinimumYawChangeForCameraMovementRegister", AntiAFKSettings.DEFAULT_MINIMUM_YAW_CHANGE_FOR_CAMERA_MOVEMENT_REGISTER);
+                AntiAFKSettings.setMinimumYawChangeForCameraMovementRegister(minimum.floatValue());
+            }
+
             ModLogger.info("Setting configurations successfully loaded from anti_afk_settings.toml.");
         }
         catch (Exception e)
@@ -89,6 +107,12 @@ public class AntiAFKSettingsConfig
             SecondsBetweenQuestions = 600
             # The number of ignored anti-AFK questions before getting kicked (regardless of AFK state)
             FailedQuestionsBeforeKick = 3
+            # The minimum movement a player must do per tick to count as enough movement to reset the movement-based AFK timer
+            MinimumPositionChangeForMovementRegister = 0.05
+            # The minimum camera pitch change to do per tick to count as enough camera movement to reset the camera-based AFK timer
+            MinimumPitchChangeForCameraMovementRegister = 2.0
+            # The minimum camera yaw change to do per tick to count as enough camera movement to reset the camera-based AFK timer
+            MinimumYawChangeForCameraMovementRegister = 2.0
             """;
         
         Files.writeString(file.toPath(), defaultContent);
