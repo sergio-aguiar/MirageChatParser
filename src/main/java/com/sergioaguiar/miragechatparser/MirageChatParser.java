@@ -24,6 +24,8 @@ import com.sergioaguiar.miragechatparser.config.sizes.ChatSizesConfig;
 import com.sergioaguiar.miragechatparser.config.strings.ChatStrings;
 import com.sergioaguiar.miragechatparser.config.strings.ChatStringsConfig;
 import com.sergioaguiar.miragechatparser.event.ChatMessageHandler;
+import com.sergioaguiar.miragechatparser.event.PlayerJoinEventHandler;
+import com.sergioaguiar.miragechatparser.event.PlayerLeaveEventHandler;
 import com.sergioaguiar.miragechatparser.event.TickEventHandler;
 import com.sergioaguiar.miragechatparser.manager.AntiAFKManager;
 import com.sergioaguiar.miragechatparser.util.ModLogger;
@@ -90,6 +92,8 @@ public class MirageChatParser implements ModInitializer
 		try
 		{
 			ChatMessageHandler.register();
+			PlayerJoinEventHandler.register();
+			PlayerLeaveEventHandler.register();
 			TickEventHandler.register();
 		}
 		catch (Exception e)

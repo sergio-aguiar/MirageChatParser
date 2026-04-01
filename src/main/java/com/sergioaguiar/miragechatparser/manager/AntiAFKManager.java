@@ -45,12 +45,16 @@ public class AntiAFKManager
 
     public static void registerPlayerAsAFK(ServerPlayerEntity player)
     {
+        if (isPlayerAFK(player)) return;
+
         ModLogger.info("Player %s is now AFK.".formatted(player.getDisplayName().getString()));
         playerTimesOfAFKMark.put(player.getUuid(), player.getServer().getTicks());
     }
 
     public static void registerPlayerNoLongerAFK(ServerPlayerEntity player)
     {
+        if (!isPlayerAFK(player)) return;
+
         ModLogger.info("Player %s is no longer AFK.".formatted(player.getDisplayName().getString()));
         playerTimesOfAFKMark.remove(player.getUuid());
     }
@@ -72,27 +76,27 @@ public class AntiAFKManager
 
     public static Vec3d getPlayerLastPosition(ServerPlayerEntity player)
     {
-        return playerLastPositions.getOrDefault(player.getUuid(), Vec3d.ZERO);
+        return playerLastPositions.getOrDefault(player.getUuid(), player.getPos());
     }
 
     public static float getPlayerLastCameraPitch(ServerPlayerEntity player)
     {
-        return playerLastCameraPitches.getOrDefault(player.getUuid(), 0f);
+        return playerLastCameraPitches.getOrDefault(player.getUuid(), player.getPitch());
     }
 
     public static float getPlayerLastCameraYaw(ServerPlayerEntity player)
     {
-        return playerLastCameraYaws.getOrDefault(player.getUuid(), 0f);
+        return playerLastCameraYaws.getOrDefault(player.getUuid(), player.getYaw());
     }
 
     public static boolean shouldPlayerBeMarkedAsAFK(ServerPlayerEntity player)
     {
-        if (player.getServer().getTicks() - playerTimesOfLastPositionMovement.get(player.getUuid()) >= secondsToTicks(AntiAFKSettings.getSecondsToAFK())) 
+        if (player.getServer().getTicks() - playerTimesOfLastPositionMovement.getOrDefault(player.getUuid(), player.getServer().getTicks()) >= secondsToTicks(AntiAFKSettings.getSecondsToAFK())) 
         {
             ModLogger.info("Marking player %s as AFK due to insufficient position movement.".formatted(player.getDisplayName().getString()));
             return true;
         }
-        if (player.getServer().getTicks() - playerTimesOfLastCameraMovement.get(player.getUuid()) >= secondsToTicks(AntiAFKSettings.getSecondsToAFK()))
+        if (player.getServer().getTicks() - playerTimesOfLastCameraMovement.getOrDefault(player.getUuid(), player.getServer().getTicks()) >= secondsToTicks(AntiAFKSettings.getSecondsToAFK()))
         {
             ModLogger.info("Marking player %s as AFK due to insufficient camera movement.".formatted(player.getDisplayName().getString()));
             return true;
@@ -109,6 +113,24 @@ public class AntiAFKManager
     public static boolean isPlayerAFK(ServerPlayerEntity player)
     {
         return playerTimesOfAFKMark.containsKey(player.getUuid());
+    }
+
+    public static void handlePlayerInit(ServerPlayerEntity player)
+    {
+        registerPlayerLastPosition(player, player.getPos());
+        registerPlayerLastCameraPitch(player, player.getPitch());
+        registerPlayerLastCameraYaw(player, player.getYaw());
+    }
+
+    public static void handlePlayerLeave(ServerPlayerEntity player)
+    {
+        playerTimesOfLastPositionMovement.remove(player.getUuid());
+        playerTimesOfLastCameraMovement.remove(player.getUuid());
+        playerTimesOfAFKMark.remove(player.getUuid());
+
+        playerLastPositions.remove(player.getUuid());
+        playerLastCameraPitches.remove(player.getUuid());
+        playerLastCameraYaws.remove(player.getUuid());
     }
 
     public static void handlePlayerPositionChangeLogic(ServerPlayerEntity player)
