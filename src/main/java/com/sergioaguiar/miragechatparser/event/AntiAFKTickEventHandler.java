@@ -7,13 +7,13 @@ import com.sergioaguiar.miragechatparser.util.ModLogger;
 import net.fabricmc.fabric.api.event.lifecycle.v1.ServerTickEvents;
 import net.minecraft.server.network.ServerPlayerEntity;
 
-public class TickEventHandler
+public class AntiAFKTickEventHandler
 {
     public static void register()
     {
         if (!Modules.shouldEnableAntiAFKModule()) 
         {
-            ModLogger.info("Anti-AFK Checker skipped.");
+            ModLogger.info("Anti-AFK Activity Checker skipped.");
             return;
         }
 
@@ -34,13 +34,12 @@ public class TickEventHandler
 
                     if (AntiAFKManager.shouldPlayerBeAFKKicked(player))
                     {
-                        // MAKE METHOD TO RETURN SECONDS SINCE LAST MOVE
-                        ModLogger.info("Player should be AFK kicked right now with (lastPosMove=%.2f - lastCamMove=%.2f)".formatted(0, 0));
+                        AntiAFKManager.handlePlayerAFKKick(player);
                     }
                 }
             }
         );
 
-        ModLogger.info("Anti-AFK Checker started.");
+        ModLogger.info("Anti-AFK Activity Checker started.");
     }
 }

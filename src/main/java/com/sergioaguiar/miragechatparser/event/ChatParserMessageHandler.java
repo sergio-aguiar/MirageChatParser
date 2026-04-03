@@ -9,13 +9,13 @@ import net.fabricmc.fabric.api.message.v1.ServerMessageDecoratorEvent;
 import net.minecraft.server.network.ServerPlayerEntity;
 import net.minecraft.text.Text;
 
-public class ChatMessageHandler 
+public class ChatParserMessageHandler 
 {
     public static void register() 
     {
         if (!Modules.shouldEnableChatParserModule()) 
         {
-            ModLogger.info("Chat Message Parser skipped.");
+            ModLogger.info("Chat Parser (Main Chat) skipped.");
             return;
         }
 
@@ -30,6 +30,6 @@ public class ChatMessageHandler
             }
         );
 
-        ModLogger.info("Chat Message Parser started.");
+        ModLogger.info("Chat Parser (Main Chat) started.");
     }
 }

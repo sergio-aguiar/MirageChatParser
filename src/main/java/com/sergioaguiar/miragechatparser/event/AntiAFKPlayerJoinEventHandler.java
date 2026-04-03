@@ -6,23 +6,23 @@ import com.sergioaguiar.miragechatparser.util.ModLogger;
 
 import net.fabricmc.fabric.api.networking.v1.ServerPlayConnectionEvents;
 
-public class PlayerLeaveEventHandler
+public class AntiAFKPlayerJoinEventHandler
 {
     public static void register()
     {
         if (!Modules.shouldEnableAntiAFKModule()) 
         {
-            ModLogger.info("Anti-AFK Player Info Cleaner skipped.");
+            ModLogger.info("Anti-AFK Player On-Join Setup skipped.");
             return;
         }
 
-        ServerPlayConnectionEvents.DISCONNECT.register(
-            (handler, server) ->
+        ServerPlayConnectionEvents.JOIN.register(
+            (handler, sender, server) ->
             {
-                AntiAFKManager.handlePlayerLeave(handler.getPlayer());
+                AntiAFKManager.handlePlayerInit(handler.getPlayer());
             }
         );
 
-        ModLogger.info("Anti-AFK Player Info Cleaner started.");
+        ModLogger.info("Anti-AFK Player On-Join Setup started.");
     }    
 }
