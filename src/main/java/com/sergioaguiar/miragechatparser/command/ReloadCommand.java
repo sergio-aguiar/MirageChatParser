@@ -40,10 +40,16 @@ public class ReloadCommand
         {
             ChatSettingsConfig.load();
             context.getSource().sendFeedback(() -> 
-                Text.literal("MirageChatParser » ")
-                    .setStyle(Style.EMPTY.withColor(ChatColors.getCommandPrefixColor()))
-                .append(Text.literal("Reloaded chat settings configuration.")
-                    .setStyle(Style.EMPTY.withColor(ChatColors.getCommandValueColor()))),
+                {
+                    var text = Text.literal("MirageChatParser » ")
+                        .setStyle(Style.EMPTY.withColor(ChatColors.getCommandPrefixColor()));
+                    
+                    text = text
+                        .append(Text.literal("Reloaded chat settings configuration.")
+                            .setStyle(Style.EMPTY.withColor(ChatColors.getCommandValueColor())));
+                    
+                    return text;
+                }, 
                 true
             );
             ModLogger.info("Chat setting configuration reloaded successfully.");
@@ -59,10 +65,16 @@ public class ReloadCommand
         {
             ChatStringsConfig.load();
             context.getSource().sendFeedback(() -> 
-                Text.literal("MirageChatParser » ")
-                    .setStyle(Style.EMPTY.withColor(ChatColors.getCommandPrefixColor()))
-                .append(Text.literal("Reloaded chat strings configuration.")
-                    .setStyle(Style.EMPTY.withColor(ChatColors.getCommandValueColor()))),
+                {
+                    var text = Text.literal("MirageChatParser » ")
+                        .setStyle(Style.EMPTY.withColor(ChatColors.getCommandPrefixColor()));
+                    
+                    text = text
+                        .append(Text.literal("Reloaded chat strings configuration.")
+                            .setStyle(Style.EMPTY.withColor(ChatColors.getCommandValueColor())));
+                    
+                    return text;
+                }, 
                 true
             );
             ModLogger.info("Chat string configuration reloaded successfully.");
@@ -78,10 +90,16 @@ public class ReloadCommand
         {
             ChatColorsConfig.load();
             context.getSource().sendFeedback(() -> 
-                Text.literal("MirageChatParser » ")
-                    .setStyle(Style.EMPTY.withColor(ChatColors.getCommandPrefixColor()))
-                .append(Text.literal("Reloaded chat color configuration.")
-                    .setStyle(Style.EMPTY.withColor(ChatColors.getCommandValueColor()))),
+                {
+                    var text = Text.literal("MirageChatParser » ")
+                        .setStyle(Style.EMPTY.withColor(ChatColors.getCommandPrefixColor()));
+                    
+                    text = text
+                        .append(Text.literal("Reloaded chat color configuration.")
+                            .setStyle(Style.EMPTY.withColor(ChatColors.getCommandValueColor())));
+                    
+                    return text;
+                }, 
                 true
             );
             ModLogger.info("Chat color configuration reloaded successfully.");
@@ -97,10 +115,16 @@ public class ReloadCommand
         {
             ChatAspectsConfig.load();
             context.getSource().sendFeedback(() -> 
-                Text.literal("MirageChatParser » ")
-                    .setStyle(Style.EMPTY.withColor(ChatColors.getCommandPrefixColor()))
-                .append(Text.literal("Reloaded chat aspect configuration.")
-                    .setStyle(Style.EMPTY.withColor(ChatColors.getCommandValueColor()))),
+                {
+                    var text = Text.literal("MirageChatParser » ")
+                        .setStyle(Style.EMPTY.withColor(ChatColors.getCommandPrefixColor()));
+                    
+                    text = text
+                        .append(Text.literal("Reloaded chat aspect configuration.")
+                            .setStyle(Style.EMPTY.withColor(ChatColors.getCommandValueColor())));
+                    
+                    return text;
+                }, 
                 true
             );
             ModLogger.info("Chat aspect configuration reloaded successfully.");
@@ -116,10 +140,16 @@ public class ReloadCommand
         {
             ChatSizesConfig.load();
             context.getSource().sendFeedback(() -> 
-                Text.literal("MirageChatParser » ")
-                    .setStyle(Style.EMPTY.withColor(ChatColors.getCommandPrefixColor()))
-                .append(Text.literal("Reloaded chat size configuration.")
-                    .setStyle(Style.EMPTY.withColor(ChatColors.getCommandValueColor()))),
+                {
+                    var text = Text.literal("MirageChatParser » ")
+                        .setStyle(Style.EMPTY.withColor(ChatColors.getCommandPrefixColor()));
+                    
+                    text = text
+                        .append(Text.literal("Reloaded chat size configuration.")
+                            .setStyle(Style.EMPTY.withColor(ChatColors.getCommandValueColor())));
+                    
+                    return text;
+                }, 
                 true
             );
             ModLogger.info("Chat size configuration reloaded successfully.");
@@ -135,17 +165,23 @@ public class ReloadCommand
         {
             AntiAFKSettingsConfig.load();
             context.getSource().sendFeedback(() -> 
-                Text.literal("MirageChatParser » ")
-                    .setStyle(Style.EMPTY.withColor(ChatColors.getCommandPrefixColor()))
-                .append(Text.literal("Reloaded anti-AFK setting configuration.")
-                    .setStyle(Style.EMPTY.withColor(ChatColors.getCommandValueColor()))),
+                {
+                    var text = Text.literal("MirageChatParser » ")
+                        .setStyle(Style.EMPTY.withColor(ChatColors.getCommandPrefixColor()));
+                    
+                    text = text
+                        .append(Text.literal("Reloaded anti-AFK settings configuration.")
+                            .setStyle(Style.EMPTY.withColor(ChatColors.getCommandValueColor())));
+                    
+                    return text;
+                }, 
                 true
             );
             ModLogger.info("Anti-AFK setting configuration reloaded successfully.");
         }
         catch (Exception e)
         {
-            context.getSource().sendError(Text.literal("MirageChatParser » Failed to reload anti-AFK setting configuration: %s".formatted(e.getMessage())));
+            context.getSource().sendError(Text.literal("MirageChatParser » Failed to reload anti-AFK settings configuration: %s".formatted(e.getMessage())));
             ModLogger.error("Error reloading anti-AFK setting config: %s".formatted(e.getMessage()));
             return 1;
         }

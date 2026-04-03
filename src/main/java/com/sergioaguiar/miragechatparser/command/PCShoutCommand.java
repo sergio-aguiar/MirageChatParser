@@ -16,6 +16,7 @@ import net.fabricmc.fabric.api.command.v2.CommandRegistrationCallback;
 import net.minecraft.server.command.CommandManager;
 import net.minecraft.server.command.ServerCommandSource;
 import net.minecraft.server.network.ServerPlayerEntity;
+import net.minecraft.text.MutableText;
 import net.minecraft.text.Style;
 import net.minecraft.text.Text;
 
@@ -74,11 +75,14 @@ public class PCShoutCommand
         int maxBoxes = Cobblemon.INSTANCE.getStorage().getPC(player).getBoxes().size();
         if (box > maxBoxes)
         {
-            player.sendMessage(Text.literal("PCShout » ")
-                    .setStyle(Style.EMPTY.withColor(ChatColors.getCommandPrefixColor()))
+            MutableText message = Text.literal("PCShout » ")
+                    .setStyle(Style.EMPTY.withColor(ChatColors.getCommandPrefixColor()));
+
+            message = message
                 .append(Text.literal("You only have %s boxes!".formatted(maxBoxes))
-                    .setStyle(Style.EMPTY.withColor(ChatColors.getCommandValueColor()))), 
-                false);
+                    .setStyle(Style.EMPTY.withColor(ChatColors.getCommandValueColor())));
+
+            player.sendMessage(message, false);
 
             return 1;
         }

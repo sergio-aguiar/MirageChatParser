@@ -14,6 +14,7 @@ import net.minecraft.component.DataComponentTypes;
 import net.minecraft.component.type.LoreComponent;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.Items;
+import net.minecraft.text.MutableText;
 import net.minecraft.text.Style;
 import net.minecraft.text.Text;
 
@@ -115,12 +116,18 @@ public class ShoutTypeGooeyButton extends ButtonBase
 
     private static Text getButtonLoreLine(int buttonIndex, int lineIndex)
     {
-        return Text.literal(ShoutType.values()[buttonIndex].getName())
-                .setStyle(Style.EMPTY.withColor(ChatColors.getPartyCheckOptionNameColor()).withItalic(false).withBold(buttonIndex == lineIndex))
+        MutableText text = Text.literal(ShoutType.values()[buttonIndex].getName())
+                .setStyle(Style.EMPTY.withColor(ChatColors.getPartyCheckOptionNameColor()).withItalic(false).withBold(buttonIndex == lineIndex));
+
+        text = text
             .append(Text.literal(ChatStrings.getPartyCheckSplitterString())
-                .setStyle(Style.EMPTY.withColor(ChatColors.getPartyCheckOptionSplitterColor()).withItalic(false).withBold(buttonIndex == lineIndex)))
+                .setStyle(Style.EMPTY.withColor(ChatColors.getPartyCheckOptionSplitterColor()).withItalic(false).withBold(buttonIndex == lineIndex)));
+
+        text = text
             .append(Text.literal(ShoutType.values()[buttonIndex].getDescription())
                 .setStyle(Style.EMPTY.withColor(ChatColors.getPartyCheckOptionDescriptionColor()).withItalic(false).withBold(buttonIndex == lineIndex)));
+
+        return text;
     }
 
     private static ItemStack getGeneralShoutItemStack()

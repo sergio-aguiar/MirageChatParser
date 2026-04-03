@@ -22,6 +22,7 @@ import net.minecraft.component.type.LoreComponent;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.Items;
 import net.minecraft.server.network.ServerPlayerEntity;
+import net.minecraft.text.MutableText;
 import net.minecraft.text.Style;
 import net.minecraft.text.Text;
 
@@ -54,39 +55,46 @@ public class GooeyLibsUtils
                 {
                     if (CooldownManager.isOnCooldown(player))
                     {
-                        player.sendMessage
-                        (
-                            Text.literal("MirageChat » ")
-                                    .setStyle(Style.EMPTY.withColor(ChatColors.getCommandPrefixColor()))
-                                .append(Text.literal("You are still on cooldown for ")
-                                    .setStyle(Style.EMPTY.withColor(ChatColors.getCommandValueColor())))
-                                .append(Text.literal("%.2f".formatted(CooldownManager.getRemainingTicks(player) / 20.0))
-                                    .setStyle(Style.EMPTY.withColor(ChatColors.getCommandPrefixColor())))
-                                .append(Text.literal(" seconds.")
-                                    .setStyle(Style.EMPTY.withColor(ChatColors.getCommandValueColor())))
-                        );
+                        MutableText message = Text.literal("MirageChat » ")
+                                .setStyle(Style.EMPTY.withColor(ChatColors.getCommandPrefixColor()));
+
+                        message = message
+                            .append(Text.literal("You are still on cooldown for ")
+                                .setStyle(Style.EMPTY.withColor(ChatColors.getCommandValueColor())));
+
+                        message = message
+                            .append(Text.literal("%.2f".formatted(CooldownManager.getRemainingTicks(player) / 20.0))
+                                .setStyle(Style.EMPTY.withColor(ChatColors.getCommandPrefixColor())));
+
+                        message = message
+                            .append(Text.literal(" seconds.")
+                                .setStyle(Style.EMPTY.withColor(ChatColors.getCommandValueColor())));
+
+                        player.sendMessage(message);
                     }
                     else
                     {
                         if (isRideShout.get())
                         {
-                            player.sendMessage
-                            (
-                                Text.literal("RideShout » ")
-                                        .setStyle(Style.EMPTY.withColor(ChatColors.getCommandPrefixColor()))
-                                    .append(Text.literal("Coming soon!")
-                                        .setStyle(Style.EMPTY.withColor(ChatColors.getCommandValueColor())))
-                            );
+                            MutableText message = Text.literal("RideShout » ")
+                                    .setStyle(Style.EMPTY.withColor(ChatColors.getCommandPrefixColor()));
+
+                            message = message
+                                .append(Text.literal("Coming soon!")
+                                    .setStyle(Style.EMPTY.withColor(ChatColors.getCommandValueColor())));
+
+                            player.sendMessage(message);
                         }
                         else if (isRibbonShout.get())
                         {
-                            player.sendMessage
-                            (
-                                Text.literal("RibbonShout » ")
-                                        .setStyle(Style.EMPTY.withColor(ChatColors.getCommandPrefixColor()))
-                                    .append(Text.literal("Coming soon!")
-                                        .setStyle(Style.EMPTY.withColor(ChatColors.getCommandValueColor())))
-                            );
+                            MutableText message = Text.literal("RibbonShout » ")
+                                    .setStyle(Style.EMPTY.withColor(ChatColors.getCommandPrefixColor()));
+
+                            message = message
+                                .append(Text.literal("Coming soon!")
+                                    .setStyle(Style.EMPTY.withColor(ChatColors.getCommandValueColor())));
+
+                            player.sendMessage(message);
                         }
                         else ShoutUtils.doPartyShout(player, pokemon, closed.get(), self.get());
 

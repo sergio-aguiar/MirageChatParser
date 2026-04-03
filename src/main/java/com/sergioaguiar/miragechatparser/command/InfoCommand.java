@@ -37,15 +37,23 @@ public class InfoCommand
             ServerCommandSource source = context.getSource();
 
             MutableText coloredLine = Text.literal("Info » ")
-                .setStyle(Style.EMPTY.withColor(ChatColors.getCommandPrefixColor()))
-            .append(Text.literal("MirageShoutParser ")
-                .setStyle(Style.EMPTY.withColor(ChatColors.getCommandValueColor())))
-            .append(Text.literal("v%s".formatted(FabricLoader.getInstance().getModContainer(MirageChatParser.MOD_ID).orElseThrow().getMetadata().getVersion().getFriendlyString()))
-                .setStyle(Style.EMPTY.withColor(ChatColors.getCommandPlayerColor())))
-            .append(Text.literal(" is developed by ")
-                .setStyle(Style.EMPTY.withColor(ChatColors.getCommandValueColor())))
-            .append(Text.literal("pioavenger")
-                .setStyle(Style.EMPTY.withColor(ChatColors.getCommandPlayerColor())));
+                .setStyle(Style.EMPTY.withColor(ChatColors.getCommandPrefixColor()));
+
+            coloredLine = coloredLine
+                .append(Text.literal("MirageShoutParser ")
+                    .setStyle(Style.EMPTY.withColor(ChatColors.getCommandValueColor())));
+
+            coloredLine = coloredLine
+                .append(Text.literal("v%s".formatted(FabricLoader.getInstance().getModContainer(MirageChatParser.MOD_ID).orElseThrow().getMetadata().getVersion().getFriendlyString()))
+                    .setStyle(Style.EMPTY.withColor(ChatColors.getCommandPlayerColor())));
+
+            coloredLine = coloredLine
+                .append(Text.literal(" is developed by ")
+                    .setStyle(Style.EMPTY.withColor(ChatColors.getCommandValueColor())));
+
+            coloredLine = coloredLine
+                .append(Text.literal("pioavenger")
+                    .setStyle(Style.EMPTY.withColor(ChatColors.getCommandPlayerColor())));
 
             source.sendMessage(coloredLine);
         }

@@ -73,11 +73,17 @@ public class AntiAFKManager
         ModLogger.info("On no longer AFK: %s".formatted(ChatColors.getCommandPlayerColor().getHexCode()));
 
         MutableText afkText = Text.literal("AFKChecker » ")
-                .setStyle(Style.EMPTY.withColor(ChatColors.getCommandPrefixColor()))
+                .setStyle(Style.EMPTY.withColor(ChatColors.getCommandPrefixColor()));
+
+        afkText = afkText
             .append(Text.literal("Player ")
-                .setStyle(Style.EMPTY.withColor(ChatColors.getCommandValueColor())))
+                .setStyle(Style.EMPTY.withColor(ChatColors.getCommandValueColor())));
+
+        afkText = afkText
             .append(Text.literal(player.getDisplayName().getString())
-                .setStyle(Style.EMPTY.withColor(ChatColors.getCommandPlayerColor())))
+                .setStyle(Style.EMPTY.withColor(ChatColors.getCommandPlayerColor())));
+
+        afkText = afkText
             .append(Text.literal(" is now AFK.")
                 .setStyle(Style.EMPTY.withColor(ChatColors.getCommandValueColor())));
 
@@ -96,19 +102,29 @@ public class AntiAFKManager
         ModLogger.info("On no longer AFK: %s".formatted(ChatColors.getCommandPlayerColor().getHexCode()));
 
         MutableText afkText = Text.literal("AFKChecker » ")
-                .setStyle(Style.EMPTY.withColor(ChatColors.getCommandPrefixColor()))
+                .setStyle(Style.EMPTY.withColor(ChatColors.getCommandPrefixColor()));
+
+        afkText = afkText
             .append(Text.literal("Player ")
-                .setStyle(Style.EMPTY.withColor(ChatColors.getCommandValueColor())))
+                .setStyle(Style.EMPTY.withColor(ChatColors.getCommandValueColor())));
+
+        afkText = afkText
             .append(Text.literal(player.getDisplayName().getString())
-                .setStyle(Style.EMPTY.withColor(ChatColors.getCommandPlayerColor())))
+                .setStyle(Style.EMPTY.withColor(ChatColors.getCommandPlayerColor())));
+
+        afkText = afkText
             .append(Text.literal(" is no longer AFK.")
                 .setStyle(Style.EMPTY.withColor(ChatColors.getCommandValueColor())));
 
         afkText = afkText
             .append(Text.literal(" (Gone for ")
-                .setStyle(Style.EMPTY.withColor(ChatColors.getCommandPrefixColor())))
+                .setStyle(Style.EMPTY.withColor(ChatColors.getCommandPrefixColor())));
+
+        afkText = afkText
             .append(Text.literal("%s".formatted(secondsToReadableTimeString((int) ticksToSeconds(player.getServer().getTicks() - timeAFK))))
-                .setStyle(Style.EMPTY.withColor(ChatColors.getCommandPlayerColor())))
+                .setStyle(Style.EMPTY.withColor(ChatColors.getCommandPlayerColor())));
+
+        afkText = afkText
             .append(Text.literal(")")
                 .setStyle(Style.EMPTY.withColor(ChatColors.getCommandPrefixColor())));
 
