@@ -64,13 +64,19 @@ public class MirageChatParser implements ModInitializer
 		{
 			ModulesConfig.load();
 
-			ChatSettingsConfig.load();
-			ChatStringsConfig.load();
-			ChatColorsConfig.load();
-			ChatAspectsConfig.load();
-			ChatSizesConfig.load();
+			if (Modules.shouldEnableChatParserModule())
+			{
+				ChatSettingsConfig.load();
+				ChatStringsConfig.load();
+				ChatColorsConfig.load();
+				ChatAspectsConfig.load();
+				ChatSizesConfig.load();
+			}
 
-			AntiAFKSettingsConfig.load();
+			if (Modules.shouldEnableAntiAFKModule())
+			{
+				AntiAFKSettingsConfig.load();
+			}
 		}
 		catch (Exception e)
 		{
@@ -81,7 +87,10 @@ public class MirageChatParser implements ModInitializer
 		// Module starting
 		try
 		{
-			AntiAFKManager.start();
+			if (Modules.shouldEnableAntiAFKModule())
+			{
+				AntiAFKManager.start();
+			}
 		}
 		catch (Exception e)
 		{
@@ -92,11 +101,18 @@ public class MirageChatParser implements ModInitializer
 		// Event registering
 		try
 		{
-			ChatParserMessageHandler.register();
-			AntiAFKPlayerJoinEventHandler.register();
-			AntiAFKPlayerDisconnectEventHandler.register();
-			AntiAFKTickEventHandler.register();
-			AntiAFKMessageHandler.register();
+			if (Modules.shouldEnableChatParserModule())
+			{
+				ChatParserMessageHandler.register();
+			}
+
+			if (Modules.shouldEnableAntiAFKModule())
+			{
+				AntiAFKPlayerJoinEventHandler.register();
+				AntiAFKPlayerDisconnectEventHandler.register();
+				AntiAFKTickEventHandler.register();
+				AntiAFKMessageHandler.register();
+			}
 		}
 		catch (Exception e)
 		{
@@ -108,12 +124,16 @@ public class MirageChatParser implements ModInitializer
 		try
 		{
 			ReloadCommand.register();
-			PartyShoutCommand.register();
-			PartyShoutAllCommand.register();
-			PCShoutCommand.register();
-			DebugShoutCommand.register();
 			InfoCommand.register();
-			PartyCheckCommand.register();
+
+			if (Modules.shouldEnableAntiAFKModule())
+			{
+				PartyShoutCommand.register();
+				PartyShoutAllCommand.register();
+				PCShoutCommand.register();
+				DebugShoutCommand.register();
+				PartyCheckCommand.register();
+			}
 		}
 		catch (Exception e)
 		{
