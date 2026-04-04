@@ -5,6 +5,7 @@ import java.util.List;
 import java.util.Set;
 import java.util.regex.Pattern;
 
+import com.cobblemon.mod.common.api.moves.HiddenPowerUtil;
 import com.cobblemon.mod.common.api.moves.Move;
 import com.cobblemon.mod.common.api.pokemon.egg.EggGroup;
 import com.cobblemon.mod.common.api.pokemon.feature.SpeciesFeature;
@@ -505,7 +506,7 @@ public class TextUtils
             );
     }
 
-    public static Text coloredMovesLine(List<Move> moves, boolean isClosedSheet) 
+    public static Text coloredMovesLine(Pokemon pokemon, List<Move> moves, boolean isClosedSheet) 
     {
         MutableText coloredLine = Text.literal(ChatStrings.getMovesString())
                 .setStyle(Style.EMPTY.withColor(ChatColors.getTooltipLabelColor()).withItalic(false));
@@ -521,10 +522,14 @@ public class TextUtils
             for (int i = 0; i < moves.size(); i++) 
             {
                 Move move = moves.get(i);
-                TextColor typeColor = TypeColor.fromTypeName(move.getType().getName());
+                String actualMoveName = move.getDisplayName().getString();
+                boolean isHiddenPower = actualMoveName.equalsIgnoreCase("Hidden Power");
+                ElementalType moveType = isHiddenPower ? HiddenPowerUtil.getHiddenPowerType(pokemon) : move.getType();
+                String moveName = actualMoveName + (isHiddenPower ? " " + moveType.getName() : "");
+                TextColor typeColor = TypeColor.fromTypeName(moveType.getName());
 
                 coloredLine = coloredLine
-                    .append(Text.literal(move.getDisplayName().getString())
+                    .append(Text.literal(moveName)
                         .setStyle(Style.EMPTY.withColor(typeColor)));
 
                 if (i < moves.size() - 1) 

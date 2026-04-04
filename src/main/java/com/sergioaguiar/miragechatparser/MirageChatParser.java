@@ -9,6 +9,8 @@ import com.sergioaguiar.miragechatparser.command.PartyCheckCommand;
 import com.sergioaguiar.miragechatparser.command.PartyShoutAllCommand;
 import com.sergioaguiar.miragechatparser.command.PartyShoutCommand;
 import com.sergioaguiar.miragechatparser.command.ReloadCommand;
+import com.sergioaguiar.miragechatparser.config.antiafk.colors.AntiAFKColors;
+import com.sergioaguiar.miragechatparser.config.antiafk.colors.AntiAFKColorsConfig;
 import com.sergioaguiar.miragechatparser.config.antiafk.settings.AntiAFKSettings;
 import com.sergioaguiar.miragechatparser.config.antiafk.settings.AntiAFKSettingsConfig;
 import com.sergioaguiar.miragechatparser.config.chatparser.aspects.ChatAspects;
@@ -52,6 +54,7 @@ public class MirageChatParser implements ModInitializer
 			ChatSizes.setDefaults();
 
 			AntiAFKSettings.setDefaults();
+			AntiAFKColors.setDefaults();
 		}
 		catch (Exception e)
 		{
@@ -76,6 +79,7 @@ public class MirageChatParser implements ModInitializer
 			if (Modules.shouldEnableAntiAFKModule())
 			{
 				AntiAFKSettingsConfig.load();
+				AntiAFKColorsConfig.load();
 			}
 		}
 		catch (Exception e)

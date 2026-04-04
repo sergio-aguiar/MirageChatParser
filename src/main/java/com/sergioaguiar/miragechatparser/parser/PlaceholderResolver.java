@@ -202,7 +202,7 @@ public class PlaceholderResolver
             if (first) first = false;
             else tooltip = tooltip.append(Text.literal("\n"));
 
-            tooltip = tooltip.append(getMovesText(moves, isClosedSheet));
+            tooltip = tooltip.append(getMovesText(pokemon, moves, isClosedSheet));
         }
 
         if (ChatSettings.shouldShowGender())
@@ -332,7 +332,7 @@ public class PlaceholderResolver
 
         if (ChatSettings.shouldShowMoves())
         {
-            tooltipText.add(getMovesText(moves, isClosedSheet));
+            tooltipText.add(getMovesText(pokemon, moves, isClosedSheet));
         }
 
         if (ChatSettings.shouldShowGender())
@@ -437,9 +437,9 @@ public class PlaceholderResolver
         return TextUtils.coloredEVsLine(evs, isClosedSheet);
     }
 
-    private static Text getMovesText(List<Move> moves, boolean isClosedSheet)
+    private static Text getMovesText(Pokemon pokemon, List<Move> moves, boolean isClosedSheet)
     {
-        return TextUtils.coloredMovesLine(moves, isClosedSheet);
+        return TextUtils.coloredMovesLine(pokemon, moves, isClosedSheet);
     }
 
     private static Text getGenderText(Gender gender, boolean isClosedSheet)

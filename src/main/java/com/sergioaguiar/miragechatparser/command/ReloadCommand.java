@@ -2,6 +2,7 @@ package com.sergioaguiar.miragechatparser.command;
 
 import com.mojang.brigadier.context.CommandContext;
 import com.mojang.brigadier.exceptions.CommandSyntaxException;
+import com.sergioaguiar.miragechatparser.config.antiafk.colors.AntiAFKColorsConfig;
 import com.sergioaguiar.miragechatparser.config.antiafk.settings.AntiAFKSettingsConfig;
 import com.sergioaguiar.miragechatparser.config.chatparser.aspects.ChatAspectsConfig;
 import com.sergioaguiar.miragechatparser.config.chatparser.colors.ChatColors;
@@ -189,6 +190,31 @@ public class ReloadCommand
             {
                 context.getSource().sendError(Text.literal("MirageChatParser » Failed to reload anti-AFK settings configuration: %s".formatted(e.getMessage())));
                 ModLogger.error("Error reloading anti-AFK setting config: %s".formatted(e.getMessage()));
+                return 1;
+            }
+
+            try
+            {
+                AntiAFKColorsConfig.load();
+                context.getSource().sendFeedback(() -> 
+                    {
+                        var text = Text.literal("MirageChatParser » ")
+                            .setStyle(Style.EMPTY.withColor(ChatColors.getCommandPrefixColor()));
+                        
+                        text = text
+                            .append(Text.literal("Reloaded anti-AFK color configuration.")
+                                .setStyle(Style.EMPTY.withColor(ChatColors.getCommandValueColor())));
+                        
+                        return text;
+                    }, 
+                    true
+                );
+                ModLogger.info("Anti-AFK color configuration reloaded successfully.");
+            }
+            catch (Exception e)
+            {
+                context.getSource().sendError(Text.literal("MirageChatParser » Failed to reload anti-AFK color configuration: %s".formatted(e.getMessage())));
+                ModLogger.error("Error reloading anti-AFK color config: %s".formatted(e.getMessage()));
                 return 1;
             }
         }
