@@ -6,7 +6,7 @@ import java.util.Set;
 
 import com.cobblemon.mod.common.api.pokemon.feature.SpeciesFeature;
 import com.cobblemon.mod.common.pokemon.Pokemon;
-import com.sergioaguiar.miragechatparser.config.colors.ChatColors;
+import com.sergioaguiar.miragechatparser.config.chatparser.colors.ChatColors;
 import com.sergioaguiar.miragechatparser.parser.PlaceholderResolver;
 
 import net.minecraft.nbt.NbtCompound;

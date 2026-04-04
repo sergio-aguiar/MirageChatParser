@@ -1,4 +1,4 @@
-package com.sergioaguiar.miragechatparser.config.aspects;
+package com.sergioaguiar.miragechatparser.config.chatparser.aspects;
 
 import java.util.HashMap;
 import java.util.HashSet;

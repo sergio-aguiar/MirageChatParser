@@ -6,9 +6,9 @@ import org.jetbrains.annotations.NotNull;
 
 import com.cobblemon.mod.common.Cobblemon;
 import com.cobblemon.mod.common.api.storage.party.PlayerPartyStore;
-import com.sergioaguiar.miragechatparser.config.colors.ChatColors;
-import com.sergioaguiar.miragechatparser.config.settings.ChatSettings;
-import com.sergioaguiar.miragechatparser.config.strings.ChatStrings;
+import com.sergioaguiar.miragechatparser.config.chatparser.colors.ChatColors;
+import com.sergioaguiar.miragechatparser.config.chatparser.settings.ChatSettings;
+import com.sergioaguiar.miragechatparser.config.chatparser.strings.ChatStrings;
 import com.sergioaguiar.miragechatparser.gui.buttons.ShoutTypeGooeyButton;
 import com.sergioaguiar.miragechatparser.gui.buttons.ShoutVisibilityGooeyButton;
 import com.sergioaguiar.miragechatparser.manager.CooldownManager;

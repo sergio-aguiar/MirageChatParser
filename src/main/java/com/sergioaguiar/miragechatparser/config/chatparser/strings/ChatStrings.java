@@ -1,4 +1,4 @@
-package com.sergioaguiar.miragechatparser.config.strings;
+package com.sergioaguiar.miragechatparser.config.chatparser.strings;
 
 import com.sergioaguiar.miragechatparser.gui.IShoutOption;
 

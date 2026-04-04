@@ -1,4 +1,4 @@
-package com.sergioaguiar.miragechatparser.config.strings;
+package com.sergioaguiar.miragechatparser.config.chatparser.strings;
 
 import java.io.File;
 import java.io.IOException;

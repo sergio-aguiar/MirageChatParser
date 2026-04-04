@@ -2,14 +2,14 @@ package com.sergioaguiar.miragechatparser.command;
 
 import com.mojang.brigadier.context.CommandContext;
 import com.mojang.brigadier.exceptions.CommandSyntaxException;
-import com.sergioaguiar.miragechatparser.config.antiafk.AntiAFKSettingsConfig;
-import com.sergioaguiar.miragechatparser.config.aspects.ChatAspectsConfig;
-import com.sergioaguiar.miragechatparser.config.colors.ChatColors;
-import com.sergioaguiar.miragechatparser.config.colors.ChatColorsConfig;
+import com.sergioaguiar.miragechatparser.config.antiafk.settings.AntiAFKSettingsConfig;
+import com.sergioaguiar.miragechatparser.config.chatparser.aspects.ChatAspectsConfig;
+import com.sergioaguiar.miragechatparser.config.chatparser.colors.ChatColors;
+import com.sergioaguiar.miragechatparser.config.chatparser.colors.ChatColorsConfig;
+import com.sergioaguiar.miragechatparser.config.chatparser.settings.ChatSettingsConfig;
+import com.sergioaguiar.miragechatparser.config.chatparser.sizes.ChatSizesConfig;
+import com.sergioaguiar.miragechatparser.config.chatparser.strings.ChatStringsConfig;
 import com.sergioaguiar.miragechatparser.config.modules.Modules;
-import com.sergioaguiar.miragechatparser.config.settings.ChatSettingsConfig;
-import com.sergioaguiar.miragechatparser.config.sizes.ChatSizesConfig;
-import com.sergioaguiar.miragechatparser.config.strings.ChatStringsConfig;
 import com.sergioaguiar.miragechatparser.util.LuckPermsUtils;
 import com.sergioaguiar.miragechatparser.util.ModLogger;
 

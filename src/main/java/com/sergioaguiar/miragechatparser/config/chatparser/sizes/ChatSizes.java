@@ -1,4 +1,4 @@
-package com.sergioaguiar.miragechatparser.config.sizes;
+package com.sergioaguiar.miragechatparser.config.chatparser.sizes;
 
 import java.util.Comparator;
 import java.util.HashMap;

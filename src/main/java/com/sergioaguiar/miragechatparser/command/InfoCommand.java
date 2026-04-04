@@ -2,7 +2,7 @@ package com.sergioaguiar.miragechatparser.command;
 
 import com.mojang.brigadier.context.CommandContext;
 import com.sergioaguiar.miragechatparser.MirageChatParser;
-import com.sergioaguiar.miragechatparser.config.colors.ChatColors;
+import com.sergioaguiar.miragechatparser.config.chatparser.colors.ChatColors;
 import com.sergioaguiar.miragechatparser.util.LuckPermsUtils;
 import com.sergioaguiar.miragechatparser.util.ModLogger;
 

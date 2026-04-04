@@ -8,8 +8,8 @@ import java.util.List;
 import java.util.Map;
 import java.util.UUID;
 
-import com.sergioaguiar.miragechatparser.config.antiafk.AntiAFKSettings;
-import com.sergioaguiar.miragechatparser.config.colors.ChatColors;
+import com.sergioaguiar.miragechatparser.config.antiafk.settings.AntiAFKSettings;
+import com.sergioaguiar.miragechatparser.config.chatparser.colors.ChatColors;
 import com.sergioaguiar.miragechatparser.util.ModLogger;
 
 import net.minecraft.server.network.ServerPlayerEntity;

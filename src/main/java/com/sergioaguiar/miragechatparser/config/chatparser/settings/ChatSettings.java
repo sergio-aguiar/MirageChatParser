@@ -1,4 +1,4 @@
-package com.sergioaguiar.miragechatparser.config.settings;
+package com.sergioaguiar.miragechatparser.config.chatparser.settings;
 
 public class ChatSettings
 {

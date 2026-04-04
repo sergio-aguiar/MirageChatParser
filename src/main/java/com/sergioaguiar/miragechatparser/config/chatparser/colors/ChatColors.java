@@ -1,4 +1,4 @@
-package com.sergioaguiar.miragechatparser.config.colors;
+package com.sergioaguiar.miragechatparser.config.chatparser.colors;
 
 import com.mojang.serialization.DataResult;
 import com.sergioaguiar.miragechatparser.util.ModLogger;

@@ -1,4 +1,4 @@
-package com.sergioaguiar.miragechatparser.config.antiafk;
+package com.sergioaguiar.miragechatparser.config.antiafk.settings;
 
 import java.io.File;
 import java.io.IOException;

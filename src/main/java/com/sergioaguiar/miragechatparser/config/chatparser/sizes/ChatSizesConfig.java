@@ -1,4 +1,4 @@
-package com.sergioaguiar.miragechatparser.config.sizes;
+package com.sergioaguiar.miragechatparser.config.chatparser.sizes;
 
 import java.nio.file.Path;
 import java.nio.file.Paths;

@@ -5,8 +5,8 @@ import java.util.function.Supplier;
 
 import org.jetbrains.annotations.NotNull;
 
-import com.sergioaguiar.miragechatparser.config.colors.ChatColors;
-import com.sergioaguiar.miragechatparser.config.strings.ChatStrings;
+import com.sergioaguiar.miragechatparser.config.chatparser.colors.ChatColors;
+import com.sergioaguiar.miragechatparser.config.chatparser.strings.ChatStrings;
 
 import ca.landonjw.gooeylibs2.api.button.ButtonAction;
 import ca.landonjw.gooeylibs2.api.button.ButtonBase;

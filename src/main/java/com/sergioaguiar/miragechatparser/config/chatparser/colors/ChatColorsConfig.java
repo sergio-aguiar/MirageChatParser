@@ -1,4 +1,4 @@
-package com.sergioaguiar.miragechatparser.config.colors;
+package com.sergioaguiar.miragechatparser.config.chatparser.colors;
 
 import java.io.File;
 import java.io.IOException;

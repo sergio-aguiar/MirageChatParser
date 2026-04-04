@@ -17,12 +17,12 @@ import com.cobblemon.mod.common.pokemon.Gender;
 import com.cobblemon.mod.common.pokemon.IVs;
 import com.cobblemon.mod.common.pokemon.Nature;
 import com.cobblemon.mod.common.pokemon.Pokemon;
-import com.sergioaguiar.miragechatparser.config.aspects.ChatAspects;
-import com.sergioaguiar.miragechatparser.config.colors.ChatColors;
-import com.sergioaguiar.miragechatparser.config.colors.ChatColors.TypeColor;
-import com.sergioaguiar.miragechatparser.config.settings.ChatSettings;
-import com.sergioaguiar.miragechatparser.config.sizes.ChatSizes;
-import com.sergioaguiar.miragechatparser.config.strings.ChatStrings;
+import com.sergioaguiar.miragechatparser.config.chatparser.aspects.ChatAspects;
+import com.sergioaguiar.miragechatparser.config.chatparser.colors.ChatColors;
+import com.sergioaguiar.miragechatparser.config.chatparser.colors.ChatColors.TypeColor;
+import com.sergioaguiar.miragechatparser.config.chatparser.settings.ChatSettings;
+import com.sergioaguiar.miragechatparser.config.chatparser.sizes.ChatSizes;
+import com.sergioaguiar.miragechatparser.config.chatparser.strings.ChatStrings;
 
 import net.minecraft.item.ItemStack;
 import net.minecraft.text.HoverEvent;
