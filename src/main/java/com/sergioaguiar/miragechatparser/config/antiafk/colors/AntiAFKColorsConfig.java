@@ -77,6 +77,29 @@ public class AntiAFKColorsConfig
                 if (color != null && !color.isEmpty())
                     AntiAFKColors.setAFKCheckerTimeColor(TextColor.parse(color).getOrThrow());
             }
+
+            if (config.contains("AFKapcha.PrefixColor"))
+            {
+                String color = config.get("AFKapcha.PrefixColor");
+                if (color != null && !color.isEmpty())
+                    AntiAFKColors.setAFKCapchaPrefixColor(TextColor.parse(color).getOrThrow());
+            }
+
+            if (config.contains("AFKapcha.TextColor"))
+            {
+                String color = config.get("AFKapcha.TextColor");
+                if (color != null && !color.isEmpty())
+                    AntiAFKColors.setAFKCapchaTextColor(TextColor.parse(color).getOrThrow());
+            }
+
+            if (config.contains("AFKapcha.QuestionColor"))
+            {
+                String color = config.get("AFKapcha.QuestionColor");
+                if (color != null && !color.isEmpty())
+                    AntiAFKColors.setAFKCapchaQuestionColor(TextColor.parse(color).getOrThrow());
+            }
+
+            ModLogger.info("Setting configurations successfully loaded from anti_afk_colors.toml.");
         }
         catch (Exception e)
         {
@@ -96,6 +119,11 @@ public class AntiAFKColorsConfig
             PlayerColor = "#cfe95e"
             GoneColor = "#2facdd"
             TimeColor = "#cfe95e"
+
+            [AFKapcha]
+            PrefixColor = "#b81106"
+            TextColor = "#d1d8eb"
+            QuestionColor = "#cfe95e"
             """;
         
         Files.writeString(file.toPath(), defaultContent);

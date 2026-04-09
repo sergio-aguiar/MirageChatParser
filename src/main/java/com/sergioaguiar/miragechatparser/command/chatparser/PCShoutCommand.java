@@ -1,4 +1,4 @@
-package com.sergioaguiar.miragechatparser.command;
+package com.sergioaguiar.miragechatparser.command.chatparser;
 
 import com.cobblemon.mod.common.Cobblemon;
 import com.cobblemon.mod.common.api.storage.pc.PCBox;

@@ -6,13 +6,17 @@ import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Random;
 import java.util.UUID;
+import java.util.concurrent.ThreadLocalRandom;
 
 import com.sergioaguiar.miragechatparser.config.antiafk.colors.AntiAFKColors;
 import com.sergioaguiar.miragechatparser.config.antiafk.settings.AntiAFKSettings;
 import com.sergioaguiar.miragechatparser.util.ModLogger;
 
+import net.minecraft.server.MinecraftServer;
 import net.minecraft.server.network.ServerPlayerEntity;
+import net.minecraft.text.ClickEvent;
 import net.minecraft.text.MutableText;
 import net.minecraft.text.Style;
 import net.minecraft.text.Text;
@@ -20,11 +24,79 @@ import net.minecraft.util.math.Vec3d;
 
 public class AntiAFKManager
 {
+    private static class PlayerCapcha
+    {
+        private final boolean isClick;
+        private final String answer;
+
+        public PlayerCapcha(boolean isClick)
+        {
+            this.isClick = isClick;
+
+            if (isClick)
+            {
+                this.answer = "";
+                return;
+            }
+
+            int length = AntiAFKSettings.getCapchaLength();
+            StringBuilder stringBuilder = new StringBuilder(length);
+            Random random = new Random();
+
+            for (int i = 0; i < length; i++)
+            {
+                stringBuilder.append(random.nextInt(10));
+            }
+
+            this.answer = stringBuilder.toString();
+        }
+
+        public boolean isClickCapcha()
+        {
+            return isClick;
+        }
+
+        public boolean isTheRightAnswer(String answer)
+        {
+            return this.answer.equalsIgnoreCase(answer);
+        }
+
+        public Text getCapchaText()
+        {
+            MutableText capchaText = Text.literal("").setStyle(Style.EMPTY);
+
+            if (isClick)
+            {
+                capchaText = capchaText
+                    .append(Text.literal("Please prove you are active: ")
+                        .setStyle(Style.EMPTY.withColor(AntiAFKColors.getAFKCapchaTextColor())));
+
+                capchaText = capchaText
+                    .append(Text.literal("[Click here]")
+                        .setStyle(Style.EMPTY.withColor(AntiAFKColors.getAFKCapchaQuestionColor())
+                            .withClickEvent(new ClickEvent(ClickEvent.Action.RUN_COMMAND, "/mirageantiafk fakecapchaclick"))));
+            }
+            else
+            {
+                capchaText = capchaText
+                    .append(Text.literal("Please type this into chat: ")
+                        .setStyle(Style.EMPTY.withColor(AntiAFKColors.getAFKCapchaTextColor())));
+
+                capchaText = capchaText
+                    .append(Text.literal(answer)
+                        .setStyle(Style.EMPTY.withColor(AntiAFKColors.getAFKCapchaQuestionColor())));
+            }
+
+            return capchaText;
+        }
+    }
+
     private static final int TICKS_PER_SECOND = 20;
 
     private static Map<UUID, Integer> playerTimesOfLastPositionMovement;
     private static Map<UUID, Integer> playerTimesOfLastCameraMovement;
     private static Map<UUID, Integer> playerTimesOfLastMessageSent;
+    private static Map<UUID, Integer> playerTimesOfLastCapchaAnswer;
     private static Map<UUID, Integer> playerTimesOfAFKMark;
 
     private static Map<UUID, Vec3d> playerLastPositions;
@@ -33,12 +105,15 @@ public class AntiAFKManager
     private static Map<UUID, String> playerLastMessages;
 
     private static Map<UUID, Integer> playersWhoWouldHaveBeenKicked;
+    private static Map<UUID, PlayerCapcha> playerActiveCapchas;
+    private static Map<UUID, Integer> playerIgnoredCapchaCounts;
 
     public static void start()
     {
         playerTimesOfLastPositionMovement = new HashMap<>();
         playerTimesOfLastCameraMovement = new HashMap<>();
         playerTimesOfLastMessageSent = new HashMap<>();
+        playerTimesOfLastCapchaAnswer = new HashMap<>();
         playerTimesOfAFKMark = new HashMap<>();
 
         playerLastPositions = new HashMap<>();
@@ -47,6 +122,8 @@ public class AntiAFKManager
         playerLastMessages = new HashMap<>();
 
         playersWhoWouldHaveBeenKicked = new HashMap<>();
+        playerActiveCapchas = new HashMap<>();
+        playerIgnoredCapchaCounts = new HashMap<>();
     }
 
     public static void registerPlayerPositionMovement(ServerPlayerEntity player)
@@ -64,14 +141,28 @@ public class AntiAFKManager
         playerTimesOfLastMessageSent.put(player.getUuid(), player.getServer().getTicks());
     }
 
+    public static void registerPlayerCapchaAnswer(ServerPlayerEntity player)
+    {
+        UUID playerUUID = player.getUuid();
+
+        playerTimesOfLastCapchaAnswer.put(playerUUID, player.getServer().getTicks());
+        playerIgnoredCapchaCounts.put(playerUUID, 0);
+    }
+
     public static void registerPlayerAsAFK(ServerPlayerEntity player)
     {
         if (isPlayerAFK(player)) return;
 
         playerTimesOfAFKMark.put(player.getUuid(), player.getServer().getTicks());
 
-        MutableText afkText = Text.literal("AFKChecker » ")
-                .setStyle(Style.EMPTY.withColor(AntiAFKColors.getAFKCheckerPrefixColor()));
+        MutableText afkText = Text.literal("").setStyle(Style.EMPTY);
+
+        if (!AntiAFKSettings.shouldHideAFKCheckerMessagePrefix())
+        {
+            afkText = afkText
+                .append(Text.literal("AFKChecker » ")
+                    .setStyle(Style.EMPTY.withColor(AntiAFKColors.getAFKCheckerPrefixColor())));
+        }
 
         afkText = afkText
             .append(Text.literal("Player ")
@@ -92,13 +183,20 @@ public class AntiAFKManager
     {
         if (!isPlayerAFK(player)) return;
 
-        int timeAFK = playerTimesOfAFKMark.getOrDefault(player.getUuid(), 0);
+        UUID playerUUID = player.getUuid();
+        int timeAFK = playerTimesOfAFKMark.getOrDefault(playerUUID, 0);
 
-        playerTimesOfAFKMark.remove(player.getUuid());
-        playersWhoWouldHaveBeenKicked.remove(player.getUuid());
+        playerTimesOfAFKMark.remove(playerUUID);
+        playersWhoWouldHaveBeenKicked.remove(playerUUID);
 
-        MutableText afkText = Text.literal("AFKChecker » ")
-                .setStyle(Style.EMPTY.withColor(AntiAFKColors.getAFKCheckerPrefixColor()));
+        MutableText afkText = Text.literal("").setStyle(Style.EMPTY);
+
+        if (!AntiAFKSettings.shouldHideAFKCheckerMessagePrefix())
+        {
+            afkText = afkText
+                .append(Text.literal("AFKChecker » ")
+                    .setStyle(Style.EMPTY.withColor(AntiAFKColors.getAFKCheckerPrefixColor())));
+        }
 
         afkText = afkText
             .append(Text.literal("Player ")
@@ -169,11 +267,14 @@ public class AntiAFKManager
 
     public static boolean shouldPlayerBeMarkedAsAFK(ServerPlayerEntity player)
     {
+        UUID playerUUID = player.getUuid();
+
         int[] lastActionTimes =
         {
-            playerTimesOfLastPositionMovement.getOrDefault(player.getUuid(), player.getServer().getTicks()),
-            playerTimesOfLastCameraMovement.getOrDefault(player.getUuid(), player.getServer().getTicks()),
-            playerTimesOfLastMessageSent.getOrDefault(player.getUuid(), player.getServer().getTicks())
+            playerTimesOfLastPositionMovement.getOrDefault(playerUUID, player.getServer().getTicks()),
+            playerTimesOfLastCameraMovement.getOrDefault(playerUUID, player.getServer().getTicks()),
+            playerTimesOfLastMessageSent.getOrDefault(playerUUID, player.getServer().getTicks()),
+            playerTimesOfLastCapchaAnswer.getOrDefault(playerUUID, player.getServer().getTicks())
         };
 
         int mostRecentActionTime = Arrays.stream(lastActionTimes).max().getAsInt();
@@ -198,24 +299,34 @@ public class AntiAFKManager
         registerPlayerPositionMovement(player);
         registerPlayerCameraMovement(player);
         registerPlayerMessageSent(player);
+        registerPlayerCapchaAnswer(player);
 
         registerPlayerLastPosition(player, player.getPos());
         registerPlayerLastCameraPitch(player, player.getPitch());
         registerPlayerLastCameraYaw(player, player.getYaw());
         registerPlayerLastMessage(player, "");
+
+        playerIgnoredCapchaCounts.put(player.getUuid(), 0);
     }
 
     public static void handlePlayerLeave(ServerPlayerEntity player)
     {
-        playerTimesOfLastPositionMovement.remove(player.getUuid());
-        playerTimesOfLastCameraMovement.remove(player.getUuid());
-        playerTimesOfAFKMark.remove(player.getUuid());
-        playerTimesOfLastMessageSent.remove(player.getUuid());
+        UUID playerUUID = player.getUuid();
 
-        playerLastPositions.remove(player.getUuid());
-        playerLastCameraPitches.remove(player.getUuid());
-        playerLastCameraYaws.remove(player.getUuid());
-        playerLastMessages.remove(player.getUuid());
+        playerTimesOfLastPositionMovement.remove(playerUUID);
+        playerTimesOfLastCameraMovement.remove(playerUUID);
+        playerTimesOfLastMessageSent.remove(playerUUID);
+        playerTimesOfLastCapchaAnswer.remove(playerUUID);
+        playerTimesOfAFKMark.remove(playerUUID);
+
+        playerLastPositions.remove(playerUUID);
+        playerLastCameraPitches.remove(playerUUID);
+        playerLastCameraYaws.remove(playerUUID);
+        playerLastMessages.remove(playerUUID);
+
+        playersWhoWouldHaveBeenKicked.remove(playerUUID);
+        playerActiveCapchas.remove(playerUUID);
+        playerIgnoredCapchaCounts.remove(playerUUID);
     }
 
     public static void handlePlayerPositionChangeLogic(ServerPlayerEntity player)
@@ -268,19 +379,125 @@ public class AntiAFKManager
         registerPlayerLastMessage(player, newMessage);
     }
 
+    public static void startCapcha(ServerPlayerEntity player)
+    {
+        UUID playerUUID = player.getUuid();
+
+        if (playerActiveCapchas.containsKey(playerUUID))
+        {
+            playerActiveCapchas.remove(playerUUID);
+            
+            int ignoredCapchas = playerIgnoredCapchaCounts.get(playerUUID) + 1;
+
+            if (ignoredCapchas >= AntiAFKSettings.getFailedCapchaBeforeKick())
+            {
+                if (!playersWhoWouldHaveBeenKicked.containsKey(playerUUID))
+                {
+                    ModLogger.info("Player %s should be AFK kicked right now with (ignoredCapchas=%d)".formatted(player.getDisplayName().getString(), ignoredCapchas));
+                    playersWhoWouldHaveBeenKicked.put(playerUUID, player.getServer().getTicks());
+                }
+            }
+
+            playerIgnoredCapchaCounts.put(playerUUID, ignoredCapchas);
+        }
+
+        playerActiveCapchas.put(playerUUID, new PlayerCapcha(ThreadLocalRandom.current().nextDouble() < 0.3));
+
+        MutableText capchaMessage = Text.literal("").setStyle(Style.EMPTY);
+
+        if (!AntiAFKSettings.shouldHideAFKCheckerMessagePrefix())
+        {
+            capchaMessage = capchaMessage
+                .append(Text.literal("AFKapcha » ")
+                    .setStyle(Style.EMPTY.withColor(AntiAFKColors.getAFKCapchaPrefixColor())));
+        }
+
+        capchaMessage = capchaMessage
+            .append(playerActiveCapchas.get(playerUUID).getCapchaText());
+
+        player.sendMessage(capchaMessage);
+    }
+
+    public static boolean hasActiveClickCapcha(ServerPlayerEntity player)
+    {
+        UUID playerUUID = player.getUuid();
+
+        return playerActiveCapchas.containsKey(playerUUID) && playerActiveCapchas.get(playerUUID).isClickCapcha();
+    }
+
+    public static boolean hasActiveMessageCapcha(ServerPlayerEntity player)
+    {
+        UUID playerUUID = player.getUuid();
+
+        return playerActiveCapchas.containsKey(playerUUID) && !playerActiveCapchas.get(playerUUID).isClickCapcha();
+    }
+
+    public static boolean isCorrectCapchaAnswer(ServerPlayerEntity player, String answer)
+    {
+        UUID playerUUID = player.getUuid();
+
+        if (!playerActiveCapchas.containsKey(playerUUID)) return false;
+
+        return playerActiveCapchas.get(playerUUID).isTheRightAnswer(answer);
+    }
+
+    public static void handleCapchaClick(ServerPlayerEntity player)
+    {
+        UUID playerUUID = player.getUuid();
+
+        if (!playerActiveCapchas.containsKey(playerUUID)) return;
+
+        if (playerActiveCapchas.get(playerUUID).isClickCapcha())
+        {
+            handleCapchaSuccess(player);
+        }
+    }
+
+    public static void handleCorrectCapchaAnswer(ServerPlayerEntity player)
+    {
+        handleCapchaSuccess(player);
+    }
+
+    private static void handleCapchaSuccess(ServerPlayerEntity player)
+    {
+        playerActiveCapchas.remove(player.getUuid());
+
+        registerPlayerNoLongerAFK(player);
+        registerPlayerCapchaAnswer(player);
+
+        MutableText capchaMessage = Text.literal("").setStyle(Style.EMPTY);
+
+        if (!AntiAFKSettings.shouldHideAFKCheckerMessagePrefix())
+        {
+            capchaMessage = capchaMessage
+                .append(Text.literal("AFKapcha » ")
+                    .setStyle(Style.EMPTY.withColor(AntiAFKColors.getAFKCapchaPrefixColor())));
+        }
+
+        capchaMessage = capchaMessage
+            .append(Text.literal("Thank you for proving you are active!")
+                .setStyle(Style.EMPTY.withColor(AntiAFKColors.getAFKCapchaTextColor())));
+
+        player.sendMessage(capchaMessage);
+    }
+
     public static void handlePlayerAFKKick(ServerPlayerEntity player)
     {
-        if (!isPlayerAFK(player) || playersWhoWouldHaveBeenKicked.containsKey(player.getUuid())) return;
+        UUID playerUUID = player.getUuid();
 
-        ModLogger.info("Player should be AFK kicked right now with (lastPosMove=%.2f seconds - lastCamMove=%.2f seconds - lastChatMsg=%.2f seconds)".formatted
+        if (!isPlayerAFK(player) || playersWhoWouldHaveBeenKicked.containsKey(playerUUID)) return;
+
+        ModLogger.info("Player %s should be AFK kicked right now with (lastPosMove=%.2f seconds - lastCamMove=%.2f seconds - lastChatMsg=%.2f seconds - lastCapcha=%.2f seconds)".formatted
             (
+                player.getDisplayName(),
                 AntiAFKManager.getSecondsSinceLastPositionMovement(player),
                 AntiAFKManager.getSecondsSinceLastCameraMovement(player),
-                AntiAFKManager.getSecondsSinceLastMessageSent(player)
+                AntiAFKManager.getSecondsSinceLastMessageSent(player),
+                AntiAFKManager.getSecondsSinceLastCapchaAnsweredSent(player)
             )
         );
 
-        playersWhoWouldHaveBeenKicked.put(player.getUuid(), player.getServer().getTicks());
+        playersWhoWouldHaveBeenKicked.put(playerUUID, player.getServer().getTicks());
     }
 
     public static double getSecondsSinceLastPositionMovement(ServerPlayerEntity player)
@@ -296,6 +513,16 @@ public class AntiAFKManager
     public static double getSecondsSinceLastMessageSent(ServerPlayerEntity player)
     {
         return ticksToSeconds(player.getServer().getTicks() - playerTimesOfLastMessageSent.getOrDefault(player.getUuid(), player.getServer().getTicks()));
+    }
+
+    public static double getSecondsSinceLastCapchaAnsweredSent(ServerPlayerEntity player)
+    {
+        return ticksToSeconds(player.getServer().getTicks() - playerTimesOfLastCapchaAnswer.getOrDefault(player.getUuid(), player.getServer().getTicks()));
+    }
+
+    public static boolean isCapchaTime(MinecraftServer server)
+    {
+        return server.getTicks() % secondsToTicks(AntiAFKSettings.getSecondsBetweenCapcha()) == 0;
     }
 
     private static int secondsToTicks(int seconds)

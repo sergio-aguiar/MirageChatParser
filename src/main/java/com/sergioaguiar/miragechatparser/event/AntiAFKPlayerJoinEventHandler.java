@@ -1,6 +1,5 @@
 package com.sergioaguiar.miragechatparser.event;
 
-import com.sergioaguiar.miragechatparser.config.modules.Modules;
 import com.sergioaguiar.miragechatparser.manager.AntiAFKManager;
 import com.sergioaguiar.miragechatparser.util.ModLogger;
 
@@ -10,12 +9,6 @@ public class AntiAFKPlayerJoinEventHandler
 {
     public static void register()
     {
-        if (!Modules.shouldEnableAntiAFKModule()) 
-        {
-            ModLogger.info("Anti-AFK Player On-Join Setup skipped.");
-            return;
-        }
-
         ServerPlayConnectionEvents.JOIN.register(
             (handler, sender, server) ->
             {

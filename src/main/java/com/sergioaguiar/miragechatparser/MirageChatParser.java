@@ -2,13 +2,14 @@ package com.sergioaguiar.miragechatparser;
 
 import net.fabricmc.api.ModInitializer;
 
-import com.sergioaguiar.miragechatparser.command.DebugShoutCommand;
 import com.sergioaguiar.miragechatparser.command.InfoCommand;
-import com.sergioaguiar.miragechatparser.command.PCShoutCommand;
-import com.sergioaguiar.miragechatparser.command.PartyCheckCommand;
-import com.sergioaguiar.miragechatparser.command.PartyShoutAllCommand;
-import com.sergioaguiar.miragechatparser.command.PartyShoutCommand;
 import com.sergioaguiar.miragechatparser.command.ReloadCommand;
+import com.sergioaguiar.miragechatparser.command.antiafk.fake.FakeCapchaClickCommand;
+import com.sergioaguiar.miragechatparser.command.chatparser.DebugShoutCommand;
+import com.sergioaguiar.miragechatparser.command.chatparser.PCShoutCommand;
+import com.sergioaguiar.miragechatparser.command.chatparser.PartyCheckCommand;
+import com.sergioaguiar.miragechatparser.command.chatparser.PartyShoutAllCommand;
+import com.sergioaguiar.miragechatparser.command.chatparser.PartyShoutCommand;
 import com.sergioaguiar.miragechatparser.config.antiafk.colors.AntiAFKColors;
 import com.sergioaguiar.miragechatparser.config.antiafk.colors.AntiAFKColorsConfig;
 import com.sergioaguiar.miragechatparser.config.antiafk.settings.AntiAFKSettings;
@@ -67,20 +68,14 @@ public class MirageChatParser implements ModInitializer
 		{
 			ModulesConfig.load();
 
-			if (Modules.shouldEnableChatParserModule())
-			{
-				ChatSettingsConfig.load();
-				ChatStringsConfig.load();
-				ChatColorsConfig.load();
-				ChatAspectsConfig.load();
-				ChatSizesConfig.load();
-			}
+			ChatSettingsConfig.load();
+			ChatStringsConfig.load();
+			ChatColorsConfig.load();
+			ChatAspectsConfig.load();
+			ChatSizesConfig.load();
 
-			if (Modules.shouldEnableAntiAFKModule())
-			{
-				AntiAFKSettingsConfig.load();
-				AntiAFKColorsConfig.load();
-			}
+			AntiAFKSettingsConfig.load();
+			AntiAFKColorsConfig.load();
 		}
 		catch (Exception e)
 		{
@@ -130,13 +125,18 @@ public class MirageChatParser implements ModInitializer
 			ReloadCommand.register();
 			InfoCommand.register();
 
-			if (Modules.shouldEnableAntiAFKModule())
+			if (Modules.shouldEnableChatParserModule())
 			{
 				PartyShoutCommand.register();
 				PartyShoutAllCommand.register();
 				PCShoutCommand.register();
 				DebugShoutCommand.register();
 				PartyCheckCommand.register();
+			}
+
+			if (Modules.shouldEnableAntiAFKModule())
+			{
+				FakeCapchaClickCommand.register();
 			}
 		}
 		catch (Exception e)
