@@ -37,7 +37,6 @@ public class ChatColorsConfig
 
         try (CommentedFileConfig config = CommentedFileConfig.builder(file)
                 .preserveInsertionOrder()
-                .autoreload()
                 .sync()
                 .build())
         {

@@ -35,11 +35,16 @@ public class AntiAFKSettingsConfig
 
         try (CommentedFileConfig config = CommentedFileConfig.builder(file)
                 .preserveInsertionOrder()
-                .autoreload()
                 .sync()
                 .build())
         {
             config.load();
+
+            if (config.contains("General.NoKickMode"))
+            {
+                boolean enabled = config.getOrElse("General.NoKickMode", AntiAFKSettings.DEFAULT_NO_KICK_MODE_ENABLED);
+                AntiAFKSettings.setNoKickMode(enabled);
+            }
 
             if (config.contains("General.SecondsToAFK"))
             {
@@ -117,6 +122,8 @@ public class AntiAFKSettingsConfig
             # Players will also have to answer CAPCHA every 10 minutes. If someone is unable to answer three times in a row, they are also kicked (roughly 30 minutes).
 
             [General]
+            # Whether No-Kick Mode (only reports when players would have been kicked, rather than kicking - good for testing) should be enabled or not (true/false)
+            NoKickMode = false
             # The number of seconds before a player is flagged as AFK if not enough relevant actions were taken
             SecondsToAFK = 600
             # The number of seconds before a player is kicked for being AFK, after being flagged as AFK (while still lacking relevant actions)

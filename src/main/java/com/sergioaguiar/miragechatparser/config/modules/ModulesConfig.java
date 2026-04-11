@@ -35,7 +35,6 @@ public class ModulesConfig
 
         try (CommentedFileConfig config = CommentedFileConfig.builder(file)
                 .preserveInsertionOrder()
-                .autoreload()
                 .sync()
                 .build())
         {

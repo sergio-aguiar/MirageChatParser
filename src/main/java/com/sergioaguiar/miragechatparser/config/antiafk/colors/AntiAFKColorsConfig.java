@@ -37,7 +37,6 @@ public class AntiAFKColorsConfig
 
         try (CommentedFileConfig config = CommentedFileConfig.builder(file)
                 .preserveInsertionOrder()
-                .autoreload()
                 .sync()
                 .build())
         {
@@ -99,6 +98,20 @@ public class AntiAFKColorsConfig
                     AntiAFKColors.setAFKCapchaQuestionColor(TextColor.parse(color).getOrThrow());
             }
 
+            if (config.contains("Kick.KickTitleColor"))
+            {
+                String color = config.get("Kick.KickTitleColor");
+                if (color != null && !color.isEmpty())
+                    AntiAFKColors.setKickTitleColor(TextColor.parse(color).getOrThrow());
+            }
+
+            if (config.contains("Kick.KickDescriptionColor"))
+            {
+                String color = config.get("Kick.KickDescriptionColor");
+                if (color != null && !color.isEmpty())
+                    AntiAFKColors.setKickDescriptionColor(TextColor.parse(color).getOrThrow());
+            }
+
             ModLogger.info("Setting configurations successfully loaded from anti_afk_colors.toml.");
         }
         catch (Exception e)
@@ -124,6 +137,10 @@ public class AntiAFKColorsConfig
             PrefixColor = "#b81106"
             TextColor = "#d1d8eb"
             QuestionColor = "#cfe95e"
+
+            [Kick]
+            KickTitleColor = "#b81106"
+            KickDescriptionColor = "#d1d8eb"
             """;
         
         Files.writeString(file.toPath(), defaultContent);

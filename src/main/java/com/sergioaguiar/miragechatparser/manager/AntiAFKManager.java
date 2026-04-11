@@ -391,10 +391,17 @@ public class AntiAFKManager
 
             if (ignoredCapchas >= AntiAFKSettings.getFailedCapchaBeforeKick())
             {
-                if (!playersWhoWouldHaveBeenKicked.containsKey(playerUUID))
+                if (AntiAFKSettings.isNoKickModeEnabled())
                 {
-                    ModLogger.info("Player %s should be AFK kicked right now with (ignoredCapchas=%d)".formatted(player.getDisplayName().getString(), ignoredCapchas));
-                    playersWhoWouldHaveBeenKicked.put(playerUUID, player.getServer().getTicks());
+                    if (!playersWhoWouldHaveBeenKicked.containsKey(playerUUID))
+                    {
+                        ModLogger.info("Player %s should be AFK kicked right now with (ignoredCapchas=%d)".formatted(player.getDisplayName().getString(), ignoredCapchas));
+                        playersWhoWouldHaveBeenKicked.put(playerUUID, player.getServer().getTicks());
+                    }
+                }
+                else
+                {
+                    handlePlayerKick(player, "You ignored too many chat CAPCHA.");
                 }
             }
 
@@ -487,17 +494,36 @@ public class AntiAFKManager
 
         if (!isPlayerAFK(player) || playersWhoWouldHaveBeenKicked.containsKey(playerUUID)) return;
 
-        ModLogger.info("Player %s should be AFK kicked right now with (lastPosMove=%.2f seconds - lastCamMove=%.2f seconds - lastChatMsg=%.2f seconds - lastCapcha=%.2f seconds)".formatted
-            (
-                player.getDisplayName(),
-                AntiAFKManager.getSecondsSinceLastPositionMovement(player),
-                AntiAFKManager.getSecondsSinceLastCameraMovement(player),
-                AntiAFKManager.getSecondsSinceLastMessageSent(player),
-                AntiAFKManager.getSecondsSinceLastCapchaAnsweredSent(player)
-            )
-        );
+        if (AntiAFKSettings.isNoKickModeEnabled())
+        {
+            ModLogger.info("Player %s should be AFK kicked right now with (lastPosMove=%.2f seconds - lastCamMove=%.2f seconds - lastChatMsg=%.2f seconds - lastCapcha=%.2f seconds)".formatted
+                (
+                    player.getDisplayName().getString(),
+                    AntiAFKManager.getSecondsSinceLastPositionMovement(player),
+                    AntiAFKManager.getSecondsSinceLastCameraMovement(player),
+                    AntiAFKManager.getSecondsSinceLastMessageSent(player),
+                    AntiAFKManager.getSecondsSinceLastCapchaAnsweredSent(player)
+                )
+            );
 
-        playersWhoWouldHaveBeenKicked.put(playerUUID, player.getServer().getTicks());
+            playersWhoWouldHaveBeenKicked.put(playerUUID, player.getServer().getTicks());
+        }
+        else
+        {
+            handlePlayerKick(player, "You were inactive for too long.");
+        }
+    }
+
+    private static void handlePlayerKick(ServerPlayerEntity player, String kickMessage)
+    {
+        MutableText kickText = Text.literal("AFKChecker\n")
+                .setStyle(Style.EMPTY.withColor(AntiAFKColors.getKickTitleColor()));
+
+        kickText = kickText
+            .append(Text.literal(kickMessage)
+                .setStyle(Style.EMPTY.withColor(AntiAFKColors.getKickDescriptionColor())));
+
+        player.networkHandler.disconnect(kickText);
     }
 
     public static double getSecondsSinceLastPositionMovement(ServerPlayerEntity player)

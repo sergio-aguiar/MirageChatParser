@@ -2,6 +2,8 @@ package com.sergioaguiar.miragechatparser.config.antiafk.settings;
 
 public class AntiAFKSettings
 {
+    protected static final boolean DEFAULT_NO_KICK_MODE_ENABLED = false;
+
     protected static final int DEFAULT_SECONDS_TO_AFK = 600;
     protected static final int DEFAULT_SECONDS_TO_AFK_KICK = 1200;
     protected static final int DEFAULT_SECONDS_BETWEEN_CAPCHA = 600;
@@ -14,6 +16,8 @@ public class AntiAFKSettings
 
     protected static final boolean DEFAULT_HIDE_AFK_CHECKER_MESSAGE_PREFIX = false;
     protected static final boolean DEFAULT_HIDE_AFK_CAPCHA_MESSAGE_PREFIX = false;
+
+    private static boolean noKickModeEnabled;
 
     private static int secondsToAFK;
     private static int secondsToAFKKick;
@@ -30,6 +34,8 @@ public class AntiAFKSettings
 
     public static void setDefaults()
     {
+        noKickModeEnabled = DEFAULT_NO_KICK_MODE_ENABLED;
+
         secondsToAFK = DEFAULT_SECONDS_TO_AFK;
         secondsToAFKKick = DEFAULT_SECONDS_TO_AFK_KICK;
         secondsBetweenCapcha = DEFAULT_SECONDS_BETWEEN_CAPCHA;
@@ -44,6 +50,7 @@ public class AntiAFKSettings
         hideAFKCapchaMessagePrefix = DEFAULT_HIDE_AFK_CAPCHA_MESSAGE_PREFIX;
     }
 
+    public static boolean isNoKickModeEnabled() { return noKickModeEnabled; }
     public static int getSecondsToAFK() { return secondsToAFK; }
     public static int getSecondsToAFKKick() { return secondsToAFKKick; }
     public static int getSecondsBetweenCapcha() { return secondsBetweenCapcha; }
@@ -55,6 +62,7 @@ public class AntiAFKSettings
     public static boolean shouldHideAFKCheckerMessagePrefix() { return hideAFKCheckerMessagePrefix; }
     public static boolean shouldHideAFKCapchaMessagePrefix() { return hideAFKCapchaMessagePrefix; }
 
+    protected static void setNoKickMode(boolean enable) { noKickModeEnabled = enable; }
     protected static void setSecondsToAFK(int seconds) { secondsToAFK = seconds; }
     protected static void setSecondsToAFKKick(int seconds) { secondsToAFKKick = seconds; }
     protected static void setSecondsBetweenCapcha(int seconds) { secondsBetweenCapcha = seconds; }
