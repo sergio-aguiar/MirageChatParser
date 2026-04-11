@@ -12,6 +12,7 @@ import java.util.concurrent.ThreadLocalRandom;
 
 import com.sergioaguiar.miragechatparser.config.antiafk.colors.AntiAFKColors;
 import com.sergioaguiar.miragechatparser.config.antiafk.settings.AntiAFKSettings;
+import com.sergioaguiar.miragechatparser.util.LuckPermsUtils;
 import com.sergioaguiar.miragechatparser.util.ModLogger;
 
 import net.minecraft.server.MinecraftServer;
@@ -412,7 +413,7 @@ public class AntiAFKManager
 
         MutableText capchaMessage = Text.literal("").setStyle(Style.EMPTY);
 
-        if (!AntiAFKSettings.shouldHideAFKCheckerMessagePrefix())
+        if (!AntiAFKSettings.shouldHideAFKCapchaMessagePrefix())
         {
             capchaMessage = capchaMessage
                 .append(Text.literal("AFKapcha » ")
@@ -474,7 +475,7 @@ public class AntiAFKManager
 
         MutableText capchaMessage = Text.literal("").setStyle(Style.EMPTY);
 
-        if (!AntiAFKSettings.shouldHideAFKCheckerMessagePrefix())
+        if (!AntiAFKSettings.shouldHideAFKCapchaMessagePrefix())
         {
             capchaMessage = capchaMessage
                 .append(Text.literal("AFKapcha » ")
@@ -516,6 +517,8 @@ public class AntiAFKManager
 
     private static void handlePlayerKick(ServerPlayerEntity player, String kickMessage)
     {
+        if (LuckPermsUtils.hasPermission(player, "mirageantiafk.bypass.kick")) return;
+
         MutableText kickText = Text.literal("AFKChecker\n")
                 .setStyle(Style.EMPTY.withColor(AntiAFKColors.getKickTitleColor()));
 

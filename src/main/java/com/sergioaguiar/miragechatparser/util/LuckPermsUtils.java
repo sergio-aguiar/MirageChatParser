@@ -32,6 +32,19 @@ public class LuckPermsUtils
             return false;
         }
 
+        return playerHasPermission(player, permission);
+    }
+
+    public static boolean hasPermission(ServerPlayerEntity player, String permission)
+    {
+        if (player.hasPermissionLevel(2)) return true;
+        if (!isModLoaded()) return player.hasPermissionLevel(2);
+
+        return playerHasPermission(player, permission);
+    }
+
+    private static boolean playerHasPermission(ServerPlayerEntity player, String permission)
+    {
         LuckPerms api = LuckPermsProvider.get();
 
         User user = api.getUserManager().getUser(player.getUuid());

@@ -3,6 +3,7 @@ package com.sergioaguiar.miragechatparser.event;
 import java.util.List;
 
 import com.sergioaguiar.miragechatparser.manager.AntiAFKManager;
+import com.sergioaguiar.miragechatparser.util.LuckPermsUtils;
 import com.sergioaguiar.miragechatparser.util.ModLogger;
 
 import net.fabricmc.fabric.api.event.lifecycle.v1.ServerTickEvents;
@@ -21,12 +22,15 @@ public class AntiAFKTickEventHandler
                 {
                     for (ServerPlayerEntity player : playerList)
                     {
+                        if (LuckPermsUtils.hasPermission(player, "mirageantiafk.bypass.capcha")) continue;
+
                         AntiAFKManager.startCapcha(player);
                     }
                 }
 
                 for (ServerPlayerEntity player : playerList)
                 {
+                    if (LuckPermsUtils.hasPermission(player, "mirageantiafk.bypass.check")) continue;
                     if (player.hasVehicle() || player.isTouchingWater()) continue;
 
                     AntiAFKManager.handlePlayerPositionChangeLogic(player);

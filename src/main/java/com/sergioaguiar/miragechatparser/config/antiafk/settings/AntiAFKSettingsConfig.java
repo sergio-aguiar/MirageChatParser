@@ -118,8 +118,8 @@ public class AntiAFKSettingsConfig
     {
         String defaultContent = """
             # MirageChatParser - Anti-AFK Settings Configuration
-            # With the default values, players will become AFK after 10 minutes of no relevant actions, followed by a kick if they remain inactive for 20 more minutes.
-            # Players will also have to answer CAPCHA every 10 minutes. If someone is unable to answer three times in a row, they are also kicked (roughly 30 minutes).
+            # With the default values, players will become AFK after 10 minutes of no relevant actions, followed by a kick if they remain inactive for 50 more minutes.
+            # Players will also have to answer CAPCHA every 15 minutes. If someone is unable to answer three times in a row, they are also kicked (roughly 60 minutes).
 
             [General]
             # Whether No-Kick Mode (only reports when players would have been kicked, rather than kicking - good for testing) should be enabled or not (true/false)
@@ -127,9 +127,9 @@ public class AntiAFKSettingsConfig
             # The number of seconds before a player is flagged as AFK if not enough relevant actions were taken
             SecondsToAFK = 600
             # The number of seconds before a player is kicked for being AFK, after being flagged as AFK (while still lacking relevant actions)
-            SecondsToAFKKick = 1200
+            SecondsToAFKKick = 3000
             # The number of seconds between anti-AFK CAPCHA (do not require the player being flagged as AFK to trigger)
-            SecondsBetweenCapcha = 600
+            SecondsBetweenCapcha = 900
             # The number of ignored anti-AFK CAPCHA before getting kicked (regardless of AFK state)
             FailedCapchaBeforeKick = 3
             # The amount of digits in a text-based CAPCHA [1-9]

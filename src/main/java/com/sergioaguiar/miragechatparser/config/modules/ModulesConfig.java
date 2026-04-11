@@ -69,7 +69,7 @@ public class ModulesConfig
             # Whether to start the chat parser module or not (true/false)
             EnableChatParserModule = true
             # Whether to start the anti-AFK module or not (true/false)
-            EnableAntiAFKModule = false
+            EnableAntiAFKModule = true
             """;
         
         Files.writeString(file.toPath(), defaultContent);

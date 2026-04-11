@@ -1,6 +1,7 @@
 package com.sergioaguiar.miragechatparser.event;
 
 import com.sergioaguiar.miragechatparser.manager.AntiAFKManager;
+import com.sergioaguiar.miragechatparser.util.LuckPermsUtils;
 import com.sergioaguiar.miragechatparser.util.ModLogger;
 
 import net.fabricmc.fabric.api.message.v1.ServerMessageEvents;
@@ -30,6 +31,8 @@ public class AntiAFKMessageHandler
         ServerMessageEvents.CHAT_MESSAGE.register(
             (message, sender, params) ->
             {
+                if (LuckPermsUtils.hasPermission(sender, "mirageantiafk.bypass.check")) return;
+
                 AntiAFKManager.handlePlayerMessageSentLogic(sender, message.getSignedContent());
             }
         );

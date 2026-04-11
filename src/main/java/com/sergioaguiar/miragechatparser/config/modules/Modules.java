@@ -3,7 +3,7 @@ package com.sergioaguiar.miragechatparser.config.modules;
 public class Modules 
 {
     protected static final boolean DEFAULT_ENABLE_CHAT_PARSER_MODULE = true;
-    protected static final boolean DEFAULT_ENABLE_ANTI_AFK_MODULE = false;
+    protected static final boolean DEFAULT_ENABLE_ANTI_AFK_MODULE = true;
 
     private static boolean enableChatParserModule;
     private static boolean enableAntiAFKModule;

@@ -5,8 +5,8 @@ public class AntiAFKSettings
     protected static final boolean DEFAULT_NO_KICK_MODE_ENABLED = false;
 
     protected static final int DEFAULT_SECONDS_TO_AFK = 600;
-    protected static final int DEFAULT_SECONDS_TO_AFK_KICK = 1200;
-    protected static final int DEFAULT_SECONDS_BETWEEN_CAPCHA = 600;
+    protected static final int DEFAULT_SECONDS_TO_AFK_KICK = 3000;
+    protected static final int DEFAULT_SECONDS_BETWEEN_CAPCHA = 900;
     protected static final int DEFAULT_FAILED_CAPCHA_BEFORE_KICK = 3;
     protected static final int DEFAULT_CAPCHA_LENGTH = 4;
     
