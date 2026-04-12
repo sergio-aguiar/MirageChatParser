@@ -13,6 +13,8 @@ import com.sergioaguiar.miragechatparser.util.LuckPermsUtils;
 import com.sergioaguiar.miragechatparser.util.ModLogger;
 import com.sergioaguiar.miragechatparser.util.TextUtils;
 
+import net.minecraft.network.packet.s2c.play.SubtitleS2CPacket;
+import net.minecraft.network.packet.s2c.play.TitleS2CPacket;
 import net.minecraft.server.MinecraftServer;
 import net.minecraft.server.network.ServerPlayerEntity;
 import net.minecraft.text.ClickEvent;
@@ -368,6 +370,19 @@ public class AntiAFKManager
             
             int ignoredCaptchas = playerIgnoredCaptchaCounts.get(playerUUID) + 1;
             playerIgnoredCaptchaCounts.put(playerUUID, ignoredCaptchas);
+
+            if (ignoredCaptchas == AntiAFKSettings.getFailedCaptchaBeforeKick() - 1)
+            {
+                player.networkHandler.sendPacket(new TitleS2CPacket(
+                    Text.literal("CAPTCHA WARNING")
+                        .setStyle(Style.EMPTY.withColor(AntiAFKColors.getCaptchaWarningTitleColor()))
+                ));
+
+                player.networkHandler.sendPacket(new SubtitleS2CPacket(
+                    Text.literal("Ignoring too many CAPTCHA may get you kicked!")
+                        .setStyle(Style.EMPTY.withColor(AntiAFKColors.getCaptchaWarningSubtitleColor()))
+                ));
+            }
 
             if (ignoredCaptchas >= AntiAFKSettings.getFailedCaptchaBeforeKick())
             {

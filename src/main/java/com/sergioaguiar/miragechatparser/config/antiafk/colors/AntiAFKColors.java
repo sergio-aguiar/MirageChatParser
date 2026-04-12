@@ -22,6 +22,8 @@ public class AntiAFKColors
     private static final DataResult<TextColor> DEFAULT_KICK_INFO_TITLE_COLOR = TextColor.parse("#b81106");
     private static final DataResult<TextColor> DEFAULT_KICK_INFO_TEXT_COLOR = TextColor.parse("#d1d8eb");
     private static final DataResult<TextColor> DEFAULT_KICK_INFO_TIME_COLOR = TextColor.parse("#cfe95e");
+    private static final DataResult<TextColor> DEFAULT_CAPTCHA_WARNING_TITLE_COLOR = TextColor.parse("#b81106");
+    private static final DataResult<TextColor> DEFAULT_CAPTCHA_WARNING_SUBTITLE_COLOR = TextColor.parse("#cfe95e");
 
     private static TextColor afkCheckerPrefixColor;
     private static TextColor afkCheckerTextColor;
@@ -38,6 +40,8 @@ public class AntiAFKColors
     private static TextColor kickInfoTitleColor;
     private static TextColor kickInfoTextColor;
     private static TextColor kickInfoTimeColor;
+    private static TextColor captchaWarningTitleColor;
+    private static TextColor captchaWarningSubtitleColor;
 
     public static void setDefaults()
     {
@@ -58,6 +62,8 @@ public class AntiAFKColors
             kickInfoTitleColor = DEFAULT_KICK_INFO_TITLE_COLOR.getOrThrow();
             kickInfoTextColor = DEFAULT_KICK_INFO_TEXT_COLOR.getOrThrow();
             kickInfoTimeColor = DEFAULT_KICK_INFO_TIME_COLOR.getOrThrow();
+            captchaWarningTitleColor = DEFAULT_CAPTCHA_WARNING_TITLE_COLOR.getOrThrow();
+            captchaWarningSubtitleColor = DEFAULT_CAPTCHA_WARNING_SUBTITLE_COLOR.getOrThrow();
         }
         catch (IllegalStateException e) 
         {
@@ -80,6 +86,8 @@ public class AntiAFKColors
     public static TextColor getKickInfoTitleColor() { return kickInfoTitleColor; }
     public static TextColor getKickInfoTextColor() { return kickInfoTextColor; }
     public static TextColor getKickInfoTimeColor() { return kickInfoTimeColor; }
+    public static TextColor getCaptchaWarningTitleColor() { return captchaWarningTitleColor; }
+    public static TextColor getCaptchaWarningSubtitleColor() { return captchaWarningSubtitleColor; }
 
     protected static void setAFKCheckerPrefixColor(TextColor color) { afkCheckerPrefixColor = color; }
     protected static void setAFKCheckerTextColor(TextColor color) { afkCheckerTextColor = color; }
@@ -96,4 +104,6 @@ public class AntiAFKColors
     protected static void setKickInfoTitleColor(TextColor color) { kickInfoTitleColor = color; }
     protected static void setKickInfoTextColor(TextColor color) { kickInfoTextColor = color; }
     protected static void setKickInfoTimeColor(TextColor color) { kickInfoTimeColor = color; }
+    protected static void setCaptchaWarningTitleColor(TextColor color) { captchaWarningTitleColor = color; }
+    protected static void setCaptchaWarningSubtitleColor(TextColor color) { captchaWarningSubtitleColor = color; }
 }
