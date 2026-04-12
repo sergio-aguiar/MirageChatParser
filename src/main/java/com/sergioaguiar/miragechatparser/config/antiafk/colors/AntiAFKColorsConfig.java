@@ -112,6 +112,41 @@ public class AntiAFKColorsConfig
                     AntiAFKColors.setKickDescriptionColor(TextColor.parse(color).getOrThrow());
             }
 
+            if (config.contains("Chat.KickReasonTitleColor"))
+            {
+                String color = config.get("Chat.KickReasonTitleColor");
+                if (color != null && !color.isEmpty())
+                    AntiAFKColors.setKickReasonTitleColor(TextColor.parse(color).getOrThrow());
+            }
+
+            if (config.contains("Chat.KickReasonDescriptionColor"))
+            {
+                String color = config.get("Chat.KickReasonDescriptionColor");
+                if (color != null && !color.isEmpty())
+                    AntiAFKColors.setKickReasonDescriptionColor(TextColor.parse(color).getOrThrow());
+            }
+
+            if (config.contains("Chat.KickInfoTitleColor"))
+            {
+                String color = config.get("Chat.KickInfoTitleColor");
+                if (color != null && !color.isEmpty())
+                    AntiAFKColors.setKickInfoTitleColor(TextColor.parse(color).getOrThrow());
+            }
+
+            if (config.contains("Chat.KickInfoTextColor"))
+            {
+                String color = config.get("Chat.KickInfoTextColor");
+                if (color != null && !color.isEmpty())
+                    AntiAFKColors.setKickInfoTextColor(TextColor.parse(color).getOrThrow());
+            }
+
+            if (config.contains("Chat.KickInfoTimeColor"))
+            {
+                String color = config.get("Chat.KickInfoTimeColor");
+                if (color != null && !color.isEmpty())
+                    AntiAFKColors.setKickInfoTimeColor(TextColor.parse(color).getOrThrow());
+            }
+
             ModLogger.info("Setting configurations successfully loaded from anti_afk_colors.toml.");
         }
         catch (Exception e)
@@ -141,6 +176,13 @@ public class AntiAFKColorsConfig
             [Kick]
             KickTitleColor = "#b81106"
             KickDescriptionColor = "#d1d8eb"
+
+            [Chat]
+            KickReasonTitleColor = "#b81106"
+            KickReasonDescriptionColor = "#d1d8eb"
+            KickInfoTitleColor = "#b81106"
+            KickInfoTextColor = "#d1d8eb"
+            KickInfoTimeColor = "#cfe95e"
             """;
         
         Files.writeString(file.toPath(), defaultContent);

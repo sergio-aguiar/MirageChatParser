@@ -17,6 +17,11 @@ public class AntiAFKColors
     private static final DataResult<TextColor> DEFAULT_AFK_CAPCHA_QUESTION_COLOR = TextColor.parse("#cfe95e");
     private static final DataResult<TextColor> DEFAULT_KICK_TITLE_COLOR = TextColor.parse("#b81106");
     private static final DataResult<TextColor> DEFAULT_KICK_DESCRIPTION_COLOR = TextColor.parse("#d1d8eb");
+    private static final DataResult<TextColor> DEFAULT_KICK_REASON_TITLE_COLOR = TextColor.parse("#b81106");
+    private static final DataResult<TextColor> DEFAULT_KICK_REASON_DESCRIPTION_COLOR = TextColor.parse("#d1d8eb");
+    private static final DataResult<TextColor> DEFAULT_KICK_INFO_TITLE_COLOR = TextColor.parse("#b81106");
+    private static final DataResult<TextColor> DEFAULT_KICK_INFO_TEXT_COLOR = TextColor.parse("#d1d8eb");
+    private static final DataResult<TextColor> DEFAULT_KICK_INFO_TIME_COLOR = TextColor.parse("#cfe95e");
 
     private static TextColor afkCheckerPrefixColor;
     private static TextColor afkCheckerTextColor;
@@ -28,6 +33,11 @@ public class AntiAFKColors
     private static TextColor afkCapchaQuestionColor;
     private static TextColor kickTitleColor;
     private static TextColor kickDescriptionColor;
+    private static TextColor kickReasonTitleColor;
+    private static TextColor kickReasonDescriptionColor;
+    private static TextColor kickInfoTitleColor;
+    private static TextColor kickInfoTextColor;
+    private static TextColor kickInfoTimeColor;
 
     public static void setDefaults()
     {
@@ -43,6 +53,11 @@ public class AntiAFKColors
             afkCapchaQuestionColor = DEFAULT_AFK_CAPCHA_QUESTION_COLOR.getOrThrow();
             kickTitleColor = DEFAULT_KICK_TITLE_COLOR.getOrThrow();
             kickDescriptionColor = DEFAULT_KICK_DESCRIPTION_COLOR.getOrThrow();
+            kickReasonTitleColor = DEFAULT_KICK_REASON_TITLE_COLOR.getOrThrow();
+            kickReasonDescriptionColor = DEFAULT_KICK_REASON_DESCRIPTION_COLOR.getOrThrow();
+            kickInfoTitleColor = DEFAULT_KICK_INFO_TITLE_COLOR.getOrThrow();
+            kickInfoTextColor = DEFAULT_KICK_INFO_TEXT_COLOR.getOrThrow();
+            kickInfoTimeColor = DEFAULT_KICK_INFO_TIME_COLOR.getOrThrow();
         }
         catch (IllegalStateException e) 
         {
@@ -60,6 +75,11 @@ public class AntiAFKColors
     public static TextColor getAFKCapchaQuestionColor() { return afkCapchaQuestionColor; }
     public static TextColor getKickTitleColor() { return kickTitleColor; }
     public static TextColor getKickDescriptionColor() { return kickDescriptionColor; }
+    public static TextColor getKickReasonTitleColor() { return kickReasonTitleColor; }
+    public static TextColor getKickReasonDescriptionColor() { return kickReasonDescriptionColor; }
+    public static TextColor getKickInfoTitleColor() { return kickInfoTitleColor; }
+    public static TextColor getKickInfoTextColor() { return kickInfoTextColor; }
+    public static TextColor getKickInfoTimeColor() { return kickInfoTimeColor; }
 
     protected static void setAFKCheckerPrefixColor(TextColor color) { afkCheckerPrefixColor = color; }
     protected static void setAFKCheckerTextColor(TextColor color) { afkCheckerTextColor = color; }
@@ -71,4 +91,9 @@ public class AntiAFKColors
     protected static void setAFKCapchaQuestionColor(TextColor color) { afkCapchaQuestionColor = color; }
     protected static void setKickTitleColor(TextColor color) { kickTitleColor = color; }
     protected static void setKickDescriptionColor(TextColor color) { kickDescriptionColor = color; }
+    protected static void setKickReasonTitleColor(TextColor color) { kickReasonTitleColor = color; }
+    protected static void setKickReasonDescriptionColor(TextColor color) { kickReasonDescriptionColor = color; }
+    protected static void setKickInfoTitleColor(TextColor color) { kickInfoTitleColor = color; }
+    protected static void setKickInfoTextColor(TextColor color) { kickInfoTextColor = color; }
+    protected static void setKickInfoTimeColor(TextColor color) { kickInfoTimeColor = color; }
 }

@@ -1,10 +1,7 @@
 package com.sergioaguiar.miragechatparser.manager;
 
-import java.time.Duration;
-import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 import java.util.Random;
 import java.util.UUID;
@@ -14,6 +11,7 @@ import com.sergioaguiar.miragechatparser.config.antiafk.colors.AntiAFKColors;
 import com.sergioaguiar.miragechatparser.config.antiafk.settings.AntiAFKSettings;
 import com.sergioaguiar.miragechatparser.util.LuckPermsUtils;
 import com.sergioaguiar.miragechatparser.util.ModLogger;
+import com.sergioaguiar.miragechatparser.util.TextUtils;
 
 import net.minecraft.server.MinecraftServer;
 import net.minecraft.server.network.ServerPlayerEntity;
@@ -92,6 +90,32 @@ public class AntiAFKManager
         }
     }
 
+    public enum KickReason
+    {
+        INACTIVE_FOR_TOO_LONG
+        (
+            "You were inactive for too long.",
+            "Inactive for too long."
+        ),
+        IGNORING_CAPCHA
+        (
+            "You ignored too many chat CAPCHA.",
+            "Ignored too many chat CAPCHA."
+        );
+
+        final String playerKickMessage;
+        final String chatKickMessage;
+
+        KickReason(String playerKickMessage, String chatKickMessage)
+        {
+            this.playerKickMessage = playerKickMessage;
+            this.chatKickMessage = chatKickMessage;
+        }
+
+        public String getPlayerKickMessage() { return playerKickMessage; }
+        public String getChatKickMessage() { return chatKickMessage; }
+    }
+
     private static final int TICKS_PER_SECOND = 20;
 
     private static Map<UUID, Integer> playerTimesOfLastPositionMovement;
@@ -156,28 +180,7 @@ public class AntiAFKManager
 
         playerTimesOfAFKMark.put(player.getUuid(), player.getServer().getTicks());
 
-        MutableText afkText = Text.literal("").setStyle(Style.EMPTY);
-
-        if (!AntiAFKSettings.shouldHideAFKCheckerMessagePrefix())
-        {
-            afkText = afkText
-                .append(Text.literal("AFKChecker » ")
-                    .setStyle(Style.EMPTY.withColor(AntiAFKColors.getAFKCheckerPrefixColor())));
-        }
-
-        afkText = afkText
-            .append(Text.literal("Player ")
-                .setStyle(Style.EMPTY.withColor(AntiAFKColors.getAFKCheckerTextColor())));
-
-        afkText = afkText
-            .append(Text.literal(player.getDisplayName().getString())
-                .setStyle(Style.EMPTY.withColor(AntiAFKColors.getAFKCheckerPlayerColor())));
-
-        afkText = afkText
-            .append(Text.literal(" is now AFK.")
-                .setStyle(Style.EMPTY.withColor(AntiAFKColors.getAFKCheckerTextColor())));
-
-        player.getServer().getPlayerManager().broadcast(afkText, false);
+        player.getServer().getPlayerManager().broadcast(TextUtils.playerAFKMessage(player.getDisplayName().getString()), false);
     }
 
     public static void registerPlayerNoLongerAFK(ServerPlayerEntity player)
@@ -190,40 +193,15 @@ public class AntiAFKManager
         playerTimesOfAFKMark.remove(playerUUID);
         playersWhoWouldHaveBeenKicked.remove(playerUUID);
 
-        MutableText afkText = Text.literal("").setStyle(Style.EMPTY);
-
-        if (!AntiAFKSettings.shouldHideAFKCheckerMessagePrefix())
-        {
-            afkText = afkText
-                .append(Text.literal("AFKChecker » ")
-                    .setStyle(Style.EMPTY.withColor(AntiAFKColors.getAFKCheckerPrefixColor())));
-        }
-
-        afkText = afkText
-            .append(Text.literal("Player ")
-                .setStyle(Style.EMPTY.withColor(AntiAFKColors.getAFKCheckerTextColor())));
-
-        afkText = afkText
-            .append(Text.literal(player.getDisplayName().getString())
-                .setStyle(Style.EMPTY.withColor(AntiAFKColors.getAFKCheckerPlayerColor())));
-
-        afkText = afkText
-            .append(Text.literal(" is no longer AFK.")
-                .setStyle(Style.EMPTY.withColor(AntiAFKColors.getAFKCheckerTextColor())));
-
-        afkText = afkText
-            .append(Text.literal(" (Gone for ")
-                .setStyle(Style.EMPTY.withColor(AntiAFKColors.getAFKCheckerGoneColor())));
-
-        afkText = afkText
-            .append(Text.literal("%s".formatted(secondsToReadableTimeString((int) ticksToSeconds(player.getServer().getTicks() - timeAFK))))
-                .setStyle(Style.EMPTY.withColor(AntiAFKColors.getAFKCheckerTextColor())));
-
-        afkText = afkText
-            .append(Text.literal(")")
-                .setStyle(Style.EMPTY.withColor(AntiAFKColors.getAFKCheckerGoneColor())));
-
-        player.getServer().getPlayerManager().broadcast(afkText, false);
+        player.getServer().getPlayerManager().broadcast
+        (
+            TextUtils.playerNotAFKMessage
+            (
+                player.getDisplayName().getString(),
+                TextUtils.secondsToReadableTimeString((int) ticksToSeconds(player.getServer().getTicks() - timeAFK))
+            ),
+            false
+        );
     }
 
     public static void registerPlayerLastPosition(ServerPlayerEntity player, Vec3d position)
@@ -389,6 +367,7 @@ public class AntiAFKManager
             playerActiveCapchas.remove(playerUUID);
             
             int ignoredCapchas = playerIgnoredCapchaCounts.get(playerUUID) + 1;
+            playerIgnoredCapchaCounts.put(playerUUID, ignoredCapchas);
 
             if (ignoredCapchas >= AntiAFKSettings.getFailedCapchaBeforeKick())
             {
@@ -402,7 +381,7 @@ public class AntiAFKManager
                 }
                 else
                 {
-                    handlePlayerKick(player, "You ignored too many chat CAPCHA.");
+                    handlePlayerKick(player, KickReason.IGNORING_CAPCHA);
                 }
             }
 
@@ -472,21 +451,8 @@ public class AntiAFKManager
 
         registerPlayerNoLongerAFK(player);
         registerPlayerCapchaAnswer(player);
-
-        MutableText capchaMessage = Text.literal("").setStyle(Style.EMPTY);
-
-        if (!AntiAFKSettings.shouldHideAFKCapchaMessagePrefix())
-        {
-            capchaMessage = capchaMessage
-                .append(Text.literal("AFKapcha » ")
-                    .setStyle(Style.EMPTY.withColor(AntiAFKColors.getAFKCapchaPrefixColor())));
-        }
-
-        capchaMessage = capchaMessage
-            .append(Text.literal("Thank you for proving you are active!")
-                .setStyle(Style.EMPTY.withColor(AntiAFKColors.getAFKCapchaTextColor())));
-
-        player.sendMessage(capchaMessage);
+        
+        player.sendMessage(TextUtils.provedActivityMessage());
     }
 
     public static void handlePlayerAFKKick(ServerPlayerEntity player)
@@ -500,10 +466,10 @@ public class AntiAFKManager
             ModLogger.info("Player %s should be AFK kicked right now with (lastPosMove=%.2f seconds - lastCamMove=%.2f seconds - lastChatMsg=%.2f seconds - lastCapcha=%.2f seconds)".formatted
                 (
                     player.getDisplayName().getString(),
-                    AntiAFKManager.getSecondsSinceLastPositionMovement(player),
-                    AntiAFKManager.getSecondsSinceLastCameraMovement(player),
-                    AntiAFKManager.getSecondsSinceLastMessageSent(player),
-                    AntiAFKManager.getSecondsSinceLastCapchaAnsweredSent(player)
+                    getSecondsSinceLastPositionMovement(player),
+                    getSecondsSinceLastCameraMovement(player),
+                    getSecondsSinceLastMessageSent(player),
+                    getSecondsSinceLastCapchaAnswerSent(player)
                 )
             );
 
@@ -511,42 +477,96 @@ public class AntiAFKManager
         }
         else
         {
-            handlePlayerKick(player, "You were inactive for too long.");
+            handlePlayerKick(player, KickReason.INACTIVE_FOR_TOO_LONG);
         }
     }
 
-    private static void handlePlayerKick(ServerPlayerEntity player, String kickMessage)
+    private static void handlePlayerKick(ServerPlayerEntity player, KickReason kickReason)
     {
         if (LuckPermsUtils.hasPermission(player, "mirageantiafk.bypass.kick")) return;
 
-        MutableText kickText = Text.literal("AFKChecker\n")
-                .setStyle(Style.EMPTY.withColor(AntiAFKColors.getKickTitleColor()));
+        switch (kickReason) {
+            case KickReason.IGNORING_CAPCHA:
+                ModLogger.info("Player %s is about to be AFK kicked right now with (ignoredCapchas=%d)".formatted(player.getDisplayName().getString(), getIgnoredCapchas(player.getUuid())));
+                break;
+            case KickReason.INACTIVE_FOR_TOO_LONG:
+                ModLogger.info("Player %s is about to be AFK kicked right now with (lastPosMove=%.2f seconds - lastCamMove=%.2f seconds - lastChatMsg=%.2f seconds - lastCapcha=%.2f seconds)".formatted
+                    (
+                        player.getDisplayName().getString(),
+                        getSecondsSinceLastPositionMovement(player),
+                        getSecondsSinceLastCameraMovement(player),
+                        getSecondsSinceLastMessageSent(player),
+                        getSecondsSinceLastCapchaAnswerSent(player)
+                    )
+                );
+                break;
+            default:
+                break;
+        }
 
-        kickText = kickText
-            .append(Text.literal(kickMessage)
-                .setStyle(Style.EMPTY.withColor(AntiAFKColors.getKickDescriptionColor())));
+        handlePlayerKickMessage(player, kickReason.getChatKickMessage());
+        player.networkHandler.disconnect(TextUtils.playerKickMessage(kickReason));
+    }
 
-        player.networkHandler.disconnect(kickText);
+    private static void handlePlayerKickMessage(ServerPlayerEntity player, String kickMessage)
+    {
+        MinecraftServer server = player.getServer();
+        UUID playerUUID = player.getUuid();
+        int currentTicks = server.getTicks();
+
+        server.getPlayerManager().broadcast(TextUtils.playerChatKickMessage(player.getDisplayName().getString(), kickMessage), false);
+
+        for (ServerPlayerEntity serverPlayer : server.getPlayerManager().getPlayerList())
+        {
+            if (!LuckPermsUtils.hasPermission(serverPlayer, "mirageantiafk.info.kick")) continue;
+
+            serverPlayer.sendMessage(TextUtils.playerPermKickMessage(playerUUID, currentTicks));
+        }
     }
 
     public static double getSecondsSinceLastPositionMovement(ServerPlayerEntity player)
     {
-        return ticksToSeconds(player.getServer().getTicks() - playerTimesOfLastPositionMovement.getOrDefault(player.getUuid(), player.getServer().getTicks()));
+        return getSecondsSinceLastPositionMovement(player.getUuid(), player.getServer().getTicks());
+    }
+
+    public static double getSecondsSinceLastPositionMovement(UUID playerUUID, int currentTicks)
+    {
+        return ticksToSeconds(currentTicks - playerTimesOfLastPositionMovement.getOrDefault(playerUUID, currentTicks));
     }
 
     public static double getSecondsSinceLastCameraMovement(ServerPlayerEntity player)
     {
-        return ticksToSeconds(player.getServer().getTicks() - playerTimesOfLastCameraMovement.getOrDefault(player.getUuid(), player.getServer().getTicks()));
+        return getSecondsSinceLastCameraMovement(player.getUuid(), player.getServer().getTicks());
+    }
+
+    public static double getSecondsSinceLastCameraMovement(UUID playerUUID, int currentTicks)
+    {
+        return ticksToSeconds(currentTicks - playerTimesOfLastCameraMovement.getOrDefault(playerUUID, currentTicks));
     }
 
     public static double getSecondsSinceLastMessageSent(ServerPlayerEntity player)
     {
-        return ticksToSeconds(player.getServer().getTicks() - playerTimesOfLastMessageSent.getOrDefault(player.getUuid(), player.getServer().getTicks()));
+        return getSecondsSinceLastMessageSent(player.getUuid(), player.getServer().getTicks());
     }
 
-    public static double getSecondsSinceLastCapchaAnsweredSent(ServerPlayerEntity player)
+    public static double getSecondsSinceLastMessageSent(UUID playerUUID, int currentTicks)
     {
-        return ticksToSeconds(player.getServer().getTicks() - playerTimesOfLastCapchaAnswer.getOrDefault(player.getUuid(), player.getServer().getTicks()));
+        return ticksToSeconds(currentTicks - playerTimesOfLastMessageSent.getOrDefault(playerUUID, currentTicks));
+    }
+
+    public static double getSecondsSinceLastCapchaAnswerSent(ServerPlayerEntity player)
+    {
+        return getSecondsSinceLastCapchaAnswerSent(player.getUuid(), player.getServer().getTicks());
+    }
+
+    public static double getSecondsSinceLastCapchaAnswerSent(UUID playerUUID, int currentTicks)
+    {
+        return ticksToSeconds(currentTicks - playerTimesOfLastCapchaAnswer.getOrDefault(playerUUID, currentTicks));
+    }
+
+    public static int getIgnoredCapchas(UUID playerUuid)
+    {
+        return playerIgnoredCapchaCounts.getOrDefault(playerUuid, 0);
     }
 
     public static boolean isCapchaTime(MinecraftServer server)
@@ -564,22 +584,5 @@ public class AntiAFKManager
         return ticks / (double) TICKS_PER_SECOND;
     }
 
-    private static String secondsToReadableTimeString(int totalSeconds)
-    {
-        Duration duration = Duration.ofSeconds(totalSeconds);
     
-        long days = duration.toDays();
-        long hours = duration.toHoursPart();
-        long minutes = duration.toMinutesPart();
-        long seconds = duration.toSecondsPart();
-
-        List<String> resultPartList = new ArrayList<>();
-
-        if (days > 0) resultPartList.add(days + " Day" + (days > 1 ? "s" : ""));
-        if (hours > 0) resultPartList.add(hours + " Hour" + (hours > 1 ? "s" : ""));
-        if (minutes > 0) resultPartList.add(minutes + " Minute" + (minutes > 1 ? "s" : ""));
-        if (seconds > 0 || resultPartList.isEmpty()) resultPartList.add(seconds + " Second" + (seconds > 1 ? "s" : ""));
-
-        return String.join(", ", resultPartList);
-    }
 }

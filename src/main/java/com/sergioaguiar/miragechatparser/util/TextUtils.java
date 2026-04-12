@@ -1,8 +1,11 @@
 package com.sergioaguiar.miragechatparser.util;
 
+import java.time.Duration;
+import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Set;
+import java.util.UUID;
 import java.util.regex.Pattern;
 
 import com.cobblemon.mod.common.api.moves.HiddenPowerUtil;
@@ -18,12 +21,16 @@ import com.cobblemon.mod.common.pokemon.Gender;
 import com.cobblemon.mod.common.pokemon.IVs;
 import com.cobblemon.mod.common.pokemon.Nature;
 import com.cobblemon.mod.common.pokemon.Pokemon;
+import com.sergioaguiar.miragechatparser.config.antiafk.colors.AntiAFKColors;
+import com.sergioaguiar.miragechatparser.config.antiafk.settings.AntiAFKSettings;
 import com.sergioaguiar.miragechatparser.config.chatparser.aspects.ChatAspects;
 import com.sergioaguiar.miragechatparser.config.chatparser.colors.ChatColors;
 import com.sergioaguiar.miragechatparser.config.chatparser.colors.ChatColors.TypeColor;
 import com.sergioaguiar.miragechatparser.config.chatparser.settings.ChatSettings;
 import com.sergioaguiar.miragechatparser.config.chatparser.sizes.ChatSizes;
 import com.sergioaguiar.miragechatparser.config.chatparser.strings.ChatStrings;
+import com.sergioaguiar.miragechatparser.manager.AntiAFKManager;
+import com.sergioaguiar.miragechatparser.manager.AntiAFKManager.KickReason;
 
 import net.minecraft.item.ItemStack;
 import net.minecraft.text.HoverEvent;
@@ -749,5 +756,232 @@ public class TextUtils
                 .setStyle(Style.EMPTY.withColor(ChatColors.getHoverableBracketErrorColor())));
 
         return errorText;
+    }
+
+    public static MutableText playerAFKMessage(String playerName)
+    {
+        MutableText afkText = Text.literal("").setStyle(Style.EMPTY);
+
+        if (!AntiAFKSettings.shouldHideAFKCheckerMessagePrefix())
+        {
+            afkText = afkText
+                .append(Text.literal("AFKChecker » ")
+                    .setStyle(Style.EMPTY.withColor(AntiAFKColors.getAFKCheckerPrefixColor())));
+        }
+
+        afkText = afkText
+            .append(Text.literal("Player ")
+                .setStyle(Style.EMPTY.withColor(AntiAFKColors.getAFKCheckerTextColor())));
+
+        afkText = afkText
+            .append(Text.literal(playerName)
+                .setStyle(Style.EMPTY.withColor(AntiAFKColors.getAFKCheckerPlayerColor())));
+
+        afkText = afkText
+            .append(Text.literal(" is now AFK.")
+                .setStyle(Style.EMPTY.withColor(AntiAFKColors.getAFKCheckerTextColor())));
+
+        return afkText;
+    }
+
+    public static MutableText playerNotAFKMessage(String playerName, String timeAway)
+    {
+        MutableText afkText = Text.literal("").setStyle(Style.EMPTY);
+
+        if (!AntiAFKSettings.shouldHideAFKCheckerMessagePrefix())
+        {
+            afkText = afkText
+                .append(Text.literal("AFKChecker » ")
+                    .setStyle(Style.EMPTY.withColor(AntiAFKColors.getAFKCheckerPrefixColor())));
+        }
+
+        afkText = afkText
+            .append(Text.literal("Player ")
+                .setStyle(Style.EMPTY.withColor(AntiAFKColors.getAFKCheckerTextColor())));
+
+        afkText = afkText
+            .append(Text.literal(playerName)
+                .setStyle(Style.EMPTY.withColor(AntiAFKColors.getAFKCheckerPlayerColor())));
+
+        afkText = afkText
+            .append(Text.literal(" is no longer AFK.")
+                .setStyle(Style.EMPTY.withColor(AntiAFKColors.getAFKCheckerTextColor())));
+
+        afkText = afkText
+            .append(Text.literal(" (Gone for ")
+                .setStyle(Style.EMPTY.withColor(AntiAFKColors.getAFKCheckerGoneColor())));
+
+        afkText = afkText
+            .append(Text.literal("%s".formatted(timeAway))
+                .setStyle(Style.EMPTY.withColor(AntiAFKColors.getAFKCheckerTextColor())));
+
+        afkText = afkText
+            .append(Text.literal(")")
+                .setStyle(Style.EMPTY.withColor(AntiAFKColors.getAFKCheckerGoneColor())));
+
+        return afkText;
+    }
+
+    public static MutableText provedActivityMessage()
+    {
+        MutableText capchaMessage = Text.literal("").setStyle(Style.EMPTY);
+
+        if (!AntiAFKSettings.shouldHideAFKCapchaMessagePrefix())
+        {
+            capchaMessage = capchaMessage
+                .append(Text.literal("AFKapcha » ")
+                    .setStyle(Style.EMPTY.withColor(AntiAFKColors.getAFKCapchaPrefixColor())));
+        }
+
+        capchaMessage = capchaMessage
+            .append(Text.literal("Thank you for proving you are active!")
+                .setStyle(Style.EMPTY.withColor(AntiAFKColors.getAFKCapchaTextColor())));
+
+        return capchaMessage;
+    }
+
+    public static MutableText playerKickMessage(KickReason kickReason)
+    {
+        MutableText kickText = Text.literal("AFKChecker\n")
+                .setStyle(Style.EMPTY.withColor(AntiAFKColors.getKickTitleColor()));
+
+        kickText = kickText
+            .append(Text.literal(kickReason.getPlayerKickMessage())
+                .setStyle(Style.EMPTY.withColor(AntiAFKColors.getKickDescriptionColor())));
+
+        return kickText;
+    }
+
+    public static MutableText playerChatKickMessage(String playerName, String kickMessage)
+    {
+        MutableText generalKickText = Text.literal("").setStyle(Style.EMPTY);
+
+        if (!AntiAFKSettings.shouldHideAFKCheckerMessagePrefix())
+        {
+            generalKickText = generalKickText
+                .append(Text.literal("AFKChecker » ")
+                    .setStyle(Style.EMPTY.withColor(AntiAFKColors.getAFKCheckerPrefixColor())));
+        }
+
+        generalKickText = generalKickText
+            .append(Text.literal("Player ")
+                .setStyle(Style.EMPTY.withColor(AntiAFKColors.getAFKCheckerTextColor())));
+
+        generalKickText = generalKickText
+            .append(Text.literal(playerName)
+                .setStyle(Style.EMPTY.withColor(AntiAFKColors.getAFKCheckerPlayerColor())));
+
+        generalKickText = generalKickText
+            .append(Text.literal(" has been kicked.\n")
+                .setStyle(Style.EMPTY.withColor(AntiAFKColors.getAFKCheckerTextColor())));
+
+        generalKickText = generalKickText
+            .append(Text.literal("Reason: ")
+                .setStyle(Style.EMPTY.withColor(AntiAFKColors.getKickReasonTitleColor())));
+
+        generalKickText = generalKickText
+            .append(Text.literal("%s".formatted(kickMessage))
+                .setStyle(Style.EMPTY.withColor(AntiAFKColors.getKickReasonDescriptionColor())));
+
+        return generalKickText;
+    }
+
+    public static MutableText playerPermKickMessage(UUID playerUUID, int currentTicks)
+    {
+        MutableText permKickText = Text.literal("").setStyle(Style.EMPTY);
+
+        permKickText = permKickText
+            .append(Text.literal("Last action info:\n")
+                .setStyle(Style.EMPTY.withColor(AntiAFKColors.getKickInfoTitleColor())));
+
+        permKickText.append
+        (
+            playerPermKickMessageLine
+            (
+                "Position Movement:",
+                " %s ".formatted(secondsToReadableTimeString((int) AntiAFKManager.getSecondsSinceLastPositionMovement(playerUUID, currentTicks))),
+                "seconds ago\n"
+            )
+        );
+
+        permKickText.append
+        (
+            playerPermKickMessageLine
+            (
+                "Camera Movement:",
+                " %s ".formatted(secondsToReadableTimeString((int) AntiAFKManager.getSecondsSinceLastCameraMovement(playerUUID, currentTicks))),
+                "seconds ago\n"
+            )
+        );
+
+        permKickText.append
+        (
+            playerPermKickMessageLine
+            (
+                "Chat Message:",
+                " %s ".formatted(secondsToReadableTimeString((int) AntiAFKManager.getSecondsSinceLastMessageSent(playerUUID, currentTicks))),
+                "seconds ago\n"
+            )
+        );
+
+        permKickText.append
+        (
+            playerPermKickMessageLine
+            (
+                "CAPCHA Answer:",
+                " %s ".formatted(secondsToReadableTimeString((int) AntiAFKManager.getSecondsSinceLastCapchaAnswerSent(playerUUID, currentTicks))),
+                "seconds ago\n"
+            )
+        );
+
+        permKickText.append
+        (
+            playerPermKickMessageLine
+            (
+                "CAPCHA Ignored:",
+                " %d ".formatted(AntiAFKManager.getIgnoredCapchas(playerUUID)),
+                "times"
+            )
+        );
+
+        return permKickText;
+    }
+
+    public static MutableText playerPermKickMessageLine(String title, String value, String units)
+    {
+        MutableText timeText = Text.literal("").setStyle(Style.EMPTY);
+
+        timeText = timeText
+            .append(Text.literal(title)
+                .setStyle(Style.EMPTY.withColor(AntiAFKColors.getKickInfoTitleColor())));
+
+        timeText = timeText
+            .append(Text.literal(value)
+                .setStyle(Style.EMPTY.withColor(AntiAFKColors.getKickInfoTimeColor())));
+
+        timeText = timeText
+            .append(Text.literal(units)
+                .setStyle(Style.EMPTY.withColor(AntiAFKColors.getKickInfoTextColor())));
+
+        return timeText;
+    }
+
+    public static String secondsToReadableTimeString(int totalSeconds)
+    {
+        Duration duration = Duration.ofSeconds(totalSeconds);
+    
+        long days = duration.toDays();
+        long hours = duration.toHoursPart();
+        long minutes = duration.toMinutesPart();
+        long seconds = duration.toSecondsPart();
+
+        List<String> resultPartList = new ArrayList<>();
+
+        if (days > 0) resultPartList.add(days + " Day" + (days > 1 ? "s" : ""));
+        if (hours > 0) resultPartList.add(hours + " Hour" + (hours > 1 ? "s" : ""));
+        if (minutes > 0) resultPartList.add(minutes + " Minute" + (minutes > 1 ? "s" : ""));
+        if (seconds > 0 || resultPartList.isEmpty()) resultPartList.add(seconds + " Second" + (seconds > 1 ? "s" : ""));
+
+        return String.join(", ", resultPartList);
     }
 }
