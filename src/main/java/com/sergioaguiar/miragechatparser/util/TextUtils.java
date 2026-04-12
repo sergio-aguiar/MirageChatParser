@@ -824,20 +824,20 @@ public class TextUtils
 
     public static MutableText provedActivityMessage()
     {
-        MutableText capchaMessage = Text.literal("").setStyle(Style.EMPTY);
+        MutableText captchaMessage = Text.literal("").setStyle(Style.EMPTY);
 
-        if (!AntiAFKSettings.shouldHideAFKCapchaMessagePrefix())
+        if (!AntiAFKSettings.shouldHideAFKCaptchaMessagePrefix())
         {
-            capchaMessage = capchaMessage
-                .append(Text.literal("AFKapcha » ")
-                    .setStyle(Style.EMPTY.withColor(AntiAFKColors.getAFKCapchaPrefixColor())));
+            captchaMessage = captchaMessage
+                .append(Text.literal("AFKaptcha » ")
+                    .setStyle(Style.EMPTY.withColor(AntiAFKColors.getAFKCaptchaPrefixColor())));
         }
 
-        capchaMessage = capchaMessage
+        captchaMessage = captchaMessage
             .append(Text.literal("Thank you for proving you are active!")
-                .setStyle(Style.EMPTY.withColor(AntiAFKColors.getAFKCapchaTextColor())));
+                .setStyle(Style.EMPTY.withColor(AntiAFKColors.getAFKCaptchaTextColor())));
 
-        return capchaMessage;
+        return captchaMessage;
     }
 
     public static MutableText playerKickMessage(KickReason kickReason)
@@ -928,8 +928,8 @@ public class TextUtils
         (
             playerPermKickMessageLine
             (
-                "CAPCHA Answer:",
-                " %s ".formatted(secondsToReadableTimeString((int) AntiAFKManager.getSecondsSinceLastCapchaAnswerSent(playerUUID, currentTicks))),
+                "CAPTCHA Answer:",
+                " %s ".formatted(secondsToReadableTimeString((int) AntiAFKManager.getSecondsSinceLastCaptchaAnswerSent(playerUUID, currentTicks))),
                 "seconds ago\n"
             )
         );
@@ -938,8 +938,8 @@ public class TextUtils
         (
             playerPermKickMessageLine
             (
-                "CAPCHA Ignored:",
-                " %d ".formatted(AntiAFKManager.getIgnoredCapchas(playerUUID)),
+                "CAPTCHA Ignored:",
+                " %d ".formatted(AntiAFKManager.getIgnoredCaptchas(playerUUID)),
                 "times"
             )
         );

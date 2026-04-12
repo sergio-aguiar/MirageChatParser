@@ -77,25 +77,25 @@ public class AntiAFKColorsConfig
                     AntiAFKColors.setAFKCheckerTimeColor(TextColor.parse(color).getOrThrow());
             }
 
-            if (config.contains("AFKapcha.PrefixColor"))
+            if (config.contains("AFKaptcha.PrefixColor"))
             {
-                String color = config.get("AFKapcha.PrefixColor");
+                String color = config.get("AFKaptcha.PrefixColor");
                 if (color != null && !color.isEmpty())
-                    AntiAFKColors.setAFKCapchaPrefixColor(TextColor.parse(color).getOrThrow());
+                    AntiAFKColors.setAFKCaptchaPrefixColor(TextColor.parse(color).getOrThrow());
             }
 
-            if (config.contains("AFKapcha.TextColor"))
+            if (config.contains("AFKaptcha.TextColor"))
             {
-                String color = config.get("AFKapcha.TextColor");
+                String color = config.get("AFKaptcha.TextColor");
                 if (color != null && !color.isEmpty())
-                    AntiAFKColors.setAFKCapchaTextColor(TextColor.parse(color).getOrThrow());
+                    AntiAFKColors.setAFKCaptchaTextColor(TextColor.parse(color).getOrThrow());
             }
 
-            if (config.contains("AFKapcha.QuestionColor"))
+            if (config.contains("AFKaptcha.QuestionColor"))
             {
-                String color = config.get("AFKapcha.QuestionColor");
+                String color = config.get("AFKaptcha.QuestionColor");
                 if (color != null && !color.isEmpty())
-                    AntiAFKColors.setAFKCapchaQuestionColor(TextColor.parse(color).getOrThrow());
+                    AntiAFKColors.setAFKCaptchaQuestionColor(TextColor.parse(color).getOrThrow());
             }
 
             if (config.contains("Kick.KickTitleColor"))
@@ -168,7 +168,7 @@ public class AntiAFKColorsConfig
             GoneColor = "#2facdd"
             TimeColor = "#cfe95e"
 
-            [AFKapcha]
+            [AFKaptcha]
             PrefixColor = "#b81106"
             TextColor = "#d1d8eb"
             QuestionColor = "#cfe95e"

@@ -18,13 +18,13 @@ public class AntiAFKTickEventHandler
             {
                 List<ServerPlayerEntity> playerList = server.getPlayerManager().getPlayerList();
 
-                if (AntiAFKManager.isCapchaTime(server))
+                if (AntiAFKManager.isCaptchaTime(server))
                 {
                     for (ServerPlayerEntity player : playerList)
                     {
-                        if (LuckPermsUtils.hasPermission(player, "mirageantiafk.bypass.capcha")) continue;
+                        if (LuckPermsUtils.hasPermission(player, "mirageantiafk.bypass.captcha")) continue;
 
-                        AntiAFKManager.startCapcha(player);
+                        AntiAFKManager.startCaptcha(player);
                     }
                 }
 

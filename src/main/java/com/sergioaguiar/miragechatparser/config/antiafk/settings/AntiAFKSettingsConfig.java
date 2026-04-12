@@ -58,22 +58,22 @@ public class AntiAFKSettingsConfig
                 AntiAFKSettings.setSecondsToAFKKick(seconds);
             }
 
-            if (config.contains("General.SecondsBetweenCapcha"))
+            if (config.contains("General.SecondsBetweenCaptcha"))
             {
-                int seconds = config.getOrElse("General.SecondsBetweenCapcha", AntiAFKSettings.DEFAULT_SECONDS_BETWEEN_CAPCHA);
-                AntiAFKSettings.setSecondsBetweenCapcha(seconds);
+                int seconds = config.getOrElse("General.SecondsBetweenCaptcha", AntiAFKSettings.DEFAULT_SECONDS_BETWEEN_CAPTCHA);
+                AntiAFKSettings.setSecondsBetweenCaptcha(seconds);
             }
 
-            if (config.contains("General.FailedCapchaBeforeKick"))
+            if (config.contains("General.FailedCaptchaBeforeKick"))
             {
-                int capchaAmount = config.getOrElse("General.FailedCapchaBeforeKick", AntiAFKSettings.DEFAULT_FAILED_CAPCHA_BEFORE_KICK);
-                AntiAFKSettings.setFailedCapchaBeforeKick(capchaAmount);
+                int captchaAmount = config.getOrElse("General.FailedCaptchaBeforeKick", AntiAFKSettings.DEFAULT_FAILED_CAPTCHA_BEFORE_KICK);
+                AntiAFKSettings.setFailedCaptchaBeforeKick(captchaAmount);
             }
 
-            if (config.contains("General.CapchaLength"))
+            if (config.contains("General.CaptchaLength"))
             {
-                int length = Math.clamp(config.getOrElse("General.CapchaLength", AntiAFKSettings.DEFAULT_CAPCHA_LENGTH), 1, 9) ;
-                AntiAFKSettings.setCapchaLength(length);
+                int length = Math.clamp(config.getOrElse("General.CaptchaLength", AntiAFKSettings.DEFAULT_CAPTCHA_LENGTH), 1, 9) ;
+                AntiAFKSettings.setCaptchaLength(length);
             }
 
             if (config.contains("General.MinimumPositionChangeForMovementRegister"))
@@ -100,10 +100,10 @@ public class AntiAFKSettingsConfig
                 AntiAFKSettings.setHideAFKCheckerMessagePrefix(enabled);
             }
 
-            if (config.contains("Message.HideAFKCapchaMessagePrefix"))
+            if (config.contains("Message.HideAFKCaptchaMessagePrefix"))
             {
-                boolean enabled = config.getOrElse("Message.HideAFKCapchaMessagePrefix", AntiAFKSettings.DEFAULT_HIDE_AFK_CAPCHA_MESSAGE_PREFIX);
-                AntiAFKSettings.setHideAFKCapchaMessagePrefix(enabled);
+                boolean enabled = config.getOrElse("Message.HideAFKCaptchaMessagePrefix", AntiAFKSettings.DEFAULT_HIDE_AFK_CAPTCHA_MESSAGE_PREFIX);
+                AntiAFKSettings.setHideAFKCaptchaMessagePrefix(enabled);
             }
 
             ModLogger.info("Setting configurations successfully loaded from anti_afk_settings.toml.");
@@ -119,7 +119,7 @@ public class AntiAFKSettingsConfig
         String defaultContent = """
             # MirageChatParser - Anti-AFK Settings Configuration
             # With the default values, players will become AFK after 10 minutes of no relevant actions, followed by a kick if they remain inactive for 50 more minutes.
-            # Players will also have to answer CAPCHA every 15 minutes. If someone is unable to answer three times in a row, they are also kicked (roughly 60 minutes).
+            # Players will also have to answer CAPTCHA every 15 minutes. If someone is unable to answer three times in a row, they are also kicked (roughly 60 minutes).
 
             [General]
             # Whether No-Kick Mode (only reports when players would have been kicked, rather than kicking - good for testing) should be enabled or not (true/false)
@@ -128,12 +128,12 @@ public class AntiAFKSettingsConfig
             SecondsToAFK = 600
             # The number of seconds before a player is kicked for being AFK, after being flagged as AFK (while still lacking relevant actions)
             SecondsToAFKKick = 3000
-            # The number of seconds between anti-AFK CAPCHA (do not require the player being flagged as AFK to trigger)
-            SecondsBetweenCapcha = 900
-            # The number of ignored anti-AFK CAPCHA before getting kicked (regardless of AFK state)
-            FailedCapchaBeforeKick = 3
-            # The amount of digits in a text-based CAPCHA [1-9]
-            CapchaLength = 4
+            # The number of seconds between anti-AFK CAPTCHA (do not require the player being flagged as AFK to trigger)
+            SecondsBetweenCaptcha = 900
+            # The number of ignored anti-AFK CAPTCHA before getting kicked (regardless of AFK state)
+            FailedCaptchaBeforeKick = 3
+            # The amount of digits in a text-based CAPTCHA [1-9]
+            CaptchaLength = 4
             # The minimum movement a player must do per tick to count as enough movement to reset the movement-based AFK timer
             MinimumPositionChangeForMovementRegister = 0.05
             # The minimum camera pitch change to do per tick to count as enough camera movement to reset the camera-based AFK timer
@@ -143,7 +143,7 @@ public class AntiAFKSettingsConfig
 
             [Message]
             HideAFKCheckerMessagePrefix = false
-            HideAFKCapchaMessagePrefix = false
+            HideAFKCaptchaMessagePrefix = false
             """;
         
         Files.writeString(file.toPath(), defaultContent);

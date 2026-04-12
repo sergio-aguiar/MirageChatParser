@@ -15,11 +15,11 @@ public class AntiAFKMessageHandler
             {
                 boolean shouldSendMessage = true;
 
-                if (AntiAFKManager.hasActiveMessageCapcha(sender))
+                if (AntiAFKManager.hasActiveMessageCaptcha(sender))
                 {
-                    if (AntiAFKManager.isCorrectCapchaAnswer(sender, message.getSignedContent().trim()))
+                    if (AntiAFKManager.isCorrectCaptchaAnswer(sender, message.getSignedContent().trim()))
                     {
-                        AntiAFKManager.handleCorrectCapchaAnswer(sender);
+                        AntiAFKManager.handleCorrectCaptchaAnswer(sender);
                         shouldSendMessage = false;
                     }
                 }

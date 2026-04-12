@@ -8,7 +8,7 @@ import net.fabricmc.fabric.api.command.v2.CommandRegistrationCallback;
 import net.minecraft.server.command.CommandManager;
 import net.minecraft.server.command.ServerCommandSource;
 
-public class FakeCapchaClickCommand
+public class FakeCaptchaClickCommand
 {
     public static void register()
     {
@@ -17,24 +17,24 @@ public class FakeCapchaClickCommand
             dispatcher.register
             (
                 CommandManager.literal("mirageantiafk")
-                    .then(CommandManager.literal("fakecapchaclick")
-                        .executes(FakeCapchaClickCommand::executeFakeCapchaClick))
+                    .then(CommandManager.literal("fakecaptchaclick")
+                        .executes(FakeCaptchaClickCommand::executeFakeCaptchaClick))
             );
         });
     }
     
-    private static int executeFakeCapchaClick(CommandContext<ServerCommandSource> context)
+    private static int executeFakeCaptchaClick(CommandContext<ServerCommandSource> context)
     {
         try
         {
             if (context.getSource().isExecutedByPlayer())
             {
-                AntiAFKManager.handleCapchaClick(context.getSource().getPlayer());
+                AntiAFKManager.handleCaptchaClick(context.getSource().getPlayer());
             }            
         }
         catch (Exception e)
         {
-            ModLogger.error("Failed to execute fakecapchaclick: %s".formatted(e.getMessage()));
+            ModLogger.error("Failed to execute fakecaptchaclick: %s".formatted(e.getMessage()));
             return 1;   
         }
 
