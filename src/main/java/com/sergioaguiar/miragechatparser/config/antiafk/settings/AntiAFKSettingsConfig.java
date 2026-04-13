@@ -40,6 +40,12 @@ public class AntiAFKSettingsConfig
         {
             config.load();
 
+            if (config.contains("General.UseCaptchaInWarning"))
+            {
+                boolean enabled = config.getOrElse("General.UseCaptchaInWarning", AntiAFKSettings.DEFAULT_NO_KICK_MODE_ENABLED);
+                AntiAFKSettings.setdUseCaptchaInWarning(enabled);
+            }
+
             if (config.contains("General.NoKickMode"))
             {
                 boolean enabled = config.getOrElse("General.NoKickMode", AntiAFKSettings.DEFAULT_NO_KICK_MODE_ENABLED);
@@ -124,6 +130,8 @@ public class AntiAFKSettingsConfig
             [General]
             # Whether No-Kick Mode (only reports when players would have been kicked, rather than kicking - good for testing) should be enabled or not (true/false)
             NoKickMode = false
+            # Whether the CAPTCHA warning that appears when you are in the last one before a kick should show the CAPTCHA or not (shows the warning if not) (true/false)
+            UseCaptchaInWarning = false
             # The number of seconds before a player is flagged as AFK if not enough relevant actions were taken
             SecondsToAFK = 600
             # The number of seconds before a player is kicked for being AFK, after being flagged as AFK (while still lacking relevant actions)

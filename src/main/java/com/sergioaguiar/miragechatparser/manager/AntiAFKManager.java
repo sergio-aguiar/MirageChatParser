@@ -90,6 +90,11 @@ public class AntiAFKManager
 
             return captchaText;
         }
+
+        public String getWarningSubtitle()
+        {
+            return (isClick) ? "Please click the chat CAPTCHA." : "Please type %s into chat.".formatted(answer);
+        }
     }
 
     public enum KickReason
@@ -363,26 +368,12 @@ public class AntiAFKManager
     public static void startCaptcha(ServerPlayerEntity player)
     {
         UUID playerUUID = player.getUuid();
+        int ignoredCaptchas = playerIgnoredCaptchaCounts.get(playerUUID) + 1;
 
         if (playerActiveCaptchas.containsKey(playerUUID))
         {
             playerActiveCaptchas.remove(playerUUID);
-            
-            int ignoredCaptchas = playerIgnoredCaptchaCounts.get(playerUUID) + 1;
             playerIgnoredCaptchaCounts.put(playerUUID, ignoredCaptchas);
-
-            if (ignoredCaptchas == AntiAFKSettings.getFailedCaptchaBeforeKick() - 1)
-            {
-                player.networkHandler.sendPacket(new TitleS2CPacket(
-                    Text.literal("CAPTCHA WARNING")
-                        .setStyle(Style.EMPTY.withColor(AntiAFKColors.getCaptchaWarningTitleColor()))
-                ));
-
-                player.networkHandler.sendPacket(new SubtitleS2CPacket(
-                    Text.literal("Ignoring too many CAPTCHA may get you kicked!")
-                        .setStyle(Style.EMPTY.withColor(AntiAFKColors.getCaptchaWarningSubtitleColor()))
-                ));
-            }
 
             if (ignoredCaptchas >= AntiAFKSettings.getFailedCaptchaBeforeKick())
             {
@@ -399,11 +390,22 @@ public class AntiAFKManager
                     handlePlayerKick(player, KickReason.IGNORING_CAPTCHA);
                 }
             }
-
-            playerIgnoredCaptchaCounts.put(playerUUID, ignoredCaptchas);
         }
 
         playerActiveCaptchas.put(playerUUID, new PlayerCaptcha(ThreadLocalRandom.current().nextDouble() < 0.3));
+
+        if (ignoredCaptchas == AntiAFKSettings.getFailedCaptchaBeforeKick() - 1)
+        {
+            player.networkHandler.sendPacket(new TitleS2CPacket(
+                Text.literal(AntiAFKSettings.shouldUseCaptchaInWarning() ? "CAPTCHA" : "CAPTCHA WARNING")
+                    .setStyle(Style.EMPTY.withColor(AntiAFKColors.getCaptchaWarningTitleColor()))
+            ));
+
+            player.networkHandler.sendPacket(new SubtitleS2CPacket(
+                Text.literal(AntiAFKSettings.shouldUseCaptchaInWarning() ? playerActiveCaptchas.get(playerUUID).getWarningSubtitle() : "Ignoring too many CAPTCHA may get you kicked!")
+                    .setStyle(Style.EMPTY.withColor(AntiAFKColors.getCaptchaWarningSubtitleColor()))
+            ));
+        }
 
         MutableText captchaMessage = Text.literal("").setStyle(Style.EMPTY);
 
