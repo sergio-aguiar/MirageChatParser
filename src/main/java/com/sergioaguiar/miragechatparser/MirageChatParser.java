@@ -5,6 +5,7 @@ import net.fabricmc.api.ModInitializer;
 import com.sergioaguiar.miragechatparser.command.InfoCommand;
 import com.sergioaguiar.miragechatparser.command.ReloadCommand;
 import com.sergioaguiar.miragechatparser.command.antiafk.AFKCommand;
+import com.sergioaguiar.miragechatparser.command.antiafk.IsAFKCommand;
 import com.sergioaguiar.miragechatparser.command.antiafk.fake.FakeCaptchaClickCommand;
 import com.sergioaguiar.miragechatparser.command.chatparser.DebugShoutCommand;
 import com.sergioaguiar.miragechatparser.command.chatparser.PCShoutCommand;
@@ -138,6 +139,7 @@ public class MirageChatParser implements ModInitializer
 			if (Modules.shouldEnableAntiAFKModule())
 			{
 				AFKCommand.register();
+				IsAFKCommand.register();
 				FakeCaptchaClickCommand.register();
 			}
 		}
