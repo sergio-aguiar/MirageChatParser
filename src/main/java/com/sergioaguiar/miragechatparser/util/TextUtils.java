@@ -33,6 +33,7 @@ import com.sergioaguiar.miragechatparser.manager.AntiAFKManager;
 import com.sergioaguiar.miragechatparser.manager.AntiAFKManager.KickReason;
 
 import net.minecraft.item.ItemStack;
+import net.minecraft.server.network.ServerPlayerEntity;
 import net.minecraft.text.HoverEvent;
 import net.minecraft.text.MutableText;
 import net.minecraft.text.Style;
@@ -886,9 +887,44 @@ public class TextUtils
         return generalKickText;
     }
 
-    public static MutableText playerPermKickMessage(UUID playerUUID, int currentTicks)
+    public static MutableText playerPermKickMessage(ServerPlayerEntity player, int currentTicks)
     {
+        UUID playerUUID = player.getUuid();
         MutableText permKickText = Text.literal("").setStyle(Style.EMPTY);
+
+        permKickText = permKickText
+            .append(Text.literal("====================\n")
+                .setStyle(Style.EMPTY.withColor(AntiAFKColors.getKickInfoBorderColor())));
+
+        permKickText.append
+        (
+            playerPermKickMessageLine
+            (
+                "Is Marked as AFK:",
+                " %b ".formatted(AntiAFKManager.isPlayerAFK(player)),
+                "\n"
+            )
+        );
+
+        permKickText.append
+        (
+            playerPermKickMessageLine
+            (
+                "Is in a Vehicle:",
+                " %b ".formatted(player.hasVehicle()),
+                "\n"
+            )
+        );
+
+        permKickText.append
+        (
+            playerPermKickMessageLine
+            (
+                "Is in a fluid (water/lava):",
+                " %b ".formatted(player.isTouchingWater() || player.isInFluid()),
+                "\n\n"
+            )
+        );
 
         permKickText = permKickText
             .append(Text.literal("Last action info:\n")
@@ -953,6 +989,10 @@ public class TextUtils
                 "times"
             )
         );
+
+        permKickText = permKickText
+            .append(Text.literal("\n====================\n")
+                .setStyle(Style.EMPTY.withColor(AntiAFKColors.getKickInfoBorderColor())));
 
         return permKickText;
     }

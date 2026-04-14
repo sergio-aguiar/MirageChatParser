@@ -147,6 +147,13 @@ public class AntiAFKColorsConfig
                     AntiAFKColors.setKickInfoTimeColor(TextColor.parse(color).getOrThrow());
             }
 
+            if (config.contains("Chat.KickInfoBorderColor"))
+            {
+                String color = config.get("Chat.KickInfoBorderColor");
+                if (color != null && !color.isEmpty())
+                    AntiAFKColors.setKickInfoBorderColor(TextColor.parse(color).getOrThrow());
+            }
+
             if (config.contains("Warning.CaptchaWarningTitleColor"))
             {
                 String color = config.get("Warning.CaptchaWarningTitleColor");
@@ -197,6 +204,7 @@ public class AntiAFKColorsConfig
             KickInfoTitleColor = "#b81106"
             KickInfoTextColor = "#d1d8eb"
             KickInfoTimeColor = "#cfe95e"
+            KickInfoBorderColor = "#e28c1b"
 
             [Warning]
             CaptchaTitleColor = "#b81106"

@@ -318,7 +318,6 @@ public class AntiAFKManager
         registerPlayerLastMessage(player, "");
 
         playerIgnoredCaptchaCounts.put(playerUUID, 0);
-        playerSuspiciousActionCount.put(playerUUID, 0);
     }
 
     public static void handlePlayerLeave(ServerPlayerEntity player)
@@ -556,7 +555,6 @@ public class AntiAFKManager
     private static void handlePlayerKickMessage(ServerPlayerEntity player, String kickMessage)
     {
         MinecraftServer server = player.getServer();
-        UUID playerUUID = player.getUuid();
         int currentTicks = server.getTicks();
 
         server.getPlayerManager().broadcast(TextUtils.playerChatKickMessage(player.getDisplayName().getString(), kickMessage), false);
@@ -565,7 +563,7 @@ public class AntiAFKManager
         {
             if (!LuckPermsUtils.hasPermission(serverPlayer, "mirageantiafk.info.kick")) continue;
 
-            serverPlayer.sendMessage(TextUtils.playerPermKickMessage(playerUUID, currentTicks));
+            serverPlayer.sendMessage(TextUtils.playerPermKickMessage(player, currentTicks));
         }
     }
 

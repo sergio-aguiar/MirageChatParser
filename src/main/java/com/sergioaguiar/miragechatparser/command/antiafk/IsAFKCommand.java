@@ -31,24 +31,6 @@ public class IsAFKCommand
 
     private static int executeIsAFK(CommandContext<ServerCommandSource> context)
     {
-        ServerCommandSource source = context.getSource();
-        if (!source.isExecutedByPlayer())
-        {
-            ModLogger.info("Only players can run this command.");
-            return 1;
-        }
-
-        ServerPlayerEntity callingPlayer;
-        try
-        {
-            callingPlayer = source.getPlayerOrThrow();
-        }
-        catch (Exception e)
-        {
-            ModLogger.error("Failed to execute AFK: %s".formatted(e.getMessage()));
-            return 1;
-        }
-
         ServerPlayerEntity targetPlayer;
         try
         {
@@ -60,8 +42,7 @@ public class IsAFKCommand
             return 1;
         }
 
-        callingPlayer.sendMessage(TextUtils.playerPermKickMessage(targetPlayer.getUuid(), targetPlayer.getServer().getTicks()));
-
+        context.getSource().sendMessage(TextUtils.playerPermKickMessage(targetPlayer, targetPlayer.getServer().getTicks()));
         return 0;
     }
 }
