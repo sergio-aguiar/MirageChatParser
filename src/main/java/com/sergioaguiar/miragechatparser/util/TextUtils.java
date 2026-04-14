@@ -940,6 +940,16 @@ public class TextUtils
             (
                 "CAPTCHA Ignored:",
                 " %d ".formatted(AntiAFKManager.getIgnoredCaptchas(playerUUID)),
+                "times\n"
+            )
+        );
+
+        permKickText.append
+        (
+            playerPermKickMessageLine
+            (
+                "Suspicious CAPTCHA:",
+                " %d ".formatted(AntiAFKManager.getPlayerSuspiciousActionCount(playerUUID)),
                 "times"
             )
         );

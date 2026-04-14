@@ -84,7 +84,7 @@ public class AntiAFKSettingsConfig
 
             if (config.contains("General.CaptchaLength"))
             {
-                int length = Math.clamp(config.getOrElse("General.CaptchaLength", AntiAFKSettings.DEFAULT_CAPTCHA_LENGTH), 1, 9) ;
+                int length = Math.clamp(config.getOrElse("General.CaptchaLength", AntiAFKSettings.DEFAULT_CAPTCHA_LENGTH), 1, 9);
                 AntiAFKSettings.setCaptchaLength(length);
             }
 
@@ -116,6 +116,12 @@ public class AntiAFKSettingsConfig
             {
                 boolean enabled = config.getOrElse("Message.HideAFKCaptchaMessagePrefix", AntiAFKSettings.DEFAULT_HIDE_AFK_CAPTCHA_MESSAGE_PREFIX);
                 AntiAFKSettings.setHideAFKCaptchaMessagePrefix(enabled);
+            }
+
+            if (config.contains("General.MinimumTicksToNotCountAsSuspiciousCaptcha"))
+            {
+                int length = Math.max(config.getOrElse("General.MinimumTicksToNotCountAsSuspiciousCaptcha", AntiAFKSettings.DEFAULT_MINIMUM_TICKS_TO_NOT_COUNT_AS_SUSPICIOUS_CAPTCHA), 1);
+                AntiAFKSettings.setMinimumTicksToNotCountAsSuspiciousCaptcha(length);
             }
 
             ModLogger.info("Setting configurations successfully loaded from anti_afk_settings.toml.");
@@ -156,6 +162,8 @@ public class AntiAFKSettingsConfig
             MinimumPitchChangeForCameraMovementRegister = 2.0
             # The minimum camera yaw change to do per tick to count as enough camera movement to reset the camera-based AFK timer
             MinimumYawChangeForCameraMovementRegister = 2.0
+            # The minimum ticks needed to pass for a CAPTCHA answer to not be considered suspicious (1 second = 20 ticks)
+            MinimumTicksToNotCountAsSuspiciousCaptcha = 20
 
             [Message]
             HideAFKCheckerMessagePrefix = false

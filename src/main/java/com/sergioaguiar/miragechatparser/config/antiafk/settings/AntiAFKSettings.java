@@ -15,6 +15,7 @@ public class AntiAFKSettings
     protected static final double DEFAULT_MINIMUM_POSITION_CHANGE_FOR_MOVEMENT_REGISTER = 0.05;
     protected static final float DEFAULT_MINIMUM_PITCH_CHANGE_FOR_CAMERA_MOVEMENT_REGISTER = 2;
     protected static final float DEFAULT_MINIMUM_YAW_CHANGE_FOR_CAMERA_MOVEMENT_REGISTER = 2;
+    protected static final int DEFAULT_MINIMUM_TICKS_TO_NOT_COUNT_AS_SUSPICIOUS_CAPTCHA = 20;
 
     protected static final boolean DEFAULT_HIDE_AFK_CHECKER_MESSAGE_PREFIX = false;
     protected static final boolean DEFAULT_HIDE_AFK_CAPTCHA_MESSAGE_PREFIX = false;
@@ -32,6 +33,7 @@ public class AntiAFKSettings
     private static double minimumPositionChangeForMovementRegister;
     private static float minimumPitchChangeForCameraMovementRegister;
     private static float minimumYawChangeForCameraMovementRegister;
+    private static int minimumTicksToNotCountAsSuspiciousCaptcha;
 
     private static boolean hideAFKCheckerMessagePrefix;
     private static boolean hideAFKCaptchaMessagePrefix;
@@ -51,6 +53,7 @@ public class AntiAFKSettings
         minimumPositionChangeForMovementRegister = DEFAULT_MINIMUM_POSITION_CHANGE_FOR_MOVEMENT_REGISTER;
         minimumPitchChangeForCameraMovementRegister = DEFAULT_MINIMUM_PITCH_CHANGE_FOR_CAMERA_MOVEMENT_REGISTER;
         minimumYawChangeForCameraMovementRegister = DEFAULT_MINIMUM_YAW_CHANGE_FOR_CAMERA_MOVEMENT_REGISTER;
+        minimumTicksToNotCountAsSuspiciousCaptcha = DEFAULT_MINIMUM_TICKS_TO_NOT_COUNT_AS_SUSPICIOUS_CAPTCHA;
 
         hideAFKCheckerMessagePrefix = DEFAULT_HIDE_AFK_CHECKER_MESSAGE_PREFIX;
         hideAFKCaptchaMessagePrefix = DEFAULT_HIDE_AFK_CAPTCHA_MESSAGE_PREFIX;
@@ -67,6 +70,7 @@ public class AntiAFKSettings
     public static double getMinimumPositionChangeForMovementRegister() { return minimumPositionChangeForMovementRegister; } 
     public static float getMinimumPitchChangeForCameraMovementRegister() { return minimumPitchChangeForCameraMovementRegister; }
     public static float getMinimumYawChangeForCameraMovementRegister() { return minimumYawChangeForCameraMovementRegister; }
+    public static int getMinimumTicksToNotCountAsSuspiciousCaptcha() { return minimumTicksToNotCountAsSuspiciousCaptcha; }
     public static boolean shouldHideAFKCheckerMessagePrefix() { return hideAFKCheckerMessagePrefix; }
     public static boolean shouldHideAFKCaptchaMessagePrefix() { return hideAFKCaptchaMessagePrefix; }
 
@@ -81,6 +85,7 @@ public class AntiAFKSettings
     protected static void setMinimumPositionChangeForMovementRegister(double minimum) { minimumPositionChangeForMovementRegister = minimum; }
     protected static void setMinimumPitchChangeForCameraMovementRegister(float minimum) { minimumPitchChangeForCameraMovementRegister = minimum; }
     protected static void setMinimumYawChangeForCameraMovementRegister(float minimum) { minimumYawChangeForCameraMovementRegister = minimum; }
+    protected static void setMinimumTicksToNotCountAsSuspiciousCaptcha(int minimum) { minimumTicksToNotCountAsSuspiciousCaptcha = minimum; }
     protected static void setHideAFKCheckerMessagePrefix(boolean enable) { hideAFKCheckerMessagePrefix = enable; }
     protected static void setHideAFKCaptchaMessagePrefix(boolean enable) { hideAFKCaptchaMessagePrefix = enable; }
 }

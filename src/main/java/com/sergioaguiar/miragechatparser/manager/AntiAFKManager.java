@@ -140,6 +140,7 @@ public class AntiAFKManager
     private static Map<UUID, Integer> playersWhoWouldHaveBeenKicked;
     private static Map<UUID, PlayerCaptcha> playerActiveCaptchas;
     private static Map<UUID, Integer> playerIgnoredCaptchaCounts;
+    private static Map<UUID, Integer> playerSuspiciousActionCount;
 
     public static void start()
     {
@@ -158,6 +159,7 @@ public class AntiAFKManager
         playersWhoWouldHaveBeenKicked = new HashMap<>();
         playerActiveCaptchas = new HashMap<>();
         playerIgnoredCaptchaCounts = new HashMap<>();
+        playerSuspiciousActionCount = new HashMap<>();
     }
 
     public static void registerPlayerPositionMovement(ServerPlayerEntity player)
@@ -178,9 +180,22 @@ public class AntiAFKManager
     public static void registerPlayerCaptchaAnswer(ServerPlayerEntity player)
     {
         UUID playerUUID = player.getUuid();
+        int currentTicks = player.getServer().getTicks();
 
-        playerTimesOfLastCaptchaAnswer.put(playerUUID, player.getServer().getTicks());
+        if (currentTicks - playerTimesOfLastCaptchaPrompt.getOrDefault(playerUUID, currentTicks) < AntiAFKSettings.getMinimumTicksToNotCountAsSuspiciousCaptcha())
+        {
+            registerPlayerSuspiciousAction(player);
+        }
+
+        playerTimesOfLastCaptchaAnswer.put(playerUUID, currentTicks);
         playerIgnoredCaptchaCounts.put(playerUUID, 0);
+    }
+
+    public static void registerPlayerSuspiciousAction(ServerPlayerEntity player)
+    {
+        UUID playerUUID = player.getUuid();
+
+        playerSuspiciousActionCount.put(playerUUID, playerSuspiciousActionCount.getOrDefault(playerUUID, 0) + 1);
     }
 
     public static void registerPlayerCaptchaPrompt(ServerPlayerEntity player)
@@ -289,6 +304,8 @@ public class AntiAFKManager
 
     public static void handlePlayerInit(ServerPlayerEntity player)
     {
+        UUID playerUUID = player.getUuid();
+
         registerPlayerPositionMovement(player);
         registerPlayerCameraMovement(player);
         registerPlayerMessageSent(player);
@@ -300,7 +317,8 @@ public class AntiAFKManager
         registerPlayerLastCameraYaw(player, player.getYaw());
         registerPlayerLastMessage(player, "");
 
-        playerIgnoredCaptchaCounts.put(player.getUuid(), 0);
+        playerIgnoredCaptchaCounts.put(playerUUID, 0);
+        playerSuspiciousActionCount.put(playerUUID, 0);
     }
 
     public static void handlePlayerLeave(ServerPlayerEntity player)
@@ -599,6 +617,11 @@ public class AntiAFKManager
     public static int getIgnoredCaptchas(UUID playerUuid)
     {
         return playerIgnoredCaptchaCounts.getOrDefault(playerUuid, 0);
+    }
+
+    public static int getPlayerSuspiciousActionCount(UUID playerUuid)
+    {
+        return playerSuspiciousActionCount.getOrDefault(playerUuid, 0);
     }
 
     public static boolean isCaptchaTime(int currentTicks)
