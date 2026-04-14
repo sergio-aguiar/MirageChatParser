@@ -42,7 +42,7 @@ public class AntiAFKSettingsConfig
 
             if (config.contains("General.UseCaptchaInWarning"))
             {
-                boolean enabled = config.getOrElse("General.UseCaptchaInWarning", AntiAFKSettings.DEFAULT_NO_KICK_MODE_ENABLED);
+                boolean enabled = config.getOrElse("General.UseCaptchaInWarning", AntiAFKSettings.DEFAULT_USE_CAPTCHA_IN_WARNING);
                 AntiAFKSettings.setdUseCaptchaInWarning(enabled);
             }
 
@@ -50,6 +50,12 @@ public class AntiAFKSettingsConfig
             {
                 boolean enabled = config.getOrElse("General.NoKickMode", AntiAFKSettings.DEFAULT_NO_KICK_MODE_ENABLED);
                 AntiAFKSettings.setNoKickMode(enabled);
+            }
+
+            if (config.contains("General.UseIndividualPlayerCaptchaTimes"))
+            {
+                boolean enabled = config.getOrElse("General.UseIndividualPlayerCaptchaTimes", AntiAFKSettings.DEFAULT_USE_INDIVIDUAL_PLAYER_CAPTCHA_TIMES);
+                AntiAFKSettings.setdUseIndividualPlayerCaptchaTimes(enabled);
             }
 
             if (config.contains("General.SecondsToAFK"))
@@ -132,6 +138,8 @@ public class AntiAFKSettingsConfig
             NoKickMode = false
             # Whether the CAPTCHA warning that appears when you are in the last one before a kick should show the CAPTCHA or not (shows the warning if not) (true/false)
             UseCaptchaInWarning = false
+            # Whether CAPTCHA should be on a per-player basis or be synced server-wide (true/false)
+            UseIndividualPlayerCaptchaTimes = false
             # The number of seconds before a player is flagged as AFK if not enough relevant actions were taken
             SecondsToAFK = 600
             # The number of seconds before a player is kicked for being AFK, after being flagged as AFK (while still lacking relevant actions)

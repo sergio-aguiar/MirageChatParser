@@ -129,6 +129,7 @@ public class AntiAFKManager
     private static Map<UUID, Integer> playerTimesOfLastCameraMovement;
     private static Map<UUID, Integer> playerTimesOfLastMessageSent;
     private static Map<UUID, Integer> playerTimesOfLastCaptchaAnswer;
+    private static Map<UUID, Integer> playerTimesOfLastCaptchaPrompt;
     private static Map<UUID, Integer> playerTimesOfAFKMark;
 
     private static Map<UUID, Vec3d> playerLastPositions;
@@ -146,6 +147,7 @@ public class AntiAFKManager
         playerTimesOfLastCameraMovement = new HashMap<>();
         playerTimesOfLastMessageSent = new HashMap<>();
         playerTimesOfLastCaptchaAnswer = new HashMap<>();
+        playerTimesOfLastCaptchaPrompt = new HashMap<>();
         playerTimesOfAFKMark = new HashMap<>();
 
         playerLastPositions = new HashMap<>();
@@ -179,6 +181,11 @@ public class AntiAFKManager
 
         playerTimesOfLastCaptchaAnswer.put(playerUUID, player.getServer().getTicks());
         playerIgnoredCaptchaCounts.put(playerUUID, 0);
+    }
+
+    public static void registerPlayerCaptchaPrompt(ServerPlayerEntity player)
+    {
+        playerTimesOfLastCaptchaPrompt.put(player.getUuid(), player.getServer().getTicks());
     }
 
     public static void registerPlayerAsAFK(ServerPlayerEntity player)
@@ -286,6 +293,7 @@ public class AntiAFKManager
         registerPlayerCameraMovement(player);
         registerPlayerMessageSent(player);
         registerPlayerCaptchaAnswer(player);
+        registerPlayerCaptchaPrompt(player);
 
         registerPlayerLastPosition(player, player.getPos());
         registerPlayerLastCameraPitch(player, player.getPitch());
@@ -303,6 +311,7 @@ public class AntiAFKManager
         playerTimesOfLastCameraMovement.remove(playerUUID);
         playerTimesOfLastMessageSent.remove(playerUUID);
         playerTimesOfLastCaptchaAnswer.remove(playerUUID);
+        playerTimesOfLastCaptchaPrompt.remove(playerUUID);
         playerTimesOfAFKMark.remove(playerUUID);
 
         playerLastPositions.remove(playerUUID);
@@ -393,6 +402,7 @@ public class AntiAFKManager
         }
 
         playerActiveCaptchas.put(playerUUID, new PlayerCaptcha(ThreadLocalRandom.current().nextDouble() < 0.3));
+        registerPlayerCaptchaPrompt(player);
 
         if (ignoredCaptchas == AntiAFKSettings.getFailedCaptchaBeforeKick() - 1)
         {
@@ -581,14 +591,24 @@ public class AntiAFKManager
         return ticksToSeconds(currentTicks - playerTimesOfLastCaptchaAnswer.getOrDefault(playerUUID, currentTicks));
     }
 
+    public static double getSecondsSinceLastCaptchaPrompt(UUID playerUUID, int currentTicks)
+    {
+        return ticksToSeconds(currentTicks - playerTimesOfLastCaptchaPrompt.getOrDefault(playerUUID, currentTicks));
+    }
+
     public static int getIgnoredCaptchas(UUID playerUuid)
     {
         return playerIgnoredCaptchaCounts.getOrDefault(playerUuid, 0);
     }
 
-    public static boolean isCaptchaTime(MinecraftServer server)
+    public static boolean isCaptchaTime(int currentTicks)
     {
-        return server.getTicks() % secondsToTicks(AntiAFKSettings.getSecondsBetweenCaptcha()) == 0;
+        return currentTicks % secondsToTicks(AntiAFKSettings.getSecondsBetweenCaptcha()) == 0;
+    }
+
+    public static boolean isIndividualPlayerCaptchaTime(int currentTicks, UUID playerUUID)
+    {
+        return currentTicks - playerTimesOfLastCaptchaPrompt.getOrDefault(playerUUID, currentTicks) >= secondsToTicks(AntiAFKSettings.getSecondsBetweenCaptcha());
     }
 
     private static int secondsToTicks(int seconds)
