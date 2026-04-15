@@ -46,7 +46,6 @@ public class AntiAFKTickEventHandler
                 for (ServerPlayerEntity player : playerList)
                 {
                     if (LuckPermsUtils.hasPermission(player, "mirageantiafk.bypass.check")) continue;
-                    if (player.hasVehicle() || player.isTouchingWater() || player.isInFluid()) continue;
 
                     AntiAFKManager.handlePlayerPositionChangeLogic(player);
                     AntiAFKManager.handlePlayerCameraChangeLogic(player);

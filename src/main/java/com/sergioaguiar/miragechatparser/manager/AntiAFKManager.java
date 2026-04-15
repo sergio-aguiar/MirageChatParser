@@ -302,6 +302,11 @@ public class AntiAFKManager
         return playerTimesOfAFKMark.containsKey(player.getUuid());
     }
 
+    public static boolean shouldPlayerActionsBeIgnored(ServerPlayerEntity player)
+    {
+        return player.hasVehicle() || player.isTouchingWater() || player.isInFluid();
+    }
+
     public static void handlePlayerInit(ServerPlayerEntity player)
     {
         UUID playerUUID = player.getUuid();
@@ -348,7 +353,7 @@ public class AntiAFKManager
 
         double distanceMoved = currentPos.distanceTo(lastPos);
 
-        if (distanceMoved >= AntiAFKSettings.getMinimumPositionChangeForMovementRegister())
+        if (!shouldPlayerActionsBeIgnored(player) && distanceMoved >= AntiAFKSettings.getMinimumPositionChangeForMovementRegister())
         {
             registerPlayerNoLongerAFK(player);
             registerPlayerPositionMovement(player);
@@ -368,7 +373,9 @@ public class AntiAFKManager
         float pitchChange = Math.abs(currentPitch - lastPitch);
         float yawChange = Math.abs(currentYaw - lastYaw);
 
-        if (pitchChange >= AntiAFKSettings.getMinimumPitchChangeForCameraMovementRegister() || yawChange >= AntiAFKSettings.getMinimumYawChangeForCameraMovementRegister())
+        if (!shouldPlayerActionsBeIgnored(player) 
+            && (pitchChange >= AntiAFKSettings.getMinimumPitchChangeForCameraMovementRegister() 
+                || yawChange >= AntiAFKSettings.getMinimumYawChangeForCameraMovementRegister()))
         {
             registerPlayerNoLongerAFK(player);
             registerPlayerCameraMovement(player);
