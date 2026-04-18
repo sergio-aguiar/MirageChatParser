@@ -5,6 +5,7 @@ public class AntiAFKSettings
     protected static final boolean DEFAULT_NO_KICK_MODE_ENABLED = false;
     protected static final boolean DEFAULT_USE_CAPTCHA_IN_WARNING = false;
     protected static final boolean DEFAULT_USE_INDIVIDUAL_PLAYER_CAPTCHA_TIMES = false;
+    protected static final boolean DEFAULT_HIDE_AFK_TIMES_WHEN_BYPASSING_KICKS = true;
 
     protected static final int DEFAULT_SECONDS_TO_AFK = 600;
     protected static final int DEFAULT_SECONDS_TO_AFK_KICK = 3000;
@@ -23,6 +24,7 @@ public class AntiAFKSettings
     private static boolean noKickModeEnabled;
     private static boolean useCaptchaInWarning;
     private static boolean useIndividualPlayerCaptchaTimes;
+    private static boolean hideAFKTimesWhenBypassingKicks;
 
     private static int secondsToAFK;
     private static int secondsToAFKKick;
@@ -43,6 +45,7 @@ public class AntiAFKSettings
         noKickModeEnabled = DEFAULT_NO_KICK_MODE_ENABLED;
         useCaptchaInWarning = DEFAULT_USE_CAPTCHA_IN_WARNING;
         useIndividualPlayerCaptchaTimes = DEFAULT_USE_INDIVIDUAL_PLAYER_CAPTCHA_TIMES;
+        hideAFKTimesWhenBypassingKicks = DEFAULT_HIDE_AFK_TIMES_WHEN_BYPASSING_KICKS;
 
         secondsToAFK = DEFAULT_SECONDS_TO_AFK;
         secondsToAFKKick = DEFAULT_SECONDS_TO_AFK_KICK;
@@ -62,6 +65,7 @@ public class AntiAFKSettings
     public static boolean isNoKickModeEnabled() { return noKickModeEnabled; }
     public static boolean shouldUseCaptchaInWarning() { return useCaptchaInWarning; }
     public static boolean shouldUseIndividualPlayerCaptchaTimes() { return useIndividualPlayerCaptchaTimes; }
+    public static boolean shouldHideAFKTimesWhenBypassingKicks() { return hideAFKTimesWhenBypassingKicks; }
     public static int getSecondsToAFK() { return secondsToAFK; }
     public static int getSecondsToAFKKick() { return secondsToAFKKick; }
     public static int getSecondsBetweenCaptcha() { return secondsBetweenCaptcha; }
@@ -75,8 +79,9 @@ public class AntiAFKSettings
     public static boolean shouldHideAFKCaptchaMessagePrefix() { return hideAFKCaptchaMessagePrefix; }
 
     protected static void setNoKickMode(boolean enable) { noKickModeEnabled = enable; }
-    protected static void setdUseCaptchaInWarning(boolean enable) { useCaptchaInWarning = enable; }
-    protected static void setdUseIndividualPlayerCaptchaTimes(boolean enable) { useIndividualPlayerCaptchaTimes = enable; }
+    protected static void setUseCaptchaInWarning(boolean enable) { useCaptchaInWarning = enable; }
+    protected static void setUseIndividualPlayerCaptchaTimes(boolean enable) { useIndividualPlayerCaptchaTimes = enable; }
+    protected static void setHideAFKTimesWhenBypassingKicks(boolean enable) { hideAFKTimesWhenBypassingKicks = enable; }
     protected static void setSecondsToAFK(int seconds) { secondsToAFK = seconds; }
     protected static void setSecondsToAFKKick(int seconds) { secondsToAFKKick = seconds; }
     protected static void setSecondsBetweenCaptcha(int seconds) { secondsBetweenCaptcha = seconds; }

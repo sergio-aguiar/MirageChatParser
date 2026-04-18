@@ -43,7 +43,7 @@ public class AntiAFKSettingsConfig
             if (config.contains("General.UseCaptchaInWarning"))
             {
                 boolean enabled = config.getOrElse("General.UseCaptchaInWarning", AntiAFKSettings.DEFAULT_USE_CAPTCHA_IN_WARNING);
-                AntiAFKSettings.setdUseCaptchaInWarning(enabled);
+                AntiAFKSettings.setUseCaptchaInWarning(enabled);
             }
 
             if (config.contains("General.NoKickMode"))
@@ -55,7 +55,13 @@ public class AntiAFKSettingsConfig
             if (config.contains("General.UseIndividualPlayerCaptchaTimes"))
             {
                 boolean enabled = config.getOrElse("General.UseIndividualPlayerCaptchaTimes", AntiAFKSettings.DEFAULT_USE_INDIVIDUAL_PLAYER_CAPTCHA_TIMES);
-                AntiAFKSettings.setdUseIndividualPlayerCaptchaTimes(enabled);
+                AntiAFKSettings.setUseIndividualPlayerCaptchaTimes(enabled);
+            }
+
+            if (config.contains("General.HideAFKTimesWhenBypassingKicks"))
+            {
+                boolean enabled = config.getOrElse("General.HideAFKTimesWhenBypassingKicks", AntiAFKSettings.DEFAULT_HIDE_AFK_TIMES_WHEN_BYPASSING_KICKS);
+                AntiAFKSettings.setHideAFKTimesWhenBypassingKicks(enabled);
             }
 
             if (config.contains("General.SecondsToAFK"))
@@ -146,6 +152,8 @@ public class AntiAFKSettingsConfig
             UseCaptchaInWarning = false
             # Whether CAPTCHA should be on a per-player basis or be synced server-wide (true/false)
             UseIndividualPlayerCaptchaTimes = false
+            # Whether non-AFK messages should state how long the player was gone for or not, when they have permissions to bypass AFK kicks (true/false)
+            HideAFKTimesWhenBypassingKicks = true
             # The number of seconds before a player is flagged as AFK if not enough relevant actions were taken
             SecondsToAFK = 600
             # The number of seconds before a player is kicked for being AFK, after being flagged as AFK (while still lacking relevant actions)

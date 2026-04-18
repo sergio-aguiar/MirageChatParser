@@ -220,7 +220,7 @@ public class AntiAFKManager
         (
             TextUtils.playerNotAFKMessage
             (
-                player.getDisplayName().getString(),
+                player,
                 TextUtils.secondsToReadableTimeString((int) ticksToSeconds(player.getServer().getTicks() - timeAFK))
             ),
             false

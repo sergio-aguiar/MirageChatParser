@@ -785,7 +785,7 @@ public class TextUtils
         return afkText;
     }
 
-    public static MutableText playerNotAFKMessage(String playerName, String timeAway)
+    public static MutableText playerNotAFKMessage(ServerPlayerEntity player, String timeAway)
     {
         MutableText afkText = Text.literal("").setStyle(Style.EMPTY);
 
@@ -801,12 +801,17 @@ public class TextUtils
                 .setStyle(Style.EMPTY.withColor(AntiAFKColors.getAFKCheckerTextColor())));
 
         afkText = afkText
-            .append(Text.literal(playerName)
+            .append(Text.literal(player.getDisplayName().getString())
                 .setStyle(Style.EMPTY.withColor(AntiAFKColors.getAFKCheckerPlayerColor())));
 
         afkText = afkText
             .append(Text.literal(" is no longer AFK.")
                 .setStyle(Style.EMPTY.withColor(AntiAFKColors.getAFKCheckerTextColor())));
+
+        if (AntiAFKSettings.shouldHideAFKTimesWhenBypassingKicks() && LuckPermsUtils.hasPermission(player, "mirageantiafk.bypass.kick"))
+        {
+            return afkText;
+        }
 
         afkText = afkText
             .append(Text.literal(" (Gone for ")
