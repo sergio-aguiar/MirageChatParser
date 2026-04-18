@@ -1,5 +1,6 @@
 package com.sergioaguiar.miragechatparser.command.antiafk.fake;
 
+import com.mojang.brigadier.arguments.StringArgumentType;
 import com.mojang.brigadier.context.CommandContext;
 import com.sergioaguiar.miragechatparser.manager.AntiAFKManager;
 import com.sergioaguiar.miragechatparser.util.ModLogger;
@@ -18,7 +19,10 @@ public class FakeCaptchaClickCommand
             (
                 CommandManager.literal("mirageantiafk")
                     .then(CommandManager.literal("fakecaptchaclick")
-                        .executes(FakeCaptchaClickCommand::executeFakeCaptchaClick))
+                        .then(CommandManager.argument("code", StringArgumentType.word())
+                            .executes(FakeCaptchaClickCommand::executeFakeCaptchaClick)
+                        )
+                    )
             );
         });
     }
@@ -29,7 +33,9 @@ public class FakeCaptchaClickCommand
         {
             if (context.getSource().isExecutedByPlayer())
             {
-                AntiAFKManager.handleCaptchaClick(context.getSource().getPlayer());
+                String code = StringArgumentType.getString(context, "code");
+
+                AntiAFKManager.handleCaptchaClick(context.getSource().getPlayer(), code);
             }            
         }
         catch (Exception e)

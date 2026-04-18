@@ -34,12 +34,6 @@ public class AntiAFKManager
         {
             this.isClick = isClick;
 
-            if (isClick)
-            {
-                this.answer = "";
-                return;
-            }
-
             int length = AntiAFKSettings.getCaptchaLength();
             StringBuilder stringBuilder = new StringBuilder(length);
             Random random = new Random();
@@ -75,7 +69,7 @@ public class AntiAFKManager
                 captchaText = captchaText
                     .append(Text.literal("[Click here]")
                         .setStyle(Style.EMPTY.withColor(AntiAFKColors.getAFKCaptchaQuestionColor())
-                            .withClickEvent(new ClickEvent(ClickEvent.Action.RUN_COMMAND, "/mirageantiafk fakecaptchaclick"))));
+                            .withClickEvent(new ClickEvent(ClickEvent.Action.RUN_COMMAND, "/mirageantiafk fakecaptchaclick %s".formatted(answer)))));
             }
             else
             {
@@ -479,13 +473,15 @@ public class AntiAFKManager
         return playerActiveCaptchas.get(playerUUID).isTheRightAnswer(answer);
     }
 
-    public static void handleCaptchaClick(ServerPlayerEntity player)
+    public static void handleCaptchaClick(ServerPlayerEntity player, String code)
     {
         UUID playerUUID = player.getUuid();
 
         if (!playerActiveCaptchas.containsKey(playerUUID)) return;
 
-        if (playerActiveCaptchas.get(playerUUID).isClickCaptcha())
+        PlayerCaptcha captcha = playerActiveCaptchas.get(playerUUID);
+
+        if (captcha.isClickCaptcha() && captcha.isTheRightAnswer(code))
         {
             handleCaptchaSuccess(player);
         }
