@@ -1,4 +1,4 @@
-package com.sergioaguiar.miragechatparser.event;
+package com.sergioaguiar.miragechatparser.event.antiafk;
 
 import java.util.List;
 

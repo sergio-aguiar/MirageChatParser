@@ -414,7 +414,7 @@ public class AntiAFKManager
                 {
                     if (!playersWhoWouldHaveBeenKicked.containsKey(playerUUID))
                     {
-                        ModLogger.info("Player %s should be AFK kicked right now with (ignoredCaptchas=%d)".formatted(player.getDisplayName().getString(), ignoredCaptchas));
+                        ModLogger.info("Player %s should be AFK kicked right now with (ignoredCaptchas=%d)".formatted(player.getGameProfile().getName(), ignoredCaptchas));
                         playersWhoWouldHaveBeenKicked.put(playerUUID, player.getServer().getTicks());
                     }
                 }
@@ -516,7 +516,7 @@ public class AntiAFKManager
         {
             ModLogger.info("Player %s should be AFK kicked right now with (lastPosMove=%.2f seconds - lastCamMove=%.2f seconds - lastChatMsg=%.2f seconds - lastCaptcha=%.2f seconds)".formatted
                 (
-                    player.getDisplayName().getString(),
+                    player.getGameProfile().getName(),
                     getSecondsSinceLastPositionMovement(player),
                     getSecondsSinceLastCameraMovement(player),
                     getSecondsSinceLastMessageSent(player),
@@ -538,12 +538,12 @@ public class AntiAFKManager
 
         switch (kickReason) {
             case KickReason.IGNORING_CAPTCHA:
-                ModLogger.info("Player %s is about to be AFK kicked right now with (ignoredCaptchas=%d)".formatted(player.getDisplayName().getString(), getIgnoredCaptchas(player.getUuid())));
+                ModLogger.info("Player %s is about to be AFK kicked right now with (ignoredCaptchas=%d)".formatted(player.getGameProfile().getName(), getIgnoredCaptchas(player.getUuid())));
                 break;
             case KickReason.INACTIVE_FOR_TOO_LONG:
                 ModLogger.info("Player %s is about to be AFK kicked right now with (lastPosMove=%.2f seconds - lastCamMove=%.2f seconds - lastChatMsg=%.2f seconds - lastCaptcha=%.2f seconds)".formatted
                     (
-                        player.getDisplayName().getString(),
+                        player.getGameProfile().getName(),
                         getSecondsSinceLastPositionMovement(player),
                         getSecondsSinceLastCameraMovement(player),
                         getSecondsSinceLastMessageSent(player),

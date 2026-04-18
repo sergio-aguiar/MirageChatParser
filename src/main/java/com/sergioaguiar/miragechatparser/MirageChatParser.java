@@ -28,11 +28,11 @@ import com.sergioaguiar.miragechatparser.config.chatparser.strings.ChatStrings;
 import com.sergioaguiar.miragechatparser.config.chatparser.strings.ChatStringsConfig;
 import com.sergioaguiar.miragechatparser.config.modules.Modules;
 import com.sergioaguiar.miragechatparser.config.modules.ModulesConfig;
-import com.sergioaguiar.miragechatparser.event.ChatParserMessageHandler;
-import com.sergioaguiar.miragechatparser.event.AntiAFKPlayerJoinEventHandler;
-import com.sergioaguiar.miragechatparser.event.AntiAFKMessageHandler;
-import com.sergioaguiar.miragechatparser.event.AntiAFKPlayerDisconnectEventHandler;
-import com.sergioaguiar.miragechatparser.event.AntiAFKTickEventHandler;
+import com.sergioaguiar.miragechatparser.event.antiafk.AntiAFKMessageHandler;
+import com.sergioaguiar.miragechatparser.event.antiafk.AntiAFKPlayerDisconnectEventHandler;
+import com.sergioaguiar.miragechatparser.event.antiafk.AntiAFKPlayerJoinEventHandler;
+import com.sergioaguiar.miragechatparser.event.antiafk.AntiAFKTickEventHandler;
+import com.sergioaguiar.miragechatparser.event.chatparser.ChatParserMessageHandler;
 import com.sergioaguiar.miragechatparser.manager.AntiAFKManager;
 import com.sergioaguiar.miragechatparser.util.ModLogger;
 

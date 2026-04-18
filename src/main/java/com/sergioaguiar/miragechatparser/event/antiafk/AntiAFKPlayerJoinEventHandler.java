@@ -1,4 +1,4 @@
-package com.sergioaguiar.miragechatparser.event;
+package com.sergioaguiar.miragechatparser.event.antiafk;
 
 import com.sergioaguiar.miragechatparser.manager.AntiAFKManager;
 import com.sergioaguiar.miragechatparser.util.ModLogger;

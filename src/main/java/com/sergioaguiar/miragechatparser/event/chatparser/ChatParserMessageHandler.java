@@ -1,4 +1,4 @@
-package com.sergioaguiar.miragechatparser.event;
+package com.sergioaguiar.miragechatparser.event.chatparser;
 
 import com.sergioaguiar.miragechatparser.config.chatparser.settings.ChatSettings;
 import com.sergioaguiar.miragechatparser.parser.ChatParser;
