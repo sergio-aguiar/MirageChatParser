@@ -193,12 +193,12 @@ public class AntiAFKManager
         playerTimesOfLastMessageSent.put(player.getUuid(), player.getServer().getTicks());
     }
 
-    public static void registerPlayerCaptchaAnswer(ServerPlayerEntity player)
+    public static void registerPlayerCaptchaAnswer(ServerPlayerEntity player, boolean isInit)
     {
         UUID playerUUID = player.getUuid();
         int currentTicks = player.getServer().getTicks();
 
-        if (currentTicks - playerTimesOfLastCaptchaPrompt.getOrDefault(playerUUID, currentTicks) < AntiAFKSettings.getMinimumTicksToNotCountAsSuspiciousCaptcha())
+        if (!isInit && currentTicks - playerTimesOfLastCaptchaPrompt.getOrDefault(playerUUID, currentTicks) < AntiAFKSettings.getMinimumTicksToNotCountAsSuspiciousCaptcha())
         {
             registerPlayerSuspiciousAction(player);
             broadcastSusActionMessageToPermissionUsers(player, SuspicionType.TOO_FAST_ANSWER.getSusAction());
@@ -331,7 +331,7 @@ public class AntiAFKManager
         registerPlayerPositionMovement(player);
         registerPlayerCameraMovement(player);
         registerPlayerMessageSent(player);
-        registerPlayerCaptchaAnswer(player);
+        registerPlayerCaptchaAnswer(player, true);
         registerPlayerCaptchaPrompt(player);
 
         registerPlayerLastPosition(player, player.getPos());
@@ -575,7 +575,7 @@ public class AntiAFKManager
         playerActiveCaptchas.remove(playerUUID);
 
         registerPlayerNoLongerAFK(player);
-        registerPlayerCaptchaAnswer(player);
+        registerPlayerCaptchaAnswer(player, false);
         
         player.sendMessage(TextUtils.provedActivityMessage());
     }
