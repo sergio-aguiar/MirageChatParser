@@ -2,6 +2,38 @@ package com.sergioaguiar.miragechatparser.config.chatparser.settings;
 
 public class ChatSettings
 {
+    public enum PartyCheckLayout
+    {
+        DEFAULT("default"),
+        MIRAGE("mirage");
+
+        private String layoutName;
+
+        PartyCheckLayout(String layoutName)
+        {
+            this.layoutName = layoutName;
+        }
+
+        public String getLayoutName()
+        {
+            return layoutName;
+        }
+
+        public static PartyCheckLayout getLayoutByName(String layoutName)
+        {
+            String fixedName = layoutName.toLowerCase().trim();
+
+            switch (fixedName) {
+                case "default":
+                    return PartyCheckLayout.DEFAULT;
+                case "mirage":
+                    return PartyCheckLayout.MIRAGE;
+                default:
+                    return PartyCheckLayout.DEFAULT;
+            }
+        }
+    }
+
     protected static final boolean DEFAULT_PARSE_NON_PLAYER_MESSAGES = false;
 
     protected static final boolean DEFAULT_SHOW_NICKNAME = true;
@@ -28,6 +60,7 @@ public class ChatSettings
     protected static final boolean DEFAULT_BOLD_HYPER_TRAINING_VALUES = false;
     protected static final boolean DEFAULT_ITALIC_HYPER_TRAINING_VALUES = false;
 
+    protected static final PartyCheckLayout DEFAULT_PARTYCHECK_LAYOUT = PartyCheckLayout.DEFAULT;
     protected static final boolean DEFAULT_SHOW_PARTYCHECK_GUI_FRAME_BLOCKS = true;
 
     private static boolean parseNonPlayerMessages;
@@ -56,6 +89,7 @@ public class ChatSettings
     private static boolean boldHyperTrainingValues;
     private static boolean italicHyperTrainingValues;
 
+    private static PartyCheckLayout partycheckLayout;
     private static boolean showPartyCheckGUIFrameBlocks;
 
     public static void setDefaults()
@@ -86,6 +120,7 @@ public class ChatSettings
         boldHyperTrainingValues = DEFAULT_BOLD_HYPER_TRAINING_VALUES;
         italicHyperTrainingValues = DEFAULT_ITALIC_HYPER_TRAINING_VALUES;
 
+        partycheckLayout = DEFAULT_PARTYCHECK_LAYOUT;
         showPartyCheckGUIFrameBlocks = DEFAULT_SHOW_PARTYCHECK_GUI_FRAME_BLOCKS;
     }
 
@@ -111,6 +146,7 @@ public class ChatSettings
     public static boolean shouldShowNeuteredIfFalse() { return showNeuteredIfFalse; }
     public static boolean shouldBoldHyperTrainingValues() { return boldHyperTrainingValues; }
     public static boolean shouldItalicHyperTrainingValues() { return italicHyperTrainingValues; }
+    public static PartyCheckLayout getPartyCheckLayout() { return partycheckLayout; }
     public static boolean shouldShowPartyCheckGUIFrameBlocks() { return showPartyCheckGUIFrameBlocks; }
 
     protected static void setParseNonPlayerMessages(boolean enabled) { parseNonPlayerMessages = enabled; }
@@ -135,5 +171,6 @@ public class ChatSettings
     protected static void setShowNeuteredIfFalse(boolean enabled) { showNeuteredIfFalse = enabled; }
     protected static void setBoldHyperTrainingValues(boolean enabled) { boldHyperTrainingValues = enabled; }
     protected static void setItalicHyperTrainingValues(boolean enabled) { italicHyperTrainingValues = enabled; }
+    protected static void setPartyCheckLayout(PartyCheckLayout layout) { partycheckLayout = layout; }
     protected static void setShowPartyCheckGUIFrameBlocks(boolean enabled) { showPartyCheckGUIFrameBlocks = enabled; }
 }

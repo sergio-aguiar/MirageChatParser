@@ -7,6 +7,7 @@ import java.nio.file.Path;
 import java.nio.file.Paths;
 
 import com.electronwill.nightconfig.core.file.CommentedFileConfig;
+import com.sergioaguiar.miragechatparser.config.chatparser.settings.ChatSettings.PartyCheckLayout;
 import com.sergioaguiar.miragechatparser.util.ModLogger;
 
 public class ChatSettingsConfig
@@ -172,6 +173,13 @@ public class ChatSettingsConfig
                 ChatSettings.setItalicHyperTrainingValues(enabled);
             }
 
+            if (config.contains("GUI.PartyCheckLayout"))
+            {
+                String string = config.get("GUI.PartyCheckLayout");
+                if (string != null && !string.isEmpty())
+                    ChatSettings.setPartyCheckLayout(PartyCheckLayout.getLayoutByName(string));
+            }
+
             if (config.contains("GUI.ShowPartyCheckGUIFrameBlocks"))
             {
                 boolean enabled = config.getOrElse("GUI.ShowPartyCheckGUIFrameBlocks", ChatSettings.DEFAULT_ITALIC_HYPER_TRAINING_VALUES);
@@ -240,6 +248,8 @@ public class ChatSettingsConfig
             ItalicHyperTrainingValues = false
 
             [GUI]
+            # The name of the layour to use in the GUI for PartyCheck ("default" or "mirage")
+            PartyCheckLayout = "default"
             # Whether the PartyCheck command's GUI should display the surrounding block frame (true/false)
             ShowPartyCheckGUIFrameBlocks = true
             """;

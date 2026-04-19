@@ -9,8 +9,11 @@ import com.cobblemon.mod.common.api.types.ElementalType;
 import com.cobblemon.mod.common.item.PokemonItem;
 import com.cobblemon.mod.common.pokemon.Pokemon;
 import com.sergioaguiar.miragechatparser.config.chatparser.colors.ChatColors;
+import com.sergioaguiar.miragechatparser.config.chatparser.settings.ChatSettings;
+import com.sergioaguiar.miragechatparser.config.chatparser.settings.ChatSettings.PartyCheckLayout;
 import com.sergioaguiar.miragechatparser.config.chatparser.strings.ChatStrings;
-import com.sergioaguiar.miragechatparser.gui.templates.PartyCheckGooeyTemplate;
+import com.sergioaguiar.miragechatparser.gui.templates.DefaultPartyCheckGooeyTemplate;
+import com.sergioaguiar.miragechatparser.gui.templates.MiragePartyCheckGooeyTemplate;
 import com.sergioaguiar.miragechatparser.manager.CooldownManager;
 import com.sergioaguiar.miragechatparser.parser.PlaceholderResolver;
 
@@ -33,7 +36,12 @@ public class GooeyLibsUtils
     public static GooeyPage getPartyCheckPage(ServerPlayerEntity player)
     {
         return GooeyPage.builder()
-            .template(new PartyCheckGooeyTemplate(TemplateHelper.slotsOf(PartyCheckGooeyTemplate.TEMPLATE_ROWS * PartyCheckGooeyTemplate.TEMPLATE_COLUMNS), player))
+            .template
+            (
+                ChatSettings.getPartyCheckLayout().equals(PartyCheckLayout.MIRAGE)
+                ? new MiragePartyCheckGooeyTemplate(TemplateHelper.slotsOf(MiragePartyCheckGooeyTemplate.TEMPLATE_ROWS * MiragePartyCheckGooeyTemplate.TEMPLATE_COLUMNS), player)
+                : new DefaultPartyCheckGooeyTemplate(TemplateHelper.slotsOf(DefaultPartyCheckGooeyTemplate.TEMPLATE_ROWS * DefaultPartyCheckGooeyTemplate.TEMPLATE_COLUMNS), player)
+            )
             .title(ChatStrings.getPartyCheckTitleString())
             .build();
     }

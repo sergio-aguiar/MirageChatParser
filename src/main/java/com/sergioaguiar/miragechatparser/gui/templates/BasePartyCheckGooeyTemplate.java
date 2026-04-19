@@ -27,7 +27,7 @@ import net.minecraft.text.MutableText;
 import net.minecraft.text.Style;
 import net.minecraft.text.Text;
 
-public class PartyCheckGooeyTemplate extends ChestTemplate
+public class BasePartyCheckGooeyTemplate extends ChestTemplate
 {
     public static final int TEMPLATE_ROWS = 5;
     public static final int TEMPLATE_COLUMNS = 9;
@@ -46,25 +46,25 @@ public class PartyCheckGooeyTemplate extends ChestTemplate
     private static final int MAX_PARTY_POKEMON = 6;
     private static final int POKEMON_PER_ROW = 3;
 
-    private ShoutTypeGooeyButton shoutTypeButton;
-    private ShoutVisibilityGooeyButton shoutVisibilityButton;
+    protected ShoutTypeGooeyButton shoutTypeButton;
+    protected ShoutVisibilityGooeyButton shoutVisibilityButton;
 
-    public PartyCheckGooeyTemplate(@NotNull TemplateSlotDelegate[] slots, ServerPlayerEntity player)
+    protected BasePartyCheckGooeyTemplate(@NotNull TemplateSlotDelegate[] slots, ServerPlayerEntity player)
     {
         super(slots);
         configureTemplateStructure(player);
     }
 
-    private void configureTemplateStructure(ServerPlayerEntity player)
+    protected void configureTemplateStructure(ServerPlayerEntity player)
     {
         if (ChatSettings.shouldShowPartyCheckGUIFrameBlocks()) configureWindowFrame();
-        configureShoutTypeButton();
-        configureShoutVisibilityButton();
+        configureShoutTypeButton(BUTTON_ROW, SHOUT_TYPE_BUTTON_COLUMN);
+        configureShoutVisibilityButton(BUTTON_ROW, SHOUT_VISIBILITY_BUTTON_COLUMN);
         configurePokemonButtons(player);
-        configurePartyShoutAllButton(player, false, false);
+        configurePartyShoutAllButton(player, false, false, BUTTON_ROW, POKESHOUTALL_BUTTON_COLUMN);
     }
 
-    private void configureWindowFrame()
+    protected void configureWindowFrame()
     {
         for (int i = 0; i < 9; i++)
         {
@@ -97,36 +97,36 @@ public class PartyCheckGooeyTemplate extends ChestTemplate
         }
     }
 
-    private void configureShoutTypeButton()
+    protected void configureShoutTypeButton(int row, int collumn)
     {
         shoutTypeButton = new ShoutTypeGooeyButton();
 
         set
         (
-            BUTTON_ROW, 
-            SHOUT_TYPE_BUTTON_COLUMN, 
+            row, 
+            collumn, 
             shoutTypeButton
         );
     }
 
-    private void configureShoutVisibilityButton()
+    protected void configureShoutVisibilityButton(int row, int collumn)
     {
         shoutVisibilityButton = new ShoutVisibilityGooeyButton();
 
         set
         (
-            BUTTON_ROW,
-            SHOUT_VISIBILITY_BUTTON_COLUMN,
+            row,
+            collumn,
             shoutVisibilityButton
         );
     }
 
-    private void configurePartyShoutAllButton(ServerPlayerEntity player, boolean closed, boolean self)
+    protected void configurePartyShoutAllButton(ServerPlayerEntity player, boolean closed, boolean self, int row, int collumn)
     {
         set
         (
-            BUTTON_ROW,
-            POKESHOUTALL_BUTTON_COLUMN,
+            row,
+            collumn,
             GooeyButton.builder()
                 .display(new ItemStack(Items.YELLOW_CONCRETE))
                 .with
