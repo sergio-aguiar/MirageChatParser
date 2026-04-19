@@ -36,7 +36,7 @@ public class ForceCaptchaCommand
 
         try
         {
-            ServerPlayerEntity target = EntityArgumentType.getPlayer(context, forcedBy);
+            ServerPlayerEntity target = EntityArgumentType.getPlayer(context, "player");
             AntiAFKManager.startCaptcha(target, forcedBy);
             return 0;
         }

@@ -170,7 +170,7 @@ public class AntiAFKSettingsConfig
             FailedCaptchaBeforeKick = 3
             # The amount of digits in a text-based CAPTCHA [1-9]
             CaptchaLength = 4
-            # The percentage of CAPTCHA that are click-based [0-1] (the closest to 0.5, the safest; the higher, the less annoying for players)
+            # The percentage of CAPTCHA that are click-based [0.0-1.0] (the closest to 0.5, the safest; the higher, the less annoying for players)
             ClickCaptchaProportion = 0.5
             # The minimum movement a player must do per tick to count as enough movement to reset the movement-based AFK timer
             MinimumPositionChangeForMovementRegister = 0.05

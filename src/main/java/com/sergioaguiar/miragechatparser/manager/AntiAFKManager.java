@@ -513,11 +513,21 @@ public class AntiAFKManager
     {
         UUID playerUUID = player.getUuid();
 
-        if (!playerActiveCaptchas.containsKey(playerUUID)) return;
+        if (!playerActiveCaptchas.containsKey(playerUUID)) 
+        {
+            registerPlayerSuspiciousAction(player);
+            broadcastSusActionMessageToPermissionUsers(player, SuspicionType.FAKE_CAPTCHA_CLICK.getSusAction());
+            return;
+        }
 
         PlayerCaptcha captcha = playerActiveCaptchas.get(playerUUID);
 
-        if (!captcha.isClickCaptcha()) return;
+        if (!captcha.isClickCaptcha()) 
+        {
+            registerPlayerSuspiciousAction(player);
+            broadcastSusActionMessageToPermissionUsers(player, SuspicionType.FAKE_CAPTCHA_CLICK.getSusAction());
+            return;
+        }
         
         if (captcha.isTheRightAnswer(code))
         {
