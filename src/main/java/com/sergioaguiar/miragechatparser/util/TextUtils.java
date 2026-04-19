@@ -1002,6 +1002,84 @@ public class TextUtils
         return permKickText;
     }
 
+    public static MutableText playerIgnoredForcedCaptcha(String playerName)
+    {
+        MutableText ignoredCaptchaMessage = Text.literal("").setStyle(Style.EMPTY);
+
+        if (!AntiAFKSettings.shouldHideAFKCaptchaMessagePrefix())
+        {
+            ignoredCaptchaMessage = ignoredCaptchaMessage
+                .append(Text.literal("AFKaptcha » ")
+                    .setStyle(Style.EMPTY.withColor(AntiAFKColors.getAFKCaptchaPrefixColor())));
+        }
+
+        ignoredCaptchaMessage = ignoredCaptchaMessage
+            .append(Text.literal("Player ")
+                .setStyle(Style.EMPTY.withColor(AntiAFKColors.getAFKCaptchaTextColor())));
+
+        ignoredCaptchaMessage = ignoredCaptchaMessage
+            .append(Text.literal(playerName)
+                .setStyle(Style.EMPTY.withColor(AntiAFKColors.getAFKCaptchaPlayerColor())));
+
+        ignoredCaptchaMessage = ignoredCaptchaMessage
+            .append(Text.literal(" ignored the CAPTCHA you forced on them.")
+                .setStyle(Style.EMPTY.withColor(AntiAFKColors.getAFKCaptchaTextColor())));
+
+        return ignoredCaptchaMessage;
+    }
+
+    public static MutableText playerAnsweredForcedCaptcha(String playerName)
+    {
+        MutableText answeredCaptchaMessage = Text.literal("").setStyle(Style.EMPTY);
+
+        if (!AntiAFKSettings.shouldHideAFKCaptchaMessagePrefix())
+        {
+            answeredCaptchaMessage = answeredCaptchaMessage
+                .append(Text.literal("AFKaptcha » ")
+                    .setStyle(Style.EMPTY.withColor(AntiAFKColors.getAFKCaptchaPrefixColor())));
+        }
+
+        answeredCaptchaMessage = answeredCaptchaMessage
+            .append(Text.literal("Player ")
+                .setStyle(Style.EMPTY.withColor(AntiAFKColors.getAFKCaptchaTextColor())));
+
+        answeredCaptchaMessage = answeredCaptchaMessage
+            .append(Text.literal(playerName)
+                .setStyle(Style.EMPTY.withColor(AntiAFKColors.getAFKCaptchaPlayerColor())));
+
+        answeredCaptchaMessage = answeredCaptchaMessage
+            .append(Text.literal(" answered the CAPTCHA you forced on them.")
+                .setStyle(Style.EMPTY.withColor(AntiAFKColors.getAFKCaptchaTextColor())));
+
+        return answeredCaptchaMessage;
+    }
+
+    public static MutableText playerPerformedSuspiciousCaptchaAction(String playerName, String susAction)
+    {
+        MutableText susCaptchaMessage = Text.literal("").setStyle(Style.EMPTY);
+
+        if (!AntiAFKSettings.shouldHideAFKCaptchaMessagePrefix())
+        {
+            susCaptchaMessage = susCaptchaMessage
+                .append(Text.literal("AFKaptcha » ")
+                    .setStyle(Style.EMPTY.withColor(AntiAFKColors.getAFKCaptchaPrefixColor())));
+        }
+
+        susCaptchaMessage = susCaptchaMessage
+            .append(Text.literal("Player ")
+                .setStyle(Style.EMPTY.withColor(AntiAFKColors.getAFKCaptchaTextColor())));
+
+        susCaptchaMessage = susCaptchaMessage
+            .append(Text.literal(playerName)
+                .setStyle(Style.EMPTY.withColor(AntiAFKColors.getAFKCaptchaPlayerColor())));
+
+        susCaptchaMessage = susCaptchaMessage
+            .append(Text.literal(" performed a suspicious CAPTCHA answer: %s.".formatted(susAction))
+                .setStyle(Style.EMPTY.withColor(AntiAFKColors.getAFKCaptchaTextColor())));
+
+        return susCaptchaMessage;
+    }
+
     public static MutableText playerPermKickMessageLine(String title, String value, String units)
     {
         MutableText timeText = Text.literal("").setStyle(Style.EMPTY);

@@ -14,6 +14,7 @@ public class AntiAFKColors
     private static final DataResult<TextColor> DEFAULT_AFK_CHECKER_TIME_COLOR = TextColor.parse("#cfe95e");
     private static final DataResult<TextColor> DEFAULT_AFK_CAPTCHA_PREFIX_COLOR = TextColor.parse("#b81106");
     private static final DataResult<TextColor> DEFAULT_AFK_CAPTCHA_TEXT_COLOR = TextColor.parse("#d1d8eb");
+    private static final DataResult<TextColor> DEFAULT_AFK_CAPTCHA_PLAYER_COLOR = TextColor.parse("#cfe95e");
     private static final DataResult<TextColor> DEFAULT_AFK_CAPTCHA_QUESTION_COLOR = TextColor.parse("#cfe95e");
     private static final DataResult<TextColor> DEFAULT_KICK_TITLE_COLOR = TextColor.parse("#b81106");
     private static final DataResult<TextColor> DEFAULT_KICK_DESCRIPTION_COLOR = TextColor.parse("#d1d8eb");
@@ -33,6 +34,7 @@ public class AntiAFKColors
     private static TextColor afkCheckerTimeColor;
     private static TextColor afkCaptchaPrefixColor;
     private static TextColor afkCaptchaTextColor;
+    private static TextColor afkCaptchaPlayerColor;
     private static TextColor afkCaptchaQuestionColor;
     private static TextColor kickTitleColor;
     private static TextColor kickDescriptionColor;
@@ -56,6 +58,7 @@ public class AntiAFKColors
             afkCheckerTimeColor = DEFAULT_AFK_CHECKER_TIME_COLOR.getOrThrow();
             afkCaptchaPrefixColor = DEFAULT_AFK_CAPTCHA_PREFIX_COLOR.getOrThrow();
             afkCaptchaTextColor = DEFAULT_AFK_CAPTCHA_TEXT_COLOR.getOrThrow();
+            afkCaptchaPlayerColor = DEFAULT_AFK_CAPTCHA_PLAYER_COLOR.getOrThrow();
             afkCaptchaQuestionColor = DEFAULT_AFK_CAPTCHA_QUESTION_COLOR.getOrThrow();
             kickTitleColor = DEFAULT_KICK_TITLE_COLOR.getOrThrow();
             kickDescriptionColor = DEFAULT_KICK_DESCRIPTION_COLOR.getOrThrow();
@@ -81,6 +84,7 @@ public class AntiAFKColors
     public static TextColor getAFKCheckerTimeColor() { return afkCheckerTimeColor; }
     public static TextColor getAFKCaptchaPrefixColor() { return afkCaptchaPrefixColor; }
     public static TextColor getAFKCaptchaTextColor() { return afkCaptchaTextColor; }
+    public static TextColor getAFKCaptchaPlayerColor() { return afkCaptchaPlayerColor; }
     public static TextColor getAFKCaptchaQuestionColor() { return afkCaptchaQuestionColor; }
     public static TextColor getKickTitleColor() { return kickTitleColor; }
     public static TextColor getKickDescriptionColor() { return kickDescriptionColor; }
@@ -100,6 +104,7 @@ public class AntiAFKColors
     protected static void setAFKCheckerTimeColor(TextColor color) { afkCheckerTimeColor = color; }
     protected static void setAFKCaptchaPrefixColor(TextColor color) { afkCaptchaPrefixColor = color; }
     protected static void setAFKCaptchaTextColor(TextColor color) { afkCaptchaTextColor = color; }
+    protected static void setAFKCaptchaPlayerColor(TextColor color) { afkCaptchaPlayerColor = color; }
     protected static void setAFKCaptchaQuestionColor(TextColor color) { afkCaptchaQuestionColor = color; }
     protected static void setKickTitleColor(TextColor color) { kickTitleColor = color; }
     protected static void setKickDescriptionColor(TextColor color) { kickDescriptionColor = color; }

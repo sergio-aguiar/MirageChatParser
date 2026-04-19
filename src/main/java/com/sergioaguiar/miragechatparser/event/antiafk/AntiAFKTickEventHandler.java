@@ -27,7 +27,7 @@ public class AntiAFKTickEventHandler
                         if (LuckPermsUtils.hasPermission(player, "mirageantiafk.bypass.captcha")) continue;
                         if (!AntiAFKManager.isIndividualPlayerCaptchaTime(currentTicks, player.getUuid())) continue;
 
-                        AntiAFKManager.startCaptcha(player);
+                        AntiAFKManager.startCaptcha(player, "Server");
                     }
                 }
                 else
@@ -38,7 +38,7 @@ public class AntiAFKTickEventHandler
                         {
                             if (LuckPermsUtils.hasPermission(player, "mirageantiafk.bypass.captcha")) continue;
 
-                            AntiAFKManager.startCaptcha(player);
+                            AntiAFKManager.startCaptcha(player, "Server");
                         }
                     }
                 }

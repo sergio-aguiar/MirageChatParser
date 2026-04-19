@@ -29,8 +29,9 @@ public class AntiAFKManager
     {
         private final boolean isClick;
         private final String answer;
+        private final String forcedBy;
 
-        public PlayerCaptcha(boolean isClick)
+        public PlayerCaptcha(boolean isClick, String forcedBy)
         {
             this.isClick = isClick;
 
@@ -44,6 +45,7 @@ public class AntiAFKManager
             }
 
             this.answer = stringBuilder.toString();
+            this.forcedBy = forcedBy;
         }
 
         public boolean isClickCaptcha()
@@ -54,6 +56,11 @@ public class AntiAFKManager
         public boolean isTheRightAnswer(String answer)
         {
             return this.answer.equalsIgnoreCase(answer);
+        }
+
+        public String getForcedBy()
+        {
+            return forcedBy;
         }
 
         public Text getCaptchaText()
@@ -115,6 +122,21 @@ public class AntiAFKManager
 
         public String getPlayerKickMessage() { return playerKickMessage; }
         public String getChatKickMessage() { return chatKickMessage; }
+    }
+
+    public enum SuspicionType
+    {
+        FAKE_CAPTCHA_CLICK("Fake Click"),
+        TOO_FAST_ANSWER("Fast Answer");
+
+        final String susAction;
+
+        SuspicionType(String susAction)
+        {
+            this.susAction = susAction;
+        }
+
+        public String getSusAction() { return susAction; }
     }
 
     private static final int TICKS_PER_SECOND = 20;
@@ -179,6 +201,7 @@ public class AntiAFKManager
         if (currentTicks - playerTimesOfLastCaptchaPrompt.getOrDefault(playerUUID, currentTicks) < AntiAFKSettings.getMinimumTicksToNotCountAsSuspiciousCaptcha())
         {
             registerPlayerSuspiciousAction(player);
+            broadcastSusActionMessageToPermissionUsers(player, SuspicionType.TOO_FAST_ANSWER.getSusAction());
         }
 
         playerTimesOfLastCaptchaAnswer.put(playerUUID, currentTicks);
@@ -392,13 +415,26 @@ public class AntiAFKManager
         registerPlayerLastMessage(player, newMessage);
     }
 
-    public static void startCaptcha(ServerPlayerEntity player)
+    public static void startCaptcha(ServerPlayerEntity player, String forcedBy)
     {
         UUID playerUUID = player.getUuid();
         int ignoredCaptchas = playerIgnoredCaptchaCounts.get(playerUUID) + 1;
 
         if (playerActiveCaptchas.containsKey(playerUUID))
         {
+            String captchaForcedBy = playerActiveCaptchas.get(playerUUID).getForcedBy();
+            if (!captchaForcedBy.equals("Server"))
+            {
+                for (ServerPlayerEntity serverPlayer : player.getServer().getPlayerManager().getPlayerList())
+                {
+                    if (serverPlayer.getUuidAsString().equals(captchaForcedBy))
+                    {
+                        serverPlayer.sendMessage(TextUtils.playerIgnoredForcedCaptcha(player.getDisplayName().getString()));
+                        break;
+                    }
+                }
+            }
+
             playerActiveCaptchas.remove(playerUUID);
             playerIgnoredCaptchaCounts.put(playerUUID, ignoredCaptchas);
 
@@ -419,7 +455,7 @@ public class AntiAFKManager
             }
         }
 
-        playerActiveCaptchas.put(playerUUID, new PlayerCaptcha(ThreadLocalRandom.current().nextDouble() < 0.3));
+        playerActiveCaptchas.put(playerUUID, new PlayerCaptcha(ThreadLocalRandom.current().nextDouble() < AntiAFKSettings.getClickCaptchaProportion(), forcedBy));
         registerPlayerCaptchaPrompt(player);
 
         if (ignoredCaptchas == AntiAFKSettings.getFailedCaptchaBeforeKick() - 1)
@@ -481,9 +517,26 @@ public class AntiAFKManager
 
         PlayerCaptcha captcha = playerActiveCaptchas.get(playerUUID);
 
-        if (captcha.isClickCaptcha() && captcha.isTheRightAnswer(code))
+        if (!captcha.isClickCaptcha()) return;
+        
+        if (captcha.isTheRightAnswer(code))
         {
             handleCaptchaSuccess(player);
+        }
+        else
+        {
+            registerPlayerSuspiciousAction(player);
+            broadcastSusActionMessageToPermissionUsers(player, SuspicionType.FAKE_CAPTCHA_CLICK.getSusAction());
+        }
+    }
+
+    private static void broadcastSusActionMessageToPermissionUsers(ServerPlayerEntity player, String susAction)
+    {
+        for (ServerPlayerEntity serverPlayer : player.getServer().getPlayerManager().getPlayerList())
+        {
+            if (!LuckPermsUtils.hasPermission(serverPlayer, "mirageantiafk.info.sus")) continue;
+
+            serverPlayer.sendMessage(TextUtils.playerPerformedSuspiciousCaptchaAction(player.getDisplayName().getString(), susAction));
         }
     }
 
@@ -494,7 +547,22 @@ public class AntiAFKManager
 
     private static void handleCaptchaSuccess(ServerPlayerEntity player)
     {
-        playerActiveCaptchas.remove(player.getUuid());
+        UUID playerUUID = player.getUuid();
+
+        String captchaForcedBy = playerActiveCaptchas.get(playerUUID).getForcedBy();
+        if (!captchaForcedBy.equals("Server"))
+        {
+            for (ServerPlayerEntity serverPlayer : player.getServer().getPlayerManager().getPlayerList())
+            {
+                if (serverPlayer.getUuidAsString().equals(captchaForcedBy))
+                {
+                    serverPlayer.sendMessage(TextUtils.playerAnsweredForcedCaptcha(player.getDisplayName().getString()));
+                    break;
+                }
+            }
+        }
+
+        playerActiveCaptchas.remove(playerUUID);
 
         registerPlayerNoLongerAFK(player);
         registerPlayerCaptchaAnswer(player);

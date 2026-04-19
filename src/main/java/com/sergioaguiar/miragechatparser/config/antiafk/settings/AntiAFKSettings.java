@@ -12,6 +12,7 @@ public class AntiAFKSettings
     protected static final int DEFAULT_SECONDS_BETWEEN_CAPTCHA = 900;
     protected static final int DEFAULT_FAILED_CAPTCHA_BEFORE_KICK = 3;
     protected static final int DEFAULT_CAPTCHA_LENGTH = 4;
+    protected static final double DEFAULT_CLICK_CAPTCHA_PROPORTION = 0.5;
     
     protected static final double DEFAULT_MINIMUM_POSITION_CHANGE_FOR_MOVEMENT_REGISTER = 0.05;
     protected static final float DEFAULT_MINIMUM_PITCH_CHANGE_FOR_CAMERA_MOVEMENT_REGISTER = 2;
@@ -31,6 +32,7 @@ public class AntiAFKSettings
     private static int secondsBetweenCaptcha;
     private static int failedCaptchaBeforeKick;
     private static int captchaLength;
+    private static double clickCaptchaProportion;
 
     private static double minimumPositionChangeForMovementRegister;
     private static float minimumPitchChangeForCameraMovementRegister;
@@ -52,6 +54,7 @@ public class AntiAFKSettings
         secondsBetweenCaptcha = DEFAULT_SECONDS_BETWEEN_CAPTCHA;
         failedCaptchaBeforeKick = DEFAULT_FAILED_CAPTCHA_BEFORE_KICK;
         captchaLength = DEFAULT_CAPTCHA_LENGTH;
+        clickCaptchaProportion = DEFAULT_CLICK_CAPTCHA_PROPORTION;
 
         minimumPositionChangeForMovementRegister = DEFAULT_MINIMUM_POSITION_CHANGE_FOR_MOVEMENT_REGISTER;
         minimumPitchChangeForCameraMovementRegister = DEFAULT_MINIMUM_PITCH_CHANGE_FOR_CAMERA_MOVEMENT_REGISTER;
@@ -71,6 +74,7 @@ public class AntiAFKSettings
     public static int getSecondsBetweenCaptcha() { return secondsBetweenCaptcha; }
     public static int getFailedCaptchaBeforeKick() { return failedCaptchaBeforeKick; }
     public static int getCaptchaLength() { return captchaLength; }
+    public static double getClickCaptchaProportion() { return clickCaptchaProportion; }
     public static double getMinimumPositionChangeForMovementRegister() { return minimumPositionChangeForMovementRegister; } 
     public static float getMinimumPitchChangeForCameraMovementRegister() { return minimumPitchChangeForCameraMovementRegister; }
     public static float getMinimumYawChangeForCameraMovementRegister() { return minimumYawChangeForCameraMovementRegister; }
@@ -87,6 +91,7 @@ public class AntiAFKSettings
     protected static void setSecondsBetweenCaptcha(int seconds) { secondsBetweenCaptcha = seconds; }
     protected static void setFailedCaptchaBeforeKick(int captchaAmount) { failedCaptchaBeforeKick = captchaAmount; }
     protected static void setCaptchaLength(int length) { captchaLength = length; }
+    protected static void setClickCaptchaProportion(double proportion) { clickCaptchaProportion = proportion; }
     protected static void setMinimumPositionChangeForMovementRegister(double minimum) { minimumPositionChangeForMovementRegister = minimum; }
     protected static void setMinimumPitchChangeForCameraMovementRegister(float minimum) { minimumPitchChangeForCameraMovementRegister = minimum; }
     protected static void setMinimumYawChangeForCameraMovementRegister(float minimum) { minimumYawChangeForCameraMovementRegister = minimum; }

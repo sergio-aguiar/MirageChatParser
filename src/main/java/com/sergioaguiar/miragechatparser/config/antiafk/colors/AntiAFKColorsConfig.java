@@ -91,6 +91,13 @@ public class AntiAFKColorsConfig
                     AntiAFKColors.setAFKCaptchaTextColor(TextColor.parse(color).getOrThrow());
             }
 
+            if (config.contains("AFKaptcha.PlayerColor"))
+            {
+                String color = config.get("AFKaptcha.PlayerColor");
+                if (color != null && !color.isEmpty())
+                    AntiAFKColors.setAFKCaptchaPlayerColor(TextColor.parse(color).getOrThrow());
+            }
+
             if (config.contains("AFKaptcha.QuestionColor"))
             {
                 String color = config.get("AFKaptcha.QuestionColor");
@@ -192,6 +199,7 @@ public class AntiAFKColorsConfig
             [AFKaptcha]
             PrefixColor = "#b81106"
             TextColor = "#d1d8eb"
+            PlayerColor = "#cfe95e"
             QuestionColor = "#cfe95e"
 
             [Kick]

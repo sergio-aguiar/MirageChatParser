@@ -94,6 +94,12 @@ public class AntiAFKSettingsConfig
                 AntiAFKSettings.setCaptchaLength(length);
             }
 
+            if (config.contains("General.ClickCaptchaProportion"))
+            {
+                double proportion = Math.clamp(config.getOrElse("General.ClickCaptchaProportion", AntiAFKSettings.DEFAULT_CLICK_CAPTCHA_PROPORTION), 0.0, 1.0);
+                AntiAFKSettings.setClickCaptchaProportion(proportion);
+            }
+
             if (config.contains("General.MinimumPositionChangeForMovementRegister"))
             {
                 double minimum = config.getOrElse("General.MinimumPositionChangeForMovementRegister", AntiAFKSettings.DEFAULT_MINIMUM_POSITION_CHANGE_FOR_MOVEMENT_REGISTER);
@@ -164,6 +170,8 @@ public class AntiAFKSettingsConfig
             FailedCaptchaBeforeKick = 3
             # The amount of digits in a text-based CAPTCHA [1-9]
             CaptchaLength = 4
+            # The percentage of CAPTCHA that are click-based [0-1] (the closest to 0.5, the safest; the higher, the less annoying for players)
+            ClickCaptchaProportion = 0.5
             # The minimum movement a player must do per tick to count as enough movement to reset the movement-based AFK timer
             MinimumPositionChangeForMovementRegister = 0.05
             # The minimum camera pitch change to do per tick to count as enough camera movement to reset the camera-based AFK timer
