@@ -9,6 +9,7 @@ import com.cobblemon.mod.common.api.storage.party.PlayerPartyStore;
 import com.sergioaguiar.miragechatparser.config.chatparser.colors.ChatColors;
 import com.sergioaguiar.miragechatparser.config.chatparser.settings.ChatSettings;
 import com.sergioaguiar.miragechatparser.config.chatparser.strings.ChatStrings;
+import com.sergioaguiar.miragechatparser.config.chatparser.textures.GUITextures;
 import com.sergioaguiar.miragechatparser.gui.buttons.ShoutTypeGooeyButton;
 import com.sergioaguiar.miragechatparser.gui.buttons.ShoutVisibilityGooeyButton;
 import com.sergioaguiar.miragechatparser.manager.CooldownManager;
@@ -20,8 +21,6 @@ import ca.landonjw.gooeylibs2.api.template.slot.TemplateSlotDelegate;
 import ca.landonjw.gooeylibs2.api.template.types.ChestTemplate;
 import net.minecraft.component.DataComponentTypes;
 import net.minecraft.component.type.LoreComponent;
-import net.minecraft.item.ItemStack;
-import net.minecraft.item.Items;
 import net.minecraft.server.network.ServerPlayerEntity;
 import net.minecraft.text.MutableText;
 import net.minecraft.text.Style;
@@ -128,7 +127,7 @@ public class BasePartyCheckGooeyTemplate extends ChestTemplate
             row,
             collumn,
             GooeyButton.builder()
-                .display(new ItemStack(Items.YELLOW_CONCRETE))
+                .display(GooeyLibsUtils.getCustomModelDataItemStack(GUITextures.getPartyShoutAllItem(), GUITextures.getPartyShoutAllCustomModelData()))
                 .with
                 (
                     DataComponentTypes.CUSTOM_NAME, 

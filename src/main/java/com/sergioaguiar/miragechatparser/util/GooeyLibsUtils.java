@@ -12,7 +12,6 @@ import com.sergioaguiar.miragechatparser.config.chatparser.colors.ChatColors;
 import com.sergioaguiar.miragechatparser.config.chatparser.settings.ChatSettings;
 import com.sergioaguiar.miragechatparser.config.chatparser.settings.ChatSettings.PartyCheckLayout;
 import com.sergioaguiar.miragechatparser.config.chatparser.strings.ChatStrings;
-import com.sergioaguiar.miragechatparser.config.chatparser.textures.GUITextures;
 import com.sergioaguiar.miragechatparser.gui.templates.DefaultPartyCheckGooeyTemplate;
 import com.sergioaguiar.miragechatparser.gui.templates.MiragePartyCheckGooeyTemplate;
 import com.sergioaguiar.miragechatparser.manager.CooldownManager;
@@ -120,13 +119,6 @@ public class GooeyLibsUtils
         }
             
         return pokemonButtonBuilder.build();
-    }
-
-    public static GooeyButton getPartyShoutButton()
-    {
-        return GooeyButton.builder()
-            .display(getCustomModelDataItemStack(GUITextures.getPartyShoutAllItem(), GUITextures.getPartyShoutAllCustomModelData()))
-            .build();
     }
 
     public static GooeyButton getBlackStainedGlassPaneButton()
