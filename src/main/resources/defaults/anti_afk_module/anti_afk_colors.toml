@@ -1,0 +1,31 @@
+# MirageChatParser - Anti-AFK Color Configuration
+# You can use standard hex color codes like "#aabbcc"
+
+[AFKChecker]
+PrefixColor = "#2facdd"
+TextColor = "#d1d8eb"
+PlayerColor = "#cfe95e"
+GoneColor = "#2facdd"
+TimeColor = "#cfe95e"
+
+[AFKaptcha]
+PrefixColor = "#b81106"
+TextColor = "#d1d8eb"
+PlayerColor = "#cfe95e"
+QuestionColor = "#cfe95e"
+
+[Kick]
+KickTitleColor = "#b81106"
+KickDescriptionColor = "#d1d8eb"
+
+[Chat]
+KickReasonTitleColor = "#b81106"
+KickReasonDescriptionColor = "#d1d8eb"
+KickInfoTitleColor = "#b81106"
+KickInfoTextColor = "#d1d8eb"
+KickInfoTimeColor = "#cfe95e"
+KickInfoBorderColor = "#e28c1b"
+
+[Warning]
+CaptchaTitleColor = "#b81106"
+CaptchaSubtitleColor = "#cfe95e"

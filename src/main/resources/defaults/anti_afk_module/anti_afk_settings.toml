@@ -1,0 +1,37 @@
+# MirageChatParser - Anti-AFK Settings Configuration
+# With the default values, players will become AFK after 10 minutes of no relevant actions, followed by a kick if they remain inactive for 50 more minutes.
+# Players will also have to answer CAPTCHA every 15 minutes. If someone is unable to answer three times in a row, they are also kicked (roughly 60 minutes).
+
+[General]
+# Whether No-Kick Mode (only reports when players would have been kicked, rather than kicking - good for testing) should be enabled or not (true/false)
+NoKickMode = false
+# Whether the CAPTCHA warning that appears when you are in the last one before a kick should show the CAPTCHA or not (shows the warning if not) (true/false)
+UseCaptchaInWarning = false
+# Whether CAPTCHA should be on a per-player basis or be synced server-wide (true/false)
+UseIndividualPlayerCaptchaTimes = false
+# Whether non-AFK messages should state how long the player was gone for or not, when they have permissions to bypass AFK kicks (true/false)
+HideAFKTimesWhenBypassingKicks = true
+# The number of seconds before a player is flagged as AFK if not enough relevant actions were taken
+SecondsToAFK = 600
+# The number of seconds before a player is kicked for being AFK, after being flagged as AFK (while still lacking relevant actions)
+SecondsToAFKKick = 3000
+# The number of seconds between anti-AFK CAPTCHA (do not require the player being flagged as AFK to trigger)
+SecondsBetweenCaptcha = 900
+# The number of ignored anti-AFK CAPTCHA before getting kicked (regardless of AFK state)
+FailedCaptchaBeforeKick = 3
+# The amount of digits in a text-based CAPTCHA [1-9]
+CaptchaLength = 4
+# The percentage of CAPTCHA that are click-based [0.0-1.0] (the closest to 0.5, the safest; the higher, the less annoying for players)
+ClickCaptchaProportion = 0.5
+# The minimum movement a player must do per tick to count as enough movement to reset the movement-based AFK timer
+MinimumPositionChangeForMovementRegister = 0.05
+# The minimum camera pitch change to do per tick to count as enough camera movement to reset the camera-based AFK timer
+MinimumPitchChangeForCameraMovementRegister = 2.0
+# The minimum camera yaw change to do per tick to count as enough camera movement to reset the camera-based AFK timer
+MinimumYawChangeForCameraMovementRegister = 2.0
+# The minimum ticks needed to pass for a CAPTCHA answer to not be considered suspicious (1 second = 20 ticks)
+MinimumTicksToNotCountAsSuspiciousCaptcha = 20
+
+[Message]
+HideAFKCheckerMessagePrefix = false
+HideAFKCaptchaMessagePrefix = false

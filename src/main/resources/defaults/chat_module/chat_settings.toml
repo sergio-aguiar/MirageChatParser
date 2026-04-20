@@ -49,5 +49,7 @@ BoldHyperTrainingValues = true
 ItalicHyperTrainingValues = false
 
 [GUI]
+# The name of the layour to use in the GUI for PartyCheck ("default" or "mirage")
+PartyCheckLayout = "default"
 # Whether the PartyCheck command's GUI should display the surrounding block frame (true/false)
 ShowPartyCheckGUIFrameBlocks = true

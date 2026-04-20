@@ -1,0 +1,31 @@
+# MirageChatParser - GUI Textures Configuration
+# Item format: minecraft:item_name
+# CustomModelData = 0 means vanilla texture
+
+[ShoutType.General]
+Item = "minecraft:white_concrete"
+CustomModelData = 0
+
+[ShoutType.Ride]
+Item = "minecraft:orange_concrete"
+CustomModelData = 0
+
+[ShoutType.Ribbon]
+Item = "minecraft:pink_concrete"
+CustomModelData = 0
+
+[ShoutVisibility.Open]
+Item = "minecraft:green_concrete"
+CustomModelData = 0
+
+[ShoutVisibility.Closed]
+Item = "minecraft:red_concrete"
+CustomModelData = 0
+
+[ShoutVisibility.Self]
+Item = "minecraft:blue_concrete"
+CustomModelData = 0
+
+[PartyShoutAll]
+Item = "minecraft:yellow_concrete"
+CustomModelData = 0
