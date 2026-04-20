@@ -10,6 +10,7 @@ import com.sergioaguiar.miragechatparser.config.chatparser.colors.ChatColorsConf
 import com.sergioaguiar.miragechatparser.config.chatparser.settings.ChatSettingsConfig;
 import com.sergioaguiar.miragechatparser.config.chatparser.sizes.ChatSizesConfig;
 import com.sergioaguiar.miragechatparser.config.chatparser.strings.ChatStringsConfig;
+import com.sergioaguiar.miragechatparser.config.chatparser.textures.GUITexturesConfig;
 import com.sergioaguiar.miragechatparser.config.modules.Modules;
 import com.sergioaguiar.miragechatparser.util.LuckPermsUtils;
 import com.sergioaguiar.miragechatparser.util.ModLogger;
@@ -162,6 +163,31 @@ public class ReloadCommand
             {
                 context.getSource().sendError(Text.literal("MirageChatParser » Failed to reload size configuration: %s".formatted(e.getMessage())));
                 ModLogger.error("Error reloading size config: %s".formatted(e.getMessage()));
+                return 1;
+            }
+
+            try
+            {
+                GUITexturesConfig.load();
+                context.getSource().sendFeedback(() -> 
+                    {
+                        var text = Text.literal("MirageChatParser » ")
+                            .setStyle(Style.EMPTY.withColor(ChatColors.getCommandPrefixColor()));
+                        
+                        text = text
+                            .append(Text.literal("Reloaded GUI texture configuration.")
+                                .setStyle(Style.EMPTY.withColor(ChatColors.getCommandValueColor())));
+                        
+                        return text;
+                    }, 
+                    true
+                );
+                ModLogger.info("GUI texture configuration reloaded successfully.");
+            }
+            catch (Exception e)
+            {
+                context.getSource().sendError(Text.literal("MirageChatParser » Failed to reload GUI texture configuration: %s".formatted(e.getMessage())));
+                ModLogger.error("Error reloading GUI texture config: %s".formatted(e.getMessage()));
                 return 1;
             }
         }

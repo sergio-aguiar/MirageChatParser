@@ -11,7 +11,7 @@ import com.sergioaguiar.miragechatparser.util.ModLogger;
 
 public class GUITexturesConfig
 {
-    private static final Path CONFIG_PATH = Paths.get("config", "miragechatparser", "chatparser", "gui_textures.toml");
+    private static final Path CONFIG_PATH = Paths.get("config", "miragechatparser", "chat_module", "gui_textures.toml");
 
     public static void load()
     {

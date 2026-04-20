@@ -7,13 +7,14 @@ import org.jetbrains.annotations.NotNull;
 
 import com.sergioaguiar.miragechatparser.config.chatparser.colors.ChatColors;
 import com.sergioaguiar.miragechatparser.config.chatparser.strings.ChatStrings;
+import com.sergioaguiar.miragechatparser.config.chatparser.textures.GUITextures;
+import com.sergioaguiar.miragechatparser.util.GooeyLibsUtils;
 
 import ca.landonjw.gooeylibs2.api.button.ButtonAction;
 import ca.landonjw.gooeylibs2.api.button.ButtonBase;
 import net.minecraft.component.DataComponentTypes;
 import net.minecraft.component.type.LoreComponent;
 import net.minecraft.item.ItemStack;
-import net.minecraft.item.Items;
 import net.minecraft.text.MutableText;
 import net.minecraft.text.Style;
 import net.minecraft.text.Text;
@@ -147,21 +148,36 @@ public class ShoutVisibilityGooeyButton extends ButtonBase
 
     private static ItemStack getShoutItemStack(ShoutVisibility type)
     {
-        ItemStack stack = new ItemStack
-        (
-            (type == ShoutVisibility.OPEN) 
-                ? Items.GREEN_CONCRETE 
-                : (type == ShoutVisibility.CLOSED) 
-                    ? Items.RED_CONCRETE 
-                    : (type == ShoutVisibility.SELF) 
-                        ? Items.BLUE_CONCRETE 
-                        : Items.GRAY_CONCRETE
-        );
+        ItemStack stack = getShoutVisibilityItemStack(type);
 
         stack.set(DataComponentTypes.CUSTOM_NAME, Text.literal(ChatStrings.getPartyCheckShoutVisibilityTitleString()).setStyle(Style.EMPTY.withColor(ChatColors.getPartyCheckButtonTitleColor()).withItalic(false)));
         stack.set(DataComponentTypes.LORE, getShoutVisibilityButtonLore(type.ordinal()));
 
         return stack;
+    }
+
+    private static ItemStack getShoutVisibilityItemStack(ShoutVisibility type)
+    {
+        String itemId = getShoutVisibilityItem(type);
+        int customModelData = getShoutVisibilityCustomModelData(type);
+
+        return GooeyLibsUtils.getCustomModelDataItemStack(itemId, customModelData);
+    }
+
+    private static String getShoutVisibilityItem(ShoutVisibility type)
+    {
+        if (type == ShoutVisibility.OPEN) return GUITextures.getShoutVisibilityOpenItem();
+        if (type == ShoutVisibility.CLOSED) return GUITextures.getShoutVisibilityClosedItem();
+        if (type == ShoutVisibility.SELF) return GUITextures.getShoutVisibilitySelfItem();
+        return "minecraft:gray_concrete";
+    }
+
+    private static int getShoutVisibilityCustomModelData(ShoutVisibility type)
+    {
+        if (type == ShoutVisibility.OPEN) return GUITextures.getShoutVisibilityOpenCustomModelData();
+        if (type == ShoutVisibility.CLOSED) return GUITextures.getShoutVisibilityClosedCustomModelData();
+        if (type == ShoutVisibility.SELF) return GUITextures.getShoutVisibilitySelfCustomModelData();
+        return 0;
     }
 
     public boolean isOpenShout()

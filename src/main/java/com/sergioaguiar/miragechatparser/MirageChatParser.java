@@ -27,6 +27,8 @@ import com.sergioaguiar.miragechatparser.config.chatparser.sizes.ChatSizes;
 import com.sergioaguiar.miragechatparser.config.chatparser.sizes.ChatSizesConfig;
 import com.sergioaguiar.miragechatparser.config.chatparser.strings.ChatStrings;
 import com.sergioaguiar.miragechatparser.config.chatparser.strings.ChatStringsConfig;
+import com.sergioaguiar.miragechatparser.config.chatparser.textures.GUITextures;
+import com.sergioaguiar.miragechatparser.config.chatparser.textures.GUITexturesConfig;
 import com.sergioaguiar.miragechatparser.config.modules.Modules;
 import com.sergioaguiar.miragechatparser.config.modules.ModulesConfig;
 import com.sergioaguiar.miragechatparser.event.antiafk.AntiAFKMessageHandler;
@@ -56,6 +58,7 @@ public class MirageChatParser implements ModInitializer
 			ChatColors.setDefaults();
 			ChatAspects.setDefaults();
 			ChatSizes.setDefaults();
+			GUITextures.setDefaults();
 
 			AntiAFKSettings.setDefaults();
 			AntiAFKColors.setDefaults();
@@ -76,6 +79,7 @@ public class MirageChatParser implements ModInitializer
 			ChatColorsConfig.load();
 			ChatAspectsConfig.load();
 			ChatSizesConfig.load();
+			GUITexturesConfig.load();
 
 			AntiAFKSettingsConfig.load();
 			AntiAFKColorsConfig.load();

@@ -12,6 +12,7 @@ import com.sergioaguiar.miragechatparser.config.chatparser.colors.ChatColors;
 import com.sergioaguiar.miragechatparser.config.chatparser.settings.ChatSettings;
 import com.sergioaguiar.miragechatparser.config.chatparser.settings.ChatSettings.PartyCheckLayout;
 import com.sergioaguiar.miragechatparser.config.chatparser.strings.ChatStrings;
+import com.sergioaguiar.miragechatparser.config.chatparser.textures.GUITextures;
 import com.sergioaguiar.miragechatparser.gui.templates.DefaultPartyCheckGooeyTemplate;
 import com.sergioaguiar.miragechatparser.gui.templates.MiragePartyCheckGooeyTemplate;
 import com.sergioaguiar.miragechatparser.manager.CooldownManager;
@@ -21,13 +22,16 @@ import ca.landonjw.gooeylibs2.api.button.GooeyButton;
 import ca.landonjw.gooeylibs2.api.helpers.TemplateHelper;
 import ca.landonjw.gooeylibs2.api.page.GooeyPage;
 import net.minecraft.component.DataComponentTypes;
+import net.minecraft.component.type.CustomModelDataComponent;
 import net.minecraft.component.type.LoreComponent;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.Items;
+import net.minecraft.registry.Registries;
 import net.minecraft.server.network.ServerPlayerEntity;
 import net.minecraft.text.MutableText;
 import net.minecraft.text.Style;
 import net.minecraft.text.Text;
+import net.minecraft.util.Identifier;
 
 public class GooeyLibsUtils
 {
@@ -121,7 +125,7 @@ public class GooeyLibsUtils
     public static GooeyButton getPartyShoutButton()
     {
         return GooeyButton.builder()
-            .display(new ItemStack(Items.WHITE_CONCRETE))
+            .display(getCustomModelDataItemStack(GUITextures.getPartyShoutAllItem(), GUITextures.getPartyShoutAllCustomModelData()))
             .build();
     }
 
@@ -144,5 +148,17 @@ public class GooeyLibsUtils
         return GooeyButton.builder()
             .display(new ItemStack(Items.WHITE_STAINED_GLASS_PANE))
             .build();
+    }
+
+    public static ItemStack getCustomModelDataItemStack(String itemId, int customModelData)
+    {
+        ItemStack stack = new ItemStack(Registries.ITEM.get(Identifier.of(itemId)));
+
+        if (customModelData != 0)
+        {
+            stack.set(DataComponentTypes.CUSTOM_MODEL_DATA, new CustomModelDataComponent(customModelData));
+        }
+
+        return stack;
     }
 }

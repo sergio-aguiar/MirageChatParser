@@ -7,13 +7,14 @@ import org.jetbrains.annotations.NotNull;
 
 import com.sergioaguiar.miragechatparser.config.chatparser.colors.ChatColors;
 import com.sergioaguiar.miragechatparser.config.chatparser.strings.ChatStrings;
+import com.sergioaguiar.miragechatparser.config.chatparser.textures.GUITextures;
+import com.sergioaguiar.miragechatparser.util.GooeyLibsUtils;
 
 import ca.landonjw.gooeylibs2.api.button.ButtonAction;
 import ca.landonjw.gooeylibs2.api.button.ButtonBase;
 import net.minecraft.component.DataComponentTypes;
 import net.minecraft.component.type.LoreComponent;
 import net.minecraft.item.ItemStack;
-import net.minecraft.item.Items;
 import net.minecraft.text.MutableText;
 import net.minecraft.text.Style;
 import net.minecraft.text.Text;
@@ -147,21 +148,36 @@ public class ShoutTypeGooeyButton extends ButtonBase
 
     private static ItemStack getShoutItemStack(ShoutType type)
     {
-        ItemStack stack = new ItemStack
-        (
-            (type == ShoutType.GENERAL) 
-                ? Items.WHITE_CONCRETE 
-                : (type == ShoutType.RIDE) 
-                    ? Items.ORANGE_CONCRETE 
-                    : (type == ShoutType.RIBBON) 
-                        ? Items.PINK_CONCRETE 
-                        : Items.GRAY_CONCRETE
-        );
+        ItemStack stack = getShoutTypeItemStack(type);
 
         stack.set(DataComponentTypes.CUSTOM_NAME, Text.literal(ChatStrings.getPartyCheckShoutTypeTitleString()).setStyle(Style.EMPTY.withColor(ChatColors.getPartyCheckButtonTitleColor()).withItalic(false)));
         stack.set(DataComponentTypes.LORE, getShoutTypeButtonLore(type.ordinal()));
 
         return stack;
+    }
+
+    private static ItemStack getShoutTypeItemStack(ShoutType type)
+    {
+        String itemId = getShoutTypeItem(type);
+        int customModelData = getShoutTypeCustomModelData(type);
+
+        return GooeyLibsUtils.getCustomModelDataItemStack(itemId, customModelData);
+    }
+
+    private static String getShoutTypeItem(ShoutType type)
+    {
+        if (type == ShoutType.GENERAL) return GUITextures.getShoutTypeGeneralItem();
+        if (type == ShoutType.RIDE) return GUITextures.getShoutTypeRideItem();
+        if (type == ShoutType.RIBBON) return GUITextures.getShoutTypeRibbonItem();
+        return "minecraft:gray_concrete";
+    }
+
+    private static int getShoutTypeCustomModelData(ShoutType type)
+    {
+        if (type == ShoutType.GENERAL) return GUITextures.getShoutTypeGeneralCustomModelData();
+        if (type == ShoutType.RIDE) return GUITextures.getShoutTypeRideCustomModelData();
+        if (type == ShoutType.RIBBON) return GUITextures.getShoutTypeRibbonCustomModelData();
+        return 0;
     }
 
     public boolean isGeneralShout()
