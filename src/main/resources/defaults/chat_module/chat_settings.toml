@@ -53,3 +53,5 @@ ItalicHyperTrainingValues = false
 PartyCheckLayout = "default"
 # Whether the PartyCheck command's GUI should display the surrounding block frame (true/false)
 ShowPartyCheckGUIFrameBlocks = true
+# Whether to show player heads in layouts that have one, such as "mirage" (true, false)
+ShowPartyCheckPlayerHeads = true

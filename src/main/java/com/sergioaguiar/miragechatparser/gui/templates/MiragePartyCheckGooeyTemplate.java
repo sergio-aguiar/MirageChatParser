@@ -4,6 +4,7 @@ import org.jetbrains.annotations.NotNull;
 
 import com.cobblemon.mod.common.Cobblemon;
 import com.cobblemon.mod.common.api.storage.party.PlayerPartyStore;
+import com.sergioaguiar.miragechatparser.config.chatparser.settings.ChatSettings;
 import com.sergioaguiar.miragechatparser.util.GooeyLibsUtils;
 
 import ca.landonjw.gooeylibs2.api.template.slot.TemplateSlotDelegate;
@@ -11,15 +12,16 @@ import net.minecraft.server.network.ServerPlayerEntity;
 
 public class MiragePartyCheckGooeyTemplate extends BasePartyCheckGooeyTemplate
 {
-    public static final int TEMPLATE_ROWS = 5;
+    public static final int TEMPLATE_ROWS = 4;
     public static final int TEMPLATE_COLUMNS = 9;
 
-    private static final int BUTTON_ROW = 1;
+    private static final int BUTTON_ROW = 0;
     private static final int SHOUT_TYPE_BUTTON_COLUMN = 3;
     private static final int SHOUT_VISIBILITY_BUTTON_COLUMN = 4;
     private static final int POKESHOUTALL_BUTTON_COLUMN = 5;
+    private static final int PLAYER_HEAD_COLUMN = 4;
 
-    private static final int POKEMON_ROW = 3;
+    private static final int POKEMON_ROW = 2;
 
     private static final int MAX_PARTY_POKEMON = 6;
 
@@ -35,6 +37,7 @@ public class MiragePartyCheckGooeyTemplate extends BasePartyCheckGooeyTemplate
         configureShoutVisibilityButton(BUTTON_ROW, SHOUT_VISIBILITY_BUTTON_COLUMN);
         configurePokemonButtons(player);
         configurePartyShoutAllButton(player, false, false, BUTTON_ROW, POKESHOUTALL_BUTTON_COLUMN);
+        if (ChatSettings.shouldShowPartyCheckPlayerHeads()) configurePlayerHead(player);
     }
 
     private void configurePokemonButtons(ServerPlayerEntity player)
@@ -57,5 +60,15 @@ public class MiragePartyCheckGooeyTemplate extends BasePartyCheckGooeyTemplate
                 continue;
             }
         }
-    }    
+    }
+    
+    private void configurePlayerHead(ServerPlayerEntity player)
+    {
+        set
+        (
+            POKEMON_ROW,
+            PLAYER_HEAD_COLUMN,
+            GooeyLibsUtils.getPlayerHeadButton(player)
+        );
+    }
 }

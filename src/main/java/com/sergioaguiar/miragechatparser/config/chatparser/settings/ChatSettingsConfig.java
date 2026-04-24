@@ -182,8 +182,14 @@ public class ChatSettingsConfig
 
             if (config.contains("GUI.ShowPartyCheckGUIFrameBlocks"))
             {
-                boolean enabled = config.getOrElse("GUI.ShowPartyCheckGUIFrameBlocks", ChatSettings.DEFAULT_ITALIC_HYPER_TRAINING_VALUES);
+                boolean enabled = config.getOrElse("GUI.ShowPartyCheckGUIFrameBlocks", ChatSettings.DEFAULT_SHOW_PARTYCHECK_GUI_FRAME_BLOCKS);
                 ChatSettings.setShowPartyCheckGUIFrameBlocks(enabled);
+            }
+
+            if (config.contains("GUI.ShowPartyCheckPlayerHeads"))
+            {
+                boolean enabled = config.getOrElse("GUI.ShowPartyCheckPlayerHeads", ChatSettings.DEFAULT_SHOW_PARTYCHECK_PLAYER_HEADS);
+                ChatSettings.setShowPartyCheckPlayerHeads(enabled);
             }
 
             ModLogger.info("Setting configurations successfully loaded from chat_settings.toml.");
@@ -252,6 +258,8 @@ public class ChatSettingsConfig
             PartyCheckLayout = "default"
             # Whether the PartyCheck command's GUI should display the surrounding block frame (true/false)
             ShowPartyCheckGUIFrameBlocks = true
+            # Whether to show player heads in layouts that have one, such as "mirage" (true, false)
+            ShowPartyCheckPlayerHeads = true
             """;
         
         Files.writeString(file.toPath(), defaultContent);

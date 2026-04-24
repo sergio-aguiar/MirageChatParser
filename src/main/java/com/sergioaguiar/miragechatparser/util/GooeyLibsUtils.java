@@ -23,6 +23,7 @@ import ca.landonjw.gooeylibs2.api.page.GooeyPage;
 import net.minecraft.component.DataComponentTypes;
 import net.minecraft.component.type.CustomModelDataComponent;
 import net.minecraft.component.type.LoreComponent;
+import net.minecraft.component.type.ProfileComponent;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.Items;
 import net.minecraft.registry.Registries;
@@ -119,6 +120,16 @@ public class GooeyLibsUtils
         }
             
         return pokemonButtonBuilder.build();
+    }
+
+    public static GooeyButton getPlayerHeadButton(ServerPlayerEntity player)
+    {
+        ItemStack head = new ItemStack(Items.PLAYER_HEAD);
+        head.set(DataComponentTypes.PROFILE, new ProfileComponent(player.getGameProfile()));
+
+        return GooeyButton.builder()
+            .display(head)
+            .build();
     }
 
     public static GooeyButton getBlackStainedGlassPaneButton()

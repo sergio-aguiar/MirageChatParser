@@ -62,6 +62,7 @@ public class ChatSettings
 
     protected static final PartyCheckLayout DEFAULT_PARTYCHECK_LAYOUT = PartyCheckLayout.DEFAULT;
     protected static final boolean DEFAULT_SHOW_PARTYCHECK_GUI_FRAME_BLOCKS = true;
+    protected static final boolean DEFAULT_SHOW_PARTYCHECK_PLAYER_HEADS = true;
 
     private static boolean parseNonPlayerMessages;
 
@@ -91,6 +92,7 @@ public class ChatSettings
 
     private static PartyCheckLayout partycheckLayout;
     private static boolean showPartyCheckGUIFrameBlocks;
+    private static boolean showPartyCheckPlayerHeads;
 
     public static void setDefaults()
     {
@@ -122,6 +124,7 @@ public class ChatSettings
 
         partycheckLayout = DEFAULT_PARTYCHECK_LAYOUT;
         showPartyCheckGUIFrameBlocks = DEFAULT_SHOW_PARTYCHECK_GUI_FRAME_BLOCKS;
+        showPartyCheckPlayerHeads = DEFAULT_SHOW_PARTYCHECK_PLAYER_HEADS;
     }
 
     public static boolean shouldParseNonPlayerMessages() { return parseNonPlayerMessages; }
@@ -148,6 +151,7 @@ public class ChatSettings
     public static boolean shouldItalicHyperTrainingValues() { return italicHyperTrainingValues; }
     public static PartyCheckLayout getPartyCheckLayout() { return partycheckLayout; }
     public static boolean shouldShowPartyCheckGUIFrameBlocks() { return showPartyCheckGUIFrameBlocks; }
+    public static boolean shouldShowPartyCheckPlayerHeads() { return showPartyCheckPlayerHeads; }
 
     protected static void setParseNonPlayerMessages(boolean enabled) { parseNonPlayerMessages = enabled; }
     protected static void setShowNickname(boolean enabled) { showNickname = enabled; }
@@ -173,4 +177,5 @@ public class ChatSettings
     protected static void setItalicHyperTrainingValues(boolean enabled) { italicHyperTrainingValues = enabled; }
     protected static void setPartyCheckLayout(PartyCheckLayout layout) { partycheckLayout = layout; }
     protected static void setShowPartyCheckGUIFrameBlocks(boolean enabled) { showPartyCheckGUIFrameBlocks = enabled; }
+    protected static void setShowPartyCheckPlayerHeads(boolean enabled) { showPartyCheckPlayerHeads = enabled; }
 }
