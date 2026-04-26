@@ -21,6 +21,7 @@ public class AntiAFKSettings
 
     protected static final boolean DEFAULT_HIDE_AFK_CHECKER_MESSAGE_PREFIX = false;
     protected static final boolean DEFAULT_HIDE_AFK_CAPTCHA_MESSAGE_PREFIX = false;
+    protected static final boolean DEFAULT_HIDE_PLAYER_WORD_START = false;
 
     private static boolean noKickModeEnabled;
     private static boolean useCaptchaInWarning;
@@ -41,6 +42,7 @@ public class AntiAFKSettings
 
     private static boolean hideAFKCheckerMessagePrefix;
     private static boolean hideAFKCaptchaMessagePrefix;
+    private static boolean hidePlayerWordStart;
 
     public static void setDefaults()
     {
@@ -63,6 +65,7 @@ public class AntiAFKSettings
 
         hideAFKCheckerMessagePrefix = DEFAULT_HIDE_AFK_CHECKER_MESSAGE_PREFIX;
         hideAFKCaptchaMessagePrefix = DEFAULT_HIDE_AFK_CAPTCHA_MESSAGE_PREFIX;
+        hidePlayerWordStart = DEFAULT_HIDE_PLAYER_WORD_START;
     }
 
     public static boolean isNoKickModeEnabled() { return noKickModeEnabled; }
@@ -81,6 +84,7 @@ public class AntiAFKSettings
     public static int getMinimumTicksToNotCountAsSuspiciousCaptcha() { return minimumTicksToNotCountAsSuspiciousCaptcha; }
     public static boolean shouldHideAFKCheckerMessagePrefix() { return hideAFKCheckerMessagePrefix; }
     public static boolean shouldHideAFKCaptchaMessagePrefix() { return hideAFKCaptchaMessagePrefix; }
+    public static boolean shouldHidePlayerWordStart() { return hidePlayerWordStart; }
 
     protected static void setNoKickMode(boolean enable) { noKickModeEnabled = enable; }
     protected static void setUseCaptchaInWarning(boolean enable) { useCaptchaInWarning = enable; }
@@ -98,4 +102,5 @@ public class AntiAFKSettings
     protected static void setMinimumTicksToNotCountAsSuspiciousCaptcha(int minimum) { minimumTicksToNotCountAsSuspiciousCaptcha = minimum; }
     protected static void setHideAFKCheckerMessagePrefix(boolean enable) { hideAFKCheckerMessagePrefix = enable; }
     protected static void setHideAFKCaptchaMessagePrefix(boolean enable) { hideAFKCaptchaMessagePrefix = enable; }
+    protected static void setHidePlayerWordStart(boolean enable) { hidePlayerWordStart = enable; }
 }

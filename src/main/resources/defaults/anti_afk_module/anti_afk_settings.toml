@@ -35,3 +35,4 @@ MinimumTicksToNotCountAsSuspiciousCaptcha = 20
 [Message]
 HideAFKCheckerMessagePrefix = false
 HideAFKCaptchaMessagePrefix = false
+HidePlayerWordStart = false

@@ -18,6 +18,7 @@ import net.minecraft.network.packet.s2c.play.TitleS2CPacket;
 import net.minecraft.server.MinecraftServer;
 import net.minecraft.server.network.ServerPlayerEntity;
 import net.minecraft.text.ClickEvent;
+import net.minecraft.text.HoverEvent;
 import net.minecraft.text.MutableText;
 import net.minecraft.text.Style;
 import net.minecraft.text.Text;
@@ -69,6 +70,9 @@ public class AntiAFKManager
 
             if (isClick)
             {
+                MutableText tooltip = Text.literal("You only need to click once!")
+                    .setStyle(Style.EMPTY);
+
                 captchaText = captchaText
                     .append(Text.literal("Please prove you are active: ")
                         .setStyle(Style.EMPTY.withColor(AntiAFKColors.getAFKCaptchaTextColor())));
@@ -76,6 +80,7 @@ public class AntiAFKManager
                 captchaText = captchaText
                     .append(Text.literal("[Click here]")
                         .setStyle(Style.EMPTY.withColor(AntiAFKColors.getAFKCaptchaQuestionColor())
+                            .withHoverEvent(new HoverEvent(HoverEvent.Action.SHOW_TEXT, tooltip))
                             .withClickEvent(new ClickEvent(ClickEvent.Action.RUN_COMMAND, "/mirageantiafk fakecaptchaclick %s".formatted(answer)))));
             }
             else

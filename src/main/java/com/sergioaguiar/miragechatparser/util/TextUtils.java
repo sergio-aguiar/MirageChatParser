@@ -770,9 +770,12 @@ public class TextUtils
                     .setStyle(Style.EMPTY.withColor(AntiAFKColors.getAFKCheckerPrefixColor())));
         }
 
-        afkText = afkText
-            .append(Text.literal("Player ")
-                .setStyle(Style.EMPTY.withColor(AntiAFKColors.getAFKCheckerTextColor())));
+        if (!AntiAFKSettings.shouldHidePlayerWordStart())
+        {
+            afkText = afkText
+                .append(Text.literal("Player ")
+                    .setStyle(Style.EMPTY.withColor(AntiAFKColors.getAFKCheckerTextColor())));
+        }
 
         afkText = afkText
             .append(Text.literal(playerName)
@@ -796,9 +799,12 @@ public class TextUtils
                     .setStyle(Style.EMPTY.withColor(AntiAFKColors.getAFKCheckerPrefixColor())));
         }
 
-        afkText = afkText
-            .append(Text.literal("Player ")
-                .setStyle(Style.EMPTY.withColor(AntiAFKColors.getAFKCheckerTextColor())));
+        if (!AntiAFKSettings.shouldHidePlayerWordStart())
+        {
+            afkText = afkText
+                .append(Text.literal("Player ")
+                    .setStyle(Style.EMPTY.withColor(AntiAFKColors.getAFKCheckerTextColor())));
+        }
 
         afkText = afkText
             .append(Text.literal(player.getDisplayName().getString())
@@ -819,7 +825,7 @@ public class TextUtils
 
         afkText = afkText
             .append(Text.literal("%s".formatted(timeAway))
-                .setStyle(Style.EMPTY.withColor(AntiAFKColors.getAFKCheckerTextColor())));
+                .setStyle(Style.EMPTY.withColor(AntiAFKColors.getAFKCheckerTimeColor())));
 
         afkText = afkText
             .append(Text.literal(")")
@@ -869,9 +875,12 @@ public class TextUtils
                     .setStyle(Style.EMPTY.withColor(AntiAFKColors.getAFKCheckerPrefixColor())));
         }
 
-        generalKickText = generalKickText
-            .append(Text.literal("Player ")
-                .setStyle(Style.EMPTY.withColor(AntiAFKColors.getAFKCheckerTextColor())));
+        if (!AntiAFKSettings.shouldHidePlayerWordStart())
+        {
+            generalKickText = generalKickText
+                .append(Text.literal("Player ")
+                    .setStyle(Style.EMPTY.withColor(AntiAFKColors.getAFKCheckerTextColor())));
+        }
 
         generalKickText = generalKickText
             .append(Text.literal(playerName)
@@ -1013,9 +1022,12 @@ public class TextUtils
                     .setStyle(Style.EMPTY.withColor(AntiAFKColors.getAFKCaptchaPrefixColor())));
         }
 
-        ignoredCaptchaMessage = ignoredCaptchaMessage
-            .append(Text.literal("Player ")
-                .setStyle(Style.EMPTY.withColor(AntiAFKColors.getAFKCaptchaTextColor())));
+        if (!AntiAFKSettings.shouldHidePlayerWordStart())
+        {
+            ignoredCaptchaMessage = ignoredCaptchaMessage
+                .append(Text.literal("Player ")
+                    .setStyle(Style.EMPTY.withColor(AntiAFKColors.getAFKCaptchaTextColor())));
+        }
 
         ignoredCaptchaMessage = ignoredCaptchaMessage
             .append(Text.literal(playerName)
@@ -1039,9 +1051,12 @@ public class TextUtils
                     .setStyle(Style.EMPTY.withColor(AntiAFKColors.getAFKCaptchaPrefixColor())));
         }
 
-        answeredCaptchaMessage = answeredCaptchaMessage
-            .append(Text.literal("Player ")
-                .setStyle(Style.EMPTY.withColor(AntiAFKColors.getAFKCaptchaTextColor())));
+        if (!AntiAFKSettings.shouldHidePlayerWordStart())
+        {
+            answeredCaptchaMessage = answeredCaptchaMessage
+                .append(Text.literal("Player ")
+                    .setStyle(Style.EMPTY.withColor(AntiAFKColors.getAFKCaptchaTextColor())));
+        }
 
         answeredCaptchaMessage = answeredCaptchaMessage
             .append(Text.literal(playerName)
@@ -1065,9 +1080,12 @@ public class TextUtils
                     .setStyle(Style.EMPTY.withColor(AntiAFKColors.getAFKCaptchaPrefixColor())));
         }
 
-        susCaptchaMessage = susCaptchaMessage
-            .append(Text.literal("Player ")
-                .setStyle(Style.EMPTY.withColor(AntiAFKColors.getAFKCaptchaTextColor())));
+        if (!AntiAFKSettings.shouldHidePlayerWordStart())
+        {
+            susCaptchaMessage = susCaptchaMessage
+                .append(Text.literal("Player ")
+                    .setStyle(Style.EMPTY.withColor(AntiAFKColors.getAFKCaptchaTextColor())));
+        }
 
         susCaptchaMessage = susCaptchaMessage
             .append(Text.literal(playerName)
@@ -1113,7 +1131,7 @@ public class TextUtils
         if (days > 0) resultPartList.add(days + " Day" + (days > 1 ? "s" : ""));
         if (hours > 0) resultPartList.add(hours + " Hour" + (hours > 1 ? "s" : ""));
         if (minutes > 0) resultPartList.add(minutes + " Minute" + (minutes > 1 ? "s" : ""));
-        if (seconds > 0 || resultPartList.isEmpty()) resultPartList.add(seconds + " Second" + (seconds > 1 ? "s" : ""));
+        if (seconds > 0 || resultPartList.isEmpty()) resultPartList.add(seconds + " Second" + (seconds != 1 ? "s" : ""));
 
         return String.join(", ", resultPartList);
     }

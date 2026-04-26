@@ -118,6 +118,12 @@ public class AntiAFKSettingsConfig
                 AntiAFKSettings.setMinimumYawChangeForCameraMovementRegister(minimum.floatValue());
             }
 
+            if (config.contains("General.MinimumTicksToNotCountAsSuspiciousCaptcha"))
+            {
+                int length = Math.max(config.getOrElse("General.MinimumTicksToNotCountAsSuspiciousCaptcha", AntiAFKSettings.DEFAULT_MINIMUM_TICKS_TO_NOT_COUNT_AS_SUSPICIOUS_CAPTCHA), 1);
+                AntiAFKSettings.setMinimumTicksToNotCountAsSuspiciousCaptcha(length);
+            }
+
             if (config.contains("Message.HideAFKCheckerMessagePrefix"))
             {
                 boolean enabled = config.getOrElse("Message.HideAFKCheckerMessagePrefix", AntiAFKSettings.DEFAULT_HIDE_AFK_CHECKER_MESSAGE_PREFIX);
@@ -130,10 +136,10 @@ public class AntiAFKSettingsConfig
                 AntiAFKSettings.setHideAFKCaptchaMessagePrefix(enabled);
             }
 
-            if (config.contains("General.MinimumTicksToNotCountAsSuspiciousCaptcha"))
+            if (config.contains("Message.HidePlayerWordStart"))
             {
-                int length = Math.max(config.getOrElse("General.MinimumTicksToNotCountAsSuspiciousCaptcha", AntiAFKSettings.DEFAULT_MINIMUM_TICKS_TO_NOT_COUNT_AS_SUSPICIOUS_CAPTCHA), 1);
-                AntiAFKSettings.setMinimumTicksToNotCountAsSuspiciousCaptcha(length);
+                boolean enabled = config.getOrElse("Message.HidePlayerWordStart", AntiAFKSettings.DEFAULT_HIDE_PLAYER_WORD_START);
+                AntiAFKSettings.setHidePlayerWordStart(enabled);
             }
 
             ModLogger.info("Setting configurations successfully loaded from anti_afk_settings.toml.");
@@ -184,6 +190,7 @@ public class AntiAFKSettingsConfig
             [Message]
             HideAFKCheckerMessagePrefix = false
             HideAFKCaptchaMessagePrefix = false
+            HidePlayerWordStart = false
             """;
         
         Files.writeString(file.toPath(), defaultContent);
