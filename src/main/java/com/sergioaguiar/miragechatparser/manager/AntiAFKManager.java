@@ -11,6 +11,7 @@ import com.sergioaguiar.miragechatparser.config.antiafk.colors.AntiAFKColors;
 import com.sergioaguiar.miragechatparser.config.antiafk.settings.AntiAFKSettings;
 import com.sergioaguiar.miragechatparser.util.LuckPermsUtils;
 import com.sergioaguiar.miragechatparser.util.ModLogger;
+import com.sergioaguiar.miragechatparser.util.PlaceholderUtils;
 import com.sergioaguiar.miragechatparser.util.TextUtils;
 
 import net.minecraft.network.packet.s2c.play.SubtitleS2CPacket;
@@ -181,6 +182,11 @@ public class AntiAFKManager
         playerActiveCaptchas = new HashMap<>();
         playerIgnoredCaptchaCounts = new HashMap<>();
         playerSuspiciousActionCount = new HashMap<>();
+
+        if (PlaceholderUtils.isModLoaded())
+        {
+            PlaceholderUtils.AfkPlaceholder.register();
+        }
     }
 
     public static void registerPlayerPositionMovement(ServerPlayerEntity player)

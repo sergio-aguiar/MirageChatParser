@@ -23,6 +23,11 @@ repositories {
     maven { url "https://repo.repsy.io/mvn/cobblemon/cobblemon" }
 
 	maven {
+		name = "Nucleoid"
+		url = "https://maven.nucleoid.xyz/"
+	}
+
+	maven {
         name = "LandonJW Snapshots"
         url = "https://maven.landonjw.ca/snapshots"
     }
@@ -62,6 +67,9 @@ dependencies {
 
 	// Gooeylibs (UI library)
 	modImplementation("ca.landonjw.gooeylibs:fabric:${gooeylibs_version}-SNAPSHOT")
+
+	// Placeholder API
+	modImplementation "eu.pb4:placeholder-api:${placeholder_api_version}"
 }
 
 processResources {

@@ -175,6 +175,20 @@ public class AntiAFKColorsConfig
                     AntiAFKColors.setCaptchaWarningSubtitleColor(TextColor.parse(color).getOrThrow());
             }
 
+            if (config.contains("AFKPlaceholder.PlaceholderBracketColor"))
+            {
+                String color = config.get("AFKPlaceholder.PlaceholderBracketColor");
+                if (color != null && !color.isEmpty())
+                    AntiAFKColors.setAFKPlaceholderBracketColor(TextColor.parse(color).getOrThrow());
+            }
+
+            if (config.contains("AFKPlaceholder.PlaceholderTextColor"))
+            {
+                String color = config.get("AFKPlaceholder.PlaceholderTextColor");
+                if (color != null && !color.isEmpty())
+                    AntiAFKColors.setAFKPlaceholderTextColor(TextColor.parse(color).getOrThrow());
+            }
+
             ModLogger.info("Setting configurations successfully loaded from anti_afk_colors.toml.");
         }
         catch (Exception e)
@@ -215,8 +229,12 @@ public class AntiAFKColorsConfig
             KickInfoBorderColor = "#e28c1b"
 
             [Warning]
-            CaptchaTitleColor = "#b81106"
-            CaptchaSubtitleColor = "#cfe95e"
+            CaptchaWarningTitleColor = "#b81106"
+            CaptchaWarningSubtitleColor = "#cfe95e"
+
+            [AFKPlaceholder]
+            PlaceholderBracketColor = "#d1d8eb"
+            PlaceholderTextColor = "#2facdd"
             """;
         
         Files.writeString(file.toPath(), defaultContent);
