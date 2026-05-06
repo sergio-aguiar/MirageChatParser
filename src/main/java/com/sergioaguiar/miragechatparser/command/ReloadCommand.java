@@ -4,6 +4,7 @@ import com.mojang.brigadier.context.CommandContext;
 import com.mojang.brigadier.exceptions.CommandSyntaxException;
 import com.sergioaguiar.miragechatparser.config.antiafk.colors.AntiAFKColorsConfig;
 import com.sergioaguiar.miragechatparser.config.antiafk.settings.AntiAFKSettingsConfig;
+import com.sergioaguiar.miragechatparser.config.antiafk.strings.AntiAFKStringsConfig;
 import com.sergioaguiar.miragechatparser.config.chatparser.aspects.ChatAspectsConfig;
 import com.sergioaguiar.miragechatparser.config.chatparser.colors.ChatColors;
 import com.sergioaguiar.miragechatparser.config.chatparser.colors.ChatColorsConfig;
@@ -216,6 +217,31 @@ public class ReloadCommand
             {
                 context.getSource().sendError(Text.literal("MirageChatParser » Failed to reload anti-AFK settings configuration: %s".formatted(e.getMessage())));
                 ModLogger.error("Error reloading anti-AFK setting config: %s".formatted(e.getMessage()));
+                return 1;
+            }
+
+            try
+            {
+                AntiAFKStringsConfig.load();
+                context.getSource().sendFeedback(() -> 
+                    {
+                        var text = Text.literal("MirageChatParser » ")
+                            .setStyle(Style.EMPTY.withColor(ChatColors.getCommandPrefixColor()));
+                        
+                        text = text
+                            .append(Text.literal("Reloaded anti-AFK string configuration.")
+                                .setStyle(Style.EMPTY.withColor(ChatColors.getCommandValueColor())));
+                        
+                        return text;
+                    }, 
+                    true
+                );
+                ModLogger.info("Anti-AFK string configuration reloaded successfully.");
+            }
+            catch (Exception e)
+            {
+                context.getSource().sendError(Text.literal("MirageChatParser » Failed to reload anti-AFK string configuration: %s".formatted(e.getMessage())));
+                ModLogger.error("Error reloading anti-AFK string config: %s".formatted(e.getMessage()));
                 return 1;
             }
 

@@ -1,6 +1,7 @@
 package com.sergioaguiar.miragechatparser.util;
 
 import com.sergioaguiar.miragechatparser.config.antiafk.colors.AntiAFKColors;
+import com.sergioaguiar.miragechatparser.config.antiafk.strings.AntiAFKStrings;
 import com.sergioaguiar.miragechatparser.manager.AntiAFKManager;
 
 import eu.pb4.placeholders.api.PlaceholderResult;
@@ -18,7 +19,7 @@ public class PlaceholderUtils
         public static void register()
         {
             Placeholders.register(
-                new Identifier("mirageessentials", "afk"),
+                new Identifier("mirageessentials", "afk-textobject"),
                 (context, arguments) ->
                 {
                     if (!context.hasPlayer()) return PlaceholderResult.invalid("No player!");
@@ -30,7 +31,7 @@ public class PlaceholderUtils
                             .setStyle(Style.EMPTY.withColor(AntiAFKColors.getAFKPlaceholderBracketColor())));
 
                     placeholder = placeholder
-                        .append(Text.literal("AFK")
+                        .append(Text.literal(AntiAFKStrings.getTextObjectPlaceholderAFKText())
                             .setStyle(Style.EMPTY.withColor(AntiAFKColors.getAFKPlaceholderTextColor())));
 
                     placeholder = placeholder
@@ -38,6 +39,16 @@ public class PlaceholderUtils
                             .setStyle(Style.EMPTY.withColor(AntiAFKColors.getAFKPlaceholderBracketColor())));
 
                     return PlaceholderResult.value(AntiAFKManager.isPlayerAFK(context.player()) ? placeholder : Text.literal(""));
+                }
+            );
+
+            Placeholders.register(
+                new Identifier("mirageessentials", "afk-mcformatting"),
+                (context, arguments) ->
+                {
+                    if (!context.hasPlayer()) return PlaceholderResult.invalid("No player!");
+
+                    return PlaceholderResult.value(AntiAFKManager.isPlayerAFK(context.player()) ? AntiAFKStrings.getMcFormattingPlaceholderAFKText() : "");
                 }
             );
         }
