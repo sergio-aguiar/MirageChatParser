@@ -23,6 +23,9 @@ public class AntiAFKSettings
     protected static final boolean DEFAULT_HIDE_AFK_CAPTCHA_MESSAGE_PREFIX = false;
     protected static final boolean DEFAULT_HIDE_PLAYER_WORD_START = false;
 
+    protected static final int DEFAULT_TICKS_BETWEEN_CAPTCHA_LOGIC_CHECKS = 200;
+    protected static final int DEFAULT_TICKS_BETWEEN_POSITION_AND_CAMERA_CHECKS = 10;
+
     private static boolean noKickModeEnabled;
     private static boolean useCaptchaInWarning;
     private static boolean useIndividualPlayerCaptchaTimes;
@@ -43,6 +46,9 @@ public class AntiAFKSettings
     private static boolean hideAFKCheckerMessagePrefix;
     private static boolean hideAFKCaptchaMessagePrefix;
     private static boolean hidePlayerWordStart;
+
+    private static int ticksBetweenCaptchaLogicChecks;
+    private static int ticksBetweenPositionAndCameraChecks;
 
     public static void setDefaults()
     {
@@ -66,6 +72,9 @@ public class AntiAFKSettings
         hideAFKCheckerMessagePrefix = DEFAULT_HIDE_AFK_CHECKER_MESSAGE_PREFIX;
         hideAFKCaptchaMessagePrefix = DEFAULT_HIDE_AFK_CAPTCHA_MESSAGE_PREFIX;
         hidePlayerWordStart = DEFAULT_HIDE_PLAYER_WORD_START;
+
+        ticksBetweenCaptchaLogicChecks = DEFAULT_TICKS_BETWEEN_CAPTCHA_LOGIC_CHECKS;
+        ticksBetweenPositionAndCameraChecks = DEFAULT_TICKS_BETWEEN_POSITION_AND_CAMERA_CHECKS;
     }
 
     public static boolean isNoKickModeEnabled() { return noKickModeEnabled; }
@@ -85,6 +94,8 @@ public class AntiAFKSettings
     public static boolean shouldHideAFKCheckerMessagePrefix() { return hideAFKCheckerMessagePrefix; }
     public static boolean shouldHideAFKCaptchaMessagePrefix() { return hideAFKCaptchaMessagePrefix; }
     public static boolean shouldHidePlayerWordStart() { return hidePlayerWordStart; }
+    public static int getTicksBetweenCaptchaLogicChecks() { return ticksBetweenCaptchaLogicChecks; }
+    public static int getTicksBetweenPositionAndCameraChecks() { return ticksBetweenPositionAndCameraChecks; }
 
     protected static void setNoKickMode(boolean enable) { noKickModeEnabled = enable; }
     protected static void setUseCaptchaInWarning(boolean enable) { useCaptchaInWarning = enable; }
@@ -103,4 +114,6 @@ public class AntiAFKSettings
     protected static void setHideAFKCheckerMessagePrefix(boolean enable) { hideAFKCheckerMessagePrefix = enable; }
     protected static void setHideAFKCaptchaMessagePrefix(boolean enable) { hideAFKCaptchaMessagePrefix = enable; }
     protected static void setHidePlayerWordStart(boolean enable) { hidePlayerWordStart = enable; }
+    protected static void setTicksBetweenCaptchaLogicChecks(int ticks) { ticksBetweenCaptchaLogicChecks = ticks; }
+    protected static void setTicksBetweenPositionAndCameraChecks(int ticks) { ticksBetweenPositionAndCameraChecks = ticks; }
 }

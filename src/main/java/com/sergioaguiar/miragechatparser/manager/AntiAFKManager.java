@@ -164,6 +164,8 @@ public class AntiAFKManager
     private static Map<UUID, Integer> playerIgnoredCaptchaCounts;
     private static Map<UUID, Integer> playerSuspiciousActionCount;
 
+    private static int lastGlobalCaptchaTime;
+
     public static void start()
     {
         playerTimesOfLastPositionMovement = new HashMap<>();
@@ -182,6 +184,8 @@ public class AntiAFKManager
         playerActiveCaptchas = new HashMap<>();
         playerIgnoredCaptchaCounts = new HashMap<>();
         playerSuspiciousActionCount = new HashMap<>();
+
+        lastGlobalCaptchaTime = 0;
 
         if (PlaceholderUtils.isModLoaded())
         {
@@ -279,6 +283,11 @@ public class AntiAFKManager
     public static void registerPlayerLastMessage(ServerPlayerEntity player, String message)
     {
         playerLastMessages.put(player.getUuid(), message);
+    }
+
+    public static void registerGlobalCaptchaHappened(int currentTicks)
+    {
+        if (currentTicks - lastGlobalCaptchaTime >= secondsToTicks(AntiAFKSettings.getSecondsBetweenCaptcha())) lastGlobalCaptchaTime = currentTicks;
     }
 
     public static Vec3d getPlayerLastPosition(ServerPlayerEntity player)
@@ -714,14 +723,24 @@ public class AntiAFKManager
         return playerSuspiciousActionCount.getOrDefault(playerUuid, 0);
     }
 
-    public static boolean isCaptchaTime(int currentTicks)
+    public static boolean isGlobalCaptchaTime(int currentTicks)
     {
-        return currentTicks % secondsToTicks(AntiAFKSettings.getSecondsBetweenCaptcha()) == 0;
+        return currentTicks - lastGlobalCaptchaTime >= secondsToTicks(AntiAFKSettings.getSecondsBetweenCaptcha());
     }
 
     public static boolean isIndividualPlayerCaptchaTime(int currentTicks, UUID playerUUID)
     {
         return currentTicks - playerTimesOfLastCaptchaPrompt.getOrDefault(playerUUID, currentTicks) >= secondsToTicks(AntiAFKSettings.getSecondsBetweenCaptcha());
+    }
+
+    public static boolean isCaptchaCheckTick(int currentTicks)
+    {
+        return currentTicks % AntiAFKSettings.getTicksBetweenCaptchaLogicChecks() == 0;
+    }
+
+    public static boolean isPositionAndCameraMovementCheckTick(int currentTicks)
+    {
+        return currentTicks % AntiAFKSettings.getTicksBetweenPositionAndCameraChecks() == 0;
     }
 
     private static int secondsToTicks(int seconds)

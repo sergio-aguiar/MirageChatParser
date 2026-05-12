@@ -20,54 +20,72 @@ public class AntiAFKTickEventHandler
                 List<ServerPlayerEntity> playerList = server.getPlayerManager().getPlayerList();
                 int currentTicks = server.getTicks();
 
-                if (AntiAFKSettings.shouldUseIndividualPlayerCaptchaTimes())
+                if (AntiAFKManager.isCaptchaCheckTick(currentTicks))
                 {
-                    for (ServerPlayerEntity player : playerList)
-                    {
-                        if (player == null) continue;
-
-                        if (LuckPermsUtils.hasPermission(player, "mirageantiafk.bypass.captcha")) continue;
-                        if (!AntiAFKManager.isIndividualPlayerCaptchaTime(currentTicks, player.getUuid())) continue;
-
-                        AntiAFKManager.startCaptcha(player, "Server");
-                    }
-                }
-                else
-                {
-                    if (AntiAFKManager.isCaptchaTime(currentTicks))
-                    {
-                        for (ServerPlayerEntity player : playerList)
-                        {
-                            if (player == null) continue;
-
-                            if (LuckPermsUtils.hasPermission(player, "mirageantiafk.bypass.captcha")) continue;
-
-                            AntiAFKManager.startCaptcha(player, "Server");
-                        }
-                    }
+                    handleCaptchaCheck(playerList, currentTicks);
                 }
 
-                for (ServerPlayerEntity player : playerList)
+                if (AntiAFKManager.isPositionAndCameraMovementCheckTick(currentTicks))
                 {
-                    if (player == null) continue;
-                    if (LuckPermsUtils.hasPermission(player, "mirageantiafk.bypass.check")) continue;
-
-                    AntiAFKManager.handlePlayerPositionChangeLogic(player);
-                    AntiAFKManager.handlePlayerCameraChangeLogic(player);
-
-                    if (!AntiAFKManager.isPlayerAFK(player) && AntiAFKManager.shouldPlayerBeMarkedAsAFK(player))
-                    {
-                        AntiAFKManager.registerPlayerAsAFK(player);
-                    }
-
-                    if (AntiAFKManager.shouldPlayerBeAFKKicked(player))
-                    {
-                        AntiAFKManager.handlePlayerAFKKick(player);
-                    }
+                    handlePositionAndCameraMovementCheck(playerList);
                 }
             }
         );
 
         ModLogger.info("Anti-AFK Activity Checker started.");
+    }
+
+    private static void handleCaptchaCheck(List<ServerPlayerEntity> playerList, int currentTicks)
+    {
+        if (AntiAFKSettings.shouldUseIndividualPlayerCaptchaTimes())
+        {
+            for (ServerPlayerEntity player : playerList)
+            {
+                if (player == null) continue;
+
+                if (LuckPermsUtils.hasPermission(player, "mirageantiafk.bypass.captcha")) continue;
+                if (!AntiAFKManager.isIndividualPlayerCaptchaTime(currentTicks, player.getUuid())) continue;
+
+                AntiAFKManager.startCaptcha(player, "Server");
+            }
+        }
+        else
+        {
+            if (AntiAFKManager.isGlobalCaptchaTime(currentTicks))
+            {
+                for (ServerPlayerEntity player : playerList)
+                {
+                    if (player == null) continue;
+
+                    if (LuckPermsUtils.hasPermission(player, "mirageantiafk.bypass.captcha")) continue;
+
+                    AntiAFKManager.startCaptcha(player, "Server");
+                }
+            }
+
+            AntiAFKManager.registerGlobalCaptchaHappened(currentTicks);
+        }
+    }
+
+    private static void handlePositionAndCameraMovementCheck(List<ServerPlayerEntity> playerList)
+    {
+        for (ServerPlayerEntity player : playerList)
+        {
+            if (player == null) continue;
+            if (LuckPermsUtils.hasPermission(player, "mirageantiafk.bypass.check")) continue;
+
+            AntiAFKManager.handlePlayerPositionChangeLogic(player);
+            AntiAFKManager.handlePlayerCameraChangeLogic(player);
+
+            if (!AntiAFKManager.isPlayerAFK(player) && AntiAFKManager.shouldPlayerBeMarkedAsAFK(player))
+            {
+                AntiAFKManager.registerPlayerAsAFK(player);
+            }
+
+            if (AntiAFKManager.shouldPlayerBeAFKKicked(player))
+            {
+                AntiAFKManager.handlePlayerAFKKick(player);
+            }
+        }
     }
 }

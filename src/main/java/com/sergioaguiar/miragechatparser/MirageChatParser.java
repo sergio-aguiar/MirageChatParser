@@ -172,5 +172,7 @@ public class MirageChatParser implements ModInitializer
 			LuckPermsPlayerJoinEventHandler.register();
 			LuckPermsUserDataRecalculateEventHandler.register();
 		});
+
+		ModLogger.info("LuckPerms event handlers started.");
 	}
 }

@@ -41,7 +41,7 @@ public class InfoCommand
                 .setStyle(Style.EMPTY.withColor(ChatColors.getCommandPrefixColor()));
 
             coloredLine = coloredLine
-                .append(Text.literal("MirageShoutParser ")
+                .append(Text.literal("MirageChatParser ")
                     .setStyle(Style.EMPTY.withColor(ChatColors.getCommandValueColor())));
 
             coloredLine = coloredLine

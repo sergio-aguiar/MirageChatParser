@@ -189,7 +189,7 @@ public class AntiAFKColorsConfig
                     AntiAFKColors.setAFKPlaceholderTextColor(TextColor.parse(color).getOrThrow());
             }
 
-            ModLogger.info("Setting configurations successfully loaded from anti_afk_colors.toml.");
+            ModLogger.info("Color configurations successfully loaded from anti_afk_colors.toml.");
         }
         catch (Exception e)
         {

@@ -120,8 +120,8 @@ public class AntiAFKSettingsConfig
 
             if (config.contains("General.MinimumTicksToNotCountAsSuspiciousCaptcha"))
             {
-                int length = Math.max(config.getOrElse("General.MinimumTicksToNotCountAsSuspiciousCaptcha", AntiAFKSettings.DEFAULT_MINIMUM_TICKS_TO_NOT_COUNT_AS_SUSPICIOUS_CAPTCHA), 1);
-                AntiAFKSettings.setMinimumTicksToNotCountAsSuspiciousCaptcha(length);
+                int ticks = Math.max(config.getOrElse("General.MinimumTicksToNotCountAsSuspiciousCaptcha", AntiAFKSettings.DEFAULT_MINIMUM_TICKS_TO_NOT_COUNT_AS_SUSPICIOUS_CAPTCHA), 1);
+                AntiAFKSettings.setMinimumTicksToNotCountAsSuspiciousCaptcha(ticks);
             }
 
             if (config.contains("Message.HideAFKCheckerMessagePrefix"))
@@ -140,6 +140,18 @@ public class AntiAFKSettingsConfig
             {
                 boolean enabled = config.getOrElse("Message.HidePlayerWordStart", AntiAFKSettings.DEFAULT_HIDE_PLAYER_WORD_START);
                 AntiAFKSettings.setHidePlayerWordStart(enabled);
+            }
+
+            if (config.contains("Performance.TicksBetweenCaptchaLogicChecks"))
+            {
+                int ticks = Math.max(config.getOrElse("Performance.TicksBetweenCaptchaLogicChecks", AntiAFKSettings.DEFAULT_TICKS_BETWEEN_CAPTCHA_LOGIC_CHECKS), 1);
+                AntiAFKSettings.setTicksBetweenCaptchaLogicChecks(ticks);
+            }
+
+            if (config.contains("Performance.TicksBetweenPositionAndCameraChecks"))
+            {
+                int ticks = Math.max(config.getOrElse("Performance.TicksBetweenPositionAndCameraChecks", AntiAFKSettings.DEFAULT_TICKS_BETWEEN_POSITION_AND_CAMERA_CHECKS), 1);
+                AntiAFKSettings.setTicksBetweenPositionAndCameraChecks(ticks);
             }
 
             ModLogger.info("Setting configurations successfully loaded from anti_afk_settings.toml.");
@@ -191,6 +203,13 @@ public class AntiAFKSettingsConfig
             HideAFKCheckerMessagePrefix = false
             HideAFKCaptchaMessagePrefix = false
             HidePlayerWordStart = false
+
+            [Performance]
+            # Tick values that are smaller increase overall accuracy (for the likes of position and camera movement checks) but also decrease
+            # overall performance (becomes more tick intensive). The default values should be fine, but you may need to tweak them depending on
+            # your hardware and overall player count (because checks scale directly with player count).
+            TicksBetweenCaptchaLogicChecks = 200
+            TicksBetweenPositionAndCameraChecks = 10 
             """;
         
         Files.writeString(file.toPath(), defaultContent);
