@@ -1,7 +1,9 @@
 package com.sergioaguiar.miragechatparser.manager;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.Random;
 import java.util.UUID;
@@ -17,6 +19,7 @@ import com.sergioaguiar.miragechatparser.util.TextUtils;
 import net.minecraft.network.packet.s2c.play.SubtitleS2CPacket;
 import net.minecraft.network.packet.s2c.play.TitleS2CPacket;
 import net.minecraft.server.MinecraftServer;
+import net.minecraft.server.PlayerManager;
 import net.minecraft.server.network.ServerPlayerEntity;
 import net.minecraft.text.ClickEvent;
 import net.minecraft.text.HoverEvent;
@@ -342,6 +345,26 @@ public class AntiAFKManager
     public static boolean shouldPlayerActionsBeIgnored(ServerPlayerEntity player)
     {
         return player.hasVehicle() || player.isTouchingWater() || player.isInFluid();
+    }
+
+    public static List<MutableText> getAFKPlayerNames(MinecraftServer server)
+    {
+        List<MutableText> afkPArrayList = new ArrayList<>();
+
+        if (playerTimesOfAFKMark.isEmpty()) return afkPArrayList;
+
+        PlayerManager playerManager = server.getPlayerManager();
+
+        for (UUID playerUUID : playerTimesOfAFKMark.keySet())
+        {
+            ServerPlayerEntity player = playerManager.getPlayer(playerUUID);
+
+            if (player == null) continue;
+
+            afkPArrayList.add(player.getDisplayName().copy());
+        }
+
+        return afkPArrayList;
     }
 
     public static void handlePlayerInit(ServerPlayerEntity player)

@@ -21,6 +21,7 @@ import com.cobblemon.mod.common.pokemon.Gender;
 import com.cobblemon.mod.common.pokemon.IVs;
 import com.cobblemon.mod.common.pokemon.Nature;
 import com.cobblemon.mod.common.pokemon.Pokemon;
+import com.sergioaguiar.miragechatparser.MirageChatParser;
 import com.sergioaguiar.miragechatparser.config.antiafk.colors.AntiAFKColors;
 import com.sergioaguiar.miragechatparser.config.antiafk.settings.AntiAFKSettings;
 import com.sergioaguiar.miragechatparser.config.chatparser.aspects.ChatAspects;
@@ -32,7 +33,9 @@ import com.sergioaguiar.miragechatparser.config.chatparser.strings.ChatStrings;
 import com.sergioaguiar.miragechatparser.manager.AntiAFKManager;
 import com.sergioaguiar.miragechatparser.manager.AntiAFKManager.KickReason;
 
+import net.fabricmc.loader.api.FabricLoader;
 import net.minecraft.item.ItemStack;
+import net.minecraft.server.MinecraftServer;
 import net.minecraft.server.network.ServerPlayerEntity;
 import net.minecraft.text.HoverEvent;
 import net.minecraft.text.MutableText;
@@ -1115,6 +1118,78 @@ public class TextUtils
                 .setStyle(Style.EMPTY.withColor(AntiAFKColors.getKickInfoTextColor())));
 
         return timeText;
+    }
+
+    public static MutableText infoCommandMessage()
+    {
+        MutableText infoMessage = Text.literal("Info » ")
+            .setStyle(Style.EMPTY.withColor(ChatColors.getCommandPrefixColor()));
+
+        infoMessage = infoMessage
+            .append(Text.literal("MirageChatParser ")
+                .setStyle(Style.EMPTY.withColor(ChatColors.getCommandValueColor())));
+
+        infoMessage = infoMessage
+            .append(Text.literal("v%s".formatted(FabricLoader.getInstance().getModContainer(MirageChatParser.MOD_ID).orElseThrow().getMetadata().getVersion().getFriendlyString()))
+                .setStyle(Style.EMPTY.withColor(ChatColors.getCommandPlayerColor())));
+
+        infoMessage = infoMessage
+            .append(Text.literal(" is developed by ")
+                .setStyle(Style.EMPTY.withColor(ChatColors.getCommandValueColor())));
+
+        infoMessage = infoMessage
+            .append(Text.literal("pioavenger")
+                .setStyle(Style.EMPTY.withColor(ChatColors.getCommandPlayerColor())));
+
+        return infoMessage;
+    }
+
+    public static MutableText afkListCommand(MinecraftServer server)
+    {
+        MutableText afkListMessage = Text.literal("").setStyle(Style.EMPTY);
+
+        afkListMessage = afkListMessage
+            .append(Text.literal("AFKList » ")
+                .setStyle(Style.EMPTY.withColor(ChatColors.getCommandPrefixColor())));
+
+        afkListMessage = afkListMessage
+            .append(Text.literal("List of currently-AFK players:\n")
+                .setStyle(Style.EMPTY.withColor(ChatColors.getCommandValueColor())));
+
+        List<MutableText> afkPlayerNames = AntiAFKManager.getAFKPlayerNames(server);
+
+        if (afkPlayerNames.isEmpty())
+        {
+            afkListMessage = afkListMessage
+                .append(Text.literal("None...")
+                    .setStyle(Style.EMPTY.withColor(ChatColors.getCommandValueColor())));
+
+            return afkListMessage;
+        }
+
+        MutableText firstPlayerName = afkPlayerNames.get(0);
+
+        afkListMessage = afkListMessage
+            .append(firstPlayerName
+                .setStyle(firstPlayerName.getStyle()));
+
+        if (afkPlayerNames.size() >= 2)
+        {
+            for (int i = 1; i < afkPlayerNames.size(); i++)
+            {
+                MutableText iPlayerName = afkPlayerNames.get(i);
+
+                afkListMessage = afkListMessage
+                    .append(Text.literal(", ")
+                        .setStyle(Style.EMPTY.withColor(ChatColors.getCommandValueColor())));
+
+                afkListMessage = afkListMessage
+                    .append(iPlayerName
+                        .setStyle(iPlayerName.getStyle()));
+            }
+        }
+
+        return afkListMessage;
     }
 
     public static String secondsToReadableTimeString(int totalSeconds)

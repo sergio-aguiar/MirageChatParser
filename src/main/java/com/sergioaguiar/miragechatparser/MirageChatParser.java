@@ -6,6 +6,7 @@ import net.fabricmc.fabric.api.event.lifecycle.v1.ServerLifecycleEvents;
 import com.sergioaguiar.miragechatparser.command.InfoCommand;
 import com.sergioaguiar.miragechatparser.command.ReloadCommand;
 import com.sergioaguiar.miragechatparser.command.antiafk.AFKCommand;
+import com.sergioaguiar.miragechatparser.command.antiafk.AFKListCommand;
 import com.sergioaguiar.miragechatparser.command.antiafk.ForceCaptchaCommand;
 import com.sergioaguiar.miragechatparser.command.antiafk.IsAFKCommand;
 import com.sergioaguiar.miragechatparser.command.antiafk.fake.FakeCaptchaClickCommand;
@@ -155,6 +156,7 @@ public class MirageChatParser implements ModInitializer
 				AFKCommand.register();
 				IsAFKCommand.register();
 				ForceCaptchaCommand.register();
+				AFKListCommand.register();
 				FakeCaptchaClickCommand.register();
 			}
 		}

@@ -1,8 +1,8 @@
 package com.sergioaguiar.miragechatparser.util;
 
-import java.util.HashMap;
 import java.util.Map;
 import java.util.UUID;
+import java.util.concurrent.ConcurrentHashMap;
 
 import net.fabricmc.loader.api.FabricLoader;
 import net.luckperms.api.LuckPerms;
@@ -19,7 +19,7 @@ public class LuckPermsUtils
 
     static
     {
-        playerPerms = new HashMap<>();
+        playerPerms = new ConcurrentHashMap<>();
     }
 
     public static void clearPermsForPlayer(ServerPlayerEntity player)
@@ -29,7 +29,7 @@ public class LuckPermsUtils
 
     public static void clearPermsForPlayer(UUID playerUUID)
     {
-        playerPerms.computeIfAbsent(playerUUID, uuid -> new HashMap<>()).clear();
+        playerPerms.remove(playerUUID);
     }
 
     public static boolean isModLoaded()
@@ -68,7 +68,7 @@ public class LuckPermsUtils
     {
         UUID playerUUID = player.getUuid();
 
-        Map<String, Boolean> permissions = playerPerms.computeIfAbsent(playerUUID, uuid -> new HashMap<>());
+        Map<String, Boolean> permissions = playerPerms.computeIfAbsent(playerUUID, uuid -> new ConcurrentHashMap<>());
 
         return permissions.computeIfAbsent(permission, perm -> 
         {

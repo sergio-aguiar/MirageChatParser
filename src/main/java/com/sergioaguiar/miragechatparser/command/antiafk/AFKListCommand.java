@@ -1,6 +1,7 @@
-package com.sergioaguiar.miragechatparser.command;
+package com.sergioaguiar.miragechatparser.command.antiafk;
 
 import com.mojang.brigadier.context.CommandContext;
+import com.mojang.brigadier.exceptions.CommandSyntaxException;
 import com.sergioaguiar.miragechatparser.util.LuckPermsUtils;
 import com.sergioaguiar.miragechatparser.util.ModLogger;
 import com.sergioaguiar.miragechatparser.util.TextUtils;
@@ -9,7 +10,7 @@ import net.fabricmc.fabric.api.command.v2.CommandRegistrationCallback;
 import net.minecraft.server.command.CommandManager;
 import net.minecraft.server.command.ServerCommandSource;
 
-public class InfoCommand
+public class AFKListCommand
 {
     public static void register()
     {
@@ -17,25 +18,23 @@ public class InfoCommand
         {
             dispatcher.register
             (
-                CommandManager.literal("miragechatparser")
-                    .then(CommandManager.literal("info")
-                        .requires(source -> LuckPermsUtils.hasPermission(source, "miragechatparser.commands.info"))
-                        .executes(InfoCommand::executeInfo)
-                    )
+                CommandManager.literal("afklist")
+                    .requires(source -> LuckPermsUtils.hasPermission(source, "mirageantiafk.commands.afklist"))
+                    .executes(AFKListCommand::executeAFKList)
             );
         });
     }
 
-    private static int executeInfo(CommandContext<ServerCommandSource> context)
+    private static int executeAFKList(CommandContext<ServerCommandSource> context) throws CommandSyntaxException
     {
         try
         {
             ServerCommandSource source = context.getSource();
-            source.sendMessage(TextUtils.infoCommandMessage());
+            source.sendMessage(TextUtils.afkListCommand(source.getServer()));
         }
         catch (Exception e)
         {
-            ModLogger.error("Failed to execute info: %s".formatted(e.getMessage()));
+            ModLogger.error("Failed to execute afkList: %s".formatted(e.getMessage()));
             return 1;   
         }
 
