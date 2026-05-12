@@ -1,6 +1,7 @@
 package com.sergioaguiar.miragechatparser;
 
 import net.fabricmc.api.ModInitializer;
+import net.fabricmc.fabric.api.event.lifecycle.v1.ServerLifecycleEvents;
 
 import com.sergioaguiar.miragechatparser.command.InfoCommand;
 import com.sergioaguiar.miragechatparser.command.ReloadCommand;
@@ -38,6 +39,8 @@ import com.sergioaguiar.miragechatparser.event.antiafk.AntiAFKPlayerDisconnectEv
 import com.sergioaguiar.miragechatparser.event.antiafk.AntiAFKPlayerJoinEventHandler;
 import com.sergioaguiar.miragechatparser.event.antiafk.AntiAFKTickEventHandler;
 import com.sergioaguiar.miragechatparser.event.chatparser.ChatParserMessageHandler;
+import com.sergioaguiar.miragechatparser.event.utils.LuckPermsPlayerJoinEventHandler;
+import com.sergioaguiar.miragechatparser.event.utils.LuckPermsUserDataRecalculateEventHandler;
 import com.sergioaguiar.miragechatparser.manager.AntiAFKManager;
 import com.sergioaguiar.miragechatparser.util.ModLogger;
 
@@ -111,6 +114,8 @@ public class MirageChatParser implements ModInitializer
 		// Event registering
 		try
 		{
+			handleLuckPermsEvents();
+
 			if (Modules.shouldEnableChatParserModule())
 			{
 				ChatParserMessageHandler.register();
@@ -158,5 +163,14 @@ public class MirageChatParser implements ModInitializer
 			ModLogger.error("Uncaught exception during command registering: %s".formatted(e.getMessage()));
 			e.printStackTrace();
 		}
+	}
+
+	private static void handleLuckPermsEvents()
+	{
+		ServerLifecycleEvents.SERVER_STARTED.register(server ->
+		{
+			LuckPermsPlayerJoinEventHandler.register();
+			LuckPermsUserDataRecalculateEventHandler.register();
+		});
 	}
 }

@@ -24,6 +24,8 @@ public class AntiAFKTickEventHandler
                 {
                     for (ServerPlayerEntity player : playerList)
                     {
+                        if (player == null) continue;
+
                         if (LuckPermsUtils.hasPermission(player, "mirageantiafk.bypass.captcha")) continue;
                         if (!AntiAFKManager.isIndividualPlayerCaptchaTime(currentTicks, player.getUuid())) continue;
 
@@ -36,6 +38,8 @@ public class AntiAFKTickEventHandler
                     {
                         for (ServerPlayerEntity player : playerList)
                         {
+                            if (player == null) continue;
+
                             if (LuckPermsUtils.hasPermission(player, "mirageantiafk.bypass.captcha")) continue;
 
                             AntiAFKManager.startCaptcha(player, "Server");
@@ -45,6 +49,7 @@ public class AntiAFKTickEventHandler
 
                 for (ServerPlayerEntity player : playerList)
                 {
+                    if (player == null) continue;
                     if (LuckPermsUtils.hasPermission(player, "mirageantiafk.bypass.check")) continue;
 
                     AntiAFKManager.handlePlayerPositionChangeLogic(player);

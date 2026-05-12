@@ -31,9 +31,10 @@ public class ReloadCommand
             dispatcher.register
             (
                 CommandManager.literal("miragechatparser")
-                    .requires(source -> LuckPermsUtils.hasPermission(source, "miragechatparser.commands.admin.reload"))
                     .then(CommandManager.literal("reload")
-                        .executes(ReloadCommand::executeReload))
+                        .requires(source -> LuckPermsUtils.hasPermission(source, "miragechatparser.commands.admin.reload"))
+                        .executes(ReloadCommand::executeReload)
+                    )
             );
         });
     }

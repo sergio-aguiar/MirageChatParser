@@ -1,5 +1,9 @@
 package com.sergioaguiar.miragechatparser.util;
 
+import java.util.HashMap;
+import java.util.Map;
+import java.util.UUID;
+
 import net.fabricmc.loader.api.FabricLoader;
 import net.luckperms.api.LuckPerms;
 import net.luckperms.api.LuckPermsProvider;
@@ -10,6 +14,23 @@ import net.minecraft.server.network.ServerPlayerEntity;
 public class LuckPermsUtils
 {
     private static final String MOD_ID_STRING = "luckperms";
+
+    private static Map<UUID, Map<String, Boolean>> playerPerms;
+
+    static
+    {
+        playerPerms = new HashMap<>();
+    }
+
+    public static void clearPermsForPlayer(ServerPlayerEntity player)
+    {
+        clearPermsForPlayer(player.getUuid());
+    }
+
+    public static void clearPermsForPlayer(UUID playerUUID)
+    {
+        playerPerms.computeIfAbsent(playerUUID, uuid -> new HashMap<>()).clear();
+    }
 
     public static boolean isModLoaded()
     {
@@ -32,7 +53,7 @@ public class LuckPermsUtils
             return false;
         }
 
-        return playerHasPermission(player, permission);
+        return playerHasPermissionInLuckPerms(player, permission);
     }
 
     public static boolean hasPermission(ServerPlayerEntity player, String permission)
@@ -40,16 +61,27 @@ public class LuckPermsUtils
         if (player.hasPermissionLevel(2)) return true;
         if (!isModLoaded()) return player.hasPermissionLevel(2);
 
-        return playerHasPermission(player, permission);
+        return playerHasPermissionInLuckPerms(player, permission);
     }
 
-    private static boolean playerHasPermission(ServerPlayerEntity player, String permission)
+    private static boolean playerHasPermissionInLuckPerms(ServerPlayerEntity player, String permission)
     {
-        LuckPerms api = LuckPermsProvider.get();
+        UUID playerUUID = player.getUuid();
 
-        User user = api.getUserManager().getUser(player.getUuid());
-        if (user == null) return false;
+        Map<String, Boolean> permissions = playerPerms.computeIfAbsent(playerUUID, uuid -> new HashMap<>());
 
-        return user.getCachedData().getPermissionData().checkPermission(permission).asBoolean();
+        return permissions.computeIfAbsent(permission, perm -> 
+        {
+            LuckPerms api = LuckPermsProvider.get();
+            User user = api.getUserManager().getUser(playerUUID);
+
+            if (user == null) return false;
+
+            return user
+                .getCachedData()
+                .getPermissionData()
+                .checkPermission(perm)
+                .asBoolean();
+        });
     }
 }

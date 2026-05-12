@@ -23,9 +23,10 @@ public class InfoCommand
             dispatcher.register
             (
                 CommandManager.literal("miragechatparser")
-                    .requires(source -> LuckPermsUtils.hasPermission(source, "miragechatparser.commands.info"))
                     .then(CommandManager.literal("info")
-                        .executes(InfoCommand::executeInfo))
+                        .requires(source -> LuckPermsUtils.hasPermission(source, "miragechatparser.commands.info"))
+                        .executes(InfoCommand::executeInfo)
+                    )
             );
         });
     }

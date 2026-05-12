@@ -4,6 +4,7 @@ import com.sergioaguiar.miragechatparser.manager.AntiAFKManager;
 import com.sergioaguiar.miragechatparser.util.ModLogger;
 
 import net.fabricmc.fabric.api.networking.v1.ServerPlayConnectionEvents;
+import net.minecraft.server.network.ServerPlayerEntity;
 
 public class AntiAFKPlayerJoinEventHandler
 {
@@ -12,7 +13,11 @@ public class AntiAFKPlayerJoinEventHandler
         ServerPlayConnectionEvents.JOIN.register(
             (handler, sender, server) ->
             {
-                AntiAFKManager.handlePlayerInit(handler.getPlayer());
+                ServerPlayerEntity player = handler.getPlayer();
+
+                if (player == null) return;
+
+                AntiAFKManager.handlePlayerInit(player);
             }
         );
 

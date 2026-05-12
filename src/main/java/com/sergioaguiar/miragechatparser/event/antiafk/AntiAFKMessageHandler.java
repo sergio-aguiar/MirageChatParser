@@ -13,6 +13,8 @@ public class AntiAFKMessageHandler
         ServerMessageEvents.ALLOW_CHAT_MESSAGE.register(
             (message, sender, params) ->
             {
+                if (sender == null) return true;
+
                 boolean shouldSendMessage = true;
 
                 if (AntiAFKManager.hasActiveMessageCaptcha(sender))
@@ -31,6 +33,8 @@ public class AntiAFKMessageHandler
         ServerMessageEvents.CHAT_MESSAGE.register(
             (message, sender, params) ->
             {
+                if (sender == null) return;
+
                 if (LuckPermsUtils.hasPermission(sender, "mirageantiafk.bypass.check")) return;
 
                 AntiAFKManager.handlePlayerMessageSentLogic(sender, message.getSignedContent());
