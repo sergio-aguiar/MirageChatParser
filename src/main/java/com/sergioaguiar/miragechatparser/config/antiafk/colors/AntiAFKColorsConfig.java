@@ -105,6 +105,20 @@ public class AntiAFKColorsConfig
                     AntiAFKColors.setAFKCaptchaQuestionColor(TextColor.parse(color).getOrThrow());
             }
 
+            if (config.contains("AFKaptcha.IgnorableBracketColor"))
+            {
+                String color = config.get("AFKaptcha.IgnorableBracketColor");
+                if (color != null && !color.isEmpty())
+                    AntiAFKColors.setAFKCaptchaIgnorableBracketColor(TextColor.parse(color).getOrThrow());
+            }
+
+            if (config.contains("AFKaptcha.IgnorableBracketColor"))
+            {
+                String color = config.get("AFKaptcha.IgnorableBracketColor");
+                if (color != null && !color.isEmpty())
+                    AntiAFKColors.setAFKCaptchaIgnorableBracketColor(TextColor.parse(color).getOrThrow());
+            }
+
             if (config.contains("Kick.KickTitleColor"))
             {
                 String color = config.get("Kick.KickTitleColor");
@@ -215,6 +229,8 @@ public class AntiAFKColorsConfig
             TextColor = "#d1d8eb"
             PlayerColor = "#cfe95e"
             QuestionColor = "#cfe95e"
+            IgnorableBracketColor = "#b81106"
+            IgnorableCountColor = "#cfe95e"
 
             [Kick]
             KickTitleColor = "#b81106"

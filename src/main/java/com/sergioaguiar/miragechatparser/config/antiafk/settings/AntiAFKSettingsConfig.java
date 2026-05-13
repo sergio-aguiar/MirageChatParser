@@ -40,16 +40,22 @@ public class AntiAFKSettingsConfig
         {
             config.load();
 
+            if (config.contains("General.NoKickMode"))
+            {
+                boolean enabled = config.getOrElse("General.NoKickMode", AntiAFKSettings.DEFAULT_NO_KICK_MODE_ENABLED);
+                AntiAFKSettings.setNoKickMode(enabled);
+            }
+
             if (config.contains("General.UseCaptchaInWarning"))
             {
                 boolean enabled = config.getOrElse("General.UseCaptchaInWarning", AntiAFKSettings.DEFAULT_USE_CAPTCHA_IN_WARNING);
                 AntiAFKSettings.setUseCaptchaInWarning(enabled);
             }
 
-            if (config.contains("General.NoKickMode"))
+            if (config.contains("General.ShowIgnorableCaptchaCount"))
             {
-                boolean enabled = config.getOrElse("General.NoKickMode", AntiAFKSettings.DEFAULT_NO_KICK_MODE_ENABLED);
-                AntiAFKSettings.setNoKickMode(enabled);
+                boolean enabled = config.getOrElse("General.ShowIgnorableCaptchaCount", AntiAFKSettings.DEFAULT_SHOW_IGNORABLE_CAPTCHA_COUNT);
+                AntiAFKSettings.setShowIgnorableCaptchaCount(enabled);
             }
 
             if (config.contains("General.UseIndividualPlayerCaptchaTimes"))
@@ -174,6 +180,8 @@ public class AntiAFKSettingsConfig
             NoKickMode = false
             # Whether the CAPTCHA warning that appears when you are in the last one before a kick should show the CAPTCHA or not (shows the warning if not) (true/false)
             UseCaptchaInWarning = false
+            # Whether the CAPTCHA messages in chat should display how many more may be ignored before getting kicked (true/false)
+            ShowIgnorableCaptchaCount = false
             # Whether CAPTCHA should be on a per-player basis or be synced server-wide (true/false)
             UseIndividualPlayerCaptchaTimes = false
             # Whether non-AFK messages should state how long the player was gone for or not, when they have permissions to bypass AFK kicks (true/false)

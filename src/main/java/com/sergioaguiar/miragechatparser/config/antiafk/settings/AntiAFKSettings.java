@@ -4,6 +4,7 @@ public class AntiAFKSettings
 {
     protected static final boolean DEFAULT_NO_KICK_MODE_ENABLED = false;
     protected static final boolean DEFAULT_USE_CAPTCHA_IN_WARNING = false;
+    protected static final boolean DEFAULT_SHOW_IGNORABLE_CAPTCHA_COUNT = false;
     protected static final boolean DEFAULT_USE_INDIVIDUAL_PLAYER_CAPTCHA_TIMES = false;
     protected static final boolean DEFAULT_HIDE_AFK_TIMES_WHEN_BYPASSING_KICKS = true;
 
@@ -28,6 +29,7 @@ public class AntiAFKSettings
 
     private static boolean noKickModeEnabled;
     private static boolean useCaptchaInWarning;
+    private static boolean showIgnorableCaptchaCount;
     private static boolean useIndividualPlayerCaptchaTimes;
     private static boolean hideAFKTimesWhenBypassingKicks;
 
@@ -54,6 +56,7 @@ public class AntiAFKSettings
     {
         noKickModeEnabled = DEFAULT_NO_KICK_MODE_ENABLED;
         useCaptchaInWarning = DEFAULT_USE_CAPTCHA_IN_WARNING;
+        showIgnorableCaptchaCount = DEFAULT_SHOW_IGNORABLE_CAPTCHA_COUNT;
         useIndividualPlayerCaptchaTimes = DEFAULT_USE_INDIVIDUAL_PLAYER_CAPTCHA_TIMES;
         hideAFKTimesWhenBypassingKicks = DEFAULT_HIDE_AFK_TIMES_WHEN_BYPASSING_KICKS;
 
@@ -79,6 +82,7 @@ public class AntiAFKSettings
 
     public static boolean isNoKickModeEnabled() { return noKickModeEnabled; }
     public static boolean shouldUseCaptchaInWarning() { return useCaptchaInWarning; }
+    public static boolean shouldShowIgnorableCaptchaCount() { return showIgnorableCaptchaCount; }
     public static boolean shouldUseIndividualPlayerCaptchaTimes() { return useIndividualPlayerCaptchaTimes; }
     public static boolean shouldHideAFKTimesWhenBypassingKicks() { return hideAFKTimesWhenBypassingKicks; }
     public static int getSecondsToAFK() { return secondsToAFK; }
@@ -99,6 +103,7 @@ public class AntiAFKSettings
 
     protected static void setNoKickMode(boolean enable) { noKickModeEnabled = enable; }
     protected static void setUseCaptchaInWarning(boolean enable) { useCaptchaInWarning = enable; }
+    protected static void setShowIgnorableCaptchaCount(boolean enable) { showIgnorableCaptchaCount = enable; }
     protected static void setUseIndividualPlayerCaptchaTimes(boolean enable) { useIndividualPlayerCaptchaTimes = enable; }
     protected static void setHideAFKTimesWhenBypassingKicks(boolean enable) { hideAFKTimesWhenBypassingKicks = enable; }
     protected static void setSecondsToAFK(int seconds) { secondsToAFK = seconds; }

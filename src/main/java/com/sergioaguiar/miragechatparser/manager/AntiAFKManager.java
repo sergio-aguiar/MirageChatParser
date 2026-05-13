@@ -68,7 +68,7 @@ public class AntiAFKManager
             return forcedBy;
         }
 
-        public Text getCaptchaText()
+        public Text getCaptchaText(UUID playerUUID)
         {
             MutableText captchaText = Text.literal("").setStyle(Style.EMPTY);
 
@@ -96,6 +96,31 @@ public class AntiAFKManager
                 captchaText = captchaText
                     .append(Text.literal(answer)
                         .setStyle(Style.EMPTY.withColor(AntiAFKColors.getAFKCaptchaQuestionColor())));
+            }
+
+            if (AntiAFKSettings.shouldShowIgnorableCaptchaCount())
+            {
+                int ignorableCaptchaCount = getIgnorableCaptchaCount(playerUUID);
+
+                captchaText = captchaText
+                    .append(Text.literal(" (")
+                        .setStyle(Style.EMPTY.withColor(AntiAFKColors.getAFKCaptchaIgnorableBracketColor())));
+
+                captchaText = captchaText
+                    .append(Text.literal("Ignorable ")
+                        .setStyle(Style.EMPTY.withColor(AntiAFKColors.getAFKCaptchaTextColor())));
+
+                captchaText = captchaText
+                    .append(Text.literal(String.valueOf(ignorableCaptchaCount))
+                        .setStyle(Style.EMPTY.withColor(AntiAFKColors.getAFKCaptchaIgnorableCountColor())));
+
+                captchaText = captchaText
+                    .append(Text.literal(" time%s".formatted(ignorableCaptchaCount == 1 ? "" : "s"))
+                        .setStyle(Style.EMPTY.withColor(AntiAFKColors.getAFKCaptchaTextColor())));
+
+                captchaText = captchaText
+                    .append(Text.literal(")")
+                        .setStyle(Style.EMPTY.withColor(AntiAFKColors.getAFKCaptchaIgnorableBracketColor())));
             }
 
             return captchaText;
@@ -313,6 +338,11 @@ public class AntiAFKManager
         return playerLastMessages.getOrDefault(player.getUuid(), "");
     }
 
+    public static int getIgnorableCaptchaCount(UUID playerUUID)
+    {
+        return AntiAFKSettings.getFailedCaptchaBeforeKick() - playerIgnoredCaptchaCounts.getOrDefault(playerUUID, 0) - 1;
+    }
+
     public static boolean shouldPlayerBeMarkedAsAFK(ServerPlayerEntity player)
     {
         UUID playerUUID = player.getUuid();
@@ -524,7 +554,7 @@ public class AntiAFKManager
         }
 
         captchaMessage = captchaMessage
-            .append(playerActiveCaptchas.get(playerUUID).getCaptchaText());
+            .append(playerActiveCaptchas.get(playerUUID).getCaptchaText(playerUUID));
 
         player.sendMessage(captchaMessage);
     }
