@@ -13,6 +13,8 @@ PrefixColor = "#b81106"
 TextColor = "#d1d8eb"
 PlayerColor = "#cfe95e"
 QuestionColor = "#cfe95e"
+IgnorableBracketColor = "#b81106"
+IgnorableCountColor = "#cfe95e"
 
 [Kick]
 KickTitleColor = "#b81106"
@@ -27,5 +29,9 @@ KickInfoTimeColor = "#cfe95e"
 KickInfoBorderColor = "#e28c1b"
 
 [Warning]
-CaptchaTitleColor = "#b81106"
-CaptchaSubtitleColor = "#cfe95e"
+CaptchaWarningTitleColor = "#b81106"
+CaptchaWarningSubtitleColor = "#cfe95e"
+
+[AFKPlaceholder]
+PlaceholderBracketColor = "#d1d8eb"
+PlaceholderTextColor = "#2facdd"

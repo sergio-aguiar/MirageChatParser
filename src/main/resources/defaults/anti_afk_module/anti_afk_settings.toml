@@ -7,6 +7,8 @@
 NoKickMode = false
 # Whether the CAPTCHA warning that appears when you are in the last one before a kick should show the CAPTCHA or not (shows the warning if not) (true/false)
 UseCaptchaInWarning = false
+# Whether the CAPTCHA messages in chat should display how many more may be ignored before getting kicked (true/false)
+ShowIgnorableCaptchaCount = false
 # Whether CAPTCHA should be on a per-player basis or be synced server-wide (true/false)
 UseIndividualPlayerCaptchaTimes = false
 # Whether non-AFK messages should state how long the player was gone for or not, when they have permissions to bypass AFK kicks (true/false)
@@ -36,3 +38,15 @@ MinimumTicksToNotCountAsSuspiciousCaptcha = 20
 HideAFKCheckerMessagePrefix = false
 HideAFKCaptchaMessagePrefix = false
 HidePlayerWordStart = false
+
+[Warning]
+FadeInTicks = 10
+StayTicks = 40
+FadeOutTicks = 10
+
+[Performance]
+# Tick values that are smaller increase overall accuracy (for the likes of position and camera movement checks) but also decrease
+# overall performance (becomes more tick intensive). The default values should be fine, but you may need to tweak them depending on
+# your hardware and overall player count (because checks scale directly with player count).
+TicksBetweenCaptchaLogicChecks = 200
+TicksBetweenPositionAndCameraChecks = 10
