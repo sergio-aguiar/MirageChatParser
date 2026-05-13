@@ -24,6 +24,10 @@ public class AntiAFKSettings
     protected static final boolean DEFAULT_HIDE_AFK_CAPTCHA_MESSAGE_PREFIX = false;
     protected static final boolean DEFAULT_HIDE_PLAYER_WORD_START = false;
 
+    protected static final int DEFAULT_WARNING_FADE_IN_TICKS = 10;
+    protected static final int DEFAULT_WARNING_STAY_TICKS = 40;
+    protected static final int DEFAULT_WARNING_FADE_OUT_TICKS = 10;
+
     protected static final int DEFAULT_TICKS_BETWEEN_CAPTCHA_LOGIC_CHECKS = 200;
     protected static final int DEFAULT_TICKS_BETWEEN_POSITION_AND_CAMERA_CHECKS = 10;
 
@@ -48,6 +52,10 @@ public class AntiAFKSettings
     private static boolean hideAFKCheckerMessagePrefix;
     private static boolean hideAFKCaptchaMessagePrefix;
     private static boolean hidePlayerWordStart;
+
+    private static int warningFadeInTicks;
+    private static int warningStayTicks;
+    private static int warningFadeOutTicks;
 
     private static int ticksBetweenCaptchaLogicChecks;
     private static int ticksBetweenPositionAndCameraChecks;
@@ -76,6 +84,10 @@ public class AntiAFKSettings
         hideAFKCaptchaMessagePrefix = DEFAULT_HIDE_AFK_CAPTCHA_MESSAGE_PREFIX;
         hidePlayerWordStart = DEFAULT_HIDE_PLAYER_WORD_START;
 
+        warningFadeInTicks = DEFAULT_WARNING_FADE_IN_TICKS;
+        warningStayTicks = DEFAULT_WARNING_STAY_TICKS;
+        warningFadeOutTicks = DEFAULT_WARNING_FADE_OUT_TICKS;
+
         ticksBetweenCaptchaLogicChecks = DEFAULT_TICKS_BETWEEN_CAPTCHA_LOGIC_CHECKS;
         ticksBetweenPositionAndCameraChecks = DEFAULT_TICKS_BETWEEN_POSITION_AND_CAMERA_CHECKS;
     }
@@ -98,6 +110,9 @@ public class AntiAFKSettings
     public static boolean shouldHideAFKCheckerMessagePrefix() { return hideAFKCheckerMessagePrefix; }
     public static boolean shouldHideAFKCaptchaMessagePrefix() { return hideAFKCaptchaMessagePrefix; }
     public static boolean shouldHidePlayerWordStart() { return hidePlayerWordStart; }
+    public static int getWarningFadeInTicks() { return warningFadeInTicks; }
+    public static int getWarningStayTicks() { return warningStayTicks; }
+    public static int getWarningFadeOutTicks() { return warningFadeOutTicks; }
     public static int getTicksBetweenCaptchaLogicChecks() { return ticksBetweenCaptchaLogicChecks; }
     public static int getTicksBetweenPositionAndCameraChecks() { return ticksBetweenPositionAndCameraChecks; }
 
@@ -119,6 +134,9 @@ public class AntiAFKSettings
     protected static void setHideAFKCheckerMessagePrefix(boolean enable) { hideAFKCheckerMessagePrefix = enable; }
     protected static void setHideAFKCaptchaMessagePrefix(boolean enable) { hideAFKCaptchaMessagePrefix = enable; }
     protected static void setHidePlayerWordStart(boolean enable) { hidePlayerWordStart = enable; }
+    protected static void setWarningFadeInTicks(int ticks) { warningFadeInTicks = ticks; }
+    protected static void setWarningStayTicks(int ticks) { warningStayTicks = ticks; }
+    protected static void setWarningFadeOutTicks(int ticks) { warningFadeOutTicks = ticks; }
     protected static void setTicksBetweenCaptchaLogicChecks(int ticks) { ticksBetweenCaptchaLogicChecks = ticks; }
     protected static void setTicksBetweenPositionAndCameraChecks(int ticks) { ticksBetweenPositionAndCameraChecks = ticks; }
 }

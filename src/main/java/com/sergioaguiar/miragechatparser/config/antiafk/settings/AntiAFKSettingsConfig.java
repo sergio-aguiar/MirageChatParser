@@ -148,6 +148,24 @@ public class AntiAFKSettingsConfig
                 AntiAFKSettings.setHidePlayerWordStart(enabled);
             }
 
+            if (config.contains("Warning.FadeInTicks"))
+            {
+                int ticks = Math.max(config.getOrElse("Warning.FadeInTicks", AntiAFKSettings.DEFAULT_WARNING_FADE_IN_TICKS), 1);
+                AntiAFKSettings.setWarningFadeInTicks(ticks);
+            }
+
+            if (config.contains("Warning.StayTicks"))
+            {
+                int ticks = Math.max(config.getOrElse("Warning.StayTicks", AntiAFKSettings.DEFAULT_WARNING_STAY_TICKS), 1);
+                AntiAFKSettings.setWarningStayTicks(ticks);
+            }
+
+            if (config.contains("Warning.FadeOutTicks"))
+            {
+                int ticks = Math.max(config.getOrElse("Warning.FadeOutTicks", AntiAFKSettings.DEFAULT_WARNING_FADE_OUT_TICKS), 1);
+                AntiAFKSettings.setWarningFadeOutTicks(ticks);
+            }
+
             if (config.contains("Performance.TicksBetweenCaptchaLogicChecks"))
             {
                 int ticks = Math.max(config.getOrElse("Performance.TicksBetweenCaptchaLogicChecks", AntiAFKSettings.DEFAULT_TICKS_BETWEEN_CAPTCHA_LOGIC_CHECKS), 1);
@@ -211,6 +229,11 @@ public class AntiAFKSettingsConfig
             HideAFKCheckerMessagePrefix = false
             HideAFKCaptchaMessagePrefix = false
             HidePlayerWordStart = false
+
+            [Warning]
+            FadeInTicks = 10
+            StayTicks = 40
+            FadeOutTicks = 10
 
             [Performance]
             # Tick values that are smaller increase overall accuracy (for the likes of position and camera movement checks) but also decrease

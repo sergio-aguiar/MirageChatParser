@@ -17,6 +17,7 @@ import com.sergioaguiar.miragechatparser.util.PlaceholderUtils;
 import com.sergioaguiar.miragechatparser.util.TextUtils;
 
 import net.minecraft.network.packet.s2c.play.SubtitleS2CPacket;
+import net.minecraft.network.packet.s2c.play.TitleFadeS2CPacket;
 import net.minecraft.network.packet.s2c.play.TitleS2CPacket;
 import net.minecraft.server.MinecraftServer;
 import net.minecraft.server.PlayerManager;
@@ -533,6 +534,15 @@ public class AntiAFKManager
 
         if (ignoredCaptchas == AntiAFKSettings.getFailedCaptchaBeforeKick() - 1)
         {
+            player.networkHandler.sendPacket(
+                new TitleFadeS2CPacket
+                (
+                    AntiAFKSettings.getWarningFadeInTicks(),
+                    AntiAFKSettings.getWarningStayTicks(),
+                    AntiAFKSettings.getWarningFadeOutTicks()
+                )
+            );
+
             player.networkHandler.sendPacket(new TitleS2CPacket(
                 Text.literal(AntiAFKSettings.shouldUseCaptchaInWarning() ? "CAPTCHA" : "CAPTCHA WARNING")
                     .setStyle(Style.EMPTY.withColor(AntiAFKColors.getCaptchaWarningTitleColor()))
