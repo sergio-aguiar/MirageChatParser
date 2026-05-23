@@ -1,7 +1,7 @@
 {
   "required": true,
   "minVersion": "0.8",
-  "package": "com.sergioaguiar.miragechatparser.mixin",
+  "package": "com.sergioaguiar.mirageessentials.mixin",
   "compatibilityLevel": "JAVA_21",
   "mixins": [
     "antiafk.AntiAFKMsgCommandMixin"

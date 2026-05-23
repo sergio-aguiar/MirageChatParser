@@ -7,7 +7,7 @@ version = project.mod_version
 group = project.maven_group
 
 base {
-	archivesName = "MirageChatParser"
+	archivesName = "MirageEssentials"
 }
 
 repositories {
@@ -37,7 +37,7 @@ loom {
 	splitEnvironmentSourceSets()
 
 	mods {
-		"miragechatparser" {
+		"mirageessentials" {
 			sourceSet sourceSets.main
 			sourceSet sourceSets.client
 		}

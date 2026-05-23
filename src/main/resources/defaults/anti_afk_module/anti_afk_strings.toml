@@ -1,4 +1,4 @@
-    # MirageChatParser - Anti-AFK Strings Configuration
+    # MirageEssentials - Anti-AFK Strings Configuration
 
     # This is for the %mirageessentials:afk-textobject% placeholder.
     # It returns a Minecraft Text object with the configured styles (such as colors from anti_afk_colors.toml).
