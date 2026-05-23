@@ -54,6 +54,8 @@ public class AntiAFKStringsConfig
                 if (string != null && !string.isEmpty())
                     AntiAFKStrings.setMcFormattingPlaceholderAFKText(string);
             }
+
+            ModLogger.info("String configurations successfully loaded from anti_afk_strings.toml.");
         }
         catch (Exception e)
         {
@@ -66,13 +68,13 @@ public class AntiAFKStringsConfig
         String defaultContent = """
             # %s - Anti-AFK Strings Configuration    
 
-            # This is for the %mirageessentials:afk-textobject% placeholder.
+            # This is for the %%mirageessentials:afk-textobject%% placeholder.
             # It returns a Minecraft Text object with the configured styles (such as colors from anti_afk_colors.toml).
             # The returned text looks like "[<TextObjectPlaceholder.PlaceholderAFKText>]".
             [TextObjectPlaceholder]
             PlaceholderAFKText = "AFK"
 
-            # This is for the %mirageessentials:afk-mcformatting% placeholder.
+            # This is for the %%mirageessentials:afk-mcformatting%% placeholder.
             # It returns the configured text, meaning it will display correctly if you need to use Minecraft formatting.
             # The return will be exactly what you specify in MCFormattingPlaceholder.PlaceholderAFKText .
             # This is what you would use with other mods like TAB.
