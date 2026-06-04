@@ -28,9 +28,6 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.item.Items;
 import net.minecraft.registry.Registries;
 import net.minecraft.server.network.ServerPlayerEntity;
-import net.minecraft.text.MutableText;
-import net.minecraft.text.Style;
-import net.minecraft.text.Text;
 import net.minecraft.util.Identifier;
 
 public class GooeyLibsUtils
@@ -67,46 +64,71 @@ public class GooeyLibsUtils
                 {
                     if (CooldownManager.isOnCooldown(player))
                     {
-                        MutableText message = Text.literal("MirageChat » ")
-                                .setStyle(Style.EMPTY.withColor(ChatColors.getCommandPrefixColor()));
+                        TextUtils.CustomTextBuilder messageBuilder = new TextUtils.CustomTextBuilder();
 
-                        message = message
-                            .append(Text.literal("You are still on cooldown for ")
-                                .setStyle(Style.EMPTY.withColor(ChatColors.getCommandValueColor())));
+                        messageBuilder.append
+                        (
+                            "MirageChat » ",
+                            ChatColors.getCommandPrefixColor()
+                        );
 
-                        message = message
-                            .append(Text.literal("%.2f".formatted(CooldownManager.getRemainingTicks(player) / 20.0))
-                                .setStyle(Style.EMPTY.withColor(ChatColors.getCommandPrefixColor())));
+                        messageBuilder.append
+                        (
+                            "You are still on cooldown for ",
+                            ChatColors.getCommandValueColor()
+                        );
 
-                        message = message
-                            .append(Text.literal(" seconds.")
-                                .setStyle(Style.EMPTY.withColor(ChatColors.getCommandValueColor())));
+                        messageBuilder.append
+                        (
+                            "%.2f".formatted(CooldownManager.getRemainingTicks(player) / 20.0),
+                            ChatColors.getCommandPrefixColor()
+                        );
 
-                        player.sendMessage(message);
+                        messageBuilder.append
+                        (
+                            " seconds.",
+                            ChatColors.getCommandValueColor()
+                        );
+
+                        player.sendMessage(messageBuilder.getText());
                     }
                     else
                     {
                         if (isRideShout.get())
                         {
-                            MutableText message = Text.literal("RideShout » ")
-                                    .setStyle(Style.EMPTY.withColor(ChatColors.getCommandPrefixColor()));
+                            TextUtils.CustomTextBuilder messageBuilder = new TextUtils.CustomTextBuilder();
 
-                            message = message
-                                .append(Text.literal("Coming soon!")
-                                    .setStyle(Style.EMPTY.withColor(ChatColors.getCommandValueColor())));
+                            messageBuilder.append
+                            (
+                                "RideShout » ",
+                                ChatColors.getCommandPrefixColor()
+                            );
 
-                            player.sendMessage(message);
+                            messageBuilder.append
+                            (
+                                "Coming soon!",
+                                ChatColors.getCommandValueColor()
+                            );
+
+                            player.sendMessage(messageBuilder.getText());
                         }
                         else if (isRibbonShout.get())
                         {
-                            MutableText message = Text.literal("RibbonShout » ")
-                                    .setStyle(Style.EMPTY.withColor(ChatColors.getCommandPrefixColor()));
+                            TextUtils.CustomTextBuilder messageBuilder = new TextUtils.CustomTextBuilder();
 
-                            message = message
-                                .append(Text.literal("Coming soon!")
-                                    .setStyle(Style.EMPTY.withColor(ChatColors.getCommandValueColor())));
+                            messageBuilder.append
+                            (
+                                "RibbonShout » ",
+                                ChatColors.getCommandPrefixColor()
+                            );
 
-                            player.sendMessage(message);
+                            messageBuilder.append
+                            (
+                                "Coming soon!",
+                                ChatColors.getCommandValueColor()
+                            );
+
+                            player.sendMessage(messageBuilder.getText());
                         }
                         else ShoutUtils.doPartyShout(player, pokemon, closed.get(), self.get());
 

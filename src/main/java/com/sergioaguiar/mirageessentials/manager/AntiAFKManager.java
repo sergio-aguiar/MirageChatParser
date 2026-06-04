@@ -71,60 +71,78 @@ public class AntiAFKManager
 
         public Text getCaptchaText(UUID playerUUID)
         {
-            MutableText captchaText = Text.literal("").setStyle(Style.EMPTY);
+            TextUtils.CustomTextBuilder textBuilder = new TextUtils.CustomTextBuilder();
 
             if (isClick)
             {
                 MutableText tooltip = Text.literal("You only need to click once!")
                     .setStyle(Style.EMPTY);
 
-                captchaText = captchaText
-                    .append(Text.literal("Please prove you are active: ")
-                        .setStyle(Style.EMPTY.withColor(AntiAFKColors.getAFKCaptchaTextColor())));
+                textBuilder.append
+                (
+                    "Please prove you are active: ",
+                    AntiAFKColors.getAFKCaptchaTextColor()
+                );
 
-                captchaText = captchaText
-                    .append(Text.literal("[Click here]")
+                textBuilder.append
+                (
+                    Text.literal("[Click here]")
                         .setStyle(Style.EMPTY.withColor(AntiAFKColors.getAFKCaptchaQuestionColor())
                             .withHoverEvent(new HoverEvent(HoverEvent.Action.SHOW_TEXT, tooltip))
-                            .withClickEvent(new ClickEvent(ClickEvent.Action.RUN_COMMAND, "/mirageantiafk fakecaptchaclick %s".formatted(answer)))));
+                            .withClickEvent(new ClickEvent(ClickEvent.Action.RUN_COMMAND, "/mirageantiafk fakecaptchaclick %s".formatted(answer))))
+                );
             }
             else
             {
-                captchaText = captchaText
-                    .append(Text.literal("Please type this into chat: ")
-                        .setStyle(Style.EMPTY.withColor(AntiAFKColors.getAFKCaptchaTextColor())));
+                textBuilder.append
+                (
+                    "Please type this into chat: ",
+                    AntiAFKColors.getAFKCaptchaTextColor()
+                );
 
-                captchaText = captchaText
-                    .append(Text.literal(answer)
-                        .setStyle(Style.EMPTY.withColor(AntiAFKColors.getAFKCaptchaQuestionColor())));
+                textBuilder.append
+                (
+                    answer,
+                    AntiAFKColors.getAFKCaptchaQuestionColor()
+                );
             }
 
             if (AntiAFKSettings.shouldShowIgnorableCaptchaCount())
             {
                 int ignorableCaptchaCount = getIgnorableCaptchaCount(playerUUID);
 
-                captchaText = captchaText
-                    .append(Text.literal(" (")
-                        .setStyle(Style.EMPTY.withColor(AntiAFKColors.getAFKCaptchaIgnorableBracketColor())));
+                textBuilder.append
+                (
+                    " (",
+                    AntiAFKColors.getAFKCaptchaIgnorableBracketColor()
+                );
 
-                captchaText = captchaText
-                    .append(Text.literal("Ignorable ")
-                        .setStyle(Style.EMPTY.withColor(AntiAFKColors.getAFKCaptchaTextColor())));
+                textBuilder.append
+                (
+                    "Ignorable ",
+                    AntiAFKColors.getAFKCaptchaTextColor()
+                );
 
-                captchaText = captchaText
-                    .append(Text.literal(String.valueOf(ignorableCaptchaCount))
-                        .setStyle(Style.EMPTY.withColor(AntiAFKColors.getAFKCaptchaIgnorableCountColor())));
+                textBuilder.append
+                (
+                    String.valueOf(ignorableCaptchaCount),
+                    AntiAFKColors.getAFKCaptchaIgnorableCountColor()
+                );
 
-                captchaText = captchaText
-                    .append(Text.literal(" time%s".formatted(ignorableCaptchaCount == 1 ? "" : "s"))
-                        .setStyle(Style.EMPTY.withColor(AntiAFKColors.getAFKCaptchaTextColor())));
+                textBuilder.append
+                (
+                    " time%s".formatted(ignorableCaptchaCount == 1 ? "" : "s"),
+                    AntiAFKColors.getAFKCaptchaTextColor()
+                );
 
-                captchaText = captchaText
-                    .append(Text.literal(")")
-                        .setStyle(Style.EMPTY.withColor(AntiAFKColors.getAFKCaptchaIgnorableBracketColor())));
+                textBuilder.append
+                (
+                    ")",
+                    AntiAFKColors.getAFKCaptchaIgnorableBracketColor()
+                );
             }
 
-            return captchaText;
+            return textBuilder.getText();
         }
 
         public String getWarningSubtitle()
@@ -554,19 +572,23 @@ public class AntiAFKManager
             ));
         }
 
-        MutableText captchaMessage = Text.literal("").setStyle(Style.EMPTY);
+        TextUtils.CustomTextBuilder textBuilder = new TextUtils.CustomTextBuilder();
 
         if (!AntiAFKSettings.shouldHideAFKCaptchaMessagePrefix())
         {
-            captchaMessage = captchaMessage
-                .append(Text.literal("AFKaptcha » ")
-                    .setStyle(Style.EMPTY.withColor(AntiAFKColors.getAFKCaptchaPrefixColor())));
+            textBuilder.append
+            (
+                "AFKaptcha » ",
+                AntiAFKColors.getAFKCaptchaPrefixColor()
+            );
         }
 
-        captchaMessage = captchaMessage
-            .append(playerActiveCaptchas.get(playerUUID).getCaptchaText(playerUUID));
+        textBuilder.append
+        (
+            playerActiveCaptchas.get(playerUUID).getCaptchaText(playerUUID)
+        );
 
-        player.sendMessage(captchaMessage);
+        player.sendMessage(textBuilder.getText());
     }
 
     public static boolean hasActiveClickCaptcha(ServerPlayerEntity player)

@@ -11,8 +11,6 @@ import com.sergioaguiar.mirageessentials.parser.PlaceholderResolver;
 
 import net.minecraft.nbt.NbtCompound;
 import net.minecraft.server.network.ServerPlayerEntity;
-import net.minecraft.text.MutableText;
-import net.minecraft.text.Style;
 import net.minecraft.text.Text;
 
 public class ShoutUtils
@@ -21,24 +19,38 @@ public class ShoutUtils
     {
         if (pokemon == null)
         {
-            MutableText message = Text.literal("DebugShout » ")
-                    .setStyle(Style.EMPTY.withColor(ChatColors.getCommandPrefixColor()));
+            TextUtils.CustomTextBuilder messageBuilder = new TextUtils.CustomTextBuilder();
 
-            message = message
-                .append(Text.literal("You can not shout an empty slot!")
-                    .setStyle(Style.EMPTY.withColor(ChatColors.getCommandValueColor())));
+            messageBuilder.append
+            (
+                "DebugShout » ",
+                ChatColors.getCommandPrefixColor()
+            );
 
-            player.sendMessage(message, false);
+            messageBuilder.append
+            (
+                "You can not shout an empty slot!",
+                ChatColors.getCommandValueColor()
+            );
+
+            player.sendMessage(messageBuilder.getText(), false);
 
             return;
         }
 
-        MutableText coloredLine = Text.literal("DebugShout » ")
-                .setStyle(Style.EMPTY.withColor(ChatColors.getCommandPrefixColor()));
+        TextUtils.CustomTextBuilder lineBuilder = new TextUtils.CustomTextBuilder();
 
-        coloredLine = coloredLine
-            .append(Text.literal("Only you can see this message!")
-                .setStyle(Style.EMPTY.withColor(ChatColors.getCommandValueColor())));
+        lineBuilder.append
+        (
+            "DebugShout » ",
+            ChatColors.getCommandPrefixColor()
+        );
+
+        lineBuilder.append
+        (
+            "Only you can see this message!",
+            ChatColors.getCommandValueColor()
+        );
 
         Set<String> aspects = pokemon.getAspects();
         Set<String> aspectsForced = pokemon.getForcedAspects();
@@ -46,169 +58,251 @@ public class ShoutUtils
         NbtCompound persistentData = pokemon.getPersistentData();
         Set<String> persistentDataKeys = pokemon.getPersistentData().getKeys();
 
-        coloredLine = coloredLine
-            .append(Text.literal("\n\n"));
+        lineBuilder.append
+        (
+            "\n\n",
+            ChatColors.getCommandValueColor()
+        );
 
-        coloredLine = coloredLine
-            .append(Text.literal("Aspect List (%d total):".formatted(aspects.size()))
-                .setStyle(Style.EMPTY.withColor(ChatColors.getCommandPrefixColor())));
+        lineBuilder.append
+        (
+            "Aspect List (%d total):".formatted(aspects.size()),
+            ChatColors.getCommandPrefixColor()
+        );
 
         for (String aspect : aspects)
         {
-            coloredLine = coloredLine
-                .append(Text.literal("\n"));
+            lineBuilder.append
+            (
+                "\n",
+                ChatColors.getCommandValueColor()
+            );
 
-            coloredLine = coloredLine
-                .append(Text.literal("- ")
-                    .setStyle(Style.EMPTY.withColor(ChatColors.getCommandPrefixColor())));
+            lineBuilder.append
+            (
+                "- ",
+                ChatColors.getCommandPrefixColor()
+            );
 
-            coloredLine = coloredLine
-                .append(Text.literal("%s".formatted(aspect))
-                    .setStyle(Style.EMPTY.withColor(ChatColors.getCommandValueColor())));
+            lineBuilder.append
+            (
+                "%s".formatted(aspect),
+                ChatColors.getCommandValueColor()
+            );
         }
 
-        coloredLine = coloredLine
-            .append(Text.literal("\n\n"));
+        lineBuilder.append
+        (
+            "\n\n",
+            ChatColors.getCommandValueColor()
+        );
 
-        coloredLine = coloredLine
-            .append(Text.literal("Forced Aspect List (%d total):".formatted(aspectsForced.size()))
-                .setStyle(Style.EMPTY.withColor(ChatColors.getCommandPrefixColor())));
+        lineBuilder.append
+        (
+            "Forced Aspect List (%d total):".formatted(aspectsForced.size()),
+            ChatColors.getCommandPrefixColor()
+        );
 
         for (String aspectForced : aspectsForced)
         {
-            coloredLine = coloredLine
-                .append(Text.literal("\n"));
+            lineBuilder.append
+            (
+                "\n",
+                ChatColors.getCommandValueColor()
+            );
 
-            coloredLine = coloredLine
-                .append(Text.literal("- ")
-                    .setStyle(Style.EMPTY.withColor(ChatColors.getCommandPrefixColor())));
+            lineBuilder.append
+            (
+                "- ",
+                ChatColors.getCommandPrefixColor()
+            );
 
-            coloredLine = coloredLine
-                .append(Text.literal("%s".formatted(aspectForced))
-                    .setStyle(Style.EMPTY.withColor(ChatColors.getCommandValueColor())));
+            lineBuilder.append
+            (
+                "%s".formatted(aspectForced),
+                ChatColors.getCommandValueColor()
+            );
         }
 
-        coloredLine = coloredLine
-            .append(Text.literal("\n\n"));
+        lineBuilder.append
+        (
+            "\n\n",
+            ChatColors.getCommandValueColor()
+        );
 
-        coloredLine = coloredLine
-            .append(Text.literal("Species Features List (%d total):".formatted(speciesFeatures.size()))
-                .setStyle(Style.EMPTY.withColor(ChatColors.getCommandPrefixColor())));
+        lineBuilder.append
+        (
+            "Species Features List (%d total):".formatted(speciesFeatures.size()),
+            ChatColors.getCommandPrefixColor()
+        );
 
         for (SpeciesFeature speciesFeature : speciesFeatures)
         {
-            coloredLine = coloredLine
-                .append(Text.literal("\n"));
+            lineBuilder.append
+            (
+                "\n",
+                ChatColors.getCommandValueColor()
+            );
 
-            coloredLine = coloredLine
-                .append(Text.literal("- %s: ".formatted(speciesFeature.getName()))
-                    .setStyle(Style.EMPTY.withColor(ChatColors.getCommandPrefixColor())));
+            lineBuilder.append
+            (
+                "- %s: ".formatted(speciesFeature.getName()),
+                ChatColors.getCommandPrefixColor()
+            );
 
-            coloredLine = coloredLine
-                .append(Text.literal("%s".formatted(speciesFeature.toString()))
-                    .setStyle(Style.EMPTY.withColor(ChatColors.getCommandValueColor())));
+            lineBuilder.append
+            (
+                "%s".formatted(speciesFeature.toString()),
+                ChatColors.getCommandValueColor()
+            );
         }
 
-        coloredLine = coloredLine
-            .append(Text.literal("\n\n"));
+        lineBuilder.append
+        (
+            "\n\n",
+            ChatColors.getCommandValueColor()
+        );
 
-        coloredLine = coloredLine
-            .append(Text.literal("Persistent Data List (%d total):".formatted(persistentDataKeys.size()))
-                .setStyle(Style.EMPTY.withColor(ChatColors.getCommandPrefixColor())));
+        lineBuilder.append
+        (
+            "Persistent Data List (%d total):".formatted(persistentDataKeys.size()),
+            ChatColors.getCommandPrefixColor()
+        );
 
         for (String persistentDataKey : persistentDataKeys)
         {
-            coloredLine = coloredLine
-                .append(Text.literal("\n"));
+            lineBuilder.append
+            (
+                "\n",
+                ChatColors.getCommandValueColor()
+            );
 
-            coloredLine = coloredLine
-                .append(Text.literal("- %s: ".formatted(persistentDataKey))
-                    .setStyle(Style.EMPTY.withColor(ChatColors.getCommandPrefixColor())));
+            lineBuilder.append
+            (
+                "- %s: ".formatted(persistentDataKey),
+                ChatColors.getCommandPrefixColor()
+            );
 
-            coloredLine = coloredLine
-                .append(Text.literal("%s".formatted(persistentData.get(persistentDataKey).asString()))
-                    .setStyle(Style.EMPTY.withColor(ChatColors.getCommandValueColor())));
+            lineBuilder.append
+            (
+                "%s".formatted(persistentData.get(persistentDataKey).asString()),
+                ChatColors.getCommandValueColor()
+            );
         }
 
-        player.sendMessage(coloredLine);
+        player.sendMessage(lineBuilder.getText());
     }
 
     public static void doPCShout(ServerPlayerEntity player, Pokemon pokemon, int box, int slot, boolean closed, boolean self)
     {
         if (pokemon == null)
         {
-            MutableText message = Text.literal("PCShout » ")
-                    .setStyle(Style.EMPTY.withColor(ChatColors.getCommandPrefixColor()));
+            TextUtils.CustomTextBuilder messageBuilder = new TextUtils.CustomTextBuilder();
 
-            message = message
-                .append(Text.literal("You can not shout an empty slot!")
-                    .setStyle(Style.EMPTY.withColor(ChatColors.getCommandValueColor())));
+            messageBuilder.append
+            (
+                "PCShout » ",
+                ChatColors.getCommandPrefixColor()
+            );
 
-            player.sendMessage(message, false);
+            messageBuilder.append
+            (
+                "You can not shout an empty slot!",
+                ChatColors.getCommandValueColor()
+            );
+
+            player.sendMessage(messageBuilder.getText(), false);
 
             return;
         }
 
         Text message = PlaceholderResolver.getPCPokemonName(player, box, slot, closed);
 
-        MutableText shoutText = Text.literal("PCShout » ")
-                .setStyle(Style.EMPTY.withColor(ChatColors.getCommandPrefixColor()));
+        TextUtils.CustomTextBuilder shoutBuilder = new TextUtils.CustomTextBuilder();
 
-        shoutText = shoutText
-            .append(Text.literal("Player ")
-                .setStyle(Style.EMPTY.withColor(ChatColors.getCommandValueColor())));
+        shoutBuilder.append
+        (
+            "PCShout » ",
+            ChatColors.getCommandPrefixColor()
+        );
 
-        shoutText = shoutText
-            .append(Text.literal(player.getDisplayName().getString())
-                .setStyle(Style.EMPTY.withColor(ChatColors.getCommandPlayerColor())));
+        shoutBuilder.append
+        (
+            "Player ",
+            ChatColors.getCommandValueColor()
+        );
 
-        shoutText = shoutText
-            .append(Text.literal(" shouted: ")
-                .setStyle(Style.EMPTY.withColor(ChatColors.getCommandValueColor())));
+        shoutBuilder.append
+        (
+            player.getDisplayName().getString(),
+            ChatColors.getCommandPlayerColor()
+        );
 
-        shoutText = shoutText
-            .append(message);
+        shoutBuilder.append
+        (
+            " shouted: ",
+            ChatColors.getCommandValueColor()
+        );
 
-        if (self) player.sendMessage(shoutText, false);
-        else player.getServer().getPlayerManager().broadcast(shoutText, false);
+        shoutBuilder.append(message);
+
+        if (self) player.sendMessage(shoutBuilder.getText(), false);
+        else player.getServer().getPlayerManager().broadcast(shoutBuilder.getText(), false);
     }
 
     public static void doPartyShout(ServerPlayerEntity player, Pokemon pokemon, boolean closed, boolean self)
     {
         if (pokemon == null)
         {
-            MutableText message = Text.literal("PartyShout » ")
-                    .setStyle(Style.EMPTY.withColor(ChatColors.getCommandPrefixColor()));
+            TextUtils.CustomTextBuilder messageBuilder = new TextUtils.CustomTextBuilder();
 
-            message = message
-                .append(Text.literal("You can not shout an empty slot!")
-                    .setStyle(Style.EMPTY.withColor(ChatColors.getCommandValueColor())));
+            messageBuilder.append
+            (
+                "PartyShout » ",
+                ChatColors.getCommandPrefixColor()
+            );
 
-            player.sendMessage(message, false);
+            messageBuilder.append
+            (
+                "You can not shout an empty slot!",
+                ChatColors.getCommandValueColor()
+            );
+
+            player.sendMessage(messageBuilder.getText(), false);
 
             return;
         }
 
-        MutableText shoutText = Text.literal("PartyShout » ")
-                .setStyle(Style.EMPTY.withColor(ChatColors.getCommandPrefixColor()));
+        TextUtils.CustomTextBuilder shoutBuilder = new TextUtils.CustomTextBuilder();
 
-        shoutText = shoutText
-            .append(Text.literal("Player ")
-                .setStyle(Style.EMPTY.withColor(ChatColors.getCommandValueColor())));
+        shoutBuilder.append
+        (
+            "PartyShout » ",
+            ChatColors.getCommandPrefixColor()
+        );
 
-        shoutText = shoutText
-            .append(Text.literal(player.getDisplayName().getString())
-                .setStyle(Style.EMPTY.withColor(ChatColors.getCommandPlayerColor())));
+        shoutBuilder.append
+        (
+            "Player ",
+            ChatColors.getCommandValueColor()
+        );
 
-        shoutText = shoutText
-            .append(Text.literal(" shouted: ")
-                .setStyle(Style.EMPTY.withColor(ChatColors.getCommandValueColor())));
+        shoutBuilder.append
+        (
+            player.getDisplayName().getString(),
+            ChatColors.getCommandPlayerColor()
+        );
 
-        shoutText = shoutText
-            .append(PlaceholderResolver.buildPokemonText(pokemon, closed));
+        shoutBuilder.append
+        (
+            " shouted: ",
+            ChatColors.getCommandValueColor()
+        );
 
-        if (self) player.sendMessage(shoutText, false);
-        else player.getServer().getPlayerManager().broadcast(shoutText, false);
+        shoutBuilder.append(PlaceholderResolver.buildPokemonText(pokemon, closed));
+
+        if (self) player.sendMessage(shoutBuilder.getText(), false);
+        else player.getServer().getPlayerManager().broadcast(shoutBuilder.getText(), false);
     }
 
     public static void doPartyShoutAll(ServerPlayerEntity player, boolean closed, boolean self)
@@ -217,45 +311,80 @@ public class ShoutUtils
 
         if (pokemonInfos.isEmpty())
         {
-            MutableText message = Text.literal("PartyShoutAll » ")
-                    .setStyle(Style.EMPTY.withColor(ChatColors.getCommandPrefixColor()));
+            TextUtils.CustomTextBuilder messageBuilder = new TextUtils.CustomTextBuilder();
 
-            message = message
-                .append(Text.literal("You can not shout an empty party!")
-                    .setStyle(Style.EMPTY.withColor(ChatColors.getCommandValueColor())));
+            messageBuilder.append
+            (
+                "PartyShoutAll » ",
+                ChatColors.getCommandPrefixColor()
+            );
 
-            player.sendMessage(message, false);
+            messageBuilder.append
+            (
+                "You can not shout an empty party!",
+                ChatColors.getCommandValueColor()
+            );
+
+            player.sendMessage(messageBuilder.getText(), false);
 
             return;
         }
         
-        MutableText shoutText = Text.literal("PartyShoutAll » ")
-                .setStyle(Style.EMPTY.withColor(ChatColors.getCommandPrefixColor()));
+        TextUtils.CustomTextBuilder shoutBuilder = new TextUtils.CustomTextBuilder();
 
-        shoutText = shoutText
-            .append(Text.literal("Player ")
-                .setStyle(Style.EMPTY.withColor(ChatColors.getCommandValueColor())));
+        shoutBuilder.append
+        (
+            "PartyShoutAll » ",
+            ChatColors.getCommandPrefixColor()
+        );
 
-        shoutText = shoutText
-            .append(Text.literal(player.getDisplayName().getString())
-                .setStyle(Style.EMPTY.withColor(ChatColors.getCommandPlayerColor())));
+        shoutBuilder.append
+        (
+            "Player ",
+            ChatColors.getCommandValueColor()
+        );
 
-        shoutText = shoutText
-            .append(Text.literal(" shouted: ")
-                .setStyle(Style.EMPTY.withColor(ChatColors.getCommandValueColor())));
+        shoutBuilder.append
+        (
+            player.getDisplayName().getString(),
+            ChatColors.getCommandPlayerColor()
+        );
 
-        shoutText = shoutText
-            .append(Text.literal("\n"));
+        shoutBuilder.append
+        (
+            " shouted: ",
+            ChatColors.getCommandValueColor()
+        );
+
+        shoutBuilder.append
+        (
+            "\n",
+            ChatColors.getCommandValueColor()
+        );
 
         int infoAmount = pokemonInfos.size();
         for (int i = 0; i < infoAmount; i++)
         {
-            shoutText = shoutText.append(pokemonInfos.get(i));
-            if (i == 2) shoutText = shoutText.append(Text.literal("\n"));
-            else if (i != infoAmount - 1) shoutText = shoutText.append(Text.literal(" "));
+            shoutBuilder.append(pokemonInfos.get(i));
+            if (i == 2)
+            {
+                shoutBuilder.append
+                (
+                    "\n",
+                    ChatColors.getCommandValueColor()
+                );
+            }
+            else if (i != infoAmount - 1)
+            {
+                shoutBuilder.append
+                (
+                    " ",
+                    ChatColors.getCommandValueColor()
+                );
+            }
         }
 
-        if (self) player.sendMessage(shoutText, false);
-        else player.getServer().getPlayerManager().broadcast(shoutText, false);
+        if (self) player.sendMessage(shoutBuilder.getText(), false);
+        else player.getServer().getPlayerManager().broadcast(shoutBuilder.getText(), false);
     }
 }

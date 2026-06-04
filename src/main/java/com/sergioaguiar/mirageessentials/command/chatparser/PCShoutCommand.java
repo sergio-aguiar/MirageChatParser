@@ -11,14 +11,12 @@ import com.sergioaguiar.mirageessentials.config.chatparser.colors.ChatColors;
 import com.sergioaguiar.mirageessentials.util.LuckPermsUtils;
 import com.sergioaguiar.mirageessentials.util.ModLogger;
 import com.sergioaguiar.mirageessentials.util.ShoutUtils;
+import com.sergioaguiar.mirageessentials.util.TextUtils;
 
 import net.fabricmc.fabric.api.command.v2.CommandRegistrationCallback;
 import net.minecraft.server.command.CommandManager;
 import net.minecraft.server.command.ServerCommandSource;
 import net.minecraft.server.network.ServerPlayerEntity;
-import net.minecraft.text.MutableText;
-import net.minecraft.text.Style;
-import net.minecraft.text.Text;
 
 public class PCShoutCommand
 {
@@ -75,14 +73,21 @@ public class PCShoutCommand
         int maxBoxes = Cobblemon.INSTANCE.getStorage().getPC(player).getBoxes().size();
         if (box > maxBoxes)
         {
-            MutableText message = Text.literal("PCShout » ")
-                    .setStyle(Style.EMPTY.withColor(ChatColors.getCommandPrefixColor()));
+            TextUtils.CustomTextBuilder textBuilder = new TextUtils.CustomTextBuilder();
 
-            message = message
-                .append(Text.literal("You only have %s boxes!".formatted(maxBoxes))
-                    .setStyle(Style.EMPTY.withColor(ChatColors.getCommandValueColor())));
+            textBuilder.append
+            (
+                "PCShout » ",
+                ChatColors.getCommandPrefixColor()
+            );
 
-            player.sendMessage(message, false);
+            textBuilder.append
+            (
+                "You only have %s boxes!".formatted(maxBoxes),
+                ChatColors.getCommandValueColor()
+            );
+
+            player.sendMessage(textBuilder.getText(), false);
 
             return 1;
         }

@@ -14,6 +14,7 @@ import com.sergioaguiar.mirageessentials.gui.buttons.ShoutTypeGooeyButton;
 import com.sergioaguiar.mirageessentials.gui.buttons.ShoutVisibilityGooeyButton;
 import com.sergioaguiar.mirageessentials.manager.CooldownManager;
 import com.sergioaguiar.mirageessentials.util.GooeyLibsUtils;
+import com.sergioaguiar.mirageessentials.util.TextUtils;
 import com.sergioaguiar.mirageessentials.util.ShoutUtils;
 
 import ca.landonjw.gooeylibs2.api.button.GooeyButton;
@@ -22,9 +23,6 @@ import ca.landonjw.gooeylibs2.api.template.types.ChestTemplate;
 import net.minecraft.component.DataComponentTypes;
 import net.minecraft.component.type.LoreComponent;
 import net.minecraft.server.network.ServerPlayerEntity;
-import net.minecraft.text.MutableText;
-import net.minecraft.text.Style;
-import net.minecraft.text.Text;
 
 public class BasePartyCheckGooeyTemplate extends ChestTemplate
 {
@@ -122,6 +120,20 @@ public class BasePartyCheckGooeyTemplate extends ChestTemplate
 
     protected void configurePartyShoutAllButton(ServerPlayerEntity player, boolean closed, boolean self, int row, int collumn)
     {
+        TextUtils.CustomTextBuilder titleBuilder = new TextUtils.CustomTextBuilder();
+        titleBuilder.append
+        (
+            ChatStrings.getPartyCheckPokeShoutAllTitleString(),
+            ChatColors.getPartyCheckButtonTitleColor()
+        );
+
+        TextUtils.CustomTextBuilder footerBuilder = new TextUtils.CustomTextBuilder();
+        footerBuilder.append
+        (
+            ChatStrings.getPartyCheckPartyShoutAllFooterString(),
+            ChatColors.getPartyCheckFooterColorColor()
+        );
+
         set
         (
             row,
@@ -130,58 +142,83 @@ public class BasePartyCheckGooeyTemplate extends ChestTemplate
                 .display(GooeyLibsUtils.getCustomModelDataItemStack(GUITextures.getPartyShoutAllItem(), GUITextures.getPartyShoutAllCustomModelData()))
                 .with
                 (
-                    DataComponentTypes.CUSTOM_NAME, 
-                    Text.literal(ChatStrings.getPartyCheckPokeShoutAllTitleString()).setStyle(Style.EMPTY.withColor(ChatColors.getPartyCheckButtonTitleColor()).withItalic(false))
+                    DataComponentTypes.CUSTOM_NAME,
+                    titleBuilder.getText()
                 )
                 .with
                 (
                     DataComponentTypes.LORE,
-                    new LoreComponent(List.of(Text.literal(ChatStrings.getPartyCheckPartyShoutAllFooterString()).setStyle(Style.EMPTY.withColor(ChatColors.getPartyCheckFooterColorColor()).withItalic(false))))
+                    new LoreComponent(List.of(footerBuilder.getText()))
                 )
                 .onClick((action) ->
                 {
                     if (CooldownManager.isOnCooldown(player))
                     {
-                        MutableText message = Text.literal("MirageChat » ")
-                                .setStyle(Style.EMPTY.withColor(ChatColors.getCommandPrefixColor()));
+                        TextUtils.CustomTextBuilder messageBuilder = new TextUtils.CustomTextBuilder();
 
-                        message = message
-                            .append(Text.literal("You are still on cooldown for ")
-                                .setStyle(Style.EMPTY.withColor(ChatColors.getCommandValueColor())));
+                        messageBuilder.append
+                        (
+                            "MirageChat » ",
+                            ChatColors.getCommandPrefixColor()
+                        );
 
-                        message = message
-                            .append(Text.literal("%.2f".formatted(CooldownManager.getRemainingTicks(player) / 20.0))
-                                .setStyle(Style.EMPTY.withColor(ChatColors.getCommandPrefixColor())));
+                        messageBuilder.append
+                        (
+                            "You are still on cooldown for ",
+                            ChatColors.getCommandValueColor()
+                        );
 
-                        message = message
-                            .append(Text.literal(" seconds.")
-                                .setStyle(Style.EMPTY.withColor(ChatColors.getCommandValueColor())));
+                        messageBuilder.append
+                        (
+                            "%.2f".formatted(CooldownManager.getRemainingTicks(player) / 20.0),
+                            ChatColors.getCommandPrefixColor()
+                        );
 
-                        player.sendMessage(message);
+                        messageBuilder.append
+                        (
+                            " seconds.",
+                            ChatColors.getCommandValueColor()
+                        );
+
+                        player.sendMessage(messageBuilder.getText());
                     }
                     else
                     {
                         if (shoutTypeButton.isRideShout()) 
                         {
-                            MutableText message = Text.literal("RideShout » ")
-                                    .setStyle(Style.EMPTY.withColor(ChatColors.getCommandPrefixColor()));
+                            TextUtils.CustomTextBuilder messageBuilder = new TextUtils.CustomTextBuilder();
 
-                            message = message
-                                .append(Text.literal("Coming soon!")
-                                    .setStyle(Style.EMPTY.withColor(ChatColors.getCommandValueColor())));
+                            messageBuilder.append
+                            (
+                                "RideShout » ",
+                                ChatColors.getCommandPrefixColor()
+                            );
 
-                            player.sendMessage(message);
+                            messageBuilder.append
+                            (
+                                "Coming soon!",
+                                ChatColors.getCommandValueColor()
+                            );
+
+                            player.sendMessage(messageBuilder.getText());
                         }
                         else if (shoutTypeButton.isRibbonShout()) 
                         {
-                            MutableText message = Text.literal("RibbonShout » ")
-                                    .setStyle(Style.EMPTY.withColor(ChatColors.getCommandPrefixColor()));
+                            TextUtils.CustomTextBuilder messageBuilder = new TextUtils.CustomTextBuilder();
+                            
+                            messageBuilder.append
+                            (
+                                "RibbonShout » ",
+                                ChatColors.getCommandPrefixColor()
+                            );
 
-                            message = message
-                                .append(Text.literal("Coming soon!")
-                                    .setStyle(Style.EMPTY.withColor(ChatColors.getCommandValueColor())));
+                            messageBuilder.append
+                            (
+                                "Coming soon!",
+                                ChatColors.getCommandValueColor()
+                            );
 
-                            player.sendMessage(message);
+                            player.sendMessage(messageBuilder.getText());
                         }
                         else ShoutUtils.doPartyShoutAll(player, shoutVisibilityButton.isClosedShout(), shoutVisibilityButton.isOpenShout());
 

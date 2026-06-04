@@ -9,14 +9,13 @@ import com.sergioaguiar.mirageessentials.config.chatparser.colors.ChatColors;
 import com.sergioaguiar.mirageessentials.config.chatparser.strings.ChatStrings;
 import com.sergioaguiar.mirageessentials.config.chatparser.textures.GUITextures;
 import com.sergioaguiar.mirageessentials.util.GooeyLibsUtils;
+import com.sergioaguiar.mirageessentials.util.TextUtils;
 
 import ca.landonjw.gooeylibs2.api.button.ButtonAction;
 import ca.landonjw.gooeylibs2.api.button.ButtonBase;
 import net.minecraft.component.DataComponentTypes;
 import net.minecraft.component.type.LoreComponent;
 import net.minecraft.item.ItemStack;
-import net.minecraft.text.MutableText;
-import net.minecraft.text.Style;
 import net.minecraft.text.Text;
 
 public class ShoutTypeGooeyButton extends ButtonBase
@@ -101,34 +100,68 @@ public class ShoutTypeGooeyButton extends ButtonBase
 
     private static LoreComponent getShoutTypeButtonLore(int buttonIndex)
     {
+        TextUtils.CustomTextBuilder emptyTextBuilder = new TextUtils.CustomTextBuilder();
+
+        emptyTextBuilder.append
+        (
+            "",
+            ChatColors.getPartyCheckOptionNameColor()
+        );
+
         List<Text> loreText = List.of
         (
             getButtonLoreLine(ShoutType.GENERAL.ordinal(), buttonIndex),
             getButtonLoreLine(ShoutType.RIDE.ordinal(), buttonIndex),
             getButtonLoreLine(ShoutType.RIBBON.ordinal(), buttonIndex),
-            Text.literal("")
-                .setStyle(Style.EMPTY.withItalic(false)),
-            Text.literal(ChatStrings.getPartyCheckFooterString())
-                .setStyle(Style.EMPTY.withColor(ChatColors.getPartyCheckFooterColorColor()).withItalic(false))
+            emptyTextBuilder.getText(),
+            buildPartyCheckFooterText()
         );
 
         return new LoreComponent(loreText);
     }
 
+    private static Text buildPartyCheckFooterText()
+    {
+        TextUtils.CustomTextBuilder textBuilder = new TextUtils.CustomTextBuilder();
+
+        textBuilder.append
+        (
+            ChatStrings.getPartyCheckFooterString(),
+            ChatColors.getPartyCheckFooterColorColor()
+        );
+
+        return textBuilder.getText();
+    }
+
     private static Text getButtonLoreLine(int buttonIndex, int lineIndex)
     {
-        MutableText text = Text.literal(ShoutType.values()[buttonIndex].getName())
-                .setStyle(Style.EMPTY.withColor(ChatColors.getPartyCheckOptionNameColor()).withItalic(false).withBold(buttonIndex == lineIndex));
+        TextUtils.CustomTextBuilder textBuilder = new TextUtils.CustomTextBuilder();
 
-        text = text
-            .append(Text.literal(ChatStrings.getPartyCheckSplitterString())
-                .setStyle(Style.EMPTY.withColor(ChatColors.getPartyCheckOptionSplitterColor()).withItalic(false).withBold(buttonIndex == lineIndex)));
+        textBuilder.append
+        (
+            ShoutType.values()[buttonIndex].getName(),
+            ChatColors.getPartyCheckOptionNameColor(),
+            buttonIndex == lineIndex,
+            false
+        );
 
-        text = text
-            .append(Text.literal(ShoutType.values()[buttonIndex].getDescription())
-                .setStyle(Style.EMPTY.withColor(ChatColors.getPartyCheckOptionDescriptionColor()).withItalic(false).withBold(buttonIndex == lineIndex)));
+        textBuilder.append
+        (
+            ChatStrings.getPartyCheckSplitterString(),
+            ChatColors.getPartyCheckOptionSplitterColor(),
+            buttonIndex == lineIndex,
+            false
+        );
 
-        return text;
+        textBuilder.append
+        (
+            ShoutType.values()[buttonIndex].getDescription(),
+            ChatColors.getPartyCheckOptionDescriptionColor(),
+            buttonIndex == lineIndex,
+            false
+        );
+
+        return textBuilder.getText();
     }
 
     private static ItemStack getGeneralShoutItemStack()
@@ -150,7 +183,15 @@ public class ShoutTypeGooeyButton extends ButtonBase
     {
         ItemStack stack = getShoutTypeItemStack(type);
 
-        stack.set(DataComponentTypes.CUSTOM_NAME, Text.literal(ChatStrings.getPartyCheckShoutTypeTitleString()).setStyle(Style.EMPTY.withColor(ChatColors.getPartyCheckButtonTitleColor()).withItalic(false)));
+        TextUtils.CustomTextBuilder titleBuilder = new TextUtils.CustomTextBuilder();
+
+        titleBuilder.append
+        (
+            ChatStrings.getPartyCheckShoutTypeTitleString(),
+            ChatColors.getPartyCheckButtonTitleColor()
+        );
+
+        stack.set(DataComponentTypes.CUSTOM_NAME, titleBuilder.getText());
         stack.set(DataComponentTypes.LORE, getShoutTypeButtonLore(type.ordinal()));
 
         return stack;

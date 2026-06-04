@@ -7,8 +7,6 @@ import com.sergioaguiar.mirageessentials.manager.AntiAFKManager;
 import eu.pb4.placeholders.api.PlaceholderResult;
 import eu.pb4.placeholders.api.Placeholders;
 import net.fabricmc.loader.api.FabricLoader;
-import net.minecraft.text.MutableText;
-import net.minecraft.text.Style;
 import net.minecraft.text.Text;
 import net.minecraft.util.Identifier;
 
@@ -24,21 +22,27 @@ public class PlaceholderUtils
                 {
                     if (!context.hasPlayer()) return PlaceholderResult.invalid("No player!");
 
-                    MutableText placeholder = Text.literal("").setStyle(Style.EMPTY);
+                    TextUtils.CustomTextBuilder placeholderBuilder = new TextUtils.CustomTextBuilder();
 
-                    placeholder = placeholder
-                        .append(Text.literal("[")
-                            .setStyle(Style.EMPTY.withColor(AntiAFKColors.getAFKPlaceholderBracketColor())));
+                    placeholderBuilder.append
+                    (
+                        "[",
+                        AntiAFKColors.getAFKPlaceholderBracketColor()
+                    );
 
-                    placeholder = placeholder
-                        .append(Text.literal(AntiAFKStrings.getTextObjectPlaceholderAFKText())
-                            .setStyle(Style.EMPTY.withColor(AntiAFKColors.getAFKPlaceholderTextColor())));
+                    placeholderBuilder.append
+                    (
+                        AntiAFKStrings.getTextObjectPlaceholderAFKText(),
+                        AntiAFKColors.getAFKPlaceholderTextColor()
+                    );
 
-                    placeholder = placeholder
-                        .append(Text.literal("]")
-                            .setStyle(Style.EMPTY.withColor(AntiAFKColors.getAFKPlaceholderBracketColor())));
+                    placeholderBuilder.append
+                    (
+                        "]",
+                        AntiAFKColors.getAFKPlaceholderBracketColor()
+                    );
 
-                    return PlaceholderResult.value(AntiAFKManager.isPlayerAFK(context.player()) ? placeholder : Text.literal(""));
+                    return PlaceholderResult.value(AntiAFKManager.isPlayerAFK(context.player()) ? placeholderBuilder.getText() : Text.literal(""));
                 }
             );
 

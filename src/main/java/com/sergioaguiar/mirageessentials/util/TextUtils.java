@@ -45,6 +45,56 @@ import net.minecraft.text.TextColor;
 
 public class TextUtils 
 {
+    public static class CustomTextBuilder
+    {
+        private MutableText textObject;
+
+        public CustomTextBuilder()
+        {
+            textObject = Text.literal("")
+                .setStyle
+                (
+                    Style.EMPTY
+                        .withItalic(false)
+                );
+        }
+
+        public void append(String textContent, TextColor textColor)
+        {
+            append(textContent, textColor, false, false);
+        }
+
+        public void append(String textContent, TextColor textColor, boolean isBold, boolean isItalic)
+        {
+            textObject = textObject.append
+            (
+                Text.literal(textContent)
+                    .setStyle
+                    (
+                        Style.EMPTY
+                            .withColor(textColor)
+                            .withBold(isBold)
+                            .withItalic(isItalic)
+                    )
+            );
+        }
+
+        public void append(Text text)
+        {
+            textObject = textObject.append(text);
+        }
+
+        public void setHoverEvent(HoverEvent hoverEvent)
+        {
+            textObject = textObject.setStyle(textObject.getStyle().withHoverEvent(hoverEvent));
+        }
+
+        public MutableText getText()
+        {
+            return textObject;
+        }
+    }
+
     public static final Pattern PLACEHOLDER_PATTERN = Pattern.compile("\\[(.*?)\\]");
     public static final String IV_AND_EV_STRING_FORMAT = "%.2f%% (%d/%d/%d/%d/%d/%d)";
 
@@ -62,82 +112,99 @@ public class TextUtils
         double total = hp + atk + def + spa + spd + spe;
         double percent = (total / 186.0) * 100.0;
 
-        MutableText text = Text.literal(String.format("%.2f%% (", percent))
-                .setStyle(Style.EMPTY.withColor(ChatColors.getTooltipValueColor()));
+        CustomTextBuilder textBuilder = new CustomTextBuilder();
 
-        text = text
-            .append(Text.literal(String.valueOf(hp))
-                .setStyle(Style.EMPTY
-                    .withColor(ChatColors.getTooltipHealthColor())
-                    .withBold(hyperTrainedStats.contains(Stats.HP) && ChatSettings.shouldBoldHyperTrainingValues())
-                    .withItalic(hyperTrainedStats.contains(Stats.HP) && ChatSettings.shouldItalicHyperTrainingValues())
-                ));
+        textBuilder.append
+        (
+            String.format("%.2f%% (", percent),
+            ChatColors.getTooltipValueColor()
+        );
 
-        text = text
-            .append(Text.literal("/")
-                .setStyle(Style.EMPTY.withColor(ChatColors.getTooltipValueColor())));
+        textBuilder.append
+        (
+            String.valueOf(hp),
+            ChatColors.getTooltipHealthColor(),
+            hyperTrainedStats.contains(Stats.HP) && ChatSettings.shouldBoldHyperTrainingValues(),
+            hyperTrainedStats.contains(Stats.HP) && ChatSettings.shouldItalicHyperTrainingValues()
+        );
 
-        text = text
-            .append(Text.literal(String.valueOf(atk))
-                .setStyle(Style.EMPTY
-                    .withColor(ChatColors.getTooltipAttackColor())
-                    .withBold(hyperTrainedStats.contains(Stats.ATTACK) && ChatSettings.shouldBoldHyperTrainingValues())
-                    .withItalic(hyperTrainedStats.contains(Stats.ATTACK) && ChatSettings.shouldItalicHyperTrainingValues())
-                ));
+        textBuilder.append
+        (
+            "/",
+            ChatColors.getTooltipValueColor()
+        );
 
-        text = text
-            .append(Text.literal("/")
-                .setStyle(Style.EMPTY.withColor(ChatColors.getTooltipValueColor())));
+        textBuilder.append
+        (
+            String.valueOf(atk),
+            ChatColors.getTooltipAttackColor(),
+            hyperTrainedStats.contains(Stats.ATTACK) && ChatSettings.shouldBoldHyperTrainingValues(),
+            hyperTrainedStats.contains(Stats.ATTACK) && ChatSettings.shouldItalicHyperTrainingValues()
+        );
 
-        text = text
-            .append(Text.literal(String.valueOf(def))
-                .setStyle(Style.EMPTY
-                    .withColor(ChatColors.getTooltipDefenseColor())
-                    .withBold(hyperTrainedStats.contains(Stats.DEFENCE) && ChatSettings.shouldBoldHyperTrainingValues())
-                    .withItalic(hyperTrainedStats.contains(Stats.DEFENCE) && ChatSettings.shouldItalicHyperTrainingValues())
-                ));
+        textBuilder.append
+        (
+            "/",
+            ChatColors.getTooltipValueColor()
+        );
 
-        text = text
-            .append(Text.literal("/")
-                .setStyle(Style.EMPTY.withColor(ChatColors.getTooltipValueColor())));
+        textBuilder.append
+        (
+            String.valueOf(def),
+            ChatColors.getTooltipDefenseColor(),
+            hyperTrainedStats.contains(Stats.DEFENCE) && ChatSettings.shouldBoldHyperTrainingValues(),
+            hyperTrainedStats.contains(Stats.DEFENCE) && ChatSettings.shouldItalicHyperTrainingValues()
+        );
 
-        text = text
-            .append(Text.literal(String.valueOf(spa))
-                .setStyle(Style.EMPTY
-                    .withColor(ChatColors.getTooltipSpAttackColor())
-                    .withBold(hyperTrainedStats.contains(Stats.SPECIAL_ATTACK) && ChatSettings.shouldBoldHyperTrainingValues())
-                    .withItalic(hyperTrainedStats.contains(Stats.SPECIAL_ATTACK) && ChatSettings.shouldItalicHyperTrainingValues())
-                ));
+        textBuilder.append
+        (
+            "/",
+            ChatColors.getTooltipValueColor()
+        );
 
-        text = text
-            .append(Text.literal("/")
-                .setStyle(Style.EMPTY.withColor(ChatColors.getTooltipValueColor())));
+        textBuilder.append
+        (
+            String.valueOf(spa),
+            ChatColors.getTooltipSpAttackColor(),
+            hyperTrainedStats.contains(Stats.SPECIAL_ATTACK) && ChatSettings.shouldBoldHyperTrainingValues(),
+            hyperTrainedStats.contains(Stats.SPECIAL_ATTACK) && ChatSettings.shouldItalicHyperTrainingValues()
+        );
 
-        text = text
-            .append(Text.literal(String.valueOf(spd))
-                .setStyle(Style.EMPTY
-                    .withColor(ChatColors.getTooltipSpDefenseColor())
-                    .withBold(hyperTrainedStats.contains(Stats.SPECIAL_DEFENCE) && ChatSettings.shouldBoldHyperTrainingValues())
-                    .withItalic(hyperTrainedStats.contains(Stats.SPECIAL_DEFENCE) && ChatSettings.shouldItalicHyperTrainingValues())
-                ));
+        textBuilder.append
+        (
+            "/",
+            ChatColors.getTooltipValueColor()
+        );
 
-        text = text
-            .append(Text.literal("/")
-                .setStyle(Style.EMPTY.withColor(ChatColors.getTooltipValueColor())));
+        textBuilder.append
+        (
+            String.valueOf(spd),
+            ChatColors.getTooltipSpDefenseColor(),
+            hyperTrainedStats.contains(Stats.SPECIAL_DEFENCE) && ChatSettings.shouldBoldHyperTrainingValues(),
+            hyperTrainedStats.contains(Stats.SPECIAL_DEFENCE) && ChatSettings.shouldItalicHyperTrainingValues()
+        );
 
-        text = text
-            .append(Text.literal(String.valueOf(spe))
-                .setStyle(Style.EMPTY
-                    .withColor(ChatColors.getTooltipSpeedColor())
-                    .withBold(hyperTrainedStats.contains(Stats.SPEED) && ChatSettings.shouldBoldHyperTrainingValues())
-                    .withItalic(hyperTrainedStats.contains(Stats.SPEED) && ChatSettings.shouldItalicHyperTrainingValues())
-                ));
+        textBuilder.append
+        (
+            "/",
+            ChatColors.getTooltipValueColor()
+        );
 
-        text = text
-            .append(Text.literal(")")
-                .setStyle(Style.EMPTY.withColor(ChatColors.getTooltipValueColor())));
+        textBuilder.append
+        (
+            String.valueOf(spe),
+            ChatColors.getTooltipSpeedColor(),
+            hyperTrainedStats.contains(Stats.SPEED) && ChatSettings.shouldBoldHyperTrainingValues(),
+            hyperTrainedStats.contains(Stats.SPEED) && ChatSettings.shouldItalicHyperTrainingValues()
+        );
 
-        return text;
+        textBuilder.append
+        (
+            ")",
+            ChatColors.getTooltipValueColor()
+        );
+
+        return textBuilder.getText();
     }
 
     public static Text getFormattedEVs(EVs evs) 
@@ -152,58 +219,87 @@ public class TextUtils
         double total = hp + atk + def + spa + spd + spe;
         double percent = (total / 510.0) * 100.0;
 
-        MutableText text = Text.literal(String.format("%.2f%% (", percent))
-                .setStyle(Style.EMPTY.withColor(ChatColors.getTooltipValueColor()));
+        CustomTextBuilder textBuilder = new CustomTextBuilder();
 
-        text = text
-            .append(Text.literal(String.valueOf(hp))
-                .setStyle(Style.EMPTY.withColor(ChatColors.getTooltipHealthColor())));
+        textBuilder.append
+        (
+            String.format("%.2f%% (", percent),
+            ChatColors.getTooltipValueColor()
+        );
 
-        text = text
-            .append(Text.literal("/")
-                .setStyle(Style.EMPTY.withColor(ChatColors.getTooltipValueColor())));
+        textBuilder.append
+        (
+            String.valueOf(hp),
+            ChatColors.getTooltipHealthColor()
+        );
 
-        text = text
-            .append(Text.literal(String.valueOf(atk))
-                .setStyle(Style.EMPTY.withColor(ChatColors.getTooltipAttackColor())));
+        textBuilder.append
+        (
+            "/",
+            ChatColors.getTooltipValueColor()
+        );
 
-        text = text
-            .append(Text.literal("/")
-                .setStyle(Style.EMPTY.withColor(ChatColors.getTooltipValueColor())));
+        textBuilder.append
+        (
+            String.valueOf(atk),
+            ChatColors.getTooltipAttackColor()
+        );
 
-        text = text
-            .append(Text.literal(String.valueOf(def))
-                .setStyle(Style.EMPTY.withColor(ChatColors.getTooltipDefenseColor())));
+        textBuilder.append
+        (
+            "/",
+            ChatColors.getTooltipValueColor()
+        );
 
-        text = text
-            .append(Text.literal("/")
-                .setStyle(Style.EMPTY.withColor(ChatColors.getTooltipValueColor())));
+        textBuilder.append
+        (
+            String.valueOf(def),
+            ChatColors.getTooltipDefenseColor()
+        );
 
-        text = text
-            .append(Text.literal(String.valueOf(spa))
-                .setStyle(Style.EMPTY.withColor(ChatColors.getTooltipSpAttackColor())));
+        textBuilder.append
+        (
+            "/",
+            ChatColors.getTooltipValueColor()
+        );
 
-        text = text
-            .append(Text.literal("/")
-                .setStyle(Style.EMPTY.withColor(ChatColors.getTooltipValueColor())));
+        textBuilder.append
+        (
+            String.valueOf(spa),
+            ChatColors.getTooltipSpAttackColor()
+        );
 
-        text = text
-            .append(Text.literal(String.valueOf(spd))
-                .setStyle(Style.EMPTY.withColor(ChatColors.getTooltipSpDefenseColor())));
+        textBuilder.append
+        (
+            "/",
+            ChatColors.getTooltipValueColor()
+        );
 
-        text = text
-            .append(Text.literal("/")
-                .setStyle(Style.EMPTY.withColor(ChatColors.getTooltipValueColor())));
+        textBuilder.append
+        (
+            String.valueOf(spd),
+            ChatColors.getTooltipSpDefenseColor()
+        );
 
-        text = text
-            .append(Text.literal(String.valueOf(spe))
-                .setStyle(Style.EMPTY.withColor(ChatColors.getTooltipSpeedColor())));
+        textBuilder.append
+        (
+            "/",
+            ChatColors.getTooltipValueColor()
+        );
 
-        text = text
-            .append(Text.literal(")")
-                .setStyle(Style.EMPTY.withColor(ChatColors.getTooltipValueColor())));
+        textBuilder.append
+        (
+            String.valueOf(spe),
+            ChatColors.getTooltipSpeedColor()
+        );
 
-        return text;
+        textBuilder.append
+        (
+            ")",
+            ChatColors.getTooltipValueColor()
+        );
+
+        return textBuilder.getText();
     }
 
     public static String toTitleCase(String input)
@@ -260,12 +356,19 @@ public class TextUtils
 
     public static Text coloredSpeciesLine(Pokemon pokemon, String formName, Set<String> aspects, List<SpeciesFeature> speciesFeatures)
     {
-        MutableText coloredLine = Text.literal(ChatStrings.getSpeciesString())
-                .setStyle(Style.EMPTY.withColor(ChatColors.getTooltipLabelColor()).withItalic(false));
+        CustomTextBuilder textBuilder = new CustomTextBuilder();
 
-        coloredLine = coloredLine
-            .append(Text.literal(pokemon.getSpecies().getName())
-                .setStyle(Style.EMPTY.withColor(ChatColors.getTooltipValueColor())));
+        textBuilder.append
+        (
+            ChatStrings.getSpeciesString(),
+            ChatColors.getTooltipLabelColor()
+        );
+
+        textBuilder.append
+        (
+            pokemon.getSpecies().getName(),
+            ChatColors.getTooltipValueColor()
+        );
 
         boolean isFormNormal = formName.equals(NORMAL_FORM_STRING);
 
@@ -282,15 +385,23 @@ public class TextUtils
 
         if (!isFormNormal || ChatSettings.shouldShowFormIfNormal())
         {
-            coloredLine = coloredLine
-                .append(Text.literal(" ("));
+            textBuilder.append
+            (
+                " (",
+                ChatColors.getTooltipValueColor()
+            );
 
-            coloredLine = coloredLine
-                .append(Text.literal(toTitleCaseWithDelimiters(formName))
-                    .setStyle(Style.EMPTY.withColor(ChatColors.getTooltipFormColor())));
+            textBuilder.append
+            (
+                toTitleCaseWithDelimiters(formName),
+                ChatColors.getTooltipFormColor()
+            );
 
-            coloredLine = coloredLine
-                .append(Text.literal(")"));
+            textBuilder.append
+            (
+                ")",
+                ChatColors.getTooltipValueColor()
+            );
         }
 
         if (isFormNormal && !allowedSpeciesFeatures.isEmpty())
@@ -320,15 +431,23 @@ public class TextUtils
                     continue;
                 }
 
-                coloredLine = coloredLine
-                    .append(Text.literal(" ("));
+                textBuilder.append
+                (
+                    " (",
+                    ChatColors.getTooltipValueColor()
+                );
 
-                coloredLine = coloredLine
-                    .append(Text.literal(toTitleCaseWithDelimiters(featureValue))
-                        .setStyle(Style.EMPTY.withColor(ChatColors.getTooltipFormColor())));
+                textBuilder.append
+                (
+                    toTitleCaseWithDelimiters(featureValue),
+                    ChatColors.getTooltipFormColor()
+                );
 
-                coloredLine = coloredLine
-                    .append(Text.literal(")"));
+                textBuilder.append
+                (
+                    ")",
+                    ChatColors.getTooltipValueColor()
+                );
             }
         }
 
@@ -338,195 +457,317 @@ public class TextUtils
             {
                 if (ChatAspects.shouldDisplayAspect(aspect))
                 {
-                    coloredLine = coloredLine
-                        .append(Text.literal(" ("));
+                    textBuilder.append
+                    (
+                        " (",
+                        ChatColors.getTooltipValueColor()
+                    );
 
-                    coloredLine = coloredLine
-                        .append(Text.literal(ChatAspects.getAspectFriendlyName(aspect))
-                            .setStyle(Style.EMPTY.withColor(ChatColors.getTooltipFormColor())));
+                    textBuilder.append
+                    (
+                        ChatAspects.getAspectFriendlyName(aspect),
+                        ChatColors.getTooltipFormColor()
+                    );
 
-                    coloredLine = coloredLine
-                        .append(Text.literal(")"));
+                    textBuilder.append
+                    (
+                        ")",
+                        ChatColors.getTooltipValueColor()
+                    );
                 }
             }
         }
 
-        return coloredLine; 
+        return textBuilder.getText(); 
     }
 
     public static Text coloredLevelLine(int level, int currentExperience, int targetExperience)
     {
-        MutableText coloredLine = Text.literal(ChatStrings.getLevelString())
-                .setStyle(Style.EMPTY.withColor(ChatColors.getTooltipLabelColor()).withItalic(false));
+        CustomTextBuilder textBuilder = new CustomTextBuilder();
 
-        coloredLine = coloredLine
-            .append(Text.literal(String.valueOf(level))
-                .setStyle(Style.EMPTY.withColor(ChatColors.getTooltipValueColor())));
+        textBuilder.append
+        (
+            ChatStrings.getLevelString(),
+            ChatColors.getTooltipLabelColor()
+        );
+
+        textBuilder.append
+        (
+            String.valueOf(level),
+            ChatColors.getTooltipValueColor()
+        );
 
         if (level != 100)
         {
-            coloredLine = coloredLine
-                .append(Text.literal(" ("));
+            textBuilder.append
+            (
+                " (",
+                ChatColors.getTooltipValueColor()
+            );
 
-            coloredLine = coloredLine
-                .append(Text.literal(String.valueOf(currentExperience))
-                    .setStyle(Style.EMPTY.withColor(ChatColors.getTooltipCurrentExperienceColor())));
+            textBuilder.append
+            (
+                String.valueOf(currentExperience),
+                ChatColors.getTooltipCurrentExperienceColor()
+            );
 
-            coloredLine = coloredLine
-                .append(Text.literal("/"));
+            textBuilder.append
+            (
+                "/",
+                ChatColors.getTooltipValueColor()
+            );
 
-            coloredLine = coloredLine
-                .append(Text.literal(String.valueOf(targetExperience))
-                    .setStyle(Style.EMPTY.withColor(ChatColors.getTooltipTargetExperienceColor())));
+            textBuilder.append
+            (
+                String.valueOf(targetExperience),
+                ChatColors.getTooltipTargetExperienceColor()
+            );
 
-            coloredLine = coloredLine
-                .append(Text.literal(")"));
+            textBuilder.append
+            (
+                ")",
+                ChatColors.getTooltipValueColor()
+            );
         }
 
-        return coloredLine;
+        return textBuilder.getText();
     }
 
     public static Text coloredMonotypeLine(ElementalType type)
     {
-        MutableText coloredLine = Text.literal(ChatStrings.getTypeString())
-                .setStyle(Style.EMPTY.withColor(ChatColors.getTooltipLabelColor()).withItalic(false));
+        CustomTextBuilder textBuilder = new CustomTextBuilder();
 
-        coloredLine = coloredLine
-            .append(Text.literal(String.valueOf(toTitleCase(type.getName())))
-                .setStyle(Style.EMPTY.withColor(TypeColor.fromTypeName(type.getName()))));
+        textBuilder.append
+        (
+            ChatStrings.getTypeString(),
+            ChatColors.getTooltipLabelColor()
+        );
 
-        return coloredLine;
+        textBuilder.append
+        (
+            String.valueOf(toTitleCase(type.getName())),
+            TypeColor.fromTypeName(type.getName())
+        );
+
+        return textBuilder.getText();
     }
 
     public static Text coloredDualtypeLine(ElementalType type1, ElementalType type2)
     {
-        MutableText coloredLine = Text.literal(ChatStrings.getTypesString())
-                .setStyle(Style.EMPTY.withColor(ChatColors.getTooltipLabelColor()).withItalic(false));
+        CustomTextBuilder textBuilder = new CustomTextBuilder();
 
-        coloredLine = coloredLine
-            .append(Text.literal(String.valueOf(toTitleCase(type1.getName())))
-                .setStyle(Style.EMPTY.withColor(TypeColor.fromTypeName(type1.getName()))));
+        textBuilder.append
+        (
+            ChatStrings.getTypesString(),
+            ChatColors.getTooltipLabelColor()
+        );
 
-        coloredLine = coloredLine
-            .append(Text.literal(ChatStrings.getTypeSeparatorString()));
+        textBuilder.append
+        (
+            String.valueOf(toTitleCase(type1.getName())),
+            TypeColor.fromTypeName(type1.getName())
+        );
 
-        coloredLine = coloredLine
-            .append(Text.literal(String.valueOf(toTitleCase(type2.getName())))
-                .setStyle(Style.EMPTY.withColor(TypeColor.fromTypeName(type2.getName()))));
+        textBuilder.append
+        (
+            ChatStrings.getTypeSeparatorString(),
+            ChatColors.getTooltipValueColor()
+        );
 
-        return coloredLine;
+        textBuilder.append
+        (
+            String.valueOf(toTitleCase(type2.getName())),
+            TypeColor.fromTypeName(type2.getName())
+        );
+
+        return textBuilder.getText();
     }
 
     public static Text coloredAbilitiesLine(String abilityName, boolean isHidden, boolean isClosedSheet)
     {
-        MutableText coloredLine = Text.literal(ChatStrings.getAbilityString())
-                .setStyle(Style.EMPTY.withColor(ChatColors.getTooltipLabelColor()).withItalic(false));
+        CustomTextBuilder textBuilder = new CustomTextBuilder();
 
-        coloredLine = coloredLine
-            .append(Text.literal(isClosedSheet ? ChatStrings.getClosedSheetString() : abilityName)
-                .setStyle(Style.EMPTY.withColor(ChatColors.getTooltipValueColor())));
+        textBuilder.append
+        (
+            ChatStrings.getAbilityString(),
+            ChatColors.getTooltipLabelColor()
+        );
+
+        textBuilder.append
+        (
+            isClosedSheet ? ChatStrings.getClosedSheetString() : abilityName,
+            ChatColors.getTooltipValueColor()
+        );
 
         if (!isClosedSheet && isHidden)
         {
-            coloredLine = coloredLine
-                .append(Text.literal(" ("));
+            textBuilder.append
+            (
+                " (",
+                ChatColors.getTooltipValueColor()
+            );
 
-            coloredLine = coloredLine
-                .append(Text.literal(ChatStrings.getHiddenAbilityString())
-                    .setStyle(Style.EMPTY.withColor(ChatColors.getTooltipHiddenAbilityColor())));
+            textBuilder.append
+            (
+                ChatStrings.getHiddenAbilityString(),
+                ChatColors.getTooltipHiddenAbilityColor()
+            );
 
-            coloredLine = coloredLine
-                .append(Text.literal(")"));
+            textBuilder.append
+            (
+                ")",
+                ChatColors.getTooltipValueColor()
+            );
         }
         
-        return coloredLine;
+        return textBuilder.getText();
     }
 
     public static Text coloredNatureLine(Nature nature, Nature natureEffective, boolean isClosedSheet) 
     {
         boolean isMinted = !nature.getDisplayName().toString().equals(natureEffective.getDisplayName().toString());
 
-        MutableText coloredLine = Text.literal(isMinted ? ChatStrings.getNatureMintedString() : ChatStrings.getNatureString())
-                .setStyle(Style.EMPTY.withColor(ChatColors.getTooltipLabelColor()).withItalic(false));
+        CustomTextBuilder textBuilder = new CustomTextBuilder();
 
-        coloredLine = coloredLine
-            .append(Text.translatable(isClosedSheet ? ChatStrings.getClosedSheetString() : natureEffective.getDisplayName().toString())
-                .setStyle(Style.EMPTY.withColor(ChatColors.getTooltipValueColor())));
+        textBuilder.append
+        (
+            isMinted ? ChatStrings.getNatureMintedString() : ChatStrings.getNatureString(),
+            ChatColors.getTooltipLabelColor()
+        );
+
+        textBuilder.append
+        (
+            Text.translatable(isClosedSheet ? ChatStrings.getClosedSheetString() : natureEffective.getDisplayName().toString())
+                .setStyle(Style.EMPTY.withColor(ChatColors.getTooltipValueColor()))
+        );
 
         if (!isClosedSheet && natureEffective.getIncreasedStat() != null && natureEffective.getDecreasedStat() != null)
         {
-            coloredLine = coloredLine
-                .append(Text.literal(" (")
-                    .setStyle(Style.EMPTY.withColor(ChatColors.getTooltipLabelColor())));
+            textBuilder.append
+            (
+                " (",
+                ChatColors.getTooltipLabelColor()
+            );
 
-            coloredLine = coloredLine
-                .append(Text.literal(ChatStrings.getStatIncreaseString())
-                    .setStyle(Style.EMPTY.withColor(ChatColors.getTooltipStatUpColor())));
+            textBuilder.append
+            (
+                ChatStrings.getStatIncreaseString(),
+                ChatColors.getTooltipStatUpColor()
+            );
 
-            coloredLine = coloredLine
-                .append(Text.literal(formatStatName(natureEffective.getIncreasedStat().toString()))
-                    .setStyle(Style.EMPTY.withColor(ChatColors.getTooltipStatUpColor())));
+            textBuilder.append
+            (
+                formatStatName(natureEffective.getIncreasedStat().toString()),
+                ChatColors.getTooltipStatUpColor()
+            );
 
-            coloredLine = coloredLine
-                .append(Text.literal("/")
-                    .setStyle(Style.EMPTY.withColor(ChatColors.getTooltipLabelColor())));
+            textBuilder.append
+            (
+                "/",
+                ChatColors.getTooltipLabelColor()
+            );
 
-            coloredLine = coloredLine
-                .append(Text.literal(ChatStrings.getStatDecreaseString())
-                    .setStyle(Style.EMPTY.withColor(ChatColors.getTooltipStatDownColor())));
+            textBuilder.append
+            (
+                ChatStrings.getStatDecreaseString(),
+                ChatColors.getTooltipStatDownColor()
+            );
 
-            coloredLine = coloredLine
-                .append(Text.literal(formatStatName(natureEffective.getDecreasedStat().toString()))
-                    .setStyle(Style.EMPTY.withColor(ChatColors.getTooltipStatDownColor())));
+            textBuilder.append
+            (
+                formatStatName(natureEffective.getDecreasedStat().toString()),
+                ChatColors.getTooltipStatDownColor()
+            );
 
-            coloredLine = coloredLine
-                .append(Text.literal(")")
-                    .setStyle(Style.EMPTY.withColor(ChatColors.getTooltipLabelColor())));
+            textBuilder.append
+            (
+                ")",
+                ChatColors.getTooltipLabelColor()
+            );
         }
 
-        return coloredLine;
+        return textBuilder.getText();
     }
 
     public static Text coloredIVsLine(IVs ivs, boolean isClosedSheet)
     {
         Set<Stats> hyperTrainedStats = CobblemonUtils.getHyperTrainedStats(ivs);
 
-        MutableText coloredLine = Text.literal(hyperTrainedStats.isEmpty() || isClosedSheet ? ChatStrings.getIVsString() : ChatStrings.getIVsHyperTrainedString())
-                .setStyle(Style.EMPTY.withColor(ChatColors.getTooltipLabelColor()).withItalic(false));
+        CustomTextBuilder textBuilder = new CustomTextBuilder();
 
-        return coloredLine.append
-            (isClosedSheet 
-                ? Text.literal(ChatStrings.getClosedSheetString())
-                    .setStyle(Style.EMPTY.withColor(ChatColors.getTooltipValueColor()))
-                : (hyperTrainedStats.isEmpty() 
+        textBuilder.append
+        (
+            hyperTrainedStats.isEmpty() || isClosedSheet ? ChatStrings.getIVsString() : ChatStrings.getIVsHyperTrainedString(),
+            ChatColors.getTooltipLabelColor()
+        );
+
+        if (isClosedSheet)
+        {
+            textBuilder.append
+            (
+                ChatStrings.getClosedSheetString(),
+                ChatColors.getTooltipValueColor()
+            );
+        } 
+        else
+        {
+            textBuilder.append
+            (
+                hyperTrainedStats.isEmpty() 
                     ? getFormattedIVs(ivs, hyperTrainedStats, false)
                     : getFormattedIVs(ivs, hyperTrainedStats, true)
-                )
             );
+        }
+
+        return textBuilder.getText();
     }
 
     public static Text coloredEVsLine(EVs evs, boolean isClosedSheet)
     {
-        return Text.literal(ChatStrings.getEVsString())
-                .setStyle(Style.EMPTY.withColor(ChatColors.getTooltipLabelColor()).withItalic(false))
-            .append
-            (isClosedSheet 
-                ? Text.literal(ChatStrings.getClosedSheetString())
-                    .setStyle(Style.EMPTY.withColor(ChatColors.getTooltipValueColor()))
-                : getFormattedEVs(evs)
+        CustomTextBuilder textBuilder = new CustomTextBuilder();
+
+        textBuilder.append
+        (
+            ChatStrings.getEVsString(),
+            ChatColors.getTooltipLabelColor()
+        );
+
+        if (isClosedSheet)
+        {
+            textBuilder.append
+            (
+                ChatStrings.getClosedSheetString(),
+                ChatColors.getTooltipValueColor()
             );
+        }
+        else
+        {
+            textBuilder.append
+            (
+                getFormattedEVs(evs)
+            );
+        }
+
+        return textBuilder.getText();
     }
 
     public static Text coloredMovesLine(Pokemon pokemon, List<Move> moves, boolean isClosedSheet) 
     {
-        MutableText coloredLine = Text.literal(ChatStrings.getMovesString())
-                .setStyle(Style.EMPTY.withColor(ChatColors.getTooltipLabelColor()).withItalic(false));
+        CustomTextBuilder textBuilder = new CustomTextBuilder();
+
+        textBuilder.append
+        (
+            ChatStrings.getMovesString(),
+            ChatColors.getTooltipLabelColor()
+        );
 
         if (isClosedSheet)
         {
-            coloredLine = coloredLine
-                .append(Text.literal(ChatStrings.getClosedSheetString())
-                    .setStyle(Style.EMPTY.withColor(ChatColors.getTooltipValueColor())));
+            textBuilder.append
+            (
+                ChatStrings.getClosedSheetString(),
+                ChatColors.getTooltipValueColor()
+            );
         }
         else
         {
@@ -539,20 +780,24 @@ public class TextUtils
                 String moveName = actualMoveName + (isHiddenPower ? " " + moveType.getName() : "");
                 TextColor typeColor = TypeColor.fromTypeName(moveType.getName());
 
-                coloredLine = coloredLine
-                    .append(Text.literal(moveName)
-                        .setStyle(Style.EMPTY.withColor(typeColor)));
+                textBuilder.append
+                (
+                    moveName,
+                    typeColor
+                );
 
                 if (i < moves.size() - 1) 
                 {
-                    coloredLine = coloredLine
-                        .append(Text.literal(ChatStrings.getMoveSeparatorString())
-                            .setStyle(Style.EMPTY.withColor(ChatColors.getTooltipValueColor())));
+                    textBuilder.append
+                    (
+                        ChatStrings.getMoveSeparatorString(),
+                        ChatColors.getTooltipValueColor()
+                    );
                 }
             }
         }
 
-        return coloredLine;
+        return textBuilder.getText();
     }
 
     public static Text coloredGenderLine(Gender gender, boolean isClosedSheet) 
@@ -574,57 +819,91 @@ public class TextUtils
                 genderSymbol = ChatStrings.getGenderlessIconString();
         }
 
-        MutableText coloredLine = Text.literal(ChatStrings.getGenderString())
-                .setStyle(Style.EMPTY.withColor(ChatColors.getTooltipLabelColor()).withItalic(false));
+        CustomTextBuilder textBuilder = new CustomTextBuilder();
+
+        textBuilder.append
+        (
+            ChatStrings.getGenderString(),
+            ChatColors.getTooltipLabelColor()
+        );
 
         if (isClosedSheet)
         {
-            coloredLine = coloredLine.append(Text.literal(ChatStrings.getClosedSheetString())
-                .setStyle(Style.EMPTY.withColor(ChatColors.getTooltipValueColor())));
+            textBuilder.append
+            (
+                ChatStrings.getClosedSheetString(),
+                ChatColors.getTooltipValueColor()
+            );
         }
         else
         {
-            coloredLine = coloredLine.append(Text.literal("%s %s".formatted(genderSymbol, toTitleCase(gender.name())))
-                .setStyle(Style.EMPTY.withColor(genderColor)));
+            textBuilder.append
+            (
+                "%s %s".formatted(genderSymbol, toTitleCase(gender.name())),
+                genderColor
+            );
         }
 
-        return coloredLine;
+        return textBuilder.getText();
     }
 
     public static Text coloredFriendshipLine(int happiness, boolean isClosedSheet)
     {
-        MutableText coloredLine = Text.literal(ChatStrings.getFriendshipString())
-                .setStyle(Style.EMPTY.withColor(ChatColors.getTooltipLabelColor()).withItalic(false));
+        CustomTextBuilder textBuilder = new CustomTextBuilder();
 
-        coloredLine = coloredLine
-            .append(Text.literal(isClosedSheet ? ChatStrings.getClosedSheetString() : Integer.toString(happiness))
-                .setStyle(Style.EMPTY.withColor(ChatColors.getTooltipValueColor())));
+        textBuilder.append
+        (
+            ChatStrings.getFriendshipString(),
+            ChatColors.getTooltipLabelColor()
+        );
 
-        return coloredLine;
+        textBuilder.append
+        (
+            isClosedSheet ? ChatStrings.getClosedSheetString() : Integer.toString(happiness),
+            ChatColors.getTooltipValueColor()
+        );
+
+        return textBuilder.getText();
     }
 
     public static Text coloredHeldItemLine(ItemStack heldItem, boolean isClosedSheet)
     {
-        MutableText coloredLine = Text.literal(ChatStrings.getHeldItemString())
-                .setStyle(Style.EMPTY.withColor(ChatColors.getTooltipLabelColor()).withItalic(false));
+        CustomTextBuilder textBuilder = new CustomTextBuilder();
 
-        coloredLine = coloredLine
-            .append(Text.literal(isClosedSheet ? ChatStrings.getClosedSheetString() : (heldItem.isEmpty() ? ChatStrings.getEmptyHeldItemString() : heldItem.getName().getString()))
-                .setStyle(Style.EMPTY.withColor(ChatColors.getTooltipValueColor())));
+        textBuilder.append
+        (
+            ChatStrings.getHeldItemString(),
+            ChatColors.getTooltipLabelColor()
+        );
 
-        return coloredLine;
+        textBuilder.append
+        (
+            isClosedSheet 
+                ? ChatStrings.getClosedSheetString() 
+                : (heldItem.isEmpty() ? ChatStrings.getEmptyHeldItemString() : heldItem.getName().getString()),
+            ChatColors.getTooltipValueColor()
+        );
+
+        return textBuilder.getText();
     }
 
     public static Text coloredCaughtBallLine(PokeBall caughtBall)
     {
-        MutableText coloredLine = Text.literal(ChatStrings.getCaughtBallString())
-                .setStyle(Style.EMPTY.withColor(ChatColors.getTooltipLabelColor()).withItalic(false));
+        CustomTextBuilder textBuilder = new CustomTextBuilder();
 
-        coloredLine = coloredLine
-            .append(Text.literal(caughtBall.item.getName().getString())
-                .setStyle(Style.EMPTY.withColor(ChatColors.getTooltipValueColor())));
+        textBuilder.append
+        (
+            ChatStrings.getCaughtBallString(),
+            ChatColors.getTooltipLabelColor()
+        );
 
-        return coloredLine;
+        textBuilder.append
+        (
+            caughtBall.item.getName().getString(),
+            ChatColors.getTooltipValueColor()
+        );
+
+        return textBuilder.getText();
     }
 
     public static Text coloredSizeLine(float scaleModifier)
@@ -639,71 +918,100 @@ public class TextUtils
             sizeColor = ChatColors.getTooltipValueColor();
         }
 
-        MutableText coloredLine = Text.literal(ChatStrings.getSizeString())
-                .setStyle(Style.EMPTY.withColor(ChatColors.getTooltipLabelColor()).withItalic(false));
+        CustomTextBuilder textBuilder = new CustomTextBuilder();
 
-        coloredLine = coloredLine
-            .append(Text.literal(ChatSizes.getSizefromScale(scaleModifier).toString())
-                .setStyle(Style.EMPTY.withColor(sizeColor)));
+        textBuilder.append
+        (
+            ChatStrings.getSizeString(),
+            ChatColors.getTooltipLabelColor()
+        );
 
-        return coloredLine;
+        textBuilder.append
+        (
+            ChatSizes.getSizefromScale(scaleModifier).toString(),
+            sizeColor
+        );
+
+        return textBuilder.getText();
     }
 
     public static Text coloredEggGroupsLine(Set<EggGroup> eggGroups)
     {
-        MutableText coloredLine =
-            Text.literal(ChatStrings.getEggGroupsString())
-                .setStyle(Style.EMPTY.withColor(ChatColors.getTooltipLabelColor()).withItalic(false));
+        CustomTextBuilder textBuilder = new CustomTextBuilder();
+
+        textBuilder.append
+        (
+            ChatStrings.getEggGroupsString(),
+            ChatColors.getTooltipLabelColor()
+        );
 
         int i = 0;
         for (EggGroup eggGroup : eggGroups)
         {
-            coloredLine = coloredLine
-                .append(Text.literal(toTitleCase(eggGroup.name().replace("_", " ")))
-                    .setStyle(Style.EMPTY.withColor(ChatColors.getTooltipValueColor())));
+            textBuilder.append
+            (
+                toTitleCase(eggGroup.name().replace("_", " ")),
+                ChatColors.getTooltipValueColor()
+            );
 
             if (i < eggGroups.size() - 1) 
             {
-                coloredLine = coloredLine
-                    .append(Text.literal(ChatStrings.getEggGroupsSeparatorString())
-                        .setStyle(Style.EMPTY.withColor(ChatColors.getTooltipValueColor())));
+                textBuilder.append
+                (
+                    ChatStrings.getEggGroupsSeparatorString(),
+                    ChatColors.getTooltipValueColor()
+                );
             }
             i++;
         }
 
-        return coloredLine;
+        return textBuilder.getText();
     }
 
     public static Text coloredNeuterLine(Pokemon pokemon, boolean isNeutered)
     {
-        MutableText coloredLine = Text.literal(ChatStrings.getNeuteredString())
-                .setStyle(Style.EMPTY.withColor(ChatColors.getTooltipLabelColor()).withItalic(false));
+        CustomTextBuilder textBuilder = new CustomTextBuilder();
 
-        coloredLine = coloredLine
-            .append(Text.literal(isNeutered ? ChatStrings.getTrueString() : ChatStrings.getFalseString())
-                .setStyle(Style.EMPTY.withColor(isNeutered ? ChatColors.getTooltipTrueColor() : ChatColors.getTooltipFalseColor())));
+        textBuilder.append
+        (
+            ChatStrings.getNeuteredString(),
+            ChatColors.getTooltipLabelColor()
+        );
 
-        return coloredLine;
+        textBuilder.append
+        (
+            isNeutered ? ChatStrings.getTrueString() : ChatStrings.getFalseString(),
+            isNeutered ? ChatColors.getTooltipTrueColor() : ChatColors.getTooltipFalseColor()
+        );
+
+        return textBuilder.getText();
     }
 
     public static Text coloredOTLine(String playerName)
     {
-        MutableText coloredLine = Text.literal(ChatStrings.getOriginalTrainerString())
-                .setStyle(Style.EMPTY.withColor(ChatColors.getTooltipLabelColor()).withItalic(false));
+        CustomTextBuilder textBuilder = new CustomTextBuilder();
 
-        coloredLine = coloredLine
-            .append(Text.literal(playerName)
-                .setStyle(Style.EMPTY.withColor(ChatColors.getTooltipValueColor())));
+        textBuilder.append
+        (
+            ChatStrings.getOriginalTrainerString(),
+            ChatColors.getTooltipLabelColor()
+        );
 
-        return coloredLine;
+        textBuilder.append
+        (
+            playerName,
+            ChatColors.getTooltipValueColor()
+        );
+
+        return textBuilder.getText();
     }
 
     public static MutableText gradientBetweenTypes(String text, ElementalType type1, ElementalType type2)
     {
-        MutableText result = Text.literal("").setStyle(Style.EMPTY.withItalic(false));
+        CustomTextBuilder textBuilder = new CustomTextBuilder();
 
         int length = text.length();
-        if (length == 0) return result;
+        if (length == 0) return textBuilder.getText();
 
         TextColor color1 = TypeColor.fromTypeName(type1.getName());
         TextColor color2 = TypeColor.fromTypeName(type2.getName());
@@ -722,198 +1030,267 @@ public class TextUtils
             int rgb = (r << 16) | (g << 8) | b;
             TextColor blended = TextColor.fromRgb(rgb);
 
-            result = result
-                .append(Text.literal(String.valueOf(text.charAt(i)))
-                    .setStyle(Style.EMPTY.withColor(blended)));
+            textBuilder.append
+            (
+                String.valueOf(text.charAt(i)),
+                blended
+            );
         }
 
-        return result;
+        return textBuilder.getText();
     }
 
     public static MutableText hoverableText(String speciesName, Text tooltip, boolean isShiny)
     {
-        MutableText hoverableText = Text.literal("[")
-                .setStyle(Style.EMPTY.withColor(isShiny ? ChatColors.getHoverableBracketShinyColor() : ChatColors.getHoverableBracketColor()));
+        CustomTextBuilder textBuilder = new CustomTextBuilder();
 
-        hoverableText = hoverableText
-            .append(Text.literal("%s%s".formatted(isShiny ? ChatStrings.getShinyIconString() : "", speciesName))
-                .setStyle(Style.EMPTY.withColor(isShiny ? ChatColors.getHoverableTextShinyColor() : ChatColors.getHoverableTextColor())));
+        textBuilder.append
+        (
+            "[",
+            isShiny ? ChatColors.getHoverableBracketShinyColor() : ChatColors.getHoverableBracketColor()
+        );
 
-        hoverableText = hoverableText
-            .append(Text.literal("]")
-                .setStyle(Style.EMPTY.withColor(isShiny ? ChatColors.getHoverableBracketShinyColor() : ChatColors.getHoverableBracketColor())));
+        textBuilder.append
+        (
+            "%s%s".formatted(isShiny ? ChatStrings.getShinyIconString() : "", speciesName),
+            isShiny ? ChatColors.getHoverableTextShinyColor() : ChatColors.getHoverableTextColor()
+        );
 
-        return hoverableText.setStyle(hoverableText.getStyle().withHoverEvent(new HoverEvent(HoverEvent.Action.SHOW_TEXT, tooltip)));
+        textBuilder.append
+        (
+            "]",
+            isShiny ? ChatColors.getHoverableBracketShinyColor() : ChatColors.getHoverableBracketColor()
+        );
+
+        textBuilder.setHoverEvent(new HoverEvent(HoverEvent.Action.SHOW_TEXT, tooltip));
+
+        return textBuilder.getText();
     }
 
     public static MutableText errorPlaceholder(String errorMessage)
     {
-        MutableText errorText = Text.literal("[")
-                .setStyle(Style.EMPTY.withColor(ChatColors.getHoverableBracketErrorColor()));
+        CustomTextBuilder textBuilder = new CustomTextBuilder();
 
-        errorText = errorText
-            .append(Text.literal(errorMessage)
-                .setStyle(Style.EMPTY.withColor(ChatColors.getHoverableTextErrorColor())));
+        textBuilder.append
+        (
+            "[",
+            ChatColors.getHoverableBracketErrorColor()
+        );
 
-        errorText = errorText
-            .append(Text.literal("]")
-                .setStyle(Style.EMPTY.withColor(ChatColors.getHoverableBracketErrorColor())));
+        textBuilder.append
+        (
+            errorMessage,
+            ChatColors.getHoverableTextErrorColor()
+        );
 
-        return errorText;
+        textBuilder.append
+        (
+            "]",
+            ChatColors.getHoverableBracketErrorColor()
+        );
+
+        return textBuilder.getText();
     }
 
     public static MutableText playerAFKMessage(String playerName)
     {
-        MutableText afkText = Text.literal("").setStyle(Style.EMPTY);
+        CustomTextBuilder textBuilder = new CustomTextBuilder();
 
         if (!AntiAFKSettings.shouldHideAFKCheckerMessagePrefix())
         {
-            afkText = afkText
-                .append(Text.literal("AFKChecker » ")
-                    .setStyle(Style.EMPTY.withColor(AntiAFKColors.getAFKCheckerPrefixColor())));
+            textBuilder.append
+            (
+                "AFKChecker » ",
+                AntiAFKColors.getAFKCheckerPrefixColor()
+            );
         }
 
         if (!AntiAFKSettings.shouldHidePlayerWordStart())
         {
-            afkText = afkText
-                .append(Text.literal("Player ")
-                    .setStyle(Style.EMPTY.withColor(AntiAFKColors.getAFKCheckerTextColor())));
+            textBuilder.append
+            (
+                "Player ",
+                AntiAFKColors.getAFKCheckerTextColor()
+            );
         }
 
-        afkText = afkText
-            .append(Text.literal(playerName)
-                .setStyle(Style.EMPTY.withColor(AntiAFKColors.getAFKCheckerPlayerColor())));
+        textBuilder.append
+        (
+            playerName,
+            AntiAFKColors.getAFKCheckerPlayerColor()
+        );
 
-        afkText = afkText
-            .append(Text.literal(" is now AFK.")
-                .setStyle(Style.EMPTY.withColor(AntiAFKColors.getAFKCheckerTextColor())));
+        textBuilder.append
+        (
+            " is now AFK.",
+            AntiAFKColors.getAFKCheckerTextColor()
+        );
 
-        return afkText;
+        return textBuilder.getText();
     }
 
     public static MutableText playerNotAFKMessage(ServerPlayerEntity player, String timeAway)
     {
-        MutableText afkText = Text.literal("").setStyle(Style.EMPTY);
+        CustomTextBuilder textBuilder = new CustomTextBuilder();
 
         if (!AntiAFKSettings.shouldHideAFKCheckerMessagePrefix())
         {
-            afkText = afkText
-                .append(Text.literal("AFKChecker » ")
-                    .setStyle(Style.EMPTY.withColor(AntiAFKColors.getAFKCheckerPrefixColor())));
+            textBuilder.append
+            (
+                "AFKChecker » ",
+                AntiAFKColors.getAFKCheckerPrefixColor()
+            );
         }
 
         if (!AntiAFKSettings.shouldHidePlayerWordStart())
         {
-            afkText = afkText
-                .append(Text.literal("Player ")
-                    .setStyle(Style.EMPTY.withColor(AntiAFKColors.getAFKCheckerTextColor())));
+            textBuilder.append
+            (
+                "Player ",
+                AntiAFKColors.getAFKCheckerTextColor()
+            );
         }
 
-        afkText = afkText
-            .append(Text.literal(player.getDisplayName().getString())
-                .setStyle(Style.EMPTY.withColor(AntiAFKColors.getAFKCheckerPlayerColor())));
+        textBuilder.append
+        (
+            player.getDisplayName().getString(),
+            AntiAFKColors.getAFKCheckerPlayerColor()
+        );
 
-        afkText = afkText
-            .append(Text.literal(" is no longer AFK.")
-                .setStyle(Style.EMPTY.withColor(AntiAFKColors.getAFKCheckerTextColor())));
+        textBuilder.append
+        (
+            " is no longer AFK.",
+            AntiAFKColors.getAFKCheckerTextColor()
+        );
 
         if (AntiAFKSettings.shouldHideAFKTimesWhenBypassingKicks() && LuckPermsUtils.hasPermission(player, "mirageantiafk.bypass.kick"))
         {
-            return afkText;
+            return textBuilder.getText();
         }
 
-        afkText = afkText
-            .append(Text.literal(" (Gone for ")
-                .setStyle(Style.EMPTY.withColor(AntiAFKColors.getAFKCheckerGoneColor())));
+        textBuilder.append
+        (
+            " (Gone for ",
+            AntiAFKColors.getAFKCheckerGoneColor()
+        );
 
-        afkText = afkText
-            .append(Text.literal("%s".formatted(timeAway))
-                .setStyle(Style.EMPTY.withColor(AntiAFKColors.getAFKCheckerTimeColor())));
+        textBuilder.append
+        (
+            String.format("%s", timeAway),
+            AntiAFKColors.getAFKCheckerTimeColor()
+        );
 
-        afkText = afkText
-            .append(Text.literal(")")
-                .setStyle(Style.EMPTY.withColor(AntiAFKColors.getAFKCheckerGoneColor())));
+        textBuilder.append
+        (
+            ")",
+            AntiAFKColors.getAFKCheckerGoneColor()
+        );
 
-        return afkText;
+        return textBuilder.getText();
     }
 
     public static MutableText provedActivityMessage()
     {
-        MutableText captchaMessage = Text.literal("").setStyle(Style.EMPTY);
+        CustomTextBuilder textBuilder = new CustomTextBuilder();
 
         if (!AntiAFKSettings.shouldHideAFKCaptchaMessagePrefix())
         {
-            captchaMessage = captchaMessage
-                .append(Text.literal("AFKaptcha » ")
-                    .setStyle(Style.EMPTY.withColor(AntiAFKColors.getAFKCaptchaPrefixColor())));
+            textBuilder.append
+            (
+                "AFKaptcha » ",
+                AntiAFKColors.getAFKCaptchaPrefixColor()
+            );
         }
 
-        captchaMessage = captchaMessage
-            .append(Text.literal("Thank you for proving you are active!")
-                .setStyle(Style.EMPTY.withColor(AntiAFKColors.getAFKCaptchaTextColor())));
+        textBuilder.append
+        (
+            "Thank you for proving you are active!",
+            AntiAFKColors.getAFKCaptchaTextColor()
+        );
 
-        return captchaMessage;
+        return textBuilder.getText();
     }
 
     public static MutableText playerKickMessage(KickReason kickReason)
     {
-        MutableText kickText = Text.literal("AFKChecker\n")
-                .setStyle(Style.EMPTY.withColor(AntiAFKColors.getKickTitleColor()));
+        CustomTextBuilder textBuilder = new CustomTextBuilder();
 
-        kickText = kickText
-            .append(Text.literal(kickReason.getPlayerKickMessage())
-                .setStyle(Style.EMPTY.withColor(AntiAFKColors.getKickDescriptionColor())));
+        textBuilder.append
+        (
+            "AFKChecker\n",
+            AntiAFKColors.getKickTitleColor()
+        );
 
-        return kickText;
+        textBuilder.append
+        (
+            kickReason.getPlayerKickMessage(),
+            AntiAFKColors.getKickDescriptionColor()
+        );
+
+        return textBuilder.getText();
     }
 
     public static MutableText playerChatKickMessage(String playerName, String kickMessage)
     {
-        MutableText generalKickText = Text.literal("").setStyle(Style.EMPTY);
+        CustomTextBuilder textBuilder = new CustomTextBuilder();
 
         if (!AntiAFKSettings.shouldHideAFKCheckerMessagePrefix())
         {
-            generalKickText = generalKickText
-                .append(Text.literal("AFKChecker » ")
-                    .setStyle(Style.EMPTY.withColor(AntiAFKColors.getAFKCheckerPrefixColor())));
+            textBuilder.append
+            (
+                "AFKChecker » ",
+                AntiAFKColors.getAFKCheckerPrefixColor()
+            );
         }
 
         if (!AntiAFKSettings.shouldHidePlayerWordStart())
         {
-            generalKickText = generalKickText
-                .append(Text.literal("Player ")
-                    .setStyle(Style.EMPTY.withColor(AntiAFKColors.getAFKCheckerTextColor())));
+            textBuilder.append
+            (
+                "Player ",
+                AntiAFKColors.getAFKCheckerTextColor()
+            );
         }
 
-        generalKickText = generalKickText
-            .append(Text.literal(playerName)
-                .setStyle(Style.EMPTY.withColor(AntiAFKColors.getAFKCheckerPlayerColor())));
+        textBuilder.append
+        (
+            playerName,
+            AntiAFKColors.getAFKCheckerPlayerColor()
+        );
 
-        generalKickText = generalKickText
-            .append(Text.literal(" has been kicked.\n")
-                .setStyle(Style.EMPTY.withColor(AntiAFKColors.getAFKCheckerTextColor())));
+        textBuilder.append
+        (
+            " has been kicked.\n",
+            AntiAFKColors.getAFKCheckerTextColor()
+        );
 
-        generalKickText = generalKickText
-            .append(Text.literal("Reason: ")
-                .setStyle(Style.EMPTY.withColor(AntiAFKColors.getKickReasonTitleColor())));
+        textBuilder.append
+        (
+            "Reason: ",
+            AntiAFKColors.getKickReasonTitleColor()
+        );
 
-        generalKickText = generalKickText
-            .append(Text.literal("%s".formatted(kickMessage))
-                .setStyle(Style.EMPTY.withColor(AntiAFKColors.getKickReasonDescriptionColor())));
+        textBuilder.append
+        (
+            kickMessage,
+            AntiAFKColors.getKickReasonDescriptionColor()
+        );
 
-        return generalKickText;
+        return textBuilder.getText();
     }
 
     public static MutableText playerPermKickMessage(ServerPlayerEntity player, int currentTicks)
     {
         UUID playerUUID = player.getUuid();
-        MutableText permKickText = Text.literal("").setStyle(Style.EMPTY);
+        CustomTextBuilder textBuilder = new CustomTextBuilder();
 
-        permKickText = permKickText
-            .append(Text.literal("====================\n")
-                .setStyle(Style.EMPTY.withColor(AntiAFKColors.getKickInfoBorderColor())));
+        textBuilder.append
+        (
+            "====================\n",
+            AntiAFKColors.getKickInfoBorderColor()
+        );
 
-        permKickText.append
+        textBuilder.append
         (
             playerPermKickMessageLine
             (
@@ -923,7 +1300,7 @@ public class TextUtils
             )
         );
 
-        permKickText.append
+        textBuilder.append
         (
             playerPermKickMessageLine
             (
@@ -933,7 +1310,7 @@ public class TextUtils
             )
         );
 
-        permKickText.append
+        textBuilder.append
         (
             playerPermKickMessageLine
             (
@@ -943,11 +1320,13 @@ public class TextUtils
             )
         );
 
-        permKickText = permKickText
-            .append(Text.literal("Last action info:\n")
-                .setStyle(Style.EMPTY.withColor(AntiAFKColors.getKickInfoTitleColor())));
+        textBuilder.append
+        (
+            "Last action info:\n",
+            AntiAFKColors.getKickInfoTitleColor()
+        );
 
-        permKickText.append
+        textBuilder.append
         (
             playerPermKickMessageLine
             (
@@ -957,7 +1336,7 @@ public class TextUtils
             )
         );
 
-        permKickText.append
+        textBuilder.append
         (
             playerPermKickMessageLine
             (
@@ -967,7 +1346,7 @@ public class TextUtils
             )
         );
 
-        permKickText.append
+        textBuilder.append
         (
             playerPermKickMessageLine
             (
@@ -977,7 +1356,7 @@ public class TextUtils
             )
         );
 
-        permKickText.append
+        textBuilder.append
         (
             playerPermKickMessageLine
             (
@@ -987,7 +1366,7 @@ public class TextUtils
             )
         );
 
-        permKickText.append
+        textBuilder.append
         (
             playerPermKickMessageLine
             (
@@ -997,7 +1376,7 @@ public class TextUtils
             )
         );
 
-        permKickText.append
+        textBuilder.append
         (
             playerPermKickMessageLine
             (
@@ -1007,171 +1386,219 @@ public class TextUtils
             )
         );
 
-        permKickText = permKickText
-            .append(Text.literal("\n====================\n")
-                .setStyle(Style.EMPTY.withColor(AntiAFKColors.getKickInfoBorderColor())));
+        textBuilder.append
+        (
+            "\n====================\n",
+            AntiAFKColors.getKickInfoBorderColor()
+        );
 
-        return permKickText;
+        return textBuilder.getText();
     }
 
     public static MutableText playerIgnoredForcedCaptcha(String playerName)
     {
-        MutableText ignoredCaptchaMessage = Text.literal("").setStyle(Style.EMPTY);
+        CustomTextBuilder textBuilder = new CustomTextBuilder();
 
         if (!AntiAFKSettings.shouldHideAFKCaptchaMessagePrefix())
         {
-            ignoredCaptchaMessage = ignoredCaptchaMessage
-                .append(Text.literal("AFKaptcha » ")
-                    .setStyle(Style.EMPTY.withColor(AntiAFKColors.getAFKCaptchaPrefixColor())));
+            textBuilder.append
+            (
+                "AFKaptcha » ",
+                AntiAFKColors.getAFKCaptchaPrefixColor()
+            );
         }
 
         if (!AntiAFKSettings.shouldHidePlayerWordStart())
         {
-            ignoredCaptchaMessage = ignoredCaptchaMessage
-                .append(Text.literal("Player ")
-                    .setStyle(Style.EMPTY.withColor(AntiAFKColors.getAFKCaptchaTextColor())));
+            textBuilder.append
+            (
+                "Player ",
+                AntiAFKColors.getAFKCaptchaTextColor()
+            );
         }
 
-        ignoredCaptchaMessage = ignoredCaptchaMessage
-            .append(Text.literal(playerName)
-                .setStyle(Style.EMPTY.withColor(AntiAFKColors.getAFKCaptchaPlayerColor())));
+        textBuilder.append
+        (
+            playerName,
+            AntiAFKColors.getAFKCaptchaPlayerColor()
+        );
 
-        ignoredCaptchaMessage = ignoredCaptchaMessage
-            .append(Text.literal(" ignored the CAPTCHA you forced on them.")
-                .setStyle(Style.EMPTY.withColor(AntiAFKColors.getAFKCaptchaTextColor())));
+        textBuilder.append
+        (
+            " ignored the CAPTCHA you forced on them.",
+            AntiAFKColors.getAFKCaptchaTextColor()
+        );
 
-        return ignoredCaptchaMessage;
+        return textBuilder.getText();
     }
 
     public static MutableText playerAnsweredForcedCaptcha(String playerName)
     {
-        MutableText answeredCaptchaMessage = Text.literal("").setStyle(Style.EMPTY);
+        CustomTextBuilder textBuilder = new CustomTextBuilder();
 
         if (!AntiAFKSettings.shouldHideAFKCaptchaMessagePrefix())
         {
-            answeredCaptchaMessage = answeredCaptchaMessage
-                .append(Text.literal("AFKaptcha » ")
-                    .setStyle(Style.EMPTY.withColor(AntiAFKColors.getAFKCaptchaPrefixColor())));
+            textBuilder.append
+            (
+                "AFKaptcha » ",
+                AntiAFKColors.getAFKCaptchaPrefixColor()
+            );
         }
 
         if (!AntiAFKSettings.shouldHidePlayerWordStart())
         {
-            answeredCaptchaMessage = answeredCaptchaMessage
-                .append(Text.literal("Player ")
-                    .setStyle(Style.EMPTY.withColor(AntiAFKColors.getAFKCaptchaTextColor())));
+            textBuilder.append
+            (
+                "Player ",
+                AntiAFKColors.getAFKCaptchaTextColor()
+            );
         }
 
-        answeredCaptchaMessage = answeredCaptchaMessage
-            .append(Text.literal(playerName)
-                .setStyle(Style.EMPTY.withColor(AntiAFKColors.getAFKCaptchaPlayerColor())));
+        textBuilder.append
+        (
+            playerName,
+            AntiAFKColors.getAFKCaptchaPlayerColor()
+        );
 
-        answeredCaptchaMessage = answeredCaptchaMessage
-            .append(Text.literal(" answered the CAPTCHA you forced on them.")
-                .setStyle(Style.EMPTY.withColor(AntiAFKColors.getAFKCaptchaTextColor())));
+        textBuilder.append
+        (
+            " answered the CAPTCHA you forced on them.",
+            AntiAFKColors.getAFKCaptchaTextColor()
+        );
 
-        return answeredCaptchaMessage;
+        return textBuilder.getText();
     }
 
     public static MutableText playerPerformedSuspiciousCaptchaAction(String playerName, String susAction)
     {
-        MutableText susCaptchaMessage = Text.literal("").setStyle(Style.EMPTY);
+        CustomTextBuilder textBuilder = new CustomTextBuilder();
 
         if (!AntiAFKSettings.shouldHideAFKCaptchaMessagePrefix())
         {
-            susCaptchaMessage = susCaptchaMessage
-                .append(Text.literal("AFKaptcha » ")
-                    .setStyle(Style.EMPTY.withColor(AntiAFKColors.getAFKCaptchaPrefixColor())));
+            textBuilder.append
+            (
+                "AFKaptcha » ",
+                AntiAFKColors.getAFKCaptchaPrefixColor()
+            );
         }
 
         if (!AntiAFKSettings.shouldHidePlayerWordStart())
         {
-            susCaptchaMessage = susCaptchaMessage
-                .append(Text.literal("Player ")
-                    .setStyle(Style.EMPTY.withColor(AntiAFKColors.getAFKCaptchaTextColor())));
+            textBuilder.append
+            (
+                "Player ",
+                AntiAFKColors.getAFKCaptchaTextColor()
+            );
         }
 
-        susCaptchaMessage = susCaptchaMessage
-            .append(Text.literal(playerName)
-                .setStyle(Style.EMPTY.withColor(AntiAFKColors.getAFKCaptchaPlayerColor())));
+        textBuilder.append
+        (
+            playerName,
+            AntiAFKColors.getAFKCaptchaPlayerColor()
+        );
 
-        susCaptchaMessage = susCaptchaMessage
-            .append(Text.literal(" performed a suspicious CAPTCHA answer: %s.".formatted(susAction))
-                .setStyle(Style.EMPTY.withColor(AntiAFKColors.getAFKCaptchaTextColor())));
+        textBuilder.append
+        (
+            " performed a suspicious CAPTCHA answer: %s.".formatted(susAction),
+            AntiAFKColors.getAFKCaptchaTextColor()
+        );
 
-        return susCaptchaMessage;
+        return textBuilder.getText();
     }
 
     public static MutableText playerPermKickMessageLine(String title, String value, String units)
     {
-        MutableText timeText = Text.literal("").setStyle(Style.EMPTY);
+        CustomTextBuilder textBuilder = new CustomTextBuilder();
 
-        timeText = timeText
-            .append(Text.literal(title)
-                .setStyle(Style.EMPTY.withColor(AntiAFKColors.getKickInfoTitleColor())));
+        textBuilder.append
+        (
+            title,
+            AntiAFKColors.getKickInfoTitleColor()
+        );
 
-        timeText = timeText
-            .append(Text.literal(value)
-                .setStyle(Style.EMPTY.withColor(AntiAFKColors.getKickInfoTimeColor())));
+        textBuilder.append
+        (
+            value,
+            AntiAFKColors.getKickInfoTimeColor()
+        );
 
-        timeText = timeText
-            .append(Text.literal(units)
-                .setStyle(Style.EMPTY.withColor(AntiAFKColors.getKickInfoTextColor())));
+        textBuilder.append
+        (
+            units,
+            AntiAFKColors.getKickInfoTextColor()
+        );
 
-        return timeText;
+        return textBuilder.getText();
     }
 
     public static MutableText infoCommandMessage()
     {
-        MutableText infoMessage = Text.literal("Info » ")
-            .setStyle(Style.EMPTY.withColor(ChatColors.getCommandPrefixColor()));
+        CustomTextBuilder textBuilder = new CustomTextBuilder();
 
-        infoMessage = infoMessage
-            .append(Text.literal("%s ".formatted(MirageEssentials.MOD_NAME))
-                .setStyle(Style.EMPTY.withColor(ChatColors.getCommandValueColor())));
+        textBuilder.append
+        (
+            "Info » ",
+            ChatColors.getCommandPrefixColor()
+        );
 
-        infoMessage = infoMessage
-            .append(Text.literal("v%s".formatted(FabricLoader.getInstance().getModContainer(MirageEssentials.MOD_ID).orElseThrow().getMetadata().getVersion().getFriendlyString()))
-                .setStyle(Style.EMPTY.withColor(ChatColors.getCommandPlayerColor())));
+        textBuilder.append
+        (
+            "%s ".formatted(MirageEssentials.MOD_NAME),
+            ChatColors.getCommandValueColor()
+        );
 
-        infoMessage = infoMessage
-            .append(Text.literal(" is developed by ")
-                .setStyle(Style.EMPTY.withColor(ChatColors.getCommandValueColor())));
+        textBuilder.append
+        (
+            "v%s".formatted(FabricLoader.getInstance().getModContainer(MirageEssentials.MOD_ID).orElseThrow().getMetadata().getVersion().getFriendlyString()),
+            ChatColors.getCommandPlayerColor()
+        );
 
-        infoMessage = infoMessage
-            .append(Text.literal("pioavenger")
-                .setStyle(Style.EMPTY.withColor(ChatColors.getCommandPlayerColor())));
+        textBuilder.append
+        (
+            " is developed by ",
+            ChatColors.getCommandValueColor()
+        );
 
-        return infoMessage;
+        textBuilder.append
+        (
+            "pioavenger",
+            ChatColors.getCommandPlayerColor()
+        );
+
+        return textBuilder.getText();
     }
 
     public static MutableText afkListCommand(MinecraftServer server)
     {
-        MutableText afkListMessage = Text.literal("").setStyle(Style.EMPTY);
+        CustomTextBuilder textBuilder = new CustomTextBuilder();
 
-        afkListMessage = afkListMessage
-            .append(Text.literal("AFKList » ")
-                .setStyle(Style.EMPTY.withColor(ChatColors.getCommandPrefixColor())));
+        textBuilder.append
+        (
+            "AFKList » ",
+            ChatColors.getCommandPrefixColor()
+        );
 
-        afkListMessage = afkListMessage
-            .append(Text.literal("List of currently-AFK players:\n")
-                .setStyle(Style.EMPTY.withColor(ChatColors.getCommandValueColor())));
+        textBuilder.append
+        (
+            "List of currently-AFK players:\n",
+            ChatColors.getCommandValueColor()
+        );
 
         List<MutableText> afkPlayerNames = AntiAFKManager.getAFKPlayerNames(server);
 
         if (afkPlayerNames.isEmpty())
         {
-            afkListMessage = afkListMessage
-                .append(Text.literal("None...")
-                    .setStyle(Style.EMPTY.withColor(ChatColors.getCommandValueColor())));
+            textBuilder.append
+            (
+                "None...",
+                ChatColors.getCommandValueColor()
+            );
 
-            return afkListMessage;
+            return textBuilder.getText();
         }
 
         MutableText firstPlayerName = afkPlayerNames.get(0);
-
-        afkListMessage = afkListMessage
-            .append(firstPlayerName
-                .setStyle(firstPlayerName.getStyle()));
+        textBuilder.append(firstPlayerName);
 
         if (afkPlayerNames.size() >= 2)
         {
@@ -1179,17 +1606,17 @@ public class TextUtils
             {
                 MutableText iPlayerName = afkPlayerNames.get(i);
 
-                afkListMessage = afkListMessage
-                    .append(Text.literal(", ")
-                        .setStyle(Style.EMPTY.withColor(ChatColors.getCommandValueColor())));
+                textBuilder.append
+                (
+                    ", ",
+                    ChatColors.getCommandValueColor()
+                );
 
-                afkListMessage = afkListMessage
-                    .append(iPlayerName
-                        .setStyle(iPlayerName.getStyle()));
+                textBuilder.append(iPlayerName);
             }
         }
 
-        return afkListMessage;
+        return textBuilder.getText();
     }
 
     public static String secondsToReadableTimeString(int totalSeconds)

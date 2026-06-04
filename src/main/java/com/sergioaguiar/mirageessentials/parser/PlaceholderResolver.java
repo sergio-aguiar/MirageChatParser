@@ -31,7 +31,6 @@ import com.sergioaguiar.mirageessentials.util.TextUtils;
 
 import net.minecraft.item.ItemStack;
 import net.minecraft.server.network.ServerPlayerEntity;
-import net.minecraft.text.MutableText;
 import net.minecraft.text.Style;
 import net.minecraft.text.Text;
 
@@ -130,127 +129,127 @@ public class PlaceholderResolver
         HashSet<EggGroup> eggGroups = species.getEggGroups();
         ItemStack heldItem = pokemon.getHeldItem$common();
 
-        MutableText tooltip = Text.literal("");
+        TextUtils.CustomTextBuilder tooltipBuilder = new TextUtils.CustomTextBuilder();
         boolean first = true;
 
         if (ChatSettings.shouldShowNickname())
         {
             if (first) first = false;
-            else tooltip = tooltip.append(Text.literal("\n"));
+            else tooltipBuilder.append(Text.literal("\n"));
 
-            tooltip = tooltip.append(getNicknameText(nickname, types));
+            tooltipBuilder.append(getNicknameText(nickname, types));
         }
 
         if (ChatSettings.shouldShowSpecies())
         {
             if (first) first = false;
-            else tooltip = tooltip.append(Text.literal("\n"));
+            else tooltipBuilder.append(Text.literal("\n"));
 
-            tooltip = tooltip.append(getSpeciesText(pokemon, aspects, speciesFeatures));
+            tooltipBuilder.append(getSpeciesText(pokemon, aspects, speciesFeatures));
         }
 
         if (ChatSettings.shouldShowLevel())
         {
             if (first) first = false;
-            else tooltip = tooltip.append(Text.literal("\n"));
+            else tooltipBuilder.append(Text.literal("\n"));
 
-            tooltip = tooltip.append(getLevelText(level, pokemon.getExperience(), nextLevelExperience));
+            tooltipBuilder.append(getLevelText(level, pokemon.getExperience(), nextLevelExperience));
         }
 
         if (ChatSettings.shouldShowTypes())
         {
             if (first) first = false;
-            else tooltip = tooltip.append(Text.literal("\n"));
+            else tooltipBuilder.append(Text.literal("\n"));
 
-            tooltip = tooltip.append(getTypesText(types));
+            tooltipBuilder.append(getTypesText(types));
         }
 
         if (ChatSettings.shouldShowAbilities())
         {
             if (first) first = false;
-            else tooltip = tooltip.append(Text.literal("\n"));
+            else tooltipBuilder.append(Text.literal("\n"));
 
-            tooltip = tooltip.append(getAbilitiesText(pokemon, isClosedSheet));
+            tooltipBuilder.append(getAbilitiesText(pokemon, isClosedSheet));
         }
 
         if (ChatSettings.shouldShowNature())
         {
             if (first) first = false;
-            else tooltip = tooltip.append(Text.literal("\n"));
+            else tooltipBuilder.append(Text.literal("\n"));
 
-            tooltip = tooltip.append(getNatureText(nature, natureEffective, isClosedSheet));
+            tooltipBuilder.append(getNatureText(nature, natureEffective, isClosedSheet));
         }
 
         if (ChatSettings.shouldShowIVs())
         {
             if (first) first = false;
-            else tooltip = tooltip.append(Text.literal("\n"));
+            else tooltipBuilder.append(Text.literal("\n"));
 
-            tooltip = tooltip.append(getIVsText(ivs, isClosedSheet));
+            tooltipBuilder.append(getIVsText(ivs, isClosedSheet));
         }
 
         if (ChatSettings.shouldShowEVs())
         {
             if (first) first = false;
-            else tooltip = tooltip.append(Text.literal("\n"));
+            else tooltipBuilder.append(Text.literal("\n"));
 
-            tooltip = tooltip.append(getEVsText(evs, isClosedSheet));
+            tooltipBuilder.append(getEVsText(evs, isClosedSheet));
         }
 
         if (ChatSettings.shouldShowMoves())
         {
             if (first) first = false;
-            else tooltip = tooltip.append(Text.literal("\n"));
+            else tooltipBuilder.append(Text.literal("\n"));
 
-            tooltip = tooltip.append(getMovesText(pokemon, moves, isClosedSheet));
+            tooltipBuilder.append(getMovesText(pokemon, moves, isClosedSheet));
         }
 
         if (ChatSettings.shouldShowGender())
         {
             if (first) first = false;
-            else tooltip = tooltip.append(Text.literal("\n"));
+            else tooltipBuilder.append(Text.literal("\n"));
 
-            tooltip = tooltip.append(getGenderText(pokemon.getGender(), isClosedSheet));
+            tooltipBuilder.append(getGenderText(pokemon.getGender(), isClosedSheet));
         }
 
         if (ChatSettings.shouldShowFriendship())
         {
             if (first) first = false;
-            else tooltip = tooltip.append(Text.literal("\n"));
+            else tooltipBuilder.append(Text.literal("\n"));
 
-            tooltip = tooltip.append(getFriendshipText(pokemon.getFriendship(), isClosedSheet));
+            tooltipBuilder.append(getFriendshipText(pokemon.getFriendship(), isClosedSheet));
         }
 
         if (ChatSettings.shouldShowHeldItem())
         {
             if (first) first = false;
-            else tooltip = tooltip.append(Text.literal("\n"));
+            else tooltipBuilder.append(Text.literal("\n"));
 
-            tooltip = tooltip.append(getHeldItemText(heldItem, isClosedSheet));
+            tooltipBuilder.append(getHeldItemText(heldItem, isClosedSheet));
         }   
 
         if (ChatSettings.shouldShowBall())
         {
             if (first) first = false;
-            else tooltip = tooltip.append(Text.literal("\n"));
+            else tooltipBuilder.append(Text.literal("\n"));
 
-            tooltip = tooltip.append(getCaughtBallText(pokemon.getCaughtBall()));
+            tooltipBuilder.append(getCaughtBallText(pokemon.getCaughtBall()));
         }
 
         if (ChatSettings.shouldShowSize())
         {
             if (first) first = false;
-            else tooltip = tooltip.append(Text.literal("\n"));
+            else tooltipBuilder.append(Text.literal("\n"));
 
-            tooltip = tooltip.append(getSizeText(pokemon.getScaleModifier()));
+            tooltipBuilder.append(getSizeText(pokemon.getScaleModifier()));
         }
 
         if (ChatSettings.shouldShowEggGroups())
         {
             if (first) first = false;
-            else tooltip = tooltip.append(Text.literal("\n"));
+            else tooltipBuilder.append(Text.literal("\n"));
 
-            tooltip = tooltip.append(getEggGroupText(eggGroups));
+            tooltipBuilder.append(getEggGroupText(eggGroups));
         }
 
         if (NeoDaycareUtils.isModLoaded() && ChatSettings.shouldShowNeutered())
@@ -260,21 +259,21 @@ public class PlaceholderResolver
             if (isNeutered || ChatSettings.shouldShowNeuteredIfFalse())
             {
                 if (first) first = false;
-                else tooltip = tooltip.append(Text.literal("\n"));
+                else tooltipBuilder.append(Text.literal("\n"));
 
-                tooltip = tooltip.append(getneuterText(pokemon, isNeutered));
+                tooltipBuilder.append(getneuterText(pokemon, isNeutered));
             }
         }
 
         if (ChatSettings.shouldShowOT())
         {
             if (first) first = false;
-            else tooltip = tooltip.append(Text.literal("\n"));
+            else tooltipBuilder.append(Text.literal("\n"));
 
-            tooltip = tooltip.append(getOText(pokemon));
+            tooltipBuilder.append(getOText(pokemon));
         }
 
-        return tooltip;
+        return tooltipBuilder.getText();
     }
 
     public static List<Text> getPokemonTooltipTextList(Pokemon pokemon, boolean isClosedSheet)
@@ -385,14 +384,27 @@ public class PlaceholderResolver
 
     public static Text getNicknameText(String nickname, List<ElementalType> types)
     {
+        TextUtils.CustomTextBuilder nicknameTextBuilder = new TextUtils.CustomTextBuilder();
+
         if (types.size() == 1)
         {
-            return Text.literal(nickname).setStyle(Style.EMPTY.withColor(ChatColors.TypeColor.fromTypeName(types.get(0).getName())).withItalic(false));
+            nicknameTextBuilder.append
+            (
+                Text.literal(nickname)
+                    .setStyle
+                    (
+                        Style.EMPTY
+                            .withColor(ChatColors.TypeColor.fromTypeName(types.get(0).getName()))
+                            .withItalic(false)
+                    )
+            );
         }
         else
         {
-            return TextUtils.gradientBetweenTypes(nickname, types.get(0), types.get(1));
+            nicknameTextBuilder.append(TextUtils.gradientBetweenTypes(nickname, types.get(0), types.get(1)));
         }
+
+        return nicknameTextBuilder.getText();
     }
 
     private static Text getSpeciesText(Pokemon pokemon, Set<String> aspects, List<SpeciesFeature> speciesFeatures)

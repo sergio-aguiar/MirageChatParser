@@ -16,11 +16,12 @@ import com.sergioaguiar.mirageessentials.config.chatparser.textures.GUITexturesC
 import com.sergioaguiar.mirageessentials.config.modules.Modules;
 import com.sergioaguiar.mirageessentials.util.LuckPermsUtils;
 import com.sergioaguiar.mirageessentials.util.ModLogger;
+import com.sergioaguiar.mirageessentials.util.TextUtils;
 
 import net.fabricmc.fabric.api.command.v2.CommandRegistrationCallback;
 import net.minecraft.server.command.CommandManager;
 import net.minecraft.server.command.ServerCommandSource;
-import net.minecraft.text.Style;
+import net.minecraft.text.MutableText;
 import net.minecraft.text.Text;
 
 public class ReloadCommand 
@@ -40,6 +41,25 @@ public class ReloadCommand
         });
     }
 
+    private static MutableText buildReloadFeedbackMessage(String message)
+    {
+        TextUtils.CustomTextBuilder textBuilder = new TextUtils.CustomTextBuilder();
+
+        textBuilder.append
+        (
+            "%s » ".formatted(MirageEssentials.MOD_NAME),
+            ChatColors.getCommandPrefixColor()
+        );
+
+        textBuilder.append
+        (
+            message,
+            ChatColors.getCommandValueColor()
+        );
+
+        return textBuilder.getText();
+    }
+
     private static int executeReload(CommandContext<ServerCommandSource> context) throws CommandSyntaxException
     {
         if (Modules.shouldEnableChatParserModule())
@@ -47,19 +67,7 @@ public class ReloadCommand
             try
             {
                 ChatSettingsConfig.load();
-                context.getSource().sendFeedback(() -> 
-                    {
-                        var text = Text.literal("%s » ".formatted(MirageEssentials.MOD_NAME))
-                            .setStyle(Style.EMPTY.withColor(ChatColors.getCommandPrefixColor()));
-                        
-                        text = text
-                            .append(Text.literal("Reloaded chat settings configuration.")
-                                .setStyle(Style.EMPTY.withColor(ChatColors.getCommandValueColor())));
-                        
-                        return text;
-                    }, 
-                    true
-                );
+                context.getSource().sendFeedback(() -> buildReloadFeedbackMessage("Reloaded chat settings configuration."), true);
                 ModLogger.info("Chat setting configuration reloaded successfully.");
             }
             catch (Exception e)
@@ -72,19 +80,7 @@ public class ReloadCommand
             try
             {
                 ChatStringsConfig.load();
-                context.getSource().sendFeedback(() -> 
-                    {
-                        var text = Text.literal("%s » ".formatted(MirageEssentials.MOD_NAME))
-                            .setStyle(Style.EMPTY.withColor(ChatColors.getCommandPrefixColor()));
-                        
-                        text = text
-                            .append(Text.literal("Reloaded chat strings configuration.")
-                                .setStyle(Style.EMPTY.withColor(ChatColors.getCommandValueColor())));
-                        
-                        return text;
-                    }, 
-                    true
-                );
+                context.getSource().sendFeedback(() -> buildReloadFeedbackMessage("Reloaded chat strings configuration."), true);
                 ModLogger.info("Chat string configuration reloaded successfully.");
             }
             catch (Exception e)
@@ -97,19 +93,7 @@ public class ReloadCommand
             try
             {
                 ChatColorsConfig.load();
-                context.getSource().sendFeedback(() -> 
-                    {
-                        var text = Text.literal("%s » ".formatted(MirageEssentials.MOD_NAME))
-                            .setStyle(Style.EMPTY.withColor(ChatColors.getCommandPrefixColor()));
-                        
-                        text = text
-                            .append(Text.literal("Reloaded chat color configuration.")
-                                .setStyle(Style.EMPTY.withColor(ChatColors.getCommandValueColor())));
-                        
-                        return text;
-                    }, 
-                    true
-                );
+                context.getSource().sendFeedback(() -> buildReloadFeedbackMessage("Reloaded chat color configuration."), true);
                 ModLogger.info("Chat color configuration reloaded successfully.");
             }
             catch (Exception e)
@@ -122,19 +106,7 @@ public class ReloadCommand
             try
             {
                 ChatAspectsConfig.load();
-                context.getSource().sendFeedback(() -> 
-                    {
-                        var text = Text.literal("%s » ".formatted(MirageEssentials.MOD_NAME))
-                            .setStyle(Style.EMPTY.withColor(ChatColors.getCommandPrefixColor()));
-                        
-                        text = text
-                            .append(Text.literal("Reloaded chat aspect configuration.")
-                                .setStyle(Style.EMPTY.withColor(ChatColors.getCommandValueColor())));
-                        
-                        return text;
-                    }, 
-                    true
-                );
+                context.getSource().sendFeedback(() -> buildReloadFeedbackMessage("Reloaded chat aspect configuration."), true);
                 ModLogger.info("Chat aspect configuration reloaded successfully.");
             }
             catch (Exception e)
@@ -147,19 +119,7 @@ public class ReloadCommand
             try
             {
                 ChatSizesConfig.load();
-                context.getSource().sendFeedback(() -> 
-                    {
-                        var text = Text.literal("%s » ".formatted(MirageEssentials.MOD_NAME))
-                            .setStyle(Style.EMPTY.withColor(ChatColors.getCommandPrefixColor()));
-                        
-                        text = text
-                            .append(Text.literal("Reloaded chat size configuration.")
-                                .setStyle(Style.EMPTY.withColor(ChatColors.getCommandValueColor())));
-                        
-                        return text;
-                    }, 
-                    true
-                );
+                context.getSource().sendFeedback(() -> buildReloadFeedbackMessage("Reloaded chat size configuration."), true);
                 ModLogger.info("Chat size configuration reloaded successfully.");
             }
             catch (Exception e)
@@ -172,19 +132,7 @@ public class ReloadCommand
             try
             {
                 GUITexturesConfig.load();
-                context.getSource().sendFeedback(() -> 
-                    {
-                        var text = Text.literal("%s » ".formatted(MirageEssentials.MOD_NAME))
-                            .setStyle(Style.EMPTY.withColor(ChatColors.getCommandPrefixColor()));
-                        
-                        text = text
-                            .append(Text.literal("Reloaded GUI texture configuration.")
-                                .setStyle(Style.EMPTY.withColor(ChatColors.getCommandValueColor())));
-                        
-                        return text;
-                    }, 
-                    true
-                );
+                context.getSource().sendFeedback(() -> buildReloadFeedbackMessage("Reloaded GUI texture configuration."), true);
                 ModLogger.info("GUI texture configuration reloaded successfully.");
             }
             catch (Exception e)
@@ -200,19 +148,7 @@ public class ReloadCommand
             try
             {
                 AntiAFKSettingsConfig.load();
-                context.getSource().sendFeedback(() -> 
-                    {
-                        var text = Text.literal("%s » ".formatted(MirageEssentials.MOD_NAME))
-                            .setStyle(Style.EMPTY.withColor(ChatColors.getCommandPrefixColor()));
-                        
-                        text = text
-                            .append(Text.literal("Reloaded anti-AFK settings configuration.")
-                                .setStyle(Style.EMPTY.withColor(ChatColors.getCommandValueColor())));
-                        
-                        return text;
-                    }, 
-                    true
-                );
+                context.getSource().sendFeedback(() -> buildReloadFeedbackMessage("Reloaded anti-AFK settings configuration."), true);
                 ModLogger.info("Anti-AFK setting configuration reloaded successfully.");
             }
             catch (Exception e)
@@ -225,19 +161,7 @@ public class ReloadCommand
             try
             {
                 AntiAFKStringsConfig.load();
-                context.getSource().sendFeedback(() -> 
-                    {
-                        var text = Text.literal("%s » ".formatted(MirageEssentials.MOD_NAME))
-                            .setStyle(Style.EMPTY.withColor(ChatColors.getCommandPrefixColor()));
-                        
-                        text = text
-                            .append(Text.literal("Reloaded anti-AFK string configuration.")
-                                .setStyle(Style.EMPTY.withColor(ChatColors.getCommandValueColor())));
-                        
-                        return text;
-                    }, 
-                    true
-                );
+                context.getSource().sendFeedback(() -> buildReloadFeedbackMessage("Reloaded anti-AFK string configuration."), true);
                 ModLogger.info("Anti-AFK string configuration reloaded successfully.");
             }
             catch (Exception e)
@@ -250,19 +174,7 @@ public class ReloadCommand
             try
             {
                 AntiAFKColorsConfig.load();
-                context.getSource().sendFeedback(() -> 
-                    {
-                        var text = Text.literal("%s » ".formatted(MirageEssentials.MOD_NAME))
-                            .setStyle(Style.EMPTY.withColor(ChatColors.getCommandPrefixColor()));
-                        
-                        text = text
-                            .append(Text.literal("Reloaded anti-AFK color configuration.")
-                                .setStyle(Style.EMPTY.withColor(ChatColors.getCommandValueColor())));
-                        
-                        return text;
-                    }, 
-                    true
-                );
+                context.getSource().sendFeedback(() -> buildReloadFeedbackMessage("Reloaded anti-AFK color configuration."), true);
                 ModLogger.info("Anti-AFK color configuration reloaded successfully.");
             }
             catch (Exception e)

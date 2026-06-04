@@ -10,14 +10,12 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 import com.sergioaguiar.mirageessentials.config.antiafk.colors.AntiAFKColors;
 import com.sergioaguiar.mirageessentials.config.antiafk.settings.AntiAFKSettings;
 import com.sergioaguiar.mirageessentials.manager.AntiAFKManager;
+import com.sergioaguiar.mirageessentials.util.TextUtils;
 
 import net.minecraft.network.message.SignedMessage;
 import net.minecraft.server.command.MessageCommand;
 import net.minecraft.server.command.ServerCommandSource;
 import net.minecraft.server.network.ServerPlayerEntity;
-import net.minecraft.text.MutableText;
-import net.minecraft.text.Style;
-import net.minecraft.text.Text;
 
 @Mixin(MessageCommand.class)
 public class AntiAFKMsgCommandMixin
@@ -29,28 +27,36 @@ public class AntiAFKMsgCommandMixin
         {
             if (!AntiAFKManager.isPlayerAFK(player)) continue;
             
-            MutableText afkText = Text.literal("").setStyle(Style.EMPTY);
+            TextUtils.CustomTextBuilder textBuilder = new TextUtils.CustomTextBuilder();
 
             if (!AntiAFKSettings.shouldHideAFKCheckerMessagePrefix())
             {
-                afkText = afkText
-                    .append(Text.literal("AFKChecker » ")
-                        .setStyle(Style.EMPTY.withColor(AntiAFKColors.getAFKCheckerPrefixColor())));
+                textBuilder.append
+                (
+                    "AFKChecker » ",
+                    AntiAFKColors.getAFKCheckerPrefixColor()
+                );
             }
 
-            afkText = afkText
-                .append(Text.literal("Player ")
-                    .setStyle(Style.EMPTY.withColor(AntiAFKColors.getAFKCheckerTextColor())));
+            textBuilder.append
+            (
+                "Player ",
+                AntiAFKColors.getAFKCheckerTextColor()
+            );
 
-            afkText = afkText
-                .append(Text.literal(player.getDisplayName().getString())
-                    .setStyle(Style.EMPTY.withColor(AntiAFKColors.getAFKCheckerPlayerColor())));
+            textBuilder.append
+            (
+                player.getDisplayName().getString(),
+                AntiAFKColors.getAFKCheckerPlayerColor()
+            );
 
-            afkText = afkText
-                .append(Text.literal(" is marked as AFK and may not see your message.")
-                    .setStyle(Style.EMPTY.withColor(AntiAFKColors.getAFKCheckerTextColor())));
+            textBuilder.append
+            (
+                " is marked as AFK and may not see your message.",
+                AntiAFKColors.getAFKCheckerTextColor()
+            );
 
-            source.sendMessage(afkText);
+            source.sendMessage(textBuilder.getText());
         }
     }
 }
