@@ -341,7 +341,7 @@ public class AntiAFKManager
 
     public static int getIgnorableCaptchaCount(UUID playerUUID)
     {
-        return AntiAFKSettings.getFailedCaptchaBeforeKick() - playerIgnoredCaptchaCounts.getOrDefault(playerUUID, 0) - 1;
+        return Math.max(AntiAFKSettings.getFailedCaptchaBeforeKick() - playerIgnoredCaptchaCounts.getOrDefault(playerUUID, 0) - 1, 0);
     }
 
     public static boolean shouldPlayerBeMarkedAsAFK(ServerPlayerEntity player)
