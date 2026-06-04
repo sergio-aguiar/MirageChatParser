@@ -78,6 +78,9 @@ public class ChatColors
     private static final DataResult<TextColor> DEFAULT_HOVERABLE_SHINY_TEXT_COLOR = TextColor.parse("#b6b30b");
     private static final DataResult<TextColor> DEFAULT_HOVERABLE_ERROR_TEXT_COLOR = TextColor.parse("#e21e1e");
 
+    private static final DataResult<TextColor> DEFAULT_HOVERABLE_ITEM_BRACKET_COLOR = TextColor.parse("#2eb4e9");
+    private static final DataResult<TextColor> DEFAULT_HOVERABLE_ITEM_TEXT_COLOR = TextColor.parse("#33daf0");
+
     private static final DataResult<TextColor> DEFAULT_TOOLTIP_LABEL_COLOR = TextColor.parse("#3463e6");
     private static final DataResult<TextColor> DEFAULT_TOOLTIP_VALUE_COLOR = TextColor.parse("#d1d8eb");
     private static final DataResult<TextColor> DEFAULT_TOOLTIP_FORM_COLOR = TextColor.parse("#e6e354");
@@ -133,6 +136,9 @@ public class ChatColors
     private static TextColor hoverableTextColor;
     private static TextColor hoverableTextShinyColor;
     private static TextColor hoverableTextErrorColor;
+
+    private static TextColor hoverableItemBracketColor;
+    private static TextColor hoverableItemTextColor;
 
     private static TextColor tooltipLabelColor;
     private static TextColor tooltipValueColor;
@@ -193,6 +199,9 @@ public class ChatColors
             hoverableTextColor = DEFAULT_HOVERABLE_TEXT_COLOR.getOrThrow();
             hoverableTextShinyColor = DEFAULT_HOVERABLE_SHINY_TEXT_COLOR.getOrThrow();
             hoverableTextErrorColor = DEFAULT_HOVERABLE_ERROR_TEXT_COLOR.getOrThrow();
+            
+            hoverableItemBracketColor = DEFAULT_HOVERABLE_ITEM_BRACKET_COLOR.getOrThrow();
+            hoverableItemTextColor = DEFAULT_HOVERABLE_ITEM_TEXT_COLOR.getOrThrow();
 
             tooltipLabelColor = DEFAULT_TOOLTIP_LABEL_COLOR.getOrThrow();
             tooltipValueColor = DEFAULT_TOOLTIP_VALUE_COLOR.getOrThrow();
@@ -253,6 +262,8 @@ public class ChatColors
     public static TextColor getHoverableTextColor() { return hoverableTextColor; }
     public static TextColor getHoverableTextShinyColor() { return hoverableTextShinyColor; }
     public static TextColor getHoverableTextErrorColor() { return hoverableTextErrorColor; }
+    public static TextColor getHoverableItemBracketColor() { return hoverableItemBracketColor; }
+    public static TextColor getHoverableItemTextColor() { return hoverableItemTextColor; }
     public static TextColor getTooltipLabelColor() { return tooltipLabelColor; }
     public static TextColor getTooltipValueColor() { return tooltipValueColor; }
     public static TextColor getTooltipFormColor() { return tooltipFormColor; }
@@ -305,6 +316,8 @@ public class ChatColors
     protected static void setHoverableTextColor(TextColor color) { hoverableTextColor = color; }
     protected static void setHoverableTextShinyColor(TextColor color) { hoverableTextShinyColor = color; }
     protected static void setHoverableTextErrorColor(TextColor color) { hoverableTextErrorColor = color; }
+    protected static void setHoverableItemBracketColor(TextColor color) { hoverableItemBracketColor = color; }
+    protected static void setHoverableItemTextColor(TextColor color) { hoverableItemTextColor = color; }
     protected static void setTooltipLabelColor(TextColor color) { tooltipLabelColor = color; }
     protected static void setTooltipValueColor(TextColor color) { tooltipValueColor = color; }
     protected static void setTooltipFormColor(TextColor color) { tooltipFormColor = color; }

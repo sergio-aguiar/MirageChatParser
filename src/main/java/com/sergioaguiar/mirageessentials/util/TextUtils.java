@@ -1645,19 +1645,19 @@ public class TextUtils
         textBuilder.append
         (
             "[",
-            ChatColors.getHoverableBracketColor()
+            ChatColors.getHoverableItemBracketColor()
         );
 
         textBuilder.append
         (
             stack.getName().getString(),
-            ChatColors.getHoverableTextColor()
+            ChatColors.getHoverableItemTextColor()
         );
 
         textBuilder.append
         (
             "]",
-            ChatColors.getHoverableBracketColor()
+            ChatColors.getHoverableItemBracketColor()
         );
 
         textBuilder.setHoverEvent(new HoverEvent(HoverEvent.Action.SHOW_ITEM, new HoverEvent.ItemStackContent(stack)));
