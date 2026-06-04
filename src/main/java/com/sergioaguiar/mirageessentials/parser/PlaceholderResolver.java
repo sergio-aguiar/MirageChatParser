@@ -31,7 +31,6 @@ import com.sergioaguiar.mirageessentials.util.TextUtils;
 
 import net.minecraft.item.ItemStack;
 import net.minecraft.server.network.ServerPlayerEntity;
-import net.minecraft.text.HoverEvent;
 import net.minecraft.text.Style;
 import net.minecraft.text.Text;
 
@@ -138,7 +137,7 @@ public class PlaceholderResolver
             return TextUtils.errorPlaceholder("Empty Slot");
         }
 
-        return getItemText(stack);
+        return TextUtils.getItemText(stack);
     }
 
     public static Text getHotbarItem(ServerPlayerEntity player, int index)
@@ -160,34 +159,7 @@ public class PlaceholderResolver
             return TextUtils.errorPlaceholder("Empty Slot");
         }
 
-        return getItemText(stack);
-    }
-
-    public static Text getItemText(ItemStack stack)
-    {
-        TextUtils.CustomTextBuilder textBuilder = new TextUtils.CustomTextBuilder();
-
-        textBuilder.append
-        (
-            "[",
-            ChatColors.getHoverableBracketColor()
-        );
-
-        textBuilder.append
-        (
-            stack.getName().getString(),
-            ChatColors.getHoverableTextColor()
-        );
-
-        textBuilder.append
-        (
-            "]",
-            ChatColors.getHoverableBracketColor()
-        );
-
-        textBuilder.setHoverEvent(new HoverEvent(HoverEvent.Action.SHOW_ITEM, new HoverEvent.ItemStackContent(stack)));
-
-        return textBuilder.getText();
+        return TextUtils.getItemText(stack);
     }
 
     public static Text buildPokemonTooltip(Pokemon pokemon, boolean isClosedSheet) 

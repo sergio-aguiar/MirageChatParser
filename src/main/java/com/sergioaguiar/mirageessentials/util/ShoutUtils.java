@@ -9,6 +9,7 @@ import com.cobblemon.mod.common.pokemon.Pokemon;
 import com.sergioaguiar.mirageessentials.config.chatparser.colors.ChatColors;
 import com.sergioaguiar.mirageessentials.parser.PlaceholderResolver;
 
+import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NbtCompound;
 import net.minecraft.server.network.ServerPlayerEntity;
 import net.minecraft.text.Text;
@@ -326,7 +327,6 @@ public class ShoutUtils
             );
 
             player.sendMessage(messageBuilder.getText(), false);
-
             return;
         }
         
@@ -386,5 +386,60 @@ public class ShoutUtils
 
         if (self) player.sendMessage(shoutBuilder.getText(), false);
         else player.getServer().getPlayerManager().broadcast(shoutBuilder.getText(), false);
+    }
+
+    public static void doItemShout(ServerPlayerEntity player, int itemIndex)
+    {
+        ItemStack stack = player.getInventory().getStack(itemIndex - 1);
+
+        if (stack == null || stack.isEmpty())
+        {
+            TextUtils.CustomTextBuilder messageBuilder = new TextUtils.CustomTextBuilder();
+
+            messageBuilder.append
+            (
+                "ItemShout » ",
+                ChatColors.getCommandPrefixColor()
+            );
+
+            messageBuilder.append
+            (
+                "You can not shout an empty item slot!",
+                ChatColors.getCommandValueColor()
+            );
+
+            player.sendMessage(messageBuilder.getText(), false);
+            return;
+        }
+
+        TextUtils.CustomTextBuilder shoutBuilder = new TextUtils.CustomTextBuilder();
+
+        shoutBuilder.append
+        (
+            "ItemShout » ",
+            ChatColors.getCommandPrefixColor()
+        );
+
+        shoutBuilder.append
+        (
+            "Player ",
+            ChatColors.getCommandValueColor()
+        );
+
+        shoutBuilder.append
+        (
+            player.getDisplayName().getString(),
+            ChatColors.getCommandPlayerColor()
+        );
+
+        shoutBuilder.append
+        (
+            " shouted: ",
+            ChatColors.getCommandValueColor()
+        );
+
+        shoutBuilder.append(TextUtils.getItemText(stack));
+        
+        player.getServer().getPlayerManager().broadcast(shoutBuilder.getText(), false);
     }
 }

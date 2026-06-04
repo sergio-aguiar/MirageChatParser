@@ -1637,4 +1637,31 @@ public class TextUtils
 
         return String.join(", ", resultPartList);
     }
+
+    public static Text getItemText(ItemStack stack)
+    {
+        TextUtils.CustomTextBuilder textBuilder = new TextUtils.CustomTextBuilder();
+
+        textBuilder.append
+        (
+            "[",
+            ChatColors.getHoverableBracketColor()
+        );
+
+        textBuilder.append
+        (
+            stack.getName().getString(),
+            ChatColors.getHoverableTextColor()
+        );
+
+        textBuilder.append
+        (
+            "]",
+            ChatColors.getHoverableBracketColor()
+        );
+
+        textBuilder.setHoverEvent(new HoverEvent(HoverEvent.Action.SHOW_ITEM, new HoverEvent.ItemStackContent(stack)));
+
+        return textBuilder.getText();
+    }
 }

@@ -8,6 +8,7 @@ import com.sergioaguiar.mirageessentials.command.antiafk.ForceCaptchaCommand;
 import com.sergioaguiar.mirageessentials.command.antiafk.IsAFKCommand;
 import com.sergioaguiar.mirageessentials.command.antiafk.fake.FakeCaptchaClickCommand;
 import com.sergioaguiar.mirageessentials.command.chatparser.DebugShoutCommand;
+import com.sergioaguiar.mirageessentials.command.chatparser.ItemShoutCommand;
 import com.sergioaguiar.mirageessentials.command.chatparser.PCShoutCommand;
 import com.sergioaguiar.mirageessentials.command.chatparser.PartyCheckCommand;
 import com.sergioaguiar.mirageessentials.command.chatparser.PartyShoutAllCommand;
@@ -150,6 +151,7 @@ public class MirageEssentials implements ModInitializer
 				PCShoutCommand.register();
 				DebugShoutCommand.register();
 				PartyCheckCommand.register();
+				ItemShoutCommand.register();
 			}
 
 			if (Modules.shouldEnableAntiAFKModule())
