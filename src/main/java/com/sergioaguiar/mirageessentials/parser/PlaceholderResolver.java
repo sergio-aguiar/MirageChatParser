@@ -31,6 +31,7 @@ import com.sergioaguiar.mirageessentials.util.TextUtils;
 
 import net.minecraft.item.ItemStack;
 import net.minecraft.server.network.ServerPlayerEntity;
+import net.minecraft.text.HoverEvent;
 import net.minecraft.text.Style;
 import net.minecraft.text.Text;
 
@@ -57,6 +58,18 @@ public class PlaceholderResolver
                 boolean isClosedSheet = parts.length > 3 && parts[3].equals("closed");
 
                 return getPCPokemonName(player, box, slot, isClosedSheet);
+            }
+            else if (lower.startsWith("item"))
+            {
+                if (lower.startsWith("item:"))
+                {
+                    String[] parts = lower.split(":");
+                    int index = Integer.parseInt(parts[1]);
+
+                    return getHotbarItem(player, index);
+                }
+
+                return getMainHandItem(player);
             }
         } 
         catch (Exception e) {}
@@ -109,6 +122,72 @@ public class PlaceholderResolver
     public static Text buildPokemonText(Pokemon pokemon, boolean isClosedSheet) 
     {
         return TextUtils.hoverableText(pokemon.getSpecies().getName(), buildPokemonTooltip(pokemon, isClosedSheet), pokemon.getShiny());
+    }
+
+    public static Text getMainHandItem(ServerPlayerEntity player)
+    {
+        if (player == null)
+        {
+            return TextUtils.errorPlaceholder("Invalid Player");
+        }
+
+        ItemStack stack = player.getMainHandStack();
+
+        if (stack == null || stack.isEmpty())
+        {
+            return TextUtils.errorPlaceholder("Empty Slot");
+        }
+
+        return getItemText(stack);
+    }
+
+    public static Text getHotbarItem(ServerPlayerEntity player, int index)
+    {
+        if (player == null)
+        {
+            return TextUtils.errorPlaceholder("Invalid Player");
+        }
+
+        if (index < 1 || index > 9)
+        {
+            return TextUtils.errorPlaceholder("Invalid Slot");
+        }
+
+        ItemStack stack = player.getInventory().getStack(index - 1);
+
+        if (stack == null || stack.isEmpty())
+        {
+            return TextUtils.errorPlaceholder("Empty Slot");
+        }
+
+        return getItemText(stack);
+    }
+
+    public static Text getItemText(ItemStack stack)
+    {
+        TextUtils.CustomTextBuilder textBuilder = new TextUtils.CustomTextBuilder();
+
+        textBuilder.append
+        (
+            "[",
+            ChatColors.getHoverableBracketColor()
+        );
+
+        textBuilder.append
+        (
+            stack.getName().getString(),
+            ChatColors.getHoverableTextColor()
+        );
+
+        textBuilder.append
+        (
+            "]",
+            ChatColors.getHoverableBracketColor()
+        );
+
+        textBuilder.setHoverEvent(new HoverEvent(HoverEvent.Action.SHOW_ITEM, new HoverEvent.ItemStackContent(stack)));
+
+        return textBuilder.getText();
     }
 
     public static Text buildPokemonTooltip(Pokemon pokemon, boolean isClosedSheet) 
