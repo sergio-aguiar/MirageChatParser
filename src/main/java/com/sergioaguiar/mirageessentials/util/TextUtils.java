@@ -34,6 +34,7 @@ import com.sergioaguiar.mirageessentials.manager.AntiAFKManager;
 import com.sergioaguiar.mirageessentials.manager.AntiAFKManager.KickReason;
 
 import net.fabricmc.loader.api.FabricLoader;
+import net.minecraft.component.DataComponentTypes;
 import net.minecraft.item.ItemStack;
 import net.minecraft.server.MinecraftServer;
 import net.minecraft.server.network.ServerPlayerEntity;
@@ -1669,8 +1670,12 @@ public class TextUtils
     {
         if (stack == null || stack.isEmpty()) return ChatStrings.getEmptyHeldItemString();
 
-        return ChatSettings.shouldShowOriginalItemNames()
-            ? stack.getItem().getName().getString()
-            : stack.getName().getString();
+        Text itemName = stack.get(DataComponentTypes.ITEM_NAME);
+
+        return itemName != null && itemName.getString().length() > 0
+            ? itemName.getString()
+            : ChatSettings.shouldShowOriginalItemNames()
+                ? stack.getItem().getName().getString()
+                : stack.getName().getString();
     }
 }
