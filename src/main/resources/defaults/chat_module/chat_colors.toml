@@ -30,9 +30,11 @@ PlayerColor = '#cfe95e'
 BracketColor = "#0a9120"
 BracketShinyColor = "#e7e436"
 BracketErrorColor = "#c00303"
+BracketItemColor = "#2eb4e9"
 TextColor = "#21bb3a"
 TextShinyColor = "#b6b30b"
 TextErrorColor = "#e21e1e"
+TextItemColor = "#33daf0"
 
 [Tooltip]
 LabelColor = "#3463e6"
