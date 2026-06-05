@@ -35,6 +35,7 @@ public class ChatSettings
     }
 
     protected static final boolean DEFAULT_PARSE_NON_PLAYER_MESSAGES = false;
+    protected static final boolean DEFAULT_SHOW_ORIGINAL_ITEM_NAMES = false;
 
     protected static final boolean DEFAULT_SHOW_NICKNAME = true;
     protected static final boolean DEFAULT_SHOW_SPECIES = true;
@@ -65,6 +66,7 @@ public class ChatSettings
     protected static final boolean DEFAULT_SHOW_PARTYCHECK_PLAYER_HEADS = true;
 
     private static boolean parseNonPlayerMessages;
+    private static boolean showOriginalItemNames;
 
     private static boolean showNickname;
     private static boolean showSpecies;
@@ -97,6 +99,7 @@ public class ChatSettings
     public static void setDefaults()
     {
         parseNonPlayerMessages = DEFAULT_PARSE_NON_PLAYER_MESSAGES;
+        showOriginalItemNames = DEFAULT_SHOW_ORIGINAL_ITEM_NAMES;
 
         showNickname = DEFAULT_SHOW_NICKNAME;
         showSpecies = DEFAULT_SHOW_SPECIES;
@@ -128,6 +131,7 @@ public class ChatSettings
     }
 
     public static boolean shouldParseNonPlayerMessages() { return parseNonPlayerMessages; }
+    public static boolean shouldShowOriginalItemNames() { return showOriginalItemNames; }
     public static boolean shouldShowNickname() { return showNickname; }
     public static boolean shouldShowSpecies() { return showSpecies; }
     public static boolean shouldShowLevel() { return showLevel; }
@@ -154,6 +158,7 @@ public class ChatSettings
     public static boolean shouldShowPartyCheckPlayerHeads() { return showPartyCheckPlayerHeads; }
 
     protected static void setParseNonPlayerMessages(boolean enabled) { parseNonPlayerMessages = enabled; }
+    protected static void setShowOriginalItemNames(boolean enabled) { showOriginalItemNames = enabled; }
     protected static void setShowNickname(boolean enabled) { showNickname = enabled; }
     protected static void setShowSpecies(boolean enabled) { showSpecies = enabled; }
     protected static void setShowLevel(boolean enabled) { showLevel = enabled; }

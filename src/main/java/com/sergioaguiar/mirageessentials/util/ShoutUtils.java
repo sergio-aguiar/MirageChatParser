@@ -391,7 +391,11 @@ public class ShoutUtils
     public static void doItemShout(ServerPlayerEntity player, int itemIndex)
     {
         ItemStack stack = player.getInventory().getStack(itemIndex - 1);
+        doItemShout(player, stack);
+    }
 
+    public static void doItemShout(ServerPlayerEntity player, ItemStack stack)
+    {
         if (stack == null || stack.isEmpty())
         {
             TextUtils.CustomTextBuilder messageBuilder = new TextUtils.CustomTextBuilder();

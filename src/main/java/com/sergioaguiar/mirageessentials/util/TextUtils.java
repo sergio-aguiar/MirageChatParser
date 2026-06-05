@@ -880,7 +880,7 @@ public class TextUtils
         (
             isClosedSheet 
                 ? ChatStrings.getClosedSheetString() 
-                : (heldItem.isEmpty() ? ChatStrings.getEmptyHeldItemString() : heldItem.getName().getString()),
+                : getItemName(heldItem),
             ChatColors.getTooltipValueColor()
         );
 
@@ -1650,7 +1650,7 @@ public class TextUtils
 
         textBuilder.append
         (
-            stack.getName().getString(),
+            getItemName(stack),
             ChatColors.getHoverableItemTextColor()
         );
 
@@ -1663,5 +1663,14 @@ public class TextUtils
         textBuilder.setHoverEvent(new HoverEvent(HoverEvent.Action.SHOW_ITEM, new HoverEvent.ItemStackContent(stack)));
 
         return textBuilder.getText();
+    }
+
+    public static String getItemName(ItemStack stack)
+    {
+        if (stack == null || stack.isEmpty()) return ChatStrings.getEmptyHeldItemString();
+
+        return ChatSettings.shouldShowOriginalItemNames()
+            ? stack.getItem().getName().getString()
+            : stack.getName().getString();
     }
 }

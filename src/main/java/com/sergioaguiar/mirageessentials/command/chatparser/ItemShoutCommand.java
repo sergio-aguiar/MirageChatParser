@@ -22,14 +22,15 @@ public class ItemShoutCommand
             (
                 CommandManager.literal("itemshout")
                     .requires(source -> LuckPermsUtils.hasPermission(source, "miragechatparser.commands.itemshout"))
+                    .executes(context -> ItemShoutCommand.executeItemShout(context, true))
                     .then(CommandManager.argument("slot", IntegerArgumentType.integer(1, 9))
-                        .executes(context -> ItemShoutCommand.executeItemShout(context))
+                        .executes(context -> ItemShoutCommand.executeItemShout(context, false))
                     )
             );
         });
     }
 
-    private static int executeItemShout(CommandContext<ServerCommandSource> context) throws CommandSyntaxException
+    private static int executeItemShout(CommandContext<ServerCommandSource> context, boolean shoutMainHand) throws CommandSyntaxException
     {
         ServerCommandSource source = context.getSource();
         if (!source.isExecutedByPlayer())
@@ -49,9 +50,16 @@ public class ItemShoutCommand
             return 1;
         }
 
-        int itemIndex = IntegerArgumentType.getInteger(context, "slot");
+        if (shoutMainHand)
+        {
+            ShoutUtils.doItemShout(player, player.getMainHandStack());
+        }
+        else
+        {
+            int itemIndex = IntegerArgumentType.getInteger(context, "slot");
+            ShoutUtils.doItemShout(player, itemIndex);
+        }
 
-        ShoutUtils.doItemShout(player, itemIndex);
         return 0;
     }
 }

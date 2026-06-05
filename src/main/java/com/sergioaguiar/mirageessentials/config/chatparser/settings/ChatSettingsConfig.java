@@ -48,6 +48,12 @@ public class ChatSettingsConfig
                 ChatSettings.setParseNonPlayerMessages(enabled);
             }
 
+            if (config.contains("General.ShowOriginalItemNames"))
+            {
+                boolean enabled = config.getOrElse("General.ShowOriginalItemNames", ChatSettings.DEFAULT_SHOW_ORIGINAL_ITEM_NAMES);
+                ChatSettings.setShowOriginalItemNames(enabled);
+            }
+
             if (config.contains("Tooltip.ShowNickname"))
             {
                 boolean enabled = config.getOrElse("Tooltip.ShowNickname", ChatSettings.DEFAULT_SHOW_NICKNAME);
@@ -209,7 +215,9 @@ public class ChatSettingsConfig
             [General]
             # Whether to parse non-player (e.g. server) messages or not (true/false)
             ParseNonPlayerMessages = false
-
+            # Whether items should show the original item name, rather than changed ones (using an anvil, for example) (true/false)
+            ShowOriginalItemNames = false
+            
             [Tooltip]
             # Whether to show a Pokémon's nickname in hover text (true/false)
             ShowNickname = true
