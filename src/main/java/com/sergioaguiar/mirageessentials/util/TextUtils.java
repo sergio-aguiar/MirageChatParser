@@ -1661,7 +1661,16 @@ public class TextUtils
             ChatColors.getHoverableItemBracketColor()
         );
 
-        textBuilder.setHoverEvent(new HoverEvent(HoverEvent.Action.SHOW_ITEM, new HoverEvent.ItemStackContent(stack)));
+        ItemStack changedStack = fixItemStackName(stack.copy());
+
+        textBuilder.setHoverEvent
+        (
+            new HoverEvent
+            (
+                HoverEvent.Action.SHOW_ITEM,
+                new HoverEvent.ItemStackContent(ChatSettings.shouldShowOriginalItemNames() ? changedStack : stack)
+            )
+        );
 
         return textBuilder.getText();
     }
@@ -1677,5 +1686,15 @@ public class TextUtils
             : ChatSettings.shouldShowOriginalItemNames()
                 ? stack.getItem().getName().getString()
                 : stack.getName().getString();
+    }
+
+    public static ItemStack fixItemStackName(ItemStack stack)
+    {
+        Text itemName = stack.get(DataComponentTypes.CUSTOM_NAME);
+
+        if (itemName == null || itemName.getString().length() == 0) return stack;
+
+        stack.remove(DataComponentTypes.CUSTOM_NAME);
+        return stack;
     }
 }
