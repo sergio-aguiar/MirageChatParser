@@ -379,6 +379,20 @@ public class ChatColorsConfig
                     ChatColors.setTooltipFalseColor(TextColor.parse(color).getOrThrow());
             }
 
+            if (config.contains("Tooltip.EggNicknameColor"))
+            {
+                String color = config.get("Tooltip.EggNicknameColor");
+                if (color != null && !color.isEmpty())
+                    ChatColors.setTooltipEggNicknameColor(TextColor.parse(color).getOrThrow());
+            }
+
+            if (config.contains("Tooltip.EggHatchStageMessageColor"))
+            {
+                String color = config.get("Tooltip.EggHatchStageMessageColor");
+                if (color != null && !color.isEmpty())
+                    ChatColors.setTooltipEggHatchStageMessageColor(TextColor.parse(color).getOrThrow());
+            }
+
             if (config.contains("GUI.PartyCheckButtonTitleColor"))
             {
                 String color = config.get("GUI.PartyCheckButtonTitleColor");
@@ -483,6 +497,8 @@ public class ChatColorsConfig
             GenderlessColor = "#bdbdbd"
             TrueColor = "#40d440"
             FalseColor = "#d12828"
+            EggNicknameColor = "#0a9120"
+            EggHatchStageMessageColor = "#14dd14"
 
             [GUI]
             PartyCheckButtonTitleColor = "#1f22b8"

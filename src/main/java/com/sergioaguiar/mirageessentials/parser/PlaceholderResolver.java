@@ -120,7 +120,14 @@ public class PlaceholderResolver
 
     public static Text buildPokemonText(Pokemon pokemon, boolean isClosedSheet) 
     {
-        return TextUtils.hoverableText(pokemon.getSpecies().getName(), buildPokemonTooltip(pokemon, isClosedSheet), pokemon.getShiny());
+        return TextUtils.hoverableText
+        (
+            pokemon.getSpecies().getName(), 
+            NeoDaycareUtils.isEgg(pokemon)
+                ? buildEggTooltip(pokemon)
+                : buildPokemonTooltip(pokemon, isClosedSheet), 
+            pokemon.getShiny()
+        );
     }
 
     public static Text getMainHandItem(ServerPlayerEntity player)
@@ -160,6 +167,47 @@ public class PlaceholderResolver
         }
 
         return TextUtils.getItemText(stack);
+    }
+
+    public static Text buildEggTooltip(Pokemon pokemon)
+    {
+        Species species = pokemon.getSpecies();
+        String nickname = (pokemon.getNickname() == null || pokemon.getNickname().getLiteralString() == null) 
+            ? species.getName() : pokemon.getNickname().getLiteralString();
+
+        TextUtils.CustomTextBuilder tooltipBuilder = new TextUtils.CustomTextBuilder();
+        boolean first = true;
+
+        if (ChatSettings.shouldShowEggNickname())
+        {
+            if (first) first = false;
+            else tooltipBuilder.append(Text.literal("\n"));
+
+            tooltipBuilder.append
+            (
+                nickname,
+                ChatColors.getTooltipEggNicknameColor()
+            );
+        }
+
+        if (ChatSettings.shouldshowEggHatchStepProgress())
+        {
+            if (first) first = false;
+            else tooltipBuilder.append(Text.literal("\n"));
+
+            tooltipBuilder.append(getStepsText(pokemon));
+        }
+
+        if (ChatSettings.shouldshowEggHatchStepProgress())
+        {
+            if (first) first = false;
+            else tooltipBuilder.append(Text.literal("\n"));
+
+            tooltipBuilder.append(Text.literal("\n"));
+            tooltipBuilder.append(getHatchStageText(pokemon));
+        }
+
+        return tooltipBuilder.getText();
     }
 
     public static Text buildPokemonTooltip(Pokemon pokemon, boolean isClosedSheet) 
@@ -553,5 +601,15 @@ public class PlaceholderResolver
         }
 
         return TextUtils.coloredOTLine(originalTrainer);
+    }
+
+    private static Text getStepsText(Pokemon pokemon)
+    {
+        return TextUtils.coloredStepsLine(pokemon);
+    }
+
+    private static Text getHatchStageText(Pokemon pokemon)
+    {
+        return TextUtils.coloredEggStageLine(pokemon);
     }
 }

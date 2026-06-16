@@ -54,6 +54,10 @@ public class ChatSettings
     protected static final boolean DEFAULT_SHOW_EGG_GROUPS = true;
     protected static final boolean DEFAULT_SHOW_NEUTERED = true;
     protected static final boolean DEFAULT_SHOW_OT = true;
+    
+    protected static final boolean DEFAULT_SHOW_EGG_NICKNAME = true;
+    protected static final boolean DEFAULT_SHOW_EGG_HATCH_STEP_PROGRESS = true;
+    protected static final boolean DEFAULT_SHOW_EGG_STAGE_MESSAGE = true;
 
     protected static final boolean DEFAULT_SHOW_FORM_IF_NORMAL = false;
     protected static final boolean DEFAULT_SHOW_NEUTERED_IF_FALSE = true;
@@ -85,6 +89,10 @@ public class ChatSettings
     private static boolean showEggGroups;
     private static boolean showNeutered;
     private static boolean showOT;
+
+    private static boolean showEggNickname;
+    private static boolean showEggHatchStepProgress;
+    private static boolean showEggStageMessage;
 
     private static boolean showFormIfNormal;
     private static boolean showNeuteredIfFalse;
@@ -119,6 +127,10 @@ public class ChatSettings
         showNeutered = DEFAULT_SHOW_NEUTERED;
         showOT = DEFAULT_SHOW_OT;
 
+        showEggNickname = DEFAULT_SHOW_EGG_NICKNAME;
+        showEggHatchStepProgress = DEFAULT_SHOW_EGG_HATCH_STEP_PROGRESS;
+        showEggStageMessage = DEFAULT_SHOW_EGG_STAGE_MESSAGE;
+
         showFormIfNormal = DEFAULT_SHOW_FORM_IF_NORMAL;
         showNeuteredIfFalse = DEFAULT_SHOW_NEUTERED_IF_FALSE;
 
@@ -149,6 +161,9 @@ public class ChatSettings
     public static boolean shouldShowEggGroups() { return showEggGroups; }
     public static boolean shouldShowNeutered() { return showNeutered; }
     public static boolean shouldShowOT() { return showOT; }
+    public static boolean shouldShowEggNickname() { return showEggNickname; }
+    public static boolean shouldshowEggHatchStepProgress() { return showEggHatchStepProgress; }
+    public static boolean shouldShowEggStageMessage() { return showEggStageMessage; }
     public static boolean shouldShowFormIfNormal() { return showFormIfNormal; }
     public static boolean shouldShowNeuteredIfFalse() { return showNeuteredIfFalse; }
     public static boolean shouldBoldHyperTrainingValues() { return boldHyperTrainingValues; }
@@ -176,6 +191,9 @@ public class ChatSettings
     protected static void setShowEggGroups(boolean enabled) { showEggGroups = enabled; }
     protected static void setShowNeutered(boolean enabled) { showNeutered = enabled; }
     protected static void setShowOT(boolean enabled) { showOT = enabled; }
+    protected static void setShowEggNickname(boolean enabled) { showEggNickname = enabled; }
+    protected static void setshowEggHatchStepProgress(boolean enabled) { showEggHatchStepProgress = enabled; }
+    protected static void setShowEggStageMessage(boolean enabled) { showEggStageMessage = enabled; }
     protected static void setShowFormIfNormal(boolean enabled) { showFormIfNormal = enabled; }
     protected static void setShowNeuteredIfFalse(boolean enabled) { showNeuteredIfFalse = enabled; }
     protected static void setBoldHyperTrainingValues(boolean enabled) { boldHyperTrainingValues = enabled; }
