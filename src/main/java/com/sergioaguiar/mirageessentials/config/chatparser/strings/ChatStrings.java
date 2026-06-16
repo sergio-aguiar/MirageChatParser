@@ -56,6 +56,33 @@ public class ChatStrings
         }
     }
 
+    public enum EggHatchStages
+    {
+        STAGE_0("This Egg doesn't seem close to hatching.", "It will probably take a long time."),
+        STAGE_1("What will hatch from this?", "It doesn't seem close to hatching."),
+        STAGE_2("It appears to move occasionally.", "It may be close to hatching."),
+        STAGE_3("Sounds can be heard coming from inside!", "It will hatch soon!");
+
+        private final String messageTop;
+        private final String messageBottom;
+
+        private EggHatchStages(String messageTop, String messageBottom)
+        {
+            this.messageTop = messageTop;
+            this.messageBottom = messageBottom;
+        }
+
+        public String getMessageTop()
+        {
+            return messageTop;
+        }
+
+        public String getMessageBottom()
+        {
+            return messageBottom;
+        }
+    }
+
     private static final String DEFAULT_TRUE_STRING = "Yes";
     private static final String DEFAULT_FALSE_STRING = "No";
 
@@ -80,6 +107,9 @@ public class ChatStrings
     private static final String DEFAULT_EGG_GROUPS_STRING = "Egg Groups: ";
     private static final String DEFAULT_NEUTERED_STRING = "Neutered: ";
     private static final String DEFAULT_ORIGINAL_TRAINER_STRING = "Original Trainer: ";
+
+    private static final String DEFAULT_HATCH_PROGRESS_STRING = "Hatch Progress: ";
+    private static final String DEFAULT_STEP_PROGRESS_STRING = "Step Progress: ";
 
     private static final String DEFAULT_HEALTH_STRING = "HP";
     private static final String DEFAULT_ATTACK_STRING = "Atk";
@@ -133,6 +163,18 @@ public class ChatStrings
     private static String eggGroupsString;
     private static String neuteredString;
     private static String originalTrainerString;
+    
+    private static String hatchProgressString;
+    private static String stepProgressString;
+
+    private static String eggHatchStage0TopString;
+    private static String eggHatchStage0BottomString;
+    private static String eggHatchStage1TopString;
+    private static String eggHatchStage1BottomString;
+    private static String eggHatchStage2TopString;
+    private static String eggHatchStage2BottomString;
+    private static String eggHatchStage3TopString;
+    private static String eggHatchStage3BottomString;
 
     private static String healthString;
     private static String attackString;
@@ -200,6 +242,18 @@ public class ChatStrings
         eggGroupsString = DEFAULT_EGG_GROUPS_STRING;
         neuteredString = DEFAULT_NEUTERED_STRING;
         originalTrainerString = DEFAULT_ORIGINAL_TRAINER_STRING;
+        
+        hatchProgressString = DEFAULT_HATCH_PROGRESS_STRING;
+        stepProgressString = DEFAULT_STEP_PROGRESS_STRING;
+
+        eggHatchStage0TopString = EggHatchStages.STAGE_0.getMessageTop();
+        eggHatchStage0BottomString = EggHatchStages.STAGE_0.getMessageBottom();
+        eggHatchStage1TopString = EggHatchStages.STAGE_1.getMessageTop();
+        eggHatchStage1BottomString = EggHatchStages.STAGE_1.getMessageBottom();
+        eggHatchStage2TopString = EggHatchStages.STAGE_2.getMessageTop();
+        eggHatchStage2BottomString = EggHatchStages.STAGE_2.getMessageBottom();
+        eggHatchStage3TopString = EggHatchStages.STAGE_3.getMessageTop();
+        eggHatchStage3BottomString = EggHatchStages.STAGE_3.getMessageBottom();
 
         healthString = DEFAULT_HEALTH_STRING;
         attackString = DEFAULT_ATTACK_STRING;
@@ -264,6 +318,16 @@ public class ChatStrings
     public static String getEggGroupsString() { return eggGroupsString; }
     public static String getNeuteredString() { return neuteredString; }
     public static String getOriginalTrainerString() { return originalTrainerString; }
+    public static String getHatchProgressString() { return hatchProgressString; }
+    public static String getStepProgressString() { return stepProgressString; }
+    public static String getEggHatchStage0TopString() { return eggHatchStage0TopString; }
+    public static String getEggHatchStage0BottomString() { return eggHatchStage0BottomString; }
+    public static String getEggHatchStage1TopString() { return eggHatchStage1TopString; }
+    public static String getEggHatchStage1BottomString() { return eggHatchStage1BottomString; }
+    public static String getEggHatchStage2TopString() { return eggHatchStage2TopString; }
+    public static String getEggHatchStage2BottomString() { return eggHatchStage2BottomString; }
+    public static String getEggHatchStage3TopString() { return eggHatchStage3TopString; }
+    public static String getEggHatchStage3BottomString() { return eggHatchStage3BottomString; }
     public static String getHealthString() { return healthString; }
     public static String getAttackString() { return attackString; }
     public static String getDefenseString() { return defenseString; }
@@ -324,6 +388,16 @@ public class ChatStrings
     protected static void setEggGroupsString(String string) { eggGroupsString = string; }
     protected static void setNeuteredString(String string) { neuteredString = string; }
     protected static void setOriginalTrainerString(String string) { originalTrainerString = string; }
+    protected static void setHatchProgressString(String string) { hatchProgressString = string; }
+    protected static void setStepProgressString(String string) { stepProgressString = string; }
+    protected static void setEggHatchStage0TopString(String string) { eggHatchStage0TopString = string; }
+    protected static void setEggHatchStage0BottomString(String string) { eggHatchStage0BottomString = string; }
+    protected static void setEggHatchStage1TopString(String string) { eggHatchStage1TopString = string; }
+    protected static void setEggHatchStage1BottomString(String string) { eggHatchStage1BottomString = string; }
+    protected static void setEggHatchStage2TopString(String string) { eggHatchStage2TopString = string; }
+    protected static void setEggHatchStage2BottomString(String string) { eggHatchStage2BottomString = string; }
+    protected static void setEggHatchStage3TopString(String string) { eggHatchStage3TopString = string; }
+    protected static void setEggHatchStage3BottomString(String string) { eggHatchStage3BottomString = string; }
     protected static void setHealthString(String string) { healthString = string; }
     protected static void setAttackString(String string) { attackString = string; }
     protected static void setDefenseString(String string) { defenseString = string; }

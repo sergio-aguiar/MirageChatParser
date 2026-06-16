@@ -195,6 +195,76 @@ public class ChatStringsConfig
                     ChatStrings.setOriginalTrainerString(string);
             }
 
+            if (config.contains("Label.HatchProgress"))
+            {
+                String string = config.get("Label.HatchProgress");
+                if (string != null && !string.isEmpty())
+                    ChatStrings.setHatchProgressString(string);
+            }
+
+            if (config.contains("Label.StepProgress"))
+            {
+                String string = config.get("Label.StepProgress");
+                if (string != null && !string.isEmpty())
+                    ChatStrings.setStepProgressString(string);
+            }
+
+            if (config.contains("EggStageMessages.EggStage0Top"))
+            {
+                String string = config.get("EggStageMessages.EggStage0Top");
+                if (string != null && !string.isEmpty())
+                    ChatStrings.setEggHatchStage0TopString(string);
+            }
+
+            if (config.contains("EggStageMessages.EggStage0Bottom"))
+            {
+                String string = config.get("EggStageMessages.EggStage0Bottom");
+                if (string != null && !string.isEmpty())
+                    ChatStrings.setEggHatchStage0BottomString(string);
+            }
+
+            if (config.contains("EggStageMessages.EggStage1Top"))
+            {
+                String string = config.get("EggStageMessages.EggStage1Top");
+                if (string != null && !string.isEmpty())
+                    ChatStrings.setEggHatchStage1TopString(string);
+            }
+
+            if (config.contains("EggStageMessages.EggStage1Bottom"))
+            {
+                String string = config.get("EggStageMessages.EggStage1Bottom");
+                if (string != null && !string.isEmpty())
+                    ChatStrings.setEggHatchStage1BottomString(string);
+            }
+
+            if (config.contains("EggStageMessages.EggStage2Top"))
+            {
+                String string = config.get("EggStageMessages.EggStage2Top");
+                if (string != null && !string.isEmpty())
+                    ChatStrings.setEggHatchStage2TopString(string);
+            }
+
+            if (config.contains("EggStageMessages.EggStage2Bottom"))
+            {
+                String string = config.get("EggStageMessages.EggStage2Bottom");
+                if (string != null && !string.isEmpty())
+                    ChatStrings.setEggHatchStage2BottomString(string);
+            }
+
+            if (config.contains("EggStageMessages.EggStage3Top"))
+            {
+                String string = config.get("EggStageMessages.EggStage3Top");
+                if (string != null && !string.isEmpty())
+                    ChatStrings.setEggHatchStage3TopString(string);
+            }
+
+            if (config.contains("EggStageMessages.EggStage3Bottom"))
+            {
+                String string = config.get("EggStageMessages.EggStage3Bottom");
+                if (string != null && !string.isEmpty())
+                    ChatStrings.setEggHatchStage3BottomString(string);
+            }
+
             if (config.contains("Value.HiddenAbility"))
             {
                 String string = config.get("Value.HiddenAbility");
@@ -492,6 +562,18 @@ public class ChatStringsConfig
             Neutered = "Neutered: "
             # Other suggestions, "OT: " and "Original Trainer (OT): "
             OriginalTrainer = "Original Trainer: "
+            HatchProgress = "Hatch Progress: "
+            StepProgress = "Step Progress: "
+
+            [EggStageMessages]
+            EggStage0Top = "This Egg doesn't seem close to hatching."
+            EggStage0Bottom = "It will probably take a long time."
+            EggStage1Top = "What will hatch from this?"
+            EggStage1Bottom = "It doesn't seem close to hatching."
+            EggStage2Top = "It appears to move occasionally."
+            EggStage2Bottom = "It may be close to hatching."
+            EggStage3Top = "Sounds can be heard coming from inside!"
+            EggStage3Bottom = "It will hatch soon!"
 
             [Stat]
             Health = "HP"

@@ -62,6 +62,9 @@ public class ChatAspects
     public static final String SPECIES_FEATURE_TREE_STRING = "tree";
     public static final String SPECIES_FEATURE_TREE_NONE_STRING = "none";
 
+    public static final String SPECIES_FEATURE_BLOCKS_TRAVELED_STRING = "blocks_traveled";
+    public static final String SPECIES_FEATURE_HATCH_PERCENTAGE_STRING = "hatch_percentage";
+
     private static Set<String> ignoredSpeciesFeatures;
     private static Map<String, String> displayedAspects;
 

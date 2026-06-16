@@ -1007,6 +1007,115 @@ public class TextUtils
         return textBuilder.getText();
     }
 
+    public static Text coloredStepsLine(Pokemon pokemon)
+    {
+        List<SpeciesFeature> speciesFeatures = pokemon.getFeatures();
+
+        int hatchPercentage = NeoDaycareUtils.getHatchPercentage(speciesFeatures);
+        Integer remainingSteps = NeoDaycareUtils.getRemainingSteps(pokemon);
+        Integer totalSteps = NeoDaycareUtils.getTotalSteps(pokemon);
+
+        CustomTextBuilder textBuilder = new CustomTextBuilder();
+
+        if (remainingSteps == null || totalSteps == null)
+        {
+            textBuilder.append
+            (
+                ChatStrings.getHatchProgressString(),
+                ChatColors.getTooltipLabelColor()
+            );
+
+            textBuilder.append
+            (
+                "%d%%".formatted(hatchPercentage),
+                ChatColors.getTooltipValueColor()
+            );
+
+            return textBuilder.getText();
+        }
+
+        textBuilder.append
+        (
+            ChatStrings.getStepProgressString(),
+            ChatColors.getTooltipLabelColor()
+        );
+
+        textBuilder.append
+        (
+            String.valueOf(totalSteps - remainingSteps),
+            ChatColors.getTooltipValueColor()
+        );
+
+        textBuilder.append
+        (
+            "/",
+            ChatColors.getTooltipValueColor()
+        );
+
+        textBuilder.append
+        (
+            String.valueOf(totalSteps),
+            ChatColors.getTooltipValueColor()
+        );
+
+        textBuilder.append
+        (
+            " (",
+            ChatColors.getTooltipValueColor()
+        );
+
+        textBuilder.append
+        (
+            "%d%%".formatted(hatchPercentage),
+            ChatColors.getTooltipValueColor()
+        );
+
+        textBuilder.append
+        (
+            ")",
+            ChatColors.getTooltipValueColor()
+        );
+
+        return textBuilder.getText();
+    }
+
+    public static Text coloredEggStageLine(Pokemon pokemon)
+    {
+        List<SpeciesFeature> speciesFeatures = pokemon.getFeatures();
+
+        int hatchPercentage = NeoDaycareUtils.getHatchPercentage(speciesFeatures);
+
+        CustomTextBuilder textBuilder = new CustomTextBuilder();
+
+        textBuilder.append
+        (
+            hatchPercentage < 40
+                ? ChatStrings.getEggHatchStage0TopString()
+                : hatchPercentage < 70
+                    ? ChatStrings.getEggHatchStage1TopString()
+                    : hatchPercentage < 90
+                        ? ChatStrings.getEggHatchStage2TopString()
+                        : ChatStrings.getEggHatchStage3TopString(),
+            ChatColors.getTooltipEggHatchStageMessageColor()
+        );
+
+        textBuilder.append(Text.literal("\n").setStyle(Style.EMPTY));
+
+        textBuilder.append
+        (
+            hatchPercentage < 40
+                ? ChatStrings.getEggHatchStage0BottomString()
+                : hatchPercentage < 70
+                    ? ChatStrings.getEggHatchStage1BottomString()
+                    : hatchPercentage < 90
+                        ? ChatStrings.getEggHatchStage2BottomString()
+                        : ChatStrings.getEggHatchStage3BottomString(),
+            ChatColors.getTooltipEggHatchStageMessageColor()
+        );
+
+        return textBuilder.getText();
+    }
+
     public static MutableText gradientBetweenTypes(String text, ElementalType type1, ElementalType type2)
     {
         CustomTextBuilder textBuilder = new CustomTextBuilder();
