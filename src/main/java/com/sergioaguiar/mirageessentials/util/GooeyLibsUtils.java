@@ -59,7 +59,16 @@ public class GooeyLibsUtils
 
             pokemonButtonBuilder.display(PokemonItem.from(pokemon))
                 .with(DataComponentTypes.ITEM_NAME, PlaceholderResolver.getNicknameText(nickname, types))
-                .with(DataComponentTypes.LORE, new LoreComponent(PlaceholderResolver.getPokemonTooltipTextList(pokemon, closed.get())))
+                .with
+                (
+                    DataComponentTypes.LORE,
+                    new LoreComponent
+                    (
+                        NeoDaycareUtils.isEgg(pokemon)
+                            ? PlaceholderResolver.getEggTooltipTextList(pokemon)
+                            : PlaceholderResolver.getPokemonTooltipTextList(pokemon, closed.get())
+                    )
+                )
                 .onClick((action) ->
                 {
                     if (CooldownManager.isOnCooldown(player))
