@@ -198,7 +198,7 @@ public class PlaceholderResolver
             tooltipBuilder.append(getStepsText(pokemon));
         }
 
-        if (ChatSettings.shouldshowEggHatchStepProgress())
+        if (ChatSettings.shouldShowEggStageMessage())
         {
             if (first) first = false;
             else tooltipBuilder.append(Text.literal("\n"));
@@ -373,6 +373,23 @@ public class PlaceholderResolver
         }
 
         return tooltipBuilder.getText();
+    }
+
+    public static List<Text> getEggTooltipTextList(Pokemon pokemon)
+    {
+        List<Text> tooltipText = new ArrayList<>();
+
+        if (ChatSettings.shouldshowEggHatchStepProgress())
+        {
+            tooltipText.add(getStepsText(pokemon));
+        }
+
+        if (ChatSettings.shouldShowEggStageMessage())
+        {
+            tooltipText.addAll(TextUtils.coloredEggStageLineList(pokemon));
+        }
+
+        return tooltipText;
     }
 
     public static List<Text> getPokemonTooltipTextList(Pokemon pokemon, boolean isClosedSheet)

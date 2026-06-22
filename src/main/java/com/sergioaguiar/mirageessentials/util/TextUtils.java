@@ -1116,6 +1116,48 @@ public class TextUtils
         return textBuilder.getText();
     }
 
+    public static List<Text> coloredEggStageLineList(Pokemon pokemon)
+    {
+        List<Text> eggStageLines = new ArrayList<>();
+
+        List<SpeciesFeature> speciesFeatures = pokemon.getFeatures();
+
+        int hatchPercentage = NeoDaycareUtils.getHatchPercentage(speciesFeatures);
+
+        CustomTextBuilder textBuilderTop = new CustomTextBuilder();
+        CustomTextBuilder textBuilderBottom = new CustomTextBuilder();
+
+        textBuilderTop.append
+        (
+            hatchPercentage < 40
+                ? ChatStrings.getEggHatchStage0TopString()
+                : hatchPercentage < 70
+                    ? ChatStrings.getEggHatchStage1TopString()
+                    : hatchPercentage < 90
+                        ? ChatStrings.getEggHatchStage2TopString()
+                        : ChatStrings.getEggHatchStage3TopString(),
+            ChatColors.getTooltipEggHatchStageMessageColor()
+        );
+
+        textBuilderBottom.append
+        (
+            hatchPercentage < 40
+                ? ChatStrings.getEggHatchStage0BottomString()
+                : hatchPercentage < 70
+                    ? ChatStrings.getEggHatchStage1BottomString()
+                    : hatchPercentage < 90
+                        ? ChatStrings.getEggHatchStage2BottomString()
+                        : ChatStrings.getEggHatchStage3BottomString(),
+            ChatColors.getTooltipEggHatchStageMessageColor()
+        );
+
+        eggStageLines.add(Text.literal("").setStyle(Style.EMPTY));
+        eggStageLines.add(textBuilderTop.getText());
+        eggStageLines.add(textBuilderBottom.getText());
+
+        return eggStageLines;
+    }
+
     public static MutableText gradientBetweenTypes(String text, ElementalType type1, ElementalType type2)
     {
         CustomTextBuilder textBuilder = new CustomTextBuilder();
