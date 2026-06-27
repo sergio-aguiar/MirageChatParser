@@ -1127,29 +1127,62 @@ public class TextUtils
         CustomTextBuilder textBuilderTop = new CustomTextBuilder();
         CustomTextBuilder textBuilderBottom = new CustomTextBuilder();
 
-        textBuilderTop.append
-        (
-            hatchPercentage < 40
-                ? ChatStrings.getEggHatchStage0TopString()
-                : hatchPercentage < 70
-                    ? ChatStrings.getEggHatchStage1TopString()
-                    : hatchPercentage < 90
-                        ? ChatStrings.getEggHatchStage2TopString()
-                        : ChatStrings.getEggHatchStage3TopString(),
-            ChatColors.getTooltipEggHatchStageMessageColor()
-        );
+        if (hatchPercentage < 40)
+        {
+            textBuilderTop.append
+            (
+                ChatStrings.getEggHatchStage0TopString(),
+                ChatColors.getTooltipEggHatchStageMessageColor()
+            );
 
-        textBuilderBottom.append
-        (
-            hatchPercentage < 40
-                ? ChatStrings.getEggHatchStage0BottomString()
-                : hatchPercentage < 70
-                    ? ChatStrings.getEggHatchStage1BottomString()
-                    : hatchPercentage < 90
-                        ? ChatStrings.getEggHatchStage2BottomString()
-                        : ChatStrings.getEggHatchStage3BottomString(),
-            ChatColors.getTooltipEggHatchStageMessageColor()
-        );
+            textBuilderBottom.append
+            (
+                ChatStrings.getEggHatchStage0BottomString(),
+                ChatColors.getTooltipEggHatchStageMessageColor()
+            );
+        }
+        else if (hatchPercentage < 70)
+        {
+            textBuilderTop.append
+            (
+                ChatStrings.getEggHatchStage1TopString(),
+                ChatColors.getTooltipEggHatchStageMessageColor()
+            );
+
+            textBuilderBottom.append
+            (
+                ChatStrings.getEggHatchStage1BottomString(),
+                ChatColors.getTooltipEggHatchStageMessageColor()
+            );
+        }
+        else if (hatchPercentage < 90)
+        {
+            textBuilderTop.append
+            (
+                ChatStrings.getEggHatchStage2TopString(),
+                ChatColors.getTooltipEggHatchStageMessageColor()
+            );
+
+            textBuilderBottom.append
+            (
+                ChatStrings.getEggHatchStage2BottomString(),
+                ChatColors.getTooltipEggHatchStageMessageColor()
+            );
+        }
+        else
+        {
+            textBuilderTop.append
+            (
+                ChatStrings.getEggHatchStage3TopString(),
+                ChatColors.getTooltipEggHatchStageMessageColor()
+            );
+
+            textBuilderBottom.append
+            (
+                ChatStrings.getEggHatchStage3BottomString(),
+                ChatColors.getTooltipEggHatchStageMessageColor()
+            );
+        }
 
         eggStageLines.add(Text.literal("").setStyle(Style.EMPTY));
         eggStageLines.add(textBuilderTop.getText());

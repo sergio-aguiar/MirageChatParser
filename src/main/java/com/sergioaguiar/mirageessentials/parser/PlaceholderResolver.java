@@ -386,7 +386,14 @@ public class PlaceholderResolver
 
         if (ChatSettings.shouldShowEggStageMessage())
         {
-            tooltipText.addAll(TextUtils.coloredEggStageLineList(pokemon));
+            List<Text> eggStageLines = TextUtils.coloredEggStageLineList(pokemon);
+
+            if (tooltipText.isEmpty())
+            {
+                eggStageLines.remove(0);
+            }
+            
+            tooltipText.addAll(eggStageLines);
         }
 
         return tooltipText;
