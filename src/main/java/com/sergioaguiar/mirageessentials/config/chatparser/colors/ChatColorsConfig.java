@@ -211,6 +211,41 @@ public class ChatColorsConfig
                     ChatColors.setHoverableBracketErrorColor(TextColor.parse(color).getOrThrow());
             }
 
+            if (config.contains("Hoverable.BracketRegularColor"))
+            {
+                String color = config.get("Hoverable.BracketRegularColor");
+                if (color != null && !color.isEmpty())
+                    ChatColors.setHoverableBracketRegularColor(TextColor.parse(color).getOrThrow());
+            }
+
+            if (config.contains("Hoverable.BracketLegendaryColor"))
+            {
+                String color = config.get("Hoverable.BracketLegendaryColor");
+                if (color != null && !color.isEmpty())
+                    ChatColors.setHoverableBracketLegendaryColor(TextColor.parse(color).getOrThrow());
+            }
+
+            if (config.contains("Hoverable.BracketMythicalColor"))
+            {
+                String color = config.get("Hoverable.BracketMythicalColor");
+                if (color != null && !color.isEmpty())
+                    ChatColors.setHoverableBracketMythicalColor(TextColor.parse(color).getOrThrow());
+            }
+
+            if (config.contains("Hoverable.BracketUltraBeastColor"))
+            {
+                String color = config.get("Hoverable.BracketUltraBeastColor");
+                if (color != null && !color.isEmpty())
+                    ChatColors.setHoverableBracketUltraBeastColor(TextColor.parse(color).getOrThrow());
+            }
+
+            if (config.contains("Hoverable.BracketCustomColor"))
+            {
+                String color = config.get("Hoverable.BracketCustomColor");
+                if (color != null && !color.isEmpty())
+                    ChatColors.setHoverableBracketCustomColor(TextColor.parse(color).getOrThrow());
+            }
+
             if (config.contains("Hoverable.BracketItemColor"))
             {
                 String color = config.get("Hoverable.BracketItemColor");
@@ -237,6 +272,41 @@ public class ChatColorsConfig
                 String color = config.get("Hoverable.TextErrorColor");
                 if (color != null && !color.isEmpty())
                     ChatColors.setHoverableTextErrorColor(TextColor.parse(color).getOrThrow());
+            }
+
+            if (config.contains("Hoverable.TextRegularColor"))
+            {
+                String color = config.get("Hoverable.TextRegularColor");
+                if (color != null && !color.isEmpty())
+                    ChatColors.setHoverableTextRegularColor(TextColor.parse(color).getOrThrow());
+            }
+
+            if (config.contains("Hoverable.TextLegendaryColor"))
+            {
+                String color = config.get("Hoverable.TextLegendaryColor");
+                if (color != null && !color.isEmpty())
+                    ChatColors.setHoverableTextLegendaryColor(TextColor.parse(color).getOrThrow());
+            }
+
+            if (config.contains("Hoverable.TextMythicalColor"))
+            {
+                String color = config.get("Hoverable.TextMythicalColor");
+                if (color != null && !color.isEmpty())
+                    ChatColors.setHoverableTextMythicalColor(TextColor.parse(color).getOrThrow());
+            }
+
+            if (config.contains("Hoverable.TextUltraBeastColor"))
+            {
+                String color = config.get("Hoverable.TextUltraBeastColor");
+                if (color != null && !color.isEmpty())
+                    ChatColors.setHoverableTextUltraBeastColor(TextColor.parse(color).getOrThrow());
+            }
+
+            if (config.contains("Hoverable.TextCustomColor"))
+            {
+                String color = config.get("Hoverable.TextCustomColor");
+                if (color != null && !color.isEmpty())
+                    ChatColors.setHoverableTextCustomColor(TextColor.parse(color).getOrThrow());
             }
 
             if (config.contains("Hoverable.TextItemColor"))
@@ -469,10 +539,20 @@ public class ChatColorsConfig
 
             [Hoverable]
             BracketColor = "#0a9120"
+            BracketRegularColor = "#b9b0b0"
+            BracketLegendaryColor = "#d61b1b"
+            BracketMythicalColor = "#c91dc0"
+            BracketUltraBeastColor = "#238f15"
+            BracketCustomColor = "#20a1d4"
             BracketShinyColor = "#e7e436"
             BracketErrorColor = "#c00303"
             BracketItemColor = "#2eb4e9"
             TextColor = "#21bb3a"
+            TextRegularColor = "#cacaca"
+            TextLegendaryColor = "#f72e2e"
+            TextMythicalColor = "#db2bd2"
+            TextUltraBeastColor = "#2ea31f"
+            TextCustomColor = "#2eb4e9"
             TextShinyColor = "#b6b30b"
             TextErrorColor = "#e21e1e"
             TextItemColor = "#33daf0"

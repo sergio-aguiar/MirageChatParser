@@ -1193,16 +1193,21 @@ public class TextUtils
 
     public static MutableText gradientBetweenTypes(String text, ElementalType type1, ElementalType type2)
     {
-        CustomTextBuilder textBuilder = new CustomTextBuilder();
-
-        int length = text.length();
-        if (length == 0) return textBuilder.getText();
-
         TextColor color1 = TypeColor.fromTypeName(type1.getName());
         TextColor color2 = TypeColor.fromTypeName(type2.getName());
 
         int rgb1 = color1.getRgb();
         int rgb2 = color2.getRgb();
+
+        return gradientBetweenRGB(text, rgb1, rgb2);
+    }
+
+    public static MutableText gradientBetweenRGB(String text, int rgb1, int rgb2)
+    {
+        CustomTextBuilder textBuilder = new CustomTextBuilder();
+        int length = text.length();
+
+         if (length == 0) return textBuilder.getText();
 
         for (int i = 0; i < length; i++) 
         {
@@ -1225,27 +1230,118 @@ public class TextUtils
         return textBuilder.getText();
     }
 
-    public static MutableText hoverableText(String speciesName, Text tooltip, boolean isShiny)
+    public static MutableText hoverableText(String speciesName, Text tooltip, boolean isShiny, boolean isLegendary, boolean isMythical, boolean isUltraBeast, boolean isCustom)
     {
         CustomTextBuilder textBuilder = new CustomTextBuilder();
 
-        textBuilder.append
-        (
-            "[",
-            isShiny ? ChatColors.getHoverableBracketShinyColor() : ChatColors.getHoverableBracketColor()
-        );
+        if (ChatSettings.shouldUsePokemonCategoryHoverables())
+        {
+            if (isShiny && ChatSettings.shouldUseShinyGradientHoverables())
+            {
+                textBuilder.append
+                (
+                    gradientBetweenRGB
+                    (
+                        "[%s%s]".formatted(isShiny ? ChatStrings.getShinyIconString() : "", speciesName), 
+                        ChatColors.getHoverableTextShinyColor().getRgb(),
+                        isCustom
+                            ? ChatColors.getHoverableBracketCustomColor().getRgb()
+                            : isLegendary 
+                                ? ChatColors.getHoverableBracketLegendaryColor().getRgb()
+                                : isMythical 
+                                    ? ChatColors.getHoverableBracketMythicalColor().getRgb()
+                                    : isUltraBeast
+                                        ? ChatColors.getHoverableBracketUltraBeastColor().getRgb()
+                                        : ChatColors.getHoverableBracketRegularColor().getRgb()
+                    )
+                );
+            }
+            else
+            {
+                textBuilder.append
+                (
+                    "[",
+                    isShiny 
+                        ? ChatColors.getHoverableBracketShinyColor() 
+                        : isCustom
+                            ? ChatColors.getHoverableBracketCustomColor()
+                            : isLegendary 
+                                ? ChatColors.getHoverableBracketLegendaryColor()
+                                : isMythical 
+                                    ? ChatColors.getHoverableBracketMythicalColor()
+                                    : isUltraBeast
+                                        ? ChatColors.getHoverableBracketUltraBeastColor()
+                                        : ChatColors.getHoverableBracketRegularColor()
+                );
 
-        textBuilder.append
-        (
-            "%s%s".formatted(isShiny ? ChatStrings.getShinyIconString() : "", speciesName),
-            isShiny ? ChatColors.getHoverableTextShinyColor() : ChatColors.getHoverableTextColor()
-        );
+                textBuilder.append
+                (
+                    "%s%s".formatted(isShiny ? ChatStrings.getShinyIconString() : "", speciesName),
+                    isShiny 
+                        ? ChatColors.getHoverableTextShinyColor() 
+                        : isCustom
+                            ? ChatColors.getHoverableTextCustomColor()
+                            : isLegendary 
+                                ? ChatColors.getHoverableTextLegendaryColor()
+                                : isMythical 
+                                    ? ChatColors.getHoverableTextMythicalColor()
+                                    : isUltraBeast
+                                        ? ChatColors.getHoverableTextUltraBeastColor()
+                                        : ChatColors.getHoverableTextRegularColor()
+                );
 
-        textBuilder.append
-        (
-            "]",
-            isShiny ? ChatColors.getHoverableBracketShinyColor() : ChatColors.getHoverableBracketColor()
-        );
+                textBuilder.append
+                (
+                    "]",
+                    isShiny 
+                        ? ChatColors.getHoverableBracketShinyColor() 
+                        : isCustom
+                            ? ChatColors.getHoverableBracketCustomColor()
+                            : isLegendary 
+                                ? ChatColors.getHoverableBracketLegendaryColor()
+                                : isMythical 
+                                    ? ChatColors.getHoverableBracketMythicalColor()
+                                    : isUltraBeast
+                                        ? ChatColors.getHoverableBracketUltraBeastColor()
+                                        : ChatColors.getHoverableBracketRegularColor()
+                );
+            }
+        }
+        else
+        {
+            if (isShiny && ChatSettings.shouldUseShinyGradientHoverables())
+            {
+                textBuilder.append
+                (
+                    gradientBetweenRGB
+                    (
+                        "[%s%s]".formatted(isShiny ? ChatStrings.getShinyIconString() : "", speciesName), 
+                        ChatColors.getHoverableTextShinyColor().getRgb(),
+                        ChatColors.getHoverableTextColor().getRgb()
+                    )
+                );
+            }
+            else
+            {
+                textBuilder.append
+                (
+                    "[",
+                    isShiny ? ChatColors.getHoverableBracketShinyColor() : ChatColors.getHoverableBracketColor()
+                );
+
+                textBuilder.append
+                (
+                    "%s%s".formatted(isShiny ? ChatStrings.getShinyIconString() : "", speciesName),
+                    isShiny ? ChatColors.getHoverableTextShinyColor() : ChatColors.getHoverableTextColor()
+                );
+
+                textBuilder.append
+                (
+                    "]",
+                    isShiny ? ChatColors.getHoverableBracketShinyColor() : ChatColors.getHoverableBracketColor()
+                );
+            }
+        }
 
         textBuilder.setHoverEvent(new HoverEvent(HoverEvent.Action.SHOW_TEXT, tooltip));
 

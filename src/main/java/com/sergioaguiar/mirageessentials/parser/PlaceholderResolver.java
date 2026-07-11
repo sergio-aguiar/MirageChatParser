@@ -22,6 +22,7 @@ import com.cobblemon.mod.common.pokemon.IVs;
 import com.cobblemon.mod.common.pokemon.Nature;
 import com.cobblemon.mod.common.pokemon.Pokemon;
 import com.cobblemon.mod.common.pokemon.Species;
+import com.sergioaguiar.mirageessentials.config.chatparser.aspects.ChatAspects;
 import com.sergioaguiar.mirageessentials.config.chatparser.colors.ChatColors;
 import com.sergioaguiar.mirageessentials.config.chatparser.settings.ChatSettings;
 import com.sergioaguiar.mirageessentials.config.chatparser.strings.ChatStrings;
@@ -126,7 +127,11 @@ public class PlaceholderResolver
             NeoDaycareUtils.isEgg(pokemon)
                 ? buildEggTooltip(pokemon)
                 : buildPokemonTooltip(pokemon, isClosedSheet), 
-            pokemon.getShiny()
+            pokemon.getShiny(),
+            pokemon.isLegendary(),
+            pokemon.isMythical(),
+            pokemon.isUltraBeast(),
+            ChatAspects.isCustomPokemon(pokemon.getAspects())
         );
     }
 

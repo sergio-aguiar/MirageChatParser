@@ -83,4 +83,13 @@ public class ChatAspects
 
     protected static void addIgnoredSpeciesFeature(String speciesFeature) { ignoredSpeciesFeatures.add(speciesFeature); }
     protected static void addDisplayedAspect(String aspect, String aspectFriendlyName) { displayedAspects.put(aspect, aspectFriendlyName); }
+
+    public static boolean isCustomPokemon(Set<String> aspects)
+    {
+        for (String aspect : aspects)
+        {
+            if (displayedAspects.containsKey(aspect)) return true;
+        }
+        return false;
+    }
 }
