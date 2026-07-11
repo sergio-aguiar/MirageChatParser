@@ -72,10 +72,20 @@ public class ChatColors
     private static final DataResult<TextColor> DEFAULT_COMMAND_PLAYER_COLOR = TextColor.parse("#cfe95e");
 
     private static final DataResult<TextColor> DEFAULT_HOVERABLE_BRACKET_COLOR = TextColor.parse("#0a9120");
-    private static final DataResult<TextColor> DEFAULT_HOVERABLE_SHINY_BRACKET_COLOR = TextColor.parse("#e7e436");
+    private static final DataResult<TextColor> DEFAULT_HOVERABLE_REGULAR_BRACKET_COLOR = TextColor.parse("#b9b0b0");
+    private static final DataResult<TextColor> DEFAULT_HOVERABLE_LEGENDARY_BRACKET_COLOR = TextColor.parse("#d61b1b");
+    private static final DataResult<TextColor> DEFAULT_HOVERABLE_MYTHICAL_BRACKET_COLOR = TextColor.parse("#c91dc0");
+    private static final DataResult<TextColor> DEFAULT_HOVERABLE_ULTRA_BEAST_BRACKET_COLOR = TextColor.parse("#238f15");
+    private static final DataResult<TextColor> DEFAULT_HOVERABLE_CUSTOM_BRACKET_COLOR = TextColor.parse("#20a1d4");
+    private static final DataResult<TextColor> DEFAULT_HOVERABLE_SHINY_BRACKET_COLOR = TextColor.parse("#f3f175");
     private static final DataResult<TextColor> DEFAULT_HOVERABLE_ERROR_BRACKET_COLOR = TextColor.parse("#c00303");
     private static final DataResult<TextColor> DEFAULT_HOVERABLE_TEXT_COLOR = TextColor.parse("#21bb3a");
-    private static final DataResult<TextColor> DEFAULT_HOVERABLE_SHINY_TEXT_COLOR = TextColor.parse("#b6b30b");
+    private static final DataResult<TextColor> DEFAULT_HOVERABLE_REGULAR_TEXT_COLOR = TextColor.parse("#cacaca");
+    private static final DataResult<TextColor> DEFAULT_HOVERABLE_LEGENDARY_TEXT_COLOR = TextColor.parse("#f72e2e");
+    private static final DataResult<TextColor> DEFAULT_HOVERABLE_MYTHICAL_TEXT_COLOR = TextColor.parse("#db2bd2");
+    private static final DataResult<TextColor> DEFAULT_HOVERABLE_ULTRA_BEAST_TEXT_COLOR = TextColor.parse("#2ea31f");
+    private static final DataResult<TextColor> DEFAULT_HOVERABLE_CUSTOM_TEXT_COLOR = TextColor.parse("#2eb4e9");
+    private static final DataResult<TextColor> DEFAULT_HOVERABLE_SHINY_TEXT_COLOR = TextColor.parse("#e7e436");
     private static final DataResult<TextColor> DEFAULT_HOVERABLE_ERROR_TEXT_COLOR = TextColor.parse("#e21e1e");
 
     private static final DataResult<TextColor> DEFAULT_HOVERABLE_ITEM_BRACKET_COLOR = TextColor.parse("#2eb4e9");
@@ -136,9 +146,19 @@ public class ChatColors
     private static TextColor hoverableBracketColor;
     private static TextColor hoverableBracketShinyColor;
     private static TextColor hoverableBracketErrorColor;
+    private static TextColor hoverableBracketRegularColor;
+    private static TextColor hoverableBracketLegendaryColor;
+    private static TextColor hoverableBracketMythicalColor;
+    private static TextColor hoverableBracketUltraBeastColor;
+    private static TextColor hoverableBracketCustomColor;
     private static TextColor hoverableTextColor;
     private static TextColor hoverableTextShinyColor;
     private static TextColor hoverableTextErrorColor;
+    private static TextColor hoverableTextRegularColor;
+    private static TextColor hoverableTextLegendaryColor;
+    private static TextColor hoverableTextMythicalColor;
+    private static TextColor hoverableTextUltraBeastColor;
+    private static TextColor hoverableTextCustomColor;
 
     private static TextColor hoverableItemBracketColor;
     private static TextColor hoverableItemTextColor;
@@ -200,9 +220,19 @@ public class ChatColors
             commandPlayerColor = DEFAULT_COMMAND_PLAYER_COLOR.getOrThrow();
 
             hoverableBracketColor = DEFAULT_HOVERABLE_BRACKET_COLOR.getOrThrow();
+            hoverableBracketRegularColor = DEFAULT_HOVERABLE_REGULAR_BRACKET_COLOR.getOrThrow();
+            hoverableBracketLegendaryColor = DEFAULT_HOVERABLE_LEGENDARY_BRACKET_COLOR.getOrThrow();
+            hoverableBracketMythicalColor = DEFAULT_HOVERABLE_MYTHICAL_BRACKET_COLOR.getOrThrow();
+            hoverableBracketUltraBeastColor = DEFAULT_HOVERABLE_ULTRA_BEAST_BRACKET_COLOR.getOrThrow();
+            hoverableBracketCustomColor = DEFAULT_HOVERABLE_CUSTOM_BRACKET_COLOR.getOrThrow();
             hoverableBracketShinyColor = DEFAULT_HOVERABLE_SHINY_BRACKET_COLOR.getOrThrow();
             hoverableBracketErrorColor = DEFAULT_HOVERABLE_ERROR_BRACKET_COLOR.getOrThrow();
             hoverableTextColor = DEFAULT_HOVERABLE_TEXT_COLOR.getOrThrow();
+            hoverableTextRegularColor = DEFAULT_HOVERABLE_REGULAR_TEXT_COLOR.getOrThrow();
+            hoverableTextLegendaryColor = DEFAULT_HOVERABLE_LEGENDARY_TEXT_COLOR.getOrThrow();
+            hoverableTextMythicalColor = DEFAULT_HOVERABLE_MYTHICAL_TEXT_COLOR.getOrThrow();
+            hoverableTextUltraBeastColor = DEFAULT_HOVERABLE_ULTRA_BEAST_TEXT_COLOR.getOrThrow();
+            hoverableTextCustomColor = DEFAULT_HOVERABLE_CUSTOM_TEXT_COLOR.getOrThrow();
             hoverableTextShinyColor = DEFAULT_HOVERABLE_SHINY_TEXT_COLOR.getOrThrow();
             hoverableTextErrorColor = DEFAULT_HOVERABLE_ERROR_TEXT_COLOR.getOrThrow();
             
@@ -268,9 +298,19 @@ public class ChatColors
     public static TextColor getHoverableBracketColor() { return hoverableBracketColor; }
     public static TextColor getHoverableBracketShinyColor() { return hoverableBracketShinyColor; }
     public static TextColor getHoverableBracketErrorColor() { return hoverableBracketErrorColor; }
+    public static TextColor getHoverableBracketRegularColor() { return hoverableBracketRegularColor; }
+    public static TextColor getHoverableBracketLegendaryColor() { return hoverableBracketLegendaryColor; }
+    public static TextColor getHoverableBracketMythicalColor() { return hoverableBracketMythicalColor; }
+    public static TextColor getHoverableBracketUltraBeastColor() { return hoverableBracketUltraBeastColor; }
+    public static TextColor getHoverableBracketCustomColor() { return hoverableBracketCustomColor; }
     public static TextColor getHoverableTextColor() { return hoverableTextColor; }
     public static TextColor getHoverableTextShinyColor() { return hoverableTextShinyColor; }
     public static TextColor getHoverableTextErrorColor() { return hoverableTextErrorColor; }
+    public static TextColor getHoverableTextRegularColor() { return hoverableTextRegularColor; }
+    public static TextColor getHoverableTextLegendaryColor() { return hoverableTextLegendaryColor; }
+    public static TextColor getHoverableTextMythicalColor() { return hoverableTextMythicalColor; }
+    public static TextColor getHoverableTextUltraBeastColor() { return hoverableTextUltraBeastColor; }
+    public static TextColor getHoverableTextCustomColor() { return hoverableTextCustomColor; }
     public static TextColor getHoverableItemBracketColor() { return hoverableItemBracketColor; }
     public static TextColor getHoverableItemTextColor() { return hoverableItemTextColor; }
     public static TextColor getTooltipLabelColor() { return tooltipLabelColor; }
@@ -324,9 +364,19 @@ public class ChatColors
     protected static void setHoverableBracketColor(TextColor color) { hoverableBracketColor = color; }
     protected static void setHoverableBracketShinyColor(TextColor color) { hoverableBracketShinyColor = color; }
     protected static void setHoverableBracketErrorColor(TextColor color) { hoverableBracketErrorColor = color; }
+    protected static void setHoverableBracketRegularColor(TextColor color) { hoverableBracketRegularColor = color; }
+    protected static void setHoverableBracketLegendaryColor(TextColor color) { hoverableBracketLegendaryColor = color; }
+    protected static void setHoverableBracketMythicalColor(TextColor color) { hoverableBracketMythicalColor = color; }
+    protected static void setHoverableBracketUltraBeastColor(TextColor color) { hoverableBracketUltraBeastColor = color; }
+    protected static void setHoverableBracketCustomColor(TextColor color) { hoverableBracketCustomColor = color; }
     protected static void setHoverableTextColor(TextColor color) { hoverableTextColor = color; }
     protected static void setHoverableTextShinyColor(TextColor color) { hoverableTextShinyColor = color; }
     protected static void setHoverableTextErrorColor(TextColor color) { hoverableTextErrorColor = color; }
+    protected static void setHoverableTextRegularColor(TextColor color) { hoverableTextRegularColor = color; }
+    protected static void setHoverableTextLegendaryColor(TextColor color) { hoverableTextLegendaryColor = color; }
+    protected static void setHoverableTextMythicalColor(TextColor color) { hoverableTextMythicalColor = color; }
+    protected static void setHoverableTextUltraBeastColor(TextColor color) { hoverableTextUltraBeastColor = color; }
+    protected static void setHoverableTextCustomColor(TextColor color) { hoverableTextCustomColor = color; }
     protected static void setHoverableItemBracketColor(TextColor color) { hoverableItemBracketColor = color; }
     protected static void setHoverableItemTextColor(TextColor color) { hoverableItemTextColor = color; }
     protected static void setTooltipLabelColor(TextColor color) { tooltipLabelColor = color; }
