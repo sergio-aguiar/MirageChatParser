@@ -71,6 +71,21 @@ public class PlaceholderResolver
 
                 return getMainHandItem(player);
             }
+            else if (lower.startsWith("help"))
+            {
+                if (lower.startsWith("help:"))
+                {
+                    String[] parts = lower.split(":");
+                    String helpType = parts[1];
+
+                    if (helpType.equals("shout") || helpType.equals("shouts") || helpType.equals("shouting"))
+                    {
+                        return getHelpShoutText();
+                    }
+                }
+
+                return getHelpText();
+            }
         } 
         catch (Exception e) {}
 
@@ -150,6 +165,16 @@ public class PlaceholderResolver
         }
 
         return TextUtils.getItemText(stack);
+    }
+
+    public static Text getHelpText()
+    {
+        return TextUtils.getHelpText();
+    }
+
+    public static Text getHelpShoutText()
+    {
+        return TextUtils.getHelpShoutText();
     }
 
     public static Text getHotbarItem(ServerPlayerEntity player, int index)

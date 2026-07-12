@@ -1977,4 +1977,170 @@ public class TextUtils
         stack.remove(DataComponentTypes.CUSTOM_NAME);
         return stack;
     }
+
+    public static MutableText getHelpText()
+    {
+        CustomTextBuilder textBuilder = new TextUtils.CustomTextBuilder();
+
+        textBuilder.append
+        (
+            "[",
+            ChatColors.getCommandPrefixColor()
+        );
+
+        textBuilder.append
+        (
+            "Help",
+            ChatColors.getCommandPrefixColor()
+        );
+
+        textBuilder.append
+        (
+            "]",
+            ChatColors.getCommandPrefixColor()
+        );
+
+        CustomTextBuilder tooltip = new TextUtils.CustomTextBuilder();
+
+        tooltip.append
+        (
+            "Help Parsing:",
+            ChatColors.getCommandPrefixColor()
+        );
+
+        tooltip.append
+        (
+            "\n\n[ help ]",
+            ChatColors.getCommandPlayerColor()
+        );
+
+        tooltip.append
+        (
+            "\nShout the list of help parsers.",
+            ChatColors.getCommandValueColor()
+        );
+
+        tooltip.append
+        (
+            "\n\n[ help : shout ] / [ help : shouts ] / [ help : shouting ]",
+            ChatColors.getCommandPlayerColor()
+        );
+
+        tooltip.append
+        (
+            "\nShout the list of shout parsers.",
+            ChatColors.getCommandValueColor()
+        );
+
+        textBuilder.setHoverEvent(new HoverEvent(HoverEvent.Action.SHOW_TEXT, tooltip.getText()));
+
+        return textBuilder.getText();
+    }
+
+    public static MutableText getHelpShoutText()
+    {
+        CustomTextBuilder textBuilder = new TextUtils.CustomTextBuilder();
+
+        textBuilder.append
+        (
+            "[",
+            ChatColors.getCommandPrefixColor()
+        );
+
+        textBuilder.append
+        (
+            "Help : Shouting",
+            ChatColors.getCommandPrefixColor()
+        );
+
+        textBuilder.append
+        (
+            "]",
+            ChatColors.getCommandPrefixColor()
+        );
+
+        CustomTextBuilder tooltip = new TextUtils.CustomTextBuilder();
+
+        tooltip.append
+        (
+            "Chat Parsing:",
+            ChatColors.getCommandPrefixColor()
+        );
+
+        tooltip.append
+        (
+            "\n\n[ party : <slot> : [closed] ] / [ poke : <slot> : [closed] ]",
+            ChatColors.getCommandPlayerColor()
+        );
+
+        tooltip.append
+        (
+            "\nShout Pokémon at party slot <slot>, optionally using the [closed] sheet option.",
+            ChatColors.getCommandValueColor()
+        );
+
+        tooltip.append
+        (
+            "\nExamples: ",
+            ChatColors.getCommandPrefixColor()
+        );
+
+        tooltip.append
+        (
+            "[party:1] / [party:6:closed] / [poke:5:closed]",
+            ChatColors.getCommandValueColor()
+        );
+
+        tooltip.append
+        (
+            "\n\n[ pc : <box> : <slot> : [closed] ]",
+            ChatColors.getCommandPlayerColor()
+        );
+
+        tooltip.append
+        (
+            "\nShout Pokémon at pc box <box> and slot <slot>, optionally using the [closed] sheet option.",
+            ChatColors.getCommandValueColor()
+        );
+
+        tooltip.append
+        (
+            "\nExamples: ",
+            ChatColors.getCommandPrefixColor()
+        );
+
+        tooltip.append
+        (
+            "[pc:1:1] / [pc:2:15:closed]",
+            ChatColors.getCommandValueColor()
+        );
+
+        tooltip.append
+        (
+            "\n\n[ item : [slot] ]",
+            ChatColors.getCommandPlayerColor()
+        );
+
+        tooltip.append
+        (
+            "\nShout Item in your main hand, optionally specifying a different hotbar slot with <slot>.",
+            ChatColors.getCommandValueColor()
+        );
+
+        tooltip.append
+        (
+            "\nExamples: ",
+            ChatColors.getCommandPrefixColor()
+        );
+
+        tooltip.append
+        (
+            "[item] / [item:9]",
+            ChatColors.getCommandValueColor()
+        );
+
+        textBuilder.setHoverEvent(new HoverEvent(HoverEvent.Action.SHOW_TEXT, tooltip.getText()));
+
+        return textBuilder.getText();
+    }
 }
