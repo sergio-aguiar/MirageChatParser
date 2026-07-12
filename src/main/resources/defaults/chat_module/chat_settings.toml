@@ -6,6 +6,12 @@ ParseNonPlayerMessages = false
 # Whether items should show the original item name, rather than changed ones (using an anvil, for example) (true/false)
 ShowOriginalItemNames = false
 
+[Hoverable]
+# Whether different Pokémon's categories (legendary, mythical, etc.) should show different colored hoverables (true/false)
+UsePokemonCategoryHoverables = true
+# Whether shiny Pokémon should have their hoverable color be a gradient with the base color, or use shiny bracket colors (true/false)
+UseShinyGradientHoverables = true
+
 [Tooltip]
 # Whether to show a Pokémon's nickname in hover text (true/false)
 ShowNickname = true
@@ -49,6 +55,14 @@ ShowNeuteredIfFalse = true
 BoldHyperTrainingValues = true
 # Whether hyper trained IV stat values should appear in italic (true/false)
 ItalicHyperTrainingValues = false
+
+[EggTooltip]
+# Whether to show an egg's nickname in hover text (true/false)
+ShowEggNickname = true
+# Whether to show an egg's hatch progress in hover text (true/false)
+ShowEggHatchStepProgress = true
+# Whether to show an egg's hatch stage progress messages in hover text (true/false)
+ShowEggHatchStageMessages = true
 
 [GUI]
 # The name of the layour to use in the GUI for PartyCheck ("default" or "mirage")

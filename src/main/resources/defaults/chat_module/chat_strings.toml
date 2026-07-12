@@ -32,6 +32,18 @@ EggGroups = "Egg Groups: "
 Neutered = "Neutered: "
 # Other suggestions, "OT: " and "Original Trainer (OT): "
 OriginalTrainer = "Original Trainer: "
+HatchProgress = "Hatch Progress: "
+StepProgress = "Step Progress: "
+
+[EggStageMessages]
+EggStage0Top = "This Egg doesn't seem close to hatching."
+EggStage0Bottom = "It will probably take a long time."
+EggStage1Top = "What will hatch from this?"
+EggStage1Bottom = "It doesn't seem close to hatching."
+EggStage2Top = "It appears to move occasionally."
+EggStage2Bottom = "It may be close to hatching."
+EggStage3Top = "Sounds can be heard coming from inside!"
+EggStage3Bottom = "It will hatch soon!"
 
 [Stat]
 Health = "HP"
