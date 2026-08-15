@@ -70,9 +70,6 @@ dependencies {
 
 	// Placeholder API
 	modImplementation "eu.pb4:placeholder-api:${placeholder_api_version}"
-
-	// NeoDaycare
-	implementation files("libs/NeoDaycare-${neodaycare_version}.jar")
 }
 
 processResources {
