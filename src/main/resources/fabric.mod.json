@@ -28,10 +28,14 @@
 		"fabricloader": ">=0.18.1",
 		"minecraft": "~1.21.1",
 		"java": ">=21",
-		"fabric-api": "*",
-		"cobblemon": ">=1.7.3"
+		"fabric-api": ">=0.116.6+1.21.1",
+		"cobblemon": ">=1.7.3+1.21.1",
+		"gooeylibs": ">=3.1.0"
 	},
 	"suggests": {
-		"placeholder-api": "*"
+		"placeholder-api": ">=2.4.1+1.21",
+		"luckperms": ">=5.4.139",
+		"cobblemonsizevariation": ">=1.1.0",
+		"neodaycare": ">=1.5.2"
 	}
 }

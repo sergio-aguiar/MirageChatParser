@@ -11,10 +11,7 @@ public class LuckPermsUserDataRecalculateEventHandler
 {
     public static void register()
     {
-        if (!LuckPermsUtils.isModLoaded())
-        {
-            return;
-        }
+        if (!LuckPermsUtils.isModLoaded()) return;
 
         LuckPerms luckPerms = LuckPermsProvider.get();
 

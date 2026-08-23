@@ -21,11 +21,6 @@ public class LuckPermsPlayerJoinEventHandler
 
                 LuckPermsUtils.clearPermsForPlayer(player);
 
-                if (!LuckPermsUtils.isModLoaded())
-                {
-                    return;
-                }
-
                 LuckPerms api = LuckPermsProvider.get();
                 api.getUserManager().loadUser(player.getUuid());
             }
