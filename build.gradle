@@ -46,30 +46,35 @@ loom {
 }
 
 dependencies {
-	minecraft "com.mojang:minecraft:${project.minecraft_version}"
-	mappings "net.fabricmc:yarn:${project.yarn_mappings}:v2"
-	modImplementation "net.fabricmc:fabric-loader:${project.loader_version}"
-	modImplementation("net.fabricmc:fabric-language-kotlin:1.12.3+kotlin.2.0.21")
+	// Minecraft
+	minecraft("com.mojang:minecraft:${project.minecraft_version}")
 
-	modImplementation "net.fabricmc.fabric-api:fabric-api:${project.fabric_version}"
+	// Fabric is required
+	mappings("net.fabricmc:yarn:${project.yarn_mappings}:v2")
+	modImplementation("net.fabricmc:fabric-loader:${project.loader_version}")
+	modImplementation("net.fabricmc:fabric-language-kotlin:${project.kotlin_version}")
+	modImplementation("net.fabricmc.fabric-api:fabric-api:${project.fabric_version}")
 
-	modImplementation "com.cobblemon:fabric:${project.cobblemon_version}+${project.minecraft_version}-SNAPSHOT"
+	// Cobblemon is required
+	modImplementation("com.cobblemon:fabric:${project.cobblemon_version}+${project.minecraft_version}-SNAPSHOT")
 
+	// LuckPerms is optional
 	compileOnly("net.luckperms:api:${project.luckperms_api_version}")
 
-	// NightConfig (needed for your config system)
-	modImplementation "com.electronwill.night-config:core:${project.night_config_version}"
-	modImplementation "com.electronwill.night-config:toml:${project.night_config_version}"
-	modImplementation "com.electronwill.night-config:json:${project.night_config_version}"
-	include "com.electronwill.night-config:core:${project.night_config_version}"
-	include "com.electronwill.night-config:toml:${project.night_config_version}"
-	include "com.electronwill.night-config:json:${project.night_config_version}"
+	// NightConfig (required for the config system - bundled)
+	implementation  include("com.electronwill.night-config:core:${project.night_config_version}")
+	implementation  include("com.electronwill.night-config:toml:${project.night_config_version}")
+	implementation  include("com.electronwill.night-config:json:${project.night_config_version}")
 
-	// Gooeylibs (UI library)
-	modImplementation("ca.landonjw.gooeylibs:fabric:${gooeylibs_version}-SNAPSHOT")
+	// Gooeylibs (UI library) is required
+	modImplementation("ca.landonjw.gooeylibs:fabric:${project.gooeylibs_version}-SNAPSHOT")
 
-	// Placeholder API
-	modImplementation "eu.pb4:placeholder-api:${placeholder_api_version}"
+	// Placeholder API is optional
+	modCompileOnly("eu.pb4:placeholder-api:${project.placeholder_api_version}")
+
+	// Adventure / MiniMessage (required for the config system - bundled)
+    implementation include("net.kyori:adventure-text-minimessage:${project.adventure_minimessage_version}")
+    modImplementation include("net.kyori:adventure-platform-fabric:${project.adventure_fabric_version}")
 }
 
 processResources {
@@ -106,7 +111,7 @@ jar {
 publishing {
 	publications {
 		create("mavenJava", MavenPublication) {
-			artifactId = project.archives_base_name
+			artifactId = project.base.archivesName.get()
 			from components.java
 		}
 	}

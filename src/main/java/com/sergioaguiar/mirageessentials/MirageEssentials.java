@@ -41,6 +41,7 @@ import com.sergioaguiar.mirageessentials.event.chatparser.ChatParserMessageHandl
 import com.sergioaguiar.mirageessentials.event.utils.LuckPermsPlayerJoinEventHandler;
 import com.sergioaguiar.mirageessentials.event.utils.LuckPermsUserDataRecalculateEventHandler;
 import com.sergioaguiar.mirageessentials.manager.AntiAFKManager;
+import com.sergioaguiar.mirageessentials.util.LuckPermsUtils;
 import com.sergioaguiar.mirageessentials.util.ModLogger;
 
 import net.fabricmc.api.ModInitializer;
@@ -172,6 +173,8 @@ public class MirageEssentials implements ModInitializer
 
 	private static void handleLuckPermsEvents()
 	{
+		if (!LuckPermsUtils.isModLoaded()) return;
+
 		ServerLifecycleEvents.SERVER_STARTED.register(server ->
 		{
 			LuckPermsPlayerJoinEventHandler.register();
