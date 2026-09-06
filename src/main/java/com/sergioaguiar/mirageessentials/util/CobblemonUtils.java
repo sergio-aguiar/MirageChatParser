@@ -58,4 +58,9 @@ public class CobblemonUtils
 
         return hyperTrainedStats;
     }
+
+    public static String getPokemonSizeName(Pokemon pokemon)
+    {
+        return pokemon.getSizeCategory().name();
+    }
 }

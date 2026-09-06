@@ -907,7 +907,28 @@ public class TextUtils
         return textBuilder.getText();
     }
 
-    public static Text coloredSizeLine(float scaleModifier)
+    public static Text coloredSizeLine(Pokemon pokemon)
+    {
+        if (CobblemonSizeVariationUtils.isModLoaded()) return getSizeVariationSizeLine(pokemon.getScaleModifier());
+
+        CustomTextBuilder textBuilder = new CustomTextBuilder();
+
+        textBuilder.append
+        (
+            ChatStrings.getSizeString(),
+            ChatColors.getTooltipLabelColor()
+        );
+
+        textBuilder.append
+        (
+            CobblemonUtils.getPokemonSizeName(pokemon),
+            ChatColors.getTooltipValueColor()
+        );
+
+        return textBuilder.getText();
+    }
+
+    public static Text getSizeVariationSizeLine(float scaleModifier)
     {
         TextColor sizeColor;
         try

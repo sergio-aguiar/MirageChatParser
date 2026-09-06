@@ -370,7 +370,7 @@ public class PlaceholderResolver
             if (first) first = false;
             else tooltipBuilder.append(Text.literal("\n"));
 
-            tooltipBuilder.append(getSizeText(pokemon.getScaleModifier()));
+            tooltipBuilder.append(getSizeText(pokemon));
         }
 
         if (ChatSettings.shouldShowEggGroups())
@@ -509,7 +509,7 @@ public class PlaceholderResolver
 
         if (ChatSettings.shouldShowSize())
         {
-            tooltipText.add(getSizeText(pokemon.getScaleModifier()));
+            tooltipText.add(getSizeText(pokemon));
         }
 
         if (ChatSettings.shouldShowEggGroups())
@@ -627,9 +627,9 @@ public class PlaceholderResolver
         return TextUtils.coloredCaughtBallLine(caughtBall);
     }
 
-    private static Text getSizeText(float scale)
+    private static Text getSizeText(Pokemon pokemon)
     {
-        return TextUtils.coloredSizeLine(scale);
+        return TextUtils.coloredSizeLine(pokemon);
     }
 
     private static Text getEggGroupText(HashSet<EggGroup> eggGroups)
